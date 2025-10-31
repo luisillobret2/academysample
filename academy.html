@@ -1,0 +1,612 @@
+<!-- Chosen Palette: Calm Harmony (Stone, Teal, Slate) -->
+<!-- Application Structure Plan: A responsive SPA with a fixed sidebar for module navigation and a main content area. Clicking a module in thesidebar instantly displays its content without a page reload. Within each module, content is organized into clear sections (Objectives, Topics, Scenario, Quiz) to improve readability and user focus. The key interaction is the interactive quiz, which provides immediate feedback, transforming passive reading into an active learning experience. This structure was chosen for its intuitive navigation (common in documentation/learning sites) and its ability to break down dense information into digestible, engaging chunks. -->
+<!-- Visualization & Content Choices: Report Info: 6 training modules on AppSec. -> Goal: Educate and test knowledge. -> Viz/Presentation Method: The primary structure is a sidebar navigation controlling content visibility in a main panel. Key topics are presented in styled cards. Scenarios are highlighted in distinct blocks. The quizzes are built with interactive HTML forms. -> Interaction: Sidebar links trigger JavaScript functions to switch module views. A "Check Answers" button for each quiz evaluates user input and provides immediate visual feedback (correct/incorrect styling) and a button to proceed. -> Justification: This interactive, component-based presentation is significantly more engaging and user-friendly than a long, single-document format. It encourages exploration and reinforces learning through instant feedback. -> Library/Method: Vanilla JavaScript for all interactivity, Tailwind CSS for styling. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mend.io Interactive Learning Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .module-content {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .quiz-option.correct {
+            background-color: #dcfce7;
+            border-left-color: #22c55e;
+        }
+        .quiz-option.incorrect {
+            background-color: #fee2e2;
+            border-left-color: #ef4444;
+        }
+        /* Fix for list styles inside generated content */
+        .module-content ul {
+            list-style-type: disc;
+            padding-left: 2rem;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-slate-800">
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <aside class="w-full md:w-64 bg-white border-r border-stone-200 p-6 flex-shrink-0">
+            <h1 class="text-2xl font-bold text-slate-900 mb-2">Mend.io</h1>
+            <h2 class="text-md font-semibold text-teal-600 mb-8">Learning Academy</h2>
+            <nav id="module-nav" class="space-y-2">
+                <!-- Navigation links will be populated by JS -->
+            </nav>
+        </aside>
+
+        <main id="main-content" class="flex-1 p-6 sm:p-8 md:p-12">
+            <!-- Module content will be injected here -->
+        </main>
+    </div>
+
+    <script>
+        const modulesData = [
+            {
+                id: 1,
+                title: "Introduction to Modern Application Security",
+                overview: "This module introduces the fundamental concepts of Application Security (AppSec) within the context of modern software development. We will explore why securing applications is critical in a DevOps environment and provide a high-level overview of the challenges and solutions Mend.io offers to empower developers.",
+                objectives: [
+                    "Explain the importance of integrating application security into the DevOps lifecycle ('Shift Left').",
+                    "Identify at least three common AppSec challenges facing modern development teams.",
+                    "Describe the core components of the Mend.io unified AppSec platform.",
+                    "Understand the benefits of automating security scans and remediation.",
+                    "Define the developer's role in building secure software proactively."
+                ],
+                topics: [
+                    { 
+                        title: "Why Application Security Matters in Modern DevOps", 
+                        content: "In traditional development, security was often a final step before release, creating bottlenecks and delaying timelines. Modern DevOps practices, characterized by speed and agility, cannot afford this friction. Integrating security directly into the developer's workflow—a concept known as **'Shifting Left'**—is essential. By addressing security issues early and often, teams can:<ul><li>**Reduce Costs:** Fixing vulnerabilities in the development stage is significantly cheaper than patching them in production.</li><li>**Increase Velocity:** Developers get instant feedback within their native tools, preventing security from becoming a roadblock.</li><li>**Improve Security Posture:** Continuous scanning and monitoring lead to more secure applications from the ground up.</li></ul>" 
+                    },
+                    { 
+                        title: "Common AppSec Challenges", 
+                        content: "Development teams today face a complex and evolving threat landscape. Key challenges include:<ul><li>**Software Supply Chain Security:** Applications are not just built, they are assembled using hundreds of third-party and open-source components. A single vulnerability in one of these dependencies can compromise the entire application.</li><li>**Open Source Risk:** While open source software (OSS) accelerates development, it also introduces risks. Teams need to manage not only security vulnerabilities but also license compliance for every OSS component they use.</li><li>**CI/CD Pipeline Exposure:** The automation that makes DevOps efficient can also be a point of weakness. Misconfigurations in the CI/CD pipeline or vulnerable tools can expose secrets, code, and infrastructure.</li></ul>"
+                    },
+                    { 
+                        title: "Overview of Mend.io’s Unified AppSec Platform", 
+                        content: "The Mend AI Native AppSec Platform consolidates all of your organization's security information into a single location, providing a comprehensive view of your security posture. It is designed to integrate seamlessly into the developer's existing workflow. Core components include:<ul><li>**Software Composition Analysis (SCA):** Scans your open-source components to detect security vulnerabilities and manage license compliance.</li><li>**Static Application Security Testing (SAST):** Analyzes your proprietary, custom code for security weaknesses and coding flaws.</li><li>**Infrastructure as Code (IaC) Scanning:** Scans configuration files (like Terraform or CloudFormation) to find misconfigurations before they reach production.</li><li>**Container and Image Scanning:** Inspects container images for vulnerabilities in the base image and any included components.</li></ul>" 
+                    },
+                    { 
+                        title: "Benefits of Automation and Continuous Security", 
+                        content: "Automating security within the CI/CD pipeline is the cornerstone of a successful AppSec program. By integrating tools like the Mend CLI or repository integrations, security scans become an automatic part of every build and pull request. The primary benefits are:<ul><li>**Speed & Efficiency:** Scans are triggered automatically, eliminating manual work and providing immediate feedback.</li><li>**Consistency:** Every code change is subjected to the same security checks, ensuring a consistent standard.</li><li>**Early Detection:** Vulnerabilities are caught moments after they are introduced, making them easier and faster to fix.</li></ul>" 
+                    },
+                    { 
+                        title: "The Developer’s Role in Proactive AppSec", 
+                        content: "In a modern AppSec model, security is a shared responsibility, and developers are at the forefront. The goal is not to turn developers into security experts, but to empower them with the right tools and information to write secure code from the start. Developers using Mend.io can:<ul><li>**View and Triage:** See security findings directly within their repository (e.g., as a GitHub check) or IDE.</li><li>**Remediate Quickly:** Receive automated fix recommendations, such as the correct version to upgrade a vulnerable library to.</li><li>**Learn and Improve:** Get context-specific training on vulnerabilities to avoid making similar mistakes in the future.</li></ul>" 
+                    }
+                ],
+                scenario: {
+                    title: "The Developer Workflow in Action",
+                    steps: [
+                        "A developer working on a new feature commits their code, which includes a new open-source library, to a feature branch in GitHub.",
+                        "The developer opens a pull request. This action automatically triggers a Mend.io scan, which performs both SAST on the new code and SCA on all dependencies.",
+                        "The scan completes in minutes. A comment appears in the pull request from Mend.io, flagging a high-severity vulnerability in the newly added open-source library.",
+                        "The comment provides a clear explanation of the vulnerability and suggests a simple fix: update the library to a newer, patched version. It may even include a button to generate a remediation pull request automatically.",
+                        "The developer applies the recommended fix, which triggers another quick scan. With all checks now passing, the pull request is approved and merged with confidence."
+                    ]
+                },
+                quiz: {
+                    questions: [
+                        {
+                            question: "What does the term 'Shift Left' mean in the context of AppSec?",
+                            options: ["Moving security checks to the end of the development cycle.", "Integrating security practices and testing early in the development lifecycle.", "Shifting all security responsibility to the operations team."],
+                            answer: 1
+                        },
+                        {
+                            question: "Which Mend.io tool is used to scan your custom, proprietary code for weaknesses?",
+                            options: ["Software Composition Analysis (SCA)", "Infrastructure as Code (IaC) Scanning", "Static Application Security Testing (SAST)"],
+                            answer: 2
+                        },
+                        {
+                            question: "What is a primary benefit of automating AppSec scans in the CI/CD pipeline?",
+                            options: ["It makes the build process slower but more secure.", "It provides developers with fast, consistent feedback on their code changes.", "It completely eliminates the need for a dedicated security team."],
+                            answer: 1
+                        }
+                    ]
+                },
+                nextModule: 2
+            },
+            {
+                id: 2,
+                title: "Mastering Software Composition Analysis (SCA)",
+                 overview: "This module provides a deep dive into Software Composition Analysis (SCA), a critical practice for securing the open-source dependencies that form the backbone of modern applications. We will explore how Mend SCA provides comprehensive visibility into your software supply chain, detects vulnerabilities, ensures license compliance, and prioritizes the risks that truly matter.",
+                objectives: [
+                    "Define SCA and explain its importance for managing open-source risk.",
+                    "Differentiate between direct and transitive dependencies and the risks they pose.",
+                    "Describe how Mend SCA identifies both security vulnerabilities and software license issues.",
+                    "Explain how Mend's Reachability Analysis helps prioritize vulnerabilities by identifying which ones are actually being called by the code.",
+                    "Understand the process of remediating SCA findings within the developer workflow."
+                ],
+                topics: [
+                    {
+                        title: "What is Software Composition Analysis (SCA)?",
+                        content: "SCA is the automated process of identifying the open-source software (OSS) components in a codebase. Once the components are identified, SCA tools analyze them to discover security vulnerabilities, check for license compliance, and map out the full dependency tree. As modern applications can be composed of 80% or more open-source code, SCA is a non-negotiable part of a mature AppSec program."
+                    },
+                    {
+                        title: "Understanding the Dependency Tree: Direct vs. Transitive",
+                        content: "Your software supply chain is more than just the libraries you explicitly add to your project.<ul><li>**Direct Dependencies:** These are the open-source components that you manually add to your manifest file (e.g., `package.json`, `pom.xml`).</li><li>**Transitive Dependencies:** These are the dependencies of your direct dependencies. A single direct dependency can pull in dozens of other transitive dependencies, creating a complex tree of components you may not even be aware of.</li></ul>Mend SCA automatically maps this entire dependency tree, because a vulnerability is just as dangerous whether it's in a direct or transitive dependency."
+                    },
+                    {
+                        title: "Core Functions: Vulnerability Detection and License Compliance",
+                        content: "Mend SCA performs two primary functions simultaneously:<ul><li>**Security Vulnerability Detection:** Mend cross-references every OSS component in your dependency tree against its extensive vulnerability database, which includes data from NVD and many other public and private sources. This detects known security flaws (CVEs) and provides rich context about their severity and potential impact.</li><li>**License Compliance Management:** Every OSS component comes with a license (e.g., MIT, Apache, GPL). Mend identifies the license of each dependency and checks it against your organization's configured policies to flag any licenses that are unapproved or pose a legal risk.</li></ul>"
+                    },
+                    {
+                        title: "Prioritizing with Reachability Analysis",
+                        content: "A key challenge with traditional SCA is alert fatigue—developers are often flooded with hundreds of vulnerability alerts, many of which pose no immediate threat. Mend's **Reachability Analysis** solves this by analyzing your proprietary code to determine if it is actually making calls to the vulnerable methods in an open-source library. This allows you to prioritize:<ul><li>**Reachable Vulnerabilities:** A critical, reachable vulnerability is a clear and present danger that should be fixed immediately.</li><li>**Unreachable Vulnerabilities:** A vulnerability in a function your code never uses is a much lower priority, reducing noise by up to 85%.</li></ul>"
+                    },
+                    {
+                        title: "Remediation and Automation",
+                        content: "Mend integrates remediation directly into the developer workflow. When a vulnerability is found, Mend provides automated recommendations and fixes:<ul><li>**Automated Pull Requests:** Mend Remediate can automatically generate a pull request that upgrades the vulnerable library to the next safe and non-breaking version.</li><li>**Clear Guidance:** For every finding, developers get actionable advice on the best path to remediation, all within their existing tools like GitHub, Azure DevOps, or GitLab.</li></ul>"
+                    }
+                ],
+                scenario: {
+                    title: "An SCA Scan in Action",
+                    steps: [
+                        "A developer adds the library `log-utils@1.2.3` to their `package.json` to handle application logging.",
+                        "On creating a pull request, a Mend SCA scan is automatically triggered.",
+                        "The scan finds two issues: A high-severity remote code execution vulnerability in `log-utils@1.2.3`. A transitive dependency brought in by `log-utils` has a restrictive `GPL-3.0` license, which violates the company's policy.",
+                        "The scan's Reachability Analysis determines that the application's code **is** calling the specific function containing the vulnerability. The finding is flagged as a high-priority, reachable threat.",
+                        "The developer receives a comment in the PR. For the vulnerability, Mend Remediate suggests upgrading to `log-utils@1.2.4` and offers a one-click button to create a pull request with the fix. For the license issue, it flags the policy violation so the developer can choose a different library."
+                    ]
+                },
+                quiz: {
+                    questions: [
+                        {
+                            question: "A library that your code explicitly imports, which in turn imports another library, is an example of what?",
+                            options: ["The first library is a direct dependency, and the second is a transitive dependency.", "Both libraries are direct dependencies.", "Both libraries are transitive dependencies."],
+                            answer: 0
+                        },
+                        {
+                            question: "What is the primary benefit of Mend's Reachability Analysis?",
+                            options: ["It finds more vulnerabilities than any other tool.", "It helps developers prioritize by showing which vulnerabilities are in code paths that are actually being used.", "It automatically fixes all detected vulnerabilities."],
+                            answer: 1
+                        },
+                        {
+                            question: "SCA tools are responsible for identifying which two types of risk?",
+                            options: ["Code quality and performance bottlenecks.", "Security vulnerabilities and software license compliance issues.", "Infrastructure misconfigurations and insecure APIs."],
+                            answer: 1
+                        }
+                    ]
+                },
+                nextModule: 3
+            },
+            {
+                id: 3,
+                title: "Analyzing Custom Code with SAST",
+                overview: "This module focuses on Static Application Security Testing (SAST), the practice of analyzing your first-party, proprietary source code for security flaws. We will cover how Mend SAST is designed for speed and accuracy, finding critical vulnerabilities like the OWASP Top 10 within the developer's workflow and providing the context needed for a fast, effective fix.",
+                objectives: [
+                    "Define SAST and explain why it is a crucial layer of a complete AppSec strategy.",
+                    "Identify common vulnerability types that SAST can detect, such as SQL Injection and Cross-Site Scripting (XSS).",
+                    "Describe how Mend SAST's incremental scanning provides fast feedback in pull requests.",
+                    "Explain how data flow analysis helps pinpoint the root cause of a vulnerability.",
+                    "Understand the process of triaging and remediating SAST findings."
+                ],
+                topics: [
+                    {
+                        title: "What is Static Application Security Testing (SAST)?",
+                        content: "SAST, often called 'white-box' testing, is a testing methodology that analyzes an application's source code for security vulnerabilities **without executing the program**. It works by modeling the application's data flows to find code patterns that could lead to a security exploit. This allows you to find and fix flaws before the code is even compiled, making it a perfect fit for a 'Shift Left' security approach."
+                    },
+                    {
+                        title: "Common Vulnerabilities Found by SAST",
+                        content: "Mend SAST is effective at finding many of the most critical web application security risks, including:<ul><li>**Injection Flaws (e.g., SQL Injection):** Occurs when untrusted user input is passed directly to a database query.</li><li>**Cross-Site Scripting (XSS):** Happens when an application includes untrusted data in a new web page without proper validation.</li><li>**Path Traversal:** Allows an attacker to read files on the server that they should not have access to.</li><li>**Insecure Deserialization:** Can lead to remote code execution when untrusted data is used to abuse an application's logic.</li></ul>"
+                    },
+                    {
+                        title: "Mend SAST: Speed and Accuracy for Developers",
+                        content: "Traditional SAST tools are often slow and produce a high number of false positives, leading to developer frustration. Mend SAST is different:<ul><li>**Incremental Scans:** After an initial full scan, Mend only scans the code that has changed in a pull request. This means developers get feedback in minutes, not hours.</li><li>**High Accuracy:** Mend's scanning engine is tuned to reduce false positives, ensuring that developers can trust the results and focus on fixing real issues.</li></ul>"
+                    },
+                    {
+                        title: "Understanding the Data Flow",
+                        content: "A key feature of Mend SAST is its ability to trace a vulnerability from its source to its sink.<ul><li>**Source:** The point where untrusted data enters the application (e.g., an API endpoint, a web form).</li><li>**Sink:** The dangerous function where that untrusted data is used, leading to a vulnerability (e.g., a database query, rendering HTML).</li></ul>By showing the full data flow, Mend helps developers quickly understand the root cause and confirm that a vulnerability is real and exploitable."
+                    },
+                    {
+                        title: "Remediation and In-Context Training",
+                        content: "Mend provides developers with everything they need to fix a finding directly in their workflow. The results shown in a pull request include:<ul><li>**Precise Location:** The exact file and line number of the vulnerability.</li><li>**Code Examples:** Clear examples of both the insecure and secure way to write the code.</li><li>**Training Links:** Direct links to short, focused training modules that explain the vulnerability type in more detail.</li></ul>"
+                    }
+                ],
+                scenario: {
+                    title: "Fixing an SQL Injection Flaw",
+                    steps: [
+                        "A developer writes a new function to look up a user by their ID, which is passed as a URL parameter. The code concatenates this user ID directly into an SQL query string.",
+                        "The developer opens a pull request, which triggers an incremental Mend SAST scan.",
+                        "The scan takes two minutes and flags a high-severity SQL Injection vulnerability.",
+                        "The report in the pull request check shows:<ul><li>**Source:** The `userId` parameter from the `GET /api/users/{userId}` endpoint.</li><li>**Data Flow:** It traces how `userId` is passed through two internal functions without being sanitized.</li><li>**Sink:** The `executeQuery` function where the raw `userId` is used in the database query.</li></ul>",
+                        "The report provides a code snippet showing how to fix this using a parameterized query (prepared statement). The developer uses this guidance to fix the code, pushes the change, and the subsequent scan passes."
+                    ]
+                },
+                quiz: {
+                    questions: [
+                        {
+                            question: "What is the 'sink' in a data flow analysis?",
+                            options: ["The entry point for user input.", "A third-party library with a known vulnerability.", "The dangerous function where untrusted data is used, causing a vulnerability."],
+                            answer: 2
+                        },
+                        {
+                            question: "Why are Mend SAST's incremental scans valuable for developers?",
+                            options: ["They scan the entire codebase every time to be thorough.", "They provide very fast feedback by only scanning the code that has changed in a pull request.", "They can only be run manually."],
+                            answer: 1
+                        },
+                        {
+                            question: "SAST is known as 'white-box' testing because:",
+                            options: ["It requires access to the application's source code to perform analysis.", "It tests the application from the outside, like a hacker would.", "It only works on applications with a graphical user interface."],
+                            answer: 0
+                        }
+                    ]
+                },
+                nextModule: 4
+            },
+            {
+                id: 4,
+                title: "Securing Infrastructure as Code (IaC)",
+                overview: "This module introduces the security discipline for Infrastructure as Code (IaC), a foundational practice for modern cloud-native development. We will explore how misconfigurations in IaC files can lead to serious security breaches and how Mend for IaC helps you find and fix these issues before your infrastructure is ever deployed.",
+                objectives: [
+                    "Define IaC and identify common IaC technologies like Terraform and CloudFormation.",
+                    "Explain why securing IaC is critical for preventing cloud security misconfigurations.",
+                    "Identify common types of IaC vulnerabilities, such as public S3 buckets or overly permissive firewall rules.",
+                    "Describe how Mend for IaC integrates into the developer workflow to provide early feedback.",
+                    "Understand how IaC scanning 'shifts left' on cloud security."
+                ],
+                topics: [
+                    {
+                        title: "What is Infrastructure as Code (IaC)?",
+                        content: "Infrastructure as Code is the practice of managing and provisioning infrastructure (like servers, databases, and networks) through machine-readable definition files, rather than through manual configuration or interactive tools. It's a core component of DevOps that allows teams to build, change, and manage infrastructure in a safe, consistent, and repeatable way. Common IaC frameworks include:<ul><li>**Terraform** (by HashiCorp)</li><li>**AWS CloudFormation**</li><li>**Azure Resource Manager (ARM) Templates**</li><li>**Kubernetes YAML**</li></ul>"
+                    },
+                    {
+                        title: "The Risk: Cloud Misconfigurations",
+                        content: "While IaC provides massive benefits in speed and consistency, a simple mistake in a configuration file can have severe security consequences once deployed. Human error is a leading cause of cloud data breaches. Common misconfigurations include:<ul><li>**Publicly Exposed Storage:** S3 buckets or Azure blobs that are accidentally made readable by the entire internet.</li><li>**Overly Permissive IAM Roles:** Giving applications or users far more permissions than they need to function.</li><li>**Unrestricted Network Access:** Security groups or firewall rules that allow traffic from any IP address (`0.0.0.0/0`) to a sensitive port.</li><li>**Missing Encryption:** Not enabling encryption for data at rest or in transit.</li></ul>"
+                    },
+                    {
+                        title: "How Mend for IaC Works",
+                        content: "Mend for IaC is a static analysis tool that scans your configuration files for thousands of known misconfiguration risks. It works directly within your repository and CI/CD pipeline, treating your infrastructure code just like your application code. The process is simple:<ul><li>A developer commits an IaC file (e.g., `main.tf`).</li><li>Mend automatically scans the file as part of a pull request check.</li><li>The scan checks the configuration against a massive database of security best practices and compliance standards.</li><li>If a misconfiguration is found, Mend flags it directly in the pull request with details on how to fix it.</li></ul>"
+                    },
+                    {
+                        title: "Shifting Cloud Security Left",
+                        content: "Traditionally, cloud misconfigurations are found *after* they are deployed, using cloud security posture management (CSPM) tools. This is a reactive approach. IaC scanning is proactive. By finding the issue in the code *before* it's deployed, you prevent the risk from ever materializing in your cloud environment. This is much faster, cheaper, and more secure."
+                    }
+                ],
+                scenario: {
+                    title: "Preventing a Public S3 Bucket",
+                    steps: [
+                        "An engineer is provisioning new cloud infrastructure for a project and writes a Terraform file to create an S3 bucket for storing sensitive user documents.",
+                        "The engineer forgets to specify an `acl` or `block_public_acls` property, which could result in the bucket defaulting to a public setting.",
+                        "The engineer opens a pull request with the new `.tf` file. A Mend for IaC scan is automatically triggered.",
+                        "Before the PR can be merged, the Mend scan fails. It posts a comment highlighting the exact line in the Terraform file and reports a critical finding: 'S3 bucket may be publicly accessible.'",
+                        "The report includes a link to documentation explaining the risk and provides a corrected code snippet showing how to explicitly set the bucket to private. The engineer applies the fix, and the new scan passes, allowing the infrastructure to be deployed securely."
+                    ]
+                },
+                quiz: {
+                    questions: [
+                        {
+                            question: "Which of the following is a common cloud misconfiguration that IaC scanning can prevent?",
+                            options: ["A SQL Injection vulnerability in a Java application.", "An S3 bucket configured to allow public read access.", "Using an open-source library with an outdated, vulnerable version."],
+                            answer: 1
+                        },
+                        {
+                            question: "What is the primary advantage of scanning IaC files over using a traditional CSPM tool?",
+                            options: ["IaC scanning finds issues proactively before infrastructure is deployed, while CSPM is reactive.", "IaC scanning requires the application to be running.", "IaC scanning can only be done manually."],
+                            answer: 0
+                        },
+                        {
+                            question: "Which of the following is NOT an example of an Infrastructure as Code technology?",
+                            options: ["Terraform", "AWS CloudFormation", "JavaScript"],
+                            answer: 2
+                        }
+                    ]
+                },
+                nextModule: 5
+            },
+            {
+                id: 5,
+                title: "The Power of a Unified AppSec Platform",
+                overview: "This capstone module brings together all the concepts from the previous lessons—SCA, SAST, and IaC security. We will demonstrate why a unified platform that combines these capabilities is far more effective than using separate, siloed tools. You will learn how the Mend AI Native AppSec Platform provides a single, correlated view of risk across your entire application portfolio.",
+                objectives: [
+                    "Explain the main disadvantages of using separate, disconnected security scanning tools.",
+                    "Describe the benefits of a unified platform, including correlated findings and consistent policies.",
+                    "Understand how Mend provides an application-centric view of risk.",
+                    "Explain how a unified platform streamlines both developer workflows and security team oversight.",
+                    "Feel confident in your understanding of Mend's holistic approach to Application Security."
+                ],
+                topics: [
+                    {
+                        title: "Beyond Silos: The Problem with Disconnected Tools",
+                        content: "Many organizations approach AppSec by purchasing separate 'best-of-breed' tools for SCA, SAST, and other security tasks. This often leads to significant challenges:<ul><li>**Fragmented Visibility:** Developers and security teams must jump between different UIs and dashboards to see the full picture of risk.</li><li>**Alert Fatigue:** Each tool has its own alerting system, often with different severity ratings and formats, making prioritization nearly impossible.</li><li>**Inconsistent Policies:** It's difficult to enforce a consistent security standard (e.g., 'no critical vulnerabilities in production') when policies must be managed separately in each tool.</li><li>**Developer Friction:** Forcing developers to learn and interact with multiple security tools in their pipeline creates complexity and slows them down.</li></ul>"
+                    },
+                    {
+                        title: "The Mend Solution: A Single, Unified Platform",
+                        content: "The Mend AI Native AppSec Platform was built from the ground up to solve these problems. It combines SCA, SAST, IaC scanning, container security, and more into a single, cohesive experience. The core benefits are:<ul><li>**Single Source of Truth:** One dashboard to see all security risks across all applications.</li><li>**Correlated Risk:** Mend understands the relationships between findings. A vulnerability in an open-source library (SCA) that is being called by a flaw in your custom code (SAST) represents a much higher, correlated risk.</li><li>**Unified Policies:** Create one set of policies that applies across your entire software development lifecycle. Fail a build if *any* critical vulnerability is found, whether it's in open source, custom code, or an IaC file.</li></ul>"
+                    },
+                    {
+                        title: "The Application-Centric View",
+                        content: "Instead of thinking about a list of vulnerabilities, Mend thinks about the health of your **applications**. The platform automatically groups repositories and projects into logical applications. This allows you to answer the most important question: 'What is the overall risk level of my `Payments-API` application?' You can see at a glance if the risk is coming from its dependencies, its own code, or its deployment configuration."
+                    },
+                    {
+                        title: "Streamlining Workflows for Everyone",
+                        content: "A unified platform benefits the entire organization:<ul><li>**For Developers:** All security feedback appears in one place (the pull request) with a consistent format. They don't need to become experts in five different security tools. Remediation is clearer and faster.</li><li>**For Security Teams:** They get true visibility over the organization's security posture from a single pane of glass. They can create meaningful reports, track remediation progress, and enforce governance without chasing down data from multiple systems.</li></ul>"
+                    }
+                ],
+                scenario: {
+                    title: "A Day in the Life with a Unified Platform",
+                    steps: [
+                        "The Application: A team is responsible for a critical e-commerce microservice. The application is built using Java, relies on dozens of open-source libraries, is defined by Terraform files, and is deployed as a Docker container.",
+                        "The Pull Request: A developer submits a PR that updates a Java function, adds a new Maven dependency, and modifies the Terraform file to open a new network port.",
+                        "The Unified Scan: A single Mend workflow is triggered in the CI pipeline. It seamlessly runs SCA, SAST, and IaC scans.",
+                        "Consolidated Feedback: The developer sees one consolidated check in their GitHub PR. The check has failed, and the report shows three distinct issues: [SCA Finding]: The new Maven dependency has a `High` severity vulnerability. [SAST Finding]: The new Java code has a `Medium` severity logging flaw. [IaC Finding]: The new port in the Terraform file is exposed to the entire internet (`0.0.0.0/0`), a `Critical` misconfiguration.",
+                        "Efficient Triage: The developer can see all the required fixes in one place. The security team sees the risk status of the e-commerce application updated in their central Mend dashboard, reflecting all three new findings. They can prioritize the `Critical` IaC issue for immediate attention."
+                    ]
+                },
+                quiz: {
+                    questions: [
+                        {
+                            question: "What is a primary disadvantage of using separate, non-integrated AppSec tools?",
+                            options: ["They are generally more affordable.", "They provide fragmented visibility and can lead to alert fatigue.", "They are easier for developers to use."],
+                            answer: 1
+                        },
+                        {
+                            question: "The 'application-centric view' in Mend means that:",
+                            options: ["It only scans applications, not libraries.", "It groups all types of security findings (SCA, SAST, IaC) under the specific application they belong to.", "You must manually define every application before scanning."],
+                            answer: 1
+                        },
+                        {
+                            question: "How does a unified platform benefit a security team?",
+                            options: ["It provides a single dashboard for visibility, reporting, and policy enforcement across the organization.", "It replaces the need for developers to fix vulnerabilities.", "It sends all security alerts directly to the CEO."],
+                            answer: 0
+                        }
+                    ]
+                },
+                nextModule: 6
+            },
+            {
+                id: 6,
+                title: "Securing AI-Powered Applications with MendAI",
+                overview: "This module introduces MendAI, Mend's solution for securing your AI-powered applications. We will cover how MendAI discovers your AI components and models, assesses their risks, and protects against behavioral risks like prompt injection and data leakage.",
+                objectives: [
+                    "Define the new security challenges introduced by using AI models in applications.",
+                    "Explain how MendAI discovers 'Shadow AI' components and models in a codebase.",
+                    "Describe the types of risks MendAI identifies in AI models (e.g., unsafe Hugging Face models).",
+                    "Understand the concept of 'Behavioral Risk' testing (Red Teaming) and the role of Probes.",
+                    "Identify common behavioral risks like Jailbreaking, PII leakage, and RAG Poisoning."
+                ],
+                topics: [
+                    {
+                        title: "The New AI-Powered Attack Surface",
+                        content: "Modern applications don't just use open-source *code*; they use open-source *models*. This creates a new supply chain risk. Models can be unsafe, malicious, or have academic vulnerabilities. Furthermore, the *interaction* with models (via prompts) opens up new 'behavioral' attack vectors that traditional scanners cannot find."
+                    },
+                    {
+                        title: "Discovering Your AI Inventory ('Shadow AI')",
+                        content: "You can't secure what you can't see. The Mend CLI scans your code to find all AI-related technologies, such as calls to inference providers (like OpenAI) and the use of local models (like from Hugging Face). This inventory of 'Shadow AI' is crucial for risk management and is populated in the AI Inventory Report."
+                    },
+                    {
+                        title: "Analyzing AI Model Risk",
+                        content: "Once discovered, MendAI checks your AI components against its risk database. It can identify 'Hugging Face Unsafe Models' and other academic security findings, giving you a clear picture of the risks *in* your AI supply chain before they are exploited."
+                    },
+                    {
+                        title: "Behavioral Risk Testing (Red Teaming)",
+                        content: "This feature tests how your AI application *behaves* when faced with malicious or unexpected inputs. MendAI 'Red Teams' your AI application by sending a catalog of automated 'Probes' to your application's API endpoint. This is critical for finding flaws that are not in the code or model itself, but in the *interaction* between them."
+                    },
+                    {
+                        title: "Understanding the Probe Catalog",
+                        content: "MendAI tests for a wide range of behavioral flaws using its probe catalog, including:<ul><li>**Jailbreak:** Tricking the model into violating its own safety policies.</li><li>**PII/Data Exfiltration:** Convincing the model to reveal sensitive personal information.</li><li>**RAG Poisoning:** (If using Retrieval-Augmented Generation) Tricking the model with poisoned data from its knowledge base.</li><li>**Harmful Content, Bias, Profanity:** Checking if the model produces inappropriate or biased responses.</li><li>**Prompt Injection / Context Leakage:** Getting the model to reveal its system prompt or other sensitive contextual data.</li></ul>"
+                    }
+                ],
+                scenario: {
+                    title: "Securing an AI Chatbot",
+                    steps: [
+                        "Application: A developer builds a new customer service chatbot that uses a popular Hugging Face model and is connected to a RAG knowledge base of internal documents.",
+                        "MendAI Scan: The developer runs a Mend CLI scan.",
+                        "Inventory & Model Risk: The scan immediately flags two issues: [AI Inventory]: It discovers the 'Shadow AI' Hugging Face model (`model-xyz-1.0`). [AI Model Risk]: It reports that `model-xyz-1.0` is listed as an 'Unsafe Model' on Hugging Face due to a known vulnerability.",
+                        "Behavioral Risk Scan: The team then configures a MendAI 'Target' (their chatbot's API) and runs a 'Test Run' using the behavioral probes.",
+                        "Probe Findings: The test fails. The report shows: [Jailbreak]: A probe successfully tricked the bot into giving instructions for a harmful activity. [Context Leakage]: A separate probe convinced the bot to output the entire raw text of a sensitive internal document from its RAG database.",
+                        "Remediation: The team now has actionable data. They must replace the unsafe model (Supply Chain risk) and add better prompt sanitization and output filtering to prevent the behavioral risks."
+                    ]
+                },
+                quiz: {
+                    questions: [
+                        {
+                            question: "What is 'Shadow AI' in the context of MendAI?",
+                            options: ["A secure AI assistant for developers.", "AI models and technologies used in a codebase that are not officially tracked or managed.", "An AI-generated code patch."],
+                            answer: 1
+                        },
+                        {
+                            question: "MendAI's 'Behavioral Risk Testing' uses 'Probes' to simulate what?",
+                            options: ["Attacks on the CI/CD pipeline.", "Malicious or testing prompts to see how an AI application behaves (e.g., Jailbreaking, PII leaks).", "Vulnerabilities in open-source code libraries."],
+                            answer: 1
+                        },
+                        {
+                            question: "Identifying an 'Unsafe Hugging Face Model' is an example of what type of security?",
+                            options: ["Securing the AI Supply Chain.", "Behavioral Risk (Red Teaming).", "Static Application Security Testing (SAST)."],
+                            answer: 0
+                        }
+                    ]
+                },
+                nextModule: null
+            }
+        ];
+
+        const mainContent = document.getElementById('main-content');
+        const moduleNav = document.getElementById('module-nav');
+
+        function renderModule(moduleId) {
+            const moduleData = modulesData.find(m => m.id === moduleId);
+            if (!moduleData) return;
+
+            let topicsHtml = moduleData.topics.map(topic => `
+                <div class="bg-white border border-stone-200 rounded-lg p-6">
+                    <h4 class="text-lg font-semibold text-slate-900 mb-2">${topic.title}</h4>
+                    <div class="text-slate-600 leading-relaxed">${topic.content}</div>
+                </div>
+            `).join('');
+
+            let objectivesHtml = moduleData.objectives.map(obj => `
+                <li class="flex items-start">
+                    <span class="text-teal-500 mr-3 mt-1 flex-shrink-0">✓</span>
+                    <span>${obj}</span>
+                </li>
+            `).join('');
+            
+            let scenarioStepsHtml = moduleData.scenario.steps.map((step, index) => `
+                <li class="flex items-start">
+                    <div class="flex-shrink-0 w-8 h-8 bg-teal-500 text-white rounded-full flex items-center justify-center font-bold mr-4">${index + 1}</div>
+                    <p class="flex-1 mt-1">${step.replace(/\[([^\]]+)\]/g, '<strong class=\"text-teal-700\">[$1]</strong>')}</p>
+                </li>
+            `).join('');
+
+            let quizQuestionsHtml = moduleData.quiz.questions.map((q, index) => `
+                <fieldset class="mb-6">
+                    <legend class="font-semibold text-slate-800 mb-2">${index + 1}. ${q.question}</legend>
+                    <div class="space-y-3">
+                        ${q.options.map((opt, optIndex) => `
+                            <label class="quiz-option flex items-center p-4 border border-stone-300 rounded-lg cursor-pointer transition-all duration-200 hover:bg-stone-100 border-l-4 border-l-transparent">
+                                <input type="radio" name="q${moduleData.id}-${index}" value="${optIndex}" class="h-4 w-4 text-teal-600 border-stone-400 focus:ring-teal-500">
+                                <span class="ml-4 text-slate-700">${opt}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </fieldset>
+            `).join('');
+            
+            mainContent.innerHTML = `
+                <div class="module-content max-w-4xl mx-auto">
+                    <h1 class="text-4xl font-bold text-slate-900 mb-4">Module ${moduleData.id}: ${moduleData.title}</h1>
+                    <p class="text-lg text-slate-600 mb-12">${moduleData.overview}</p>
+
+                    <div class="mb-12">
+                        <h3 class="text-2xl font-semibold text-slate-900 mb-6 border-b pb-3">Learning Objectives</h3>
+                        <ul classall-objectives class="space-y-3 text-slate-700" style="list-style-type: none; padding-left: 0;">${objectivesHtml}</ul>
+                    </div>
+                    
+                    <div class="mb-12">
+                        <h3 class="text-2xl font-semibold text-slate-900 mb-6 border-b pb-3">Key Topics</h3>
+                        <div class="space-y-6">${topicsHtml}</div>
+                    </div>
+
+                    <div class="mb-12 bg-teal-50 border-2 border-dashed border-teal-200 rounded-lg p-8">
+                        <h3 class="text-2xl font-semibold text-teal-800 mb-6">${moduleData.scenario.title}</h3>
+                        <ul class="space-y-6" style="list-style-type: none; padding-left: 0;">${scenarioStepsHtml}</ul>
+                    </div>
+
+                    <div id="quiz-${moduleData.id}" class="bg-white border border-stone-200 rounded-lg p-8">
+                        <h3 class="text-2xl font-semibold text-slate-900 mb-8 border-b pb-3">Knowledge Check</h3>
+                        ${quizQuestionsHtml}
+                        <button id="quiz-btn-${moduleData.id}" onclick="checkQuiz(${moduleData.id})" class="mt-4 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200 w-full md:w-auto">Check Answers</button>
+                        <div id="quiz-result-${moduleData.id}" class="mt-6"></div>
+                    </div>
+                </div>
+            `;
+            
+            fixListStyles();
+            updateNav(moduleId);
+        }
+        
+        function fixListStyles() {
+            const content = document.getElementById('main-content');
+            content.querySelectorAll('.all-objectives').forEach(ul => {
+                ul.style.listStyleType = 'none';
+                ul.style.paddingLeft = '0';
+            });
+            content.querySelectorAll('.module-content ul:not(.all-objectives)').forEach(ul => {
+                ul.style.listStyleType = 'disc';
+                ul.style.paddingLeft = '1.5rem';
+                ul.style.marginLeft = '1rem';
+            });
+            content.querySelectorAll('.module-content li').forEach(li => {
+                 li.style.marginBottom = '0.5rem';
+            });
+        }
+
+        function updateNav(activeModuleId) {
+            const navLinks = moduleNav.querySelectorAll('a');
+            navLinks.forEach(link => {
+                if (parseInt(link.dataset.moduleId) === activeModuleId) {
+                    link.classList.add('bg-teal-50', 'text-teal-700', 'font-bold');
+                    link.classList.remove('text-slate-600', 'hover:bg-stone-100');
+                } else {
+                    link.classList.remove('bg-teal-50', 'text-teal-700', 'font-bold');
+                    link.classList.add('text-slate-600', 'hover:bg-stone-100');
+                }
+            });
+        }
+        
+        function checkQuiz(moduleId) {
+            const moduleData = modulesData.find(m => m.id === moduleId);
+            const quizContainer = document.getElementById(`quiz-${moduleId}`);
+            const questions = moduleData.quiz.questions;
+            let allCorrect = true;
+            
+            questions.forEach((q, qIndex) => {
+                const selected = quizContainer.querySelector(`input[name="q${moduleId}-${qIndex}"]:checked`);
+                if(selected) {
+                    const selectedValue = parseInt(selected.value);
+                    const correctValue = q.answer;
+                    const optionLabel = selected.parentElement;
+                    
+                    optionLabel.classList.remove('incorrect', 'correct');
+
+                    if (selectedValue === correctValue) {
+                        optionLabel.classList.add('correct');
+                    } else {
+                        optionLabel.classList.add('incorrect');
+                        allCorrect = false;
+                        const correctLabel = quizContainer.querySelector(`input[name="q${moduleId}-${qIndex}"][value="${correctValue}"]`).parentElement;
+                        correctLabel.classList.add('correct');
+                    }
+                } else {
+                    allCorrect = false;
+                }
+            });
+
+            const allRadios = quizContainer.querySelectorAll('input[type="radio"]');
+            allRadios.forEach(radio => radio.disabled = true);
+            
+            const button = quizContainer.querySelector(`#quiz-btn-${moduleId}`);
+            button.disabled = true;
+            button.textContent = 'Results Submitted';
+            button.classList.add('opacity-50', 'cursor-not-allowed');
+
+            const resultContainer = quizContainer.querySelector(`#quiz-result-${moduleId}`);
+            if (allCorrect) {
+                 let nextModuleButton = '';
+                if (moduleData.nextModule) {
+                    nextModuleButton = `<button onclick="renderModule(${moduleData.nextModule})" class="mt-4 px-6 py-3 bg-teal-600 text-white font-semibold rounded-lg hover:bg-teal-700 transition-colors duration-200 w-full md:w-auto">Go to Next Module →</button>`;
+                } else {
+                    nextModuleButton = `<p class="mt-4 text-lg font-semibold text-teal-700">Congratulations, you have completed the learning track!</p>`;
+                }
+                resultContainer.innerHTML = `
+                    <p class="text-lg font-semibold text-green-600">All answers are correct! Great job!</p>
+                    ${nextModuleButton}
+                `;
+            } else {
+                 resultContainer.innerHTML = `<p class="text-lg font-semibold text-red-600">Not quite! Review the correct answers above and feel free to try again by reloading.</p>`;
+            }
+        }
+
+        function initialize() {
+            modulesData.forEach(module => {
+                const link = document.createElement('a');
+                link.href = '#';
+                link.dataset.moduleId = module.id;
+                link.className = 'block p-3 rounded-lg text-slate-600 hover:bg-stone-100 transition-colors duration-200';
+                link.innerHTML = `<span class="font-medium">Module ${module.id}:</span> ${module.title.split(':')[0]}`;
+                link.onclick = (e) => {
+                    e.preventDefault();
+                    renderModule(module.id);
+                };
+                moduleNav.appendChild(link);
+            });
+            renderModule(1);
+        }
+
+        document.addEventListener('DOMContentLoaded', initialize);
+    </script>
+</body>
+</html>
+
