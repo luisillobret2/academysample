@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certifications - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="index.html" class="logo"><div class="logo-icon">M</div> Mend <span>Learn</span></a>
+            <ul class="nav-main">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="learning-paths.html">Learning Paths</a></li>
+                <li><a href="certifications.html" class="active">Certifications</a></li>
+                <li><a href="labs.html">Labs</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="leaderboard.html">Leaderboard</a></li>
+                <li><a href="ai-coach.html">AI Coach</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-search">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <input type="text" placeholder="Search courses, labs...">
+                </div>
+                <div class="nav-xp">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    2,450 XP
+                </div>
+                <a href="profile.html" class="nav-avatar">JD</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+    </header>
+
+    <section class="hero" style="padding: 36px 0;">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Certification <span class="accent">Program</span></h1>
+                <p>Six levels of professional credentials. Earn digital badges, unlock partner benefits, and demonstrate expertise to customers.</p>
+            </div>
+        </div>
+    </section>
+
+    <main class="page-content">
+        <div class="container">
+
+            <!-- Certification Ladder Visual -->
+            <div class="section">
+                <div class="section-header">
+                    <h2>Your Certification Journey</h2>
+                </div>
+
+                <!-- Progress Overview -->
+                <div class="card-flat mb-24" style="display: flex; gap: 32px; align-items: center; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <h3 style="margin-bottom: 8px;">1 of 6 Certifications Earned</h3>
+                        <p class="text-sm text-muted">You're on track for the Professional certification. Complete the remaining prerequisites to unlock the exam.</p>
+                    </div>
+                    <div class="stat-row" style="gap: 32px;">
+                        <div class="stat-item">
+                            <div class="stat-value accent">1</div>
+                            <div class="stat-label">Earned</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" style="color: var(--color-secondary);">1</div>
+                            <div class="stat-label">In Progress</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">4</div>
+                            <div class="stat-label">Available</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certification Cards -->
+            <div class="section">
+                <div class="section-header">
+                    <h2>All Certifications</h2>
+                </div>
+
+                <div class="grid-3">
+                    <!-- Associate -->
+                    <div class="cert-card associate">
+                        <div class="cert-badge-icon">&#128171;</div>
+                        <div class="cert-level">Level 1</div>
+                        <h3>Certified Associate</h3>
+                        <p>Universal entry point covering platform fundamentals, market positioning, and partner program knowledge.</p>
+                        <div class="cert-details">
+                            <span>&#128339; 60 min exam | 50 questions</span>
+                            <span>&#127919; 70% passing score</span>
+                            <span>&#128187; Online, unproctored</span>
+                            <span>&#128260; Renew every 12 months</span>
+                            <span>&#128176; Free for all partners</span>
+                        </div>
+                        <span class="badge badge-green" style="margin-bottom: 16px;">Earned - June 2025</span>
+                        <br>
+                        <a href="#" class="btn btn-secondary btn-sm" style="width: 100%;">View Certificate</a>
+                    </div>
+
+                    <!-- Professional -->
+                    <div class="cert-card professional">
+                        <div class="cert-badge-icon">&#9881;</div>
+                        <div class="cert-level">Level 2</div>
+                        <h3>Certified Professional</h3>
+                        <p>Validates hands-on configuration, CI/CD integration, vulnerability management, and administration skills.</p>
+                        <div class="cert-details">
+                            <span>&#128339; 90 min exam | 60 questions</span>
+                            <span>&#127919; 75% passing score</span>
+                            <span>&#128187; Online, proctored</span>
+                            <span>&#128260; Renew every 18 months</span>
+                            <span>&#128176; Free for Silver+ partners</span>
+                        </div>
+                        <div style="margin-bottom: 16px;">
+                            <div class="text-sm text-muted mb-4">Prerequisites: 68% complete</div>
+                            <div class="progress-bar"><div class="fill" style="width: 68%;"></div></div>
+                        </div>
+                        <a href="#" class="btn btn-primary btn-sm" style="width: 100%;">Continue Preparation</a>
+                    </div>
+
+                    <!-- Expert -->
+                    <div class="cert-card expert">
+                        <div class="cert-badge-icon">&#11088;</div>
+                        <div class="cert-level">Level 3</div>
+                        <h3>Certified Expert</h3>
+                        <p>Enterprise architecture, advanced integration, governance, migration strategies. Includes lab-based practical assessment.</p>
+                        <div class="cert-details">
+                            <span>&#128339; 120 min | Questions + 2 labs</span>
+                            <span>&#127919; 80% passing score</span>
+                            <span>&#128187; Online, proctored + live labs</span>
+                            <span>&#128260; Renew every 24 months</span>
+                            <span>&#128176; Free for Gold+ partners</span>
+                        </div>
+                        <span class="badge badge-purple" style="margin-bottom: 16px;">Requires: Professional</span>
+                        <br>
+                        <span class="btn btn-secondary btn-sm" style="width: 100%; opacity: 0.5;">Locked</span>
+                    </div>
+
+                    <!-- Partner Technical Specialist -->
+                    <div class="cert-card tech-specialist">
+                        <div class="cert-badge-icon">&#128295;</div>
+                        <div class="cert-level">Specialist</div>
+                        <h3>Partner Technical Specialist</h3>
+                        <p>The premier SE credential. Knowledge exam + 3 practical labs + recorded demo evaluation by Mend.io SE team.</p>
+                        <div class="cert-details">
+                            <span>&#128339; 150 min total</span>
+                            <span>&#127919; 80% knowledge + Pass all labs + Pass demo</span>
+                            <span>&#128187; Mixed: proctored + self-paced</span>
+                            <span>&#128260; Renew every 24 months</span>
+                            <span>&#128176; Free for all partners</span>
+                        </div>
+                        <span class="badge badge-teal" style="margin-bottom: 16px;">Requires: Professional + SE Track</span>
+                        <br>
+                        <span class="btn btn-secondary btn-sm" style="width: 100%; opacity: 0.5;">Locked</span>
+                    </div>
+
+                    <!-- Partner Sales Specialist -->
+                    <div class="cert-card sales-specialist">
+                        <div class="cert-badge-icon">&#129309;</div>
+                        <div class="cert-level">Specialist</div>
+                        <h3>Partner Sales Specialist</h3>
+                        <p>Sales-specific credential validating pitch delivery, objection handling, competitive positioning, and deal management.</p>
+                        <div class="cert-details">
+                            <span>&#128339; 75 min exam</span>
+                            <span>&#127919; 75% passing score</span>
+                            <span>&#128187; Online + AI roleplay evaluation</span>
+                            <span>&#128260; Renew every 12 months</span>
+                            <span>&#128176; Free for all partners</span>
+                        </div>
+                        <span class="badge badge-orange" style="margin-bottom: 16px;">Requires: Associate + Sales Track</span>
+                        <br>
+                        <a href="#" class="btn btn-outline btn-sm" style="width: 100%;">View Requirements</a>
+                    </div>
+
+                    <!-- Master Architect -->
+                    <div class="cert-card master">
+                        <div class="cert-badge-icon">&#128081;</div>
+                        <div class="cert-level">Capstone</div>
+                        <h3>Master Architect</h3>
+                        <p>Elite credential for top partner architects. Design challenge + live defense panel. Fewer than 50 globally.</p>
+                        <div class="cert-details">
+                            <span>&#128339; 4 hrs (2 sessions)</span>
+                            <span>&#127919; Panel consensus</span>
+                            <span>&#128187; Take-home design + live defense</span>
+                            <span>&#128260; Renew every 24 months</span>
+                            <span>&#128176; Invitation only</span>
+                        </div>
+                        <span class="badge badge-gold" style="margin-bottom: 16px;">Requires: Expert + Technical Specialist</span>
+                        <br>
+                        <span class="btn btn-secondary btn-sm" style="width: 100%; opacity: 0.5;">By Invitation</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certification Benefits -->
+            <div class="section">
+                <div class="section-header">
+                    <h2>Why Get Certified?</h2>
+                </div>
+                <div class="grid-4">
+                    <div class="card-flat" style="text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: 12px;">&#128200;</div>
+                        <h4>Better Margins</h4>
+                        <p class="text-sm text-muted" style="margin-top: 8px;">Certified partners earn +2-5% additional deal registration discount</p>
+                    </div>
+                    <div class="card-flat" style="text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: 12px;">&#127937;</div>
+                        <h4>Priority Leads</h4>
+                        <p class="text-sm text-muted" style="margin-top: 8px;">Certified reps receive priority lead routing from Mend.io</p>
+                    </div>
+                    <div class="card-flat" style="text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: 12px;">&#128101;</div>
+                        <h4>Customer Trust</h4>
+                        <p class="text-sm text-muted" style="margin-top: 8px;">Credly badges on LinkedIn signal verified expertise to prospects</p>
+                    </div>
+                    <div class="card-flat" style="text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: 12px;">&#127942;</div>
+                        <h4>Partner Tier</h4>
+                        <p class="text-sm text-muted" style="margin-top: 8px;">Certifications count toward Silver, Gold, Platinum, and Diamond tiers</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <span>&copy; 2025 Mend.io. All rights reserved.</span>
+                <span><a href="#">Privacy</a> &middot; <a href="#">Terms</a></span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="index.html" class="logo"><div class="logo-icon">M</div> Mend <span>Learn</span></a>
+            <ul class="nav-main">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="learning-paths.html">Learning Paths</a></li>
+                <li><a href="certifications.html">Certifications</a></li>
+                <li><a href="labs.html">Labs</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="leaderboard.html">Leaderboard</a></li>
+                <li><a href="ai-coach.html">AI Coach</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-search">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <input type="text" placeholder="Search courses, labs...">
+                </div>
+                <div class="nav-xp">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    2,450 XP
+                </div>
+                <a href="profile.html" class="nav-avatar" style="box-shadow: 0 0 0 2px var(--color-accent);">JD</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+    </header>
+
+    <main class="page-content">
+        <div class="container">
+
+            <!-- Profile Header -->
+            <div class="profile-header">
+                <div class="profile-avatar">JD</div>
+                <div class="profile-info">
+                    <h1>Jane Doe</h1>
+                    <p>Sales Engineer &middot; Acme Security (VAR) &middot; Silver Partner</p>
+                    <div class="profile-badges">
+                        <span class="badge badge-green">Associate Certified</span>
+                        <span class="badge badge-accent">Level 5 &middot; Specialist</span>
+                        <span class="badge badge-orange">14-Day Streak</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="section">
+                <div class="grid-4" style="margin-bottom: 32px;">
+                    <div class="card-flat" style="text-align: center;">
+                        <div class="stat-value accent">2,450</div>
+                        <div class="stat-label">Total XP</div>
+                    </div>
+                    <div class="card-flat" style="text-align: center;">
+                        <div class="stat-value accent">12</div>
+                        <div class="stat-label">Modules Done</div>
+                    </div>
+                    <div class="card-flat" style="text-align: center;">
+                        <div class="stat-value accent">3</div>
+                        <div class="stat-label">Labs Done</div>
+                    </div>
+                    <div class="card-flat" style="text-align: center;">
+                        <div class="stat-value accent">#23</div>
+                        <div class="stat-label">Rank</div>
+                    </div>
+                </div>
+
+                <!-- XP to Next Level -->
+                <div class="card-flat mb-24">
+                    <div class="flex justify-between items-center mb-8">
+                        <div>
+                            <h4>Level 5: Specialist</h4>
+                            <div class="text-sm text-muted">550 XP to Level 6: Advanced</div>
+                        </div>
+                        <span class="text-sm" style="color: var(--color-accent);">2,450 / 3,000 XP</span>
+                    </div>
+                    <div class="progress-bar" style="height: 10px;">
+                        <div class="fill" style="width: 82%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <!-- Certifications -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2>Certifications</h2>
+                    </div>
+                    <div class="flex flex-col gap-12">
+                        <div class="card-flat" style="display: flex; gap: 16px; align-items: center; padding: 16px;">
+                            <div style="width: 48px; height: 48px; border-radius: 50%; background: rgba(46, 204, 113, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">&#128171;</div>
+                            <div style="flex: 1;">
+                                <div style="font-weight: 600; color: var(--color-text-bright);">Certified Associate</div>
+                                <div class="text-xs text-muted">Earned June 15, 2025 &middot; Expires June 15, 2026</div>
+                            </div>
+                            <span class="badge badge-green">Active</span>
+                        </div>
+                        <div class="card-flat" style="display: flex; gap: 16px; align-items: center; padding: 16px;">
+                            <div style="width: 48px; height: 48px; border-radius: 50%; background: rgba(52, 152, 219, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">&#9881;</div>
+                            <div style="flex: 1;">
+                                <div style="font-weight: 600; color: var(--color-text-bright);">Certified Professional</div>
+                                <div class="text-xs text-muted">68% prerequisites complete</div>
+                                <div class="progress-bar" style="margin-top: 6px;"><div class="fill" style="width: 68%;"></div></div>
+                            </div>
+                            <span class="badge badge-blue">In Progress</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Badges -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2>Badges (8)</h2>
+                    </div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                        <div class="card-flat" style="width: 80px; height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; text-align: center;" title="Getting Started">
+                            <span style="font-size: 1.5rem;">&#127919;</span>
+                            <span class="text-xs text-muted" style="margin-top: 4px;">Start</span>
+                        </div>
+                        <div class="card-flat" style="width: 80px; height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; text-align: center;" title="Foundation Builder">
+                            <span style="font-size: 1.5rem;">&#127959;</span>
+                            <span class="text-xs text-muted" style="margin-top: 4px;">Found.</span>
+                        </div>
+                        <div class="card-flat" style="width: 80px; height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; text-align: center;" title="Lab Rat">
+                            <span style="font-size: 1.5rem;">&#129431;</span>
+                            <span class="text-xs text-muted" style="margin-top: 4px;">Lab Rat</span>
+                        </div>
+                        <div class="card-flat" style="width: 80px; height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; text-align: center;" title="Streak Starter">
+                            <span style="font-size: 1.5rem;">&#128293;</span>
+                            <span class="text-xs text-muted" style="margin-top: 4px;">Streak</span>
+                        </div>
+                        <div class="card-flat" style="width: 80px; height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; text-align: center;" title="Speed Learner">
+                            <span style="font-size: 1.5rem;">&#9889;</span>
+                            <span class="text-xs text-muted" style="margin-top: 4px;">Speed</span>
+                        </div>
+                        <div class="card-flat" style="width: 80px; height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; text-align: center;" title="Early Adopter">
+                            <span style="font-size: 1.5rem;">&#11088;</span>
+                            <span class="text-xs text-muted" style="margin-top: 4px;">Early</span>
+                        </div>
+                        <div class="card-flat" style="width: 80px; height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; text-align: center;" title="First Deal">
+                            <span style="font-size: 1.5rem;">&#128176;</span>
+                            <span class="text-xs text-muted" style="margin-top: 4px;">Deal</span>
+                        </div>
+                        <div class="card-flat" style="width: 80px; height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; text-align: center;" title="Certified Associate">
+                            <span style="font-size: 1.5rem;">&#128171;</span>
+                            <span class="text-xs text-muted" style="margin-top: 4px;">Cert</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skill Points -->
+            <div class="section">
+                <div class="section-header">
+                    <h2>Skill Points</h2>
+                </div>
+                <div class="grid-4">
+                    <div class="card-flat">
+                        <div class="flex justify-between items-center mb-8">
+                            <span class="text-sm" style="font-weight: 600; color: var(--color-text-bright);">SCA Mastery</span>
+                            <span class="text-sm text-accent">680 / 1000</span>
+                        </div>
+                        <div class="progress-bar"><div class="fill" style="width: 68%;"></div></div>
+                    </div>
+                    <div class="card-flat">
+                        <div class="flex justify-between items-center mb-8">
+                            <span class="text-sm" style="font-weight: 600; color: var(--color-text-bright);">SAST Mastery</span>
+                            <span class="text-sm" style="color: var(--color-secondary);">250 / 1000</span>
+                        </div>
+                        <div class="progress-bar fill-secondary"><div class="fill" style="width: 25%;"></div></div>
+                    </div>
+                    <div class="card-flat">
+                        <div class="flex justify-between items-center mb-8">
+                            <span class="text-sm" style="font-weight: 600; color: var(--color-text-bright);">Integration</span>
+                            <span class="text-sm" style="color: var(--color-warning);">320 / 1000</span>
+                        </div>
+                        <div class="progress-bar fill-warning"><div class="fill" style="width: 32%;"></div></div>
+                    </div>
+                    <div class="card-flat">
+                        <div class="flex justify-between items-center mb-8">
+                            <span class="text-sm" style="font-weight: 600; color: var(--color-text-bright);">Sales Mastery</span>
+                            <span class="text-sm text-muted">0 / 1000</span>
+                        </div>
+                        <div class="progress-bar"><div class="fill" style="width: 0%;"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learning History -->
+            <div class="section">
+                <div class="section-header">
+                    <h2>Recent Activity</h2>
+                </div>
+                <div class="flex flex-col gap-8">
+                    <div class="card-flat" style="display: flex; gap: 16px; align-items: center; padding: 16px;">
+                        <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-accent); flex-shrink: 0;"></div>
+                        <div style="flex: 1;">
+                            <div class="text-sm" style="color: var(--color-text-bright);">Completed: SCA Integration Patterns</div>
+                            <div class="text-xs text-muted">Today at 2:15 PM &middot; +75 XP</div>
+                        </div>
+                        <span class="badge badge-accent">+75 XP</span>
+                    </div>
+                    <div class="card-flat" style="display: flex; gap: 16px; align-items: center; padding: 16px;">
+                        <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-accent); flex-shrink: 0;"></div>
+                        <div style="flex: 1;">
+                            <div class="text-sm" style="color: var(--color-text-bright);">Completed Lab: GitHub Actions Integration</div>
+                            <div class="text-xs text-muted">Yesterday at 4:30 PM &middot; +100 XP</div>
+                        </div>
+                        <span class="badge badge-accent">+100 XP</span>
+                    </div>
+                    <div class="card-flat" style="display: flex; gap: 16px; align-items: center; padding: 16px;">
+                        <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-secondary); flex-shrink: 0;"></div>
+                        <div style="flex: 1;">
+                            <div class="text-sm" style="color: var(--color-text-bright);">Earned Badge: Lab Rat (3 labs completed)</div>
+                            <div class="text-xs text-muted">Yesterday at 4:30 PM</div>
+                        </div>
+                        <span style="font-size: 1.25rem;">&#129431;</span>
+                    </div>
+                    <div class="card-flat" style="display: flex; gap: 16px; align-items: center; padding: 16px;">
+                        <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-accent); flex-shrink: 0;"></div>
+                        <div style="flex: 1;">
+                            <div class="text-sm" style="color: var(--color-text-bright);">Passed Knowledge Check: SCA Reporting (85%)</div>
+                            <div class="text-xs text-muted">2 days ago &middot; +75 XP</div>
+                        </div>
+                        <span class="badge badge-accent">+75 XP</span>
+                    </div>
+                    <div class="card-flat" style="display: flex; gap: 16px; align-items: center; padding: 16px;">
+                        <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-warning); flex-shrink: 0;"></div>
+                        <div style="flex: 1;">
+                            <div class="text-sm" style="color: var(--color-text-bright);">7-Day Streak Achieved!</div>
+                            <div class="text-xs text-muted">5 days ago &middot; +100 XP bonus</div>
+                        </div>
+                        <span class="badge badge-accent">+100 XP</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <span>&copy; 2025 Mend.io. All rights reserved.</span>
+                <span><a href="#">Privacy</a> &middot; <a href="#">Terms</a></span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

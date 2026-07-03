@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hands-On Labs - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="index.html" class="logo"><div class="logo-icon">M</div> Mend <span>Learn</span></a>
+            <ul class="nav-main">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="learning-paths.html">Learning Paths</a></li>
+                <li><a href="certifications.html">Certifications</a></li>
+                <li><a href="labs.html" class="active">Labs</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="leaderboard.html">Leaderboard</a></li>
+                <li><a href="ai-coach.html">AI Coach</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-search">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <input type="text" placeholder="Search courses, labs...">
+                </div>
+                <div class="nav-xp">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    2,450 XP
+                </div>
+                <a href="profile.html" class="nav-avatar">JD</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+    </header>
+
+    <section class="hero" style="padding: 36px 0;">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Hands-On <span class="accent">Labs</span></h1>
+                <p>Real Mend.io environments in your browser. Practice scanning, configuring, integrating, and troubleshooting.</p>
+                <div class="hero-stats" style="margin-top: 24px;">
+                    <div class="hero-stat">
+                        <span class="value">3</span>
+                        <span class="label">Labs Completed</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="value">12</span>
+                        <span class="label">Labs Available</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="value">300</span>
+                        <span class="label">XP from Labs</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="page-content">
+        <div class="container">
+
+            <!-- Filter -->
+            <div class="filter-bar" data-target="labs-grid">
+                <button class="filter-btn active" data-filter="all">All Labs</button>
+                <button class="filter-btn" data-filter="guided">Guided</button>
+                <button class="filter-btn" data-filter="challenge">Challenge</button>
+                <button class="filter-btn" data-filter="sca">SCA</button>
+                <button class="filter-btn" data-filter="sast">SAST</button>
+                <button class="filter-btn" data-filter="integration">Integration</button>
+                <button class="filter-btn" data-filter="admin">Administration</button>
+            </div>
+
+            <div id="labs-grid" class="grid-3">
+
+                <!-- Lab 1 -->
+                <div class="lab-card" data-category="guided,sca">
+                    <div class="lab-card-visual" style="background: linear-gradient(135deg, #0d1929, rgba(0, 212, 170, 0.2));">
+                        <span class="lab-icon">&#128737;</span>
+                        <span class="badge badge-green lab-type">Guided</span>
+                    </div>
+                    <div class="lab-card-body">
+                        <h3>Your First SCA Scan</h3>
+                        <p>Set up your first project, run an SCA scan on a Java application, and review vulnerability results.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 45 min</span>
+                            <span>&#127942; 100 XP</span>
+                        </div>
+                        <div class="lab-card-footer">
+                            <span class="badge badge-green">Completed</span>
+                            <a href="#" class="btn btn-secondary btn-sm">Redo Lab</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lab 2 -->
+                <div class="lab-card" data-category="guided,sca">
+                    <div class="lab-card-visual" style="background: linear-gradient(135deg, #0d1929, rgba(0, 212, 170, 0.2));">
+                        <span class="lab-icon">&#128203;</span>
+                        <span class="badge badge-green lab-type">Guided</span>
+                    </div>
+                    <div class="lab-card-body">
+                        <h3>SCA Policy Configuration</h3>
+                        <p>Create and apply scanning policies for vulnerability severity thresholds and license compliance rules.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 45 min</span>
+                            <span>&#127942; 100 XP</span>
+                        </div>
+                        <div class="lab-card-footer">
+                            <span class="badge badge-green">Completed</span>
+                            <a href="#" class="btn btn-secondary btn-sm">Redo Lab</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lab 3 -->
+                <div class="lab-card" data-category="guided,integration">
+                    <div class="lab-card-visual" style="background: linear-gradient(135deg, #0d1929, rgba(108, 92, 231, 0.2));">
+                        <span class="lab-icon">&#9881;</span>
+                        <span class="badge badge-green lab-type">Guided</span>
+                    </div>
+                    <div class="lab-card-body">
+                        <h3>GitHub Actions Integration</h3>
+                        <p>Configure Mend.io scanning in a GitHub Actions CI/CD pipeline with fail conditions and PR comments.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 60 min</span>
+                            <span>&#127942; 100 XP</span>
+                        </div>
+                        <div class="lab-card-footer">
+                            <span class="badge badge-green">Completed</span>
+                            <a href="#" class="btn btn-secondary btn-sm">Redo Lab</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lab 4 -->
+                <div class="lab-card" data-category="guided,sast">
+                    <div class="lab-card-visual" style="background: linear-gradient(135deg, #0d1929, rgba(108, 92, 231, 0.2));">
+                        <span class="lab-icon">&#128270;</span>
+                        <span class="badge badge-green lab-type">Guided</span>
+                    </div>
+                    <div class="lab-card-body">
+                        <h3>SAST Code Analysis</h3>
+                        <p>Run SAST analysis on a Python application, review code findings, configure custom rules, and manage false positives.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 60 min</span>
+                            <span>&#127942; 100 XP</span>
+                        </div>
+                        <div class="lab-card-footer">
+                            <span class="text-sm text-muted">Not started</span>
+                            <a href="#" class="btn btn-primary btn-sm" data-action="launch-lab">Launch Lab</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lab 5 -->
+                <div class="lab-card" data-category="guided,integration">
+                    <div class="lab-card-visual" style="background: linear-gradient(135deg, #0d1929, rgba(52, 152, 219, 0.2));">
+                        <span class="lab-icon">&#128187;</span>
+                        <span class="badge badge-green lab-type">Guided</span>
+                    </div>
+                    <div class="lab-card-body">
+                        <h3>Jenkins Pipeline Integration</h3>
+                        <p>Set up Mend.io in a Jenkins CI/CD pipeline with build stages, quality gates, and reporting.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 60 min</span>
+                            <span>&#127942; 100 XP</span>
+                        </div>
+                        <div class="lab-card-footer">
+                            <span class="text-sm text-muted">Not started</span>
+                            <a href="#" class="btn btn-primary btn-sm" data-action="launch-lab">Launch Lab</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lab 6 -->
+                <div class="lab-card" data-category="guided,admin">
+                    <div class="lab-card-visual" style="background: linear-gradient(135deg, #0d1929, rgba(241, 196, 15, 0.2));">
+                        <span class="lab-icon">&#128100;</span>
+                        <span class="badge badge-green lab-type">Guided</span>
+                    </div>
+                    <div class="lab-card-body">
+                        <h3>SSO & RBAC Configuration</h3>
+                        <p>Configure SAML SSO, set up role-based access controls, and manage organizational hierarchies.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 60 min</span>
+                            <span>&#127942; 100 XP</span>
+                        </div>
+                        <div class="lab-card-footer">
+                            <span class="text-sm text-muted">Not started</span>
+                            <a href="#" class="btn btn-primary btn-sm" data-action="launch-lab">Launch Lab</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lab 7 -->
+                <div class="lab-card" data-category="guided,sca">
+                    <div class="lab-card-visual" style="background: linear-gradient(135deg, #0d1929, rgba(26, 188, 156, 0.2));">
+                        <span class="lab-icon">&#128279;</span>
+                        <span class="badge badge-green lab-type">Guided</span>
+                    </div>
+                    <div class="lab-card-body">
+                        <h3>SBOM Generation & Management</h3>
+                        <p>Generate Software Bills of Materials, export in CycloneDX/SPDX formats, and integrate with compliance tools.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 45 min</span>
+                            <span>&#127942; 100 XP</span>
+                        </div>
+                        <div class="lab-card-footer">
+                            <span class="badge badge-accent">New</span>
+                            <a href="#" class="btn btn-primary btn-sm" data-action="launch-lab">Launch Lab</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lab 8 -->
+                <div class="lab-card" data-category="guided,admin">
+                    <div class="lab-card-visual" style="background: linear-gradient(135deg, #0d1929, rgba(155, 89, 182, 0.2));">
+                        <span class="lab-icon">&#128202;</span>
+                        <span class="badge badge-green lab-type">Guided</span>
+                    </div>
+                    <div class="lab-card-body">
+                        <h3>API & Custom Reporting</h3>
+                        <p>Use the Mend.io REST API to build custom reports, automate workflows, and export data to BI tools.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 90 min</span>
+                            <span>&#127942; 100 XP</span>
+                        </div>
+                        <div class="lab-card-footer">
+                            <span class="text-sm text-muted">Not started</span>
+                            <a href="#" class="btn btn-primary btn-sm" data-action="launch-lab">Launch Lab</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lab 9 - Challenge -->
+                <div class="lab-card" data-category="challenge,sca,sast">
+                    <div class="lab-card-visual" style="background: linear-gradient(135deg, #0d1929, rgba(231, 76, 60, 0.2));">
+                        <span class="lab-icon">&#9889;</span>
+                        <span class="badge badge-purple lab-type">Challenge</span>
+                    </div>
+                    <div class="lab-card-body">
+                        <h3>Full Stack Security Audit</h3>
+                        <p>Challenge: Audit a full-stack application using SCA + SAST. Find all critical vulnerabilities and create a remediation plan.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 90 min</span>
+                            <span>&#127942; 200 XP</span>
+                        </div>
+                        <div class="lab-card-footer">
+                            <span class="tag">Requires: SCA + SAST tracks</span>
+                            <a href="#" class="btn btn-primary btn-sm" data-action="launch-lab">Launch</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lab 10 - Challenge -->
+                <div class="lab-card" data-category="challenge,integration">
+                    <div class="lab-card-visual" style="background: linear-gradient(135deg, #0d1929, rgba(231, 76, 60, 0.2));">
+                        <span class="lab-icon">&#128736;</span>
+                        <span class="badge badge-purple lab-type">Challenge</span>
+                    </div>
+                    <div class="lab-card-body">
+                        <h3>Enterprise Deployment Design</h3>
+                        <p>Challenge: Design and implement a multi-org deployment with SSO, policies, and CI/CD for a simulated enterprise customer.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 120 min</span>
+                            <span>&#127942; 300 XP</span>
+                        </div>
+                        <div class="lab-card-footer">
+                            <span class="tag">Requires: Professional Cert</span>
+                            <span class="btn btn-secondary btn-sm" style="opacity: 0.5;">Locked</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lab 11 -->
+                <div class="lab-card" data-category="guided,admin">
+                    <div class="lab-card-visual" style="background: linear-gradient(135deg, #0d1929, rgba(230, 126, 34, 0.2));">
+                        <span class="lab-icon">&#128272;</span>
+                        <span class="badge badge-green lab-type">Guided</span>
+                    </div>
+                    <div class="lab-card-body">
+                        <h3>Secrets Detection Setup</h3>
+                        <p>Configure secrets scanning, set up incident response workflows, and run historical scans on repositories.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 45 min</span>
+                            <span>&#127942; 100 XP</span>
+                        </div>
+                        <div class="lab-card-footer">
+                            <span class="badge badge-accent">New</span>
+                            <a href="#" class="btn btn-primary btn-sm" data-action="launch-lab">Launch Lab</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lab 12 - Demo Practice -->
+                <div class="lab-card" data-category="guided,sca,sast">
+                    <div class="lab-card-visual" style="background: linear-gradient(135deg, #0d1929, rgba(46, 204, 113, 0.2));">
+                        <span class="lab-icon">&#127908;</span>
+                        <span class="badge badge-teal lab-type">Demo</span>
+                    </div>
+                    <div class="lab-card-body">
+                        <h3>Demo Practice Environment</h3>
+                        <p>Practice the standard Mend.io SCA and SAST demo in a realistic customer-ready environment. Record your demo for certification.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 90 min</span>
+                            <span>&#127942; 150 XP</span>
+                        </div>
+                        <div class="lab-card-footer">
+                            <span class="text-sm text-muted">For SE certification</span>
+                            <a href="#" class="btn btn-primary btn-sm" data-action="launch-lab">Launch Lab</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <span>&copy; 2025 Mend.io. All rights reserved.</span>
+                <span><a href="#">Privacy</a> &middot; <a href="#">Terms</a></span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
