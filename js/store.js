@@ -325,8 +325,28 @@ const MendStore = {
             ],
             sales: ['sales/01-selling-mend'],
             developer: ['developer/01-developer-quickstart'],
-            container: ['container/01-container-security'],
-            technical: ['technical/01-technical-deep-dive']
+            container: [
+                'container/01-container-security',
+                'container/02-image-scanning',
+                'container/03-kubernetes-security'
+            ],
+            technical: ['technical/01-technical-deep-dive'],
+            secrets: [
+                'secrets/01-secrets-scanning',
+                'secrets/02-incident-response'
+            ],
+            'supply-chain': [
+                'supply-chain/01-supply-chain-threats',
+                'supply-chain/02-sbom-governance'
+            ],
+            executive: [
+                'executive/01-security-strategy',
+                'executive/02-building-practice'
+            ],
+            enterprise: [
+                'enterprise/01-enterprise-deployment',
+                'enterprise/02-api-automation'
+            ]
         };
         return trackMap[track] || [];
     },
