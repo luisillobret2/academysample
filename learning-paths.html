@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Paths - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="index.html" class="logo"><div class="logo-icon">M</div> Mend <span>Learn</span></a>
+            <ul class="nav-main">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="learning-paths.html" class="active">Learning Paths</a></li>
+                <li><a href="certifications.html">Certifications</a></li>
+                <li><a href="labs.html">Labs</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="leaderboard.html">Leaderboard</a></li>
+                <li><a href="ai-coach.html">AI Coach</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-search">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <input type="text" placeholder="Search courses, labs...">
+                </div>
+                <div class="nav-xp">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    2,450 XP
+                </div>
+                <a href="profile.html" class="nav-avatar">JD</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+    </header>
+
+    <section class="hero" style="padding: 36px 0;">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Learning <span class="accent">Paths</span></h1>
+                <p>Progressive learning journeys from Beginner to Expert. Choose by role, product, or skill level.</p>
+            </div>
+        </div>
+    </section>
+
+    <main class="page-content">
+        <div class="container">
+
+            <!-- Filters -->
+            <div class="section">
+                <div class="tabs" style="margin-bottom: 16px;">
+                    <button class="tab active" data-tab="tab-all">All Paths</button>
+                    <button class="tab" data-tab="tab-role">By Role</button>
+                    <button class="tab" data-tab="tab-product">By Product</button>
+                    <button class="tab" data-tab="tab-level">By Level</button>
+                </div>
+
+                <div class="filter-bar" data-target="paths-grid">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="beginner">Beginner</button>
+                    <button class="filter-btn" data-filter="intermediate">Intermediate</button>
+                    <button class="filter-btn" data-filter="expert">Expert</button>
+                    <button class="filter-btn" data-filter="sales">Sales</button>
+                    <button class="filter-btn" data-filter="technical">Technical</button>
+                    <button class="filter-btn" data-filter="product">Product</button>
+                </div>
+
+                <div id="paths-grid" class="grid-3">
+
+                    <!-- Foundation -->
+                    <div class="path-card" data-category="beginner">
+                        <div class="path-card-header">
+                            <div class="path-card-icon" style="background: rgba(46, 204, 113, 0.15); color: #2ecc71;">&#127919;</div>
+                            <span class="badge badge-green">Level 1</span>
+                        </div>
+                        <h3>Foundation Track</h3>
+                        <p>Application security fundamentals, supply chain security, and Mend.io platform overview. Required for all partners.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 2 hrs</span>
+                            <span>&#128218; 4 modules</span>
+                            <span>&#127942; 200 XP</span>
+                        </div>
+                        <div class="progress-bar mb-8"><div class="fill" style="width: 100%;"></div></div>
+                        <div class="path-card-footer">
+                            <span class="badge badge-green">Completed</span>
+                            <a href="#" class="btn btn-secondary btn-sm">Review</a>
+                        </div>
+                    </div>
+
+                    <!-- SCA -->
+                    <div class="path-card" data-category="intermediate,product,technical">
+                        <div class="path-card-header">
+                            <div class="path-card-icon" style="background: rgba(0, 212, 170, 0.15); color: #00d4aa;">&#128737;</div>
+                            <span class="badge badge-blue">Level 2</span>
+                        </div>
+                        <h3>SCA Deep Dive</h3>
+                        <p>Master Software Composition Analysis: vulnerability scanning, license compliance, policy configuration, and integration patterns.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 5 hrs</span>
+                            <span>&#128218; 8 modules</span>
+                            <span>&#127942; 500 XP</span>
+                        </div>
+                        <div class="progress-bar mb-8"><div class="fill" style="width: 68%;"></div></div>
+                        <div class="path-card-footer">
+                            <span class="text-sm text-muted">68% complete</span>
+                            <a href="#" class="btn btn-primary btn-sm" data-action="start-course">Continue</a>
+                        </div>
+                    </div>
+
+                    <!-- SAST -->
+                    <div class="path-card" data-category="intermediate,product,technical">
+                        <div class="path-card-header">
+                            <div class="path-card-icon" style="background: rgba(108, 92, 231, 0.15); color: #6c5ce7;">&#128270;</div>
+                            <span class="badge badge-blue">Level 2</span>
+                        </div>
+                        <h3>SAST Product Track</h3>
+                        <p>Static application security testing, code analysis, custom rules, false positive management, and CI/CD pipeline integration.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 5 hrs</span>
+                            <span>&#128218; 8 modules</span>
+                            <span>&#127942; 500 XP</span>
+                        </div>
+                        <div class="progress-bar mb-8"><div class="fill" style="width: 25%;"></div></div>
+                        <div class="path-card-footer">
+                            <span class="text-sm text-muted">25% complete</span>
+                            <a href="#" class="btn btn-primary btn-sm" data-action="start-course">Continue</a>
+                        </div>
+                    </div>
+
+                    <!-- Secrets -->
+                    <div class="path-card" data-category="intermediate,product,technical">
+                        <div class="path-card-header">
+                            <div class="path-card-icon" style="background: rgba(231, 76, 60, 0.15); color: #e74c3c;">&#128272;</div>
+                            <span class="badge badge-blue">Level 2</span>
+                        </div>
+                        <h3>Secrets Detection</h3>
+                        <p>Learn secrets scanning, incident response workflows, historical scanning, and remediation strategies.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 2.5 hrs</span>
+                            <span>&#128218; 6 modules</span>
+                            <span>&#127942; 350 XP</span>
+                        </div>
+                        <div class="progress-bar mb-8"><div class="fill" style="width: 0%;"></div></div>
+                        <div class="path-card-footer">
+                            <span class="text-sm text-muted">Not started</span>
+                            <a href="#" class="btn btn-primary btn-sm" data-action="start-course">Start</a>
+                        </div>
+                    </div>
+
+                    <!-- Container -->
+                    <div class="path-card" data-category="intermediate,product,technical">
+                        <div class="path-card-header">
+                            <div class="path-card-icon" style="background: rgba(52, 152, 219, 0.15); color: #3498db;">&#128230;</div>
+                            <span class="badge badge-blue">Level 2</span>
+                        </div>
+                        <h3>Container Security</h3>
+                        <p>Container security fundamentals, image scanning, base image recommendations, registry integration, and Kubernetes.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 4.5 hrs</span>
+                            <span>&#128218; 7 modules</span>
+                            <span>&#127942; 450 XP</span>
+                        </div>
+                        <div class="progress-bar mb-8"><div class="fill" style="width: 0%;"></div></div>
+                        <div class="path-card-footer">
+                            <span class="text-sm text-muted">Not started</span>
+                            <a href="#" class="btn btn-primary btn-sm" data-action="start-course">Start</a>
+                        </div>
+                    </div>
+
+                    <!-- Supply Chain -->
+                    <div class="path-card" data-category="intermediate,product,technical">
+                        <div class="path-card-header">
+                            <div class="path-card-icon" style="background: rgba(26, 188, 156, 0.15); color: #1abc9c;">&#128279;</div>
+                            <span class="badge badge-blue">Level 2</span>
+                        </div>
+                        <h3>Supply Chain Security</h3>
+                        <p>Supply chain threats, SBOM generation, dependency risk scoring, policy enforcement, and provenance attestation.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 4 hrs</span>
+                            <span>&#128218; 7 modules</span>
+                            <span>&#127942; 450 XP</span>
+                        </div>
+                        <div class="progress-bar mb-8"><div class="fill" style="width: 0%;"></div></div>
+                        <div class="path-card-footer">
+                            <span class="badge badge-accent">New</span>
+                            <a href="#" class="btn btn-primary btn-sm" data-action="start-course">Start</a>
+                        </div>
+                    </div>
+
+                    <!-- Sales Track -->
+                    <div class="path-card" data-category="intermediate,sales">
+                        <div class="path-card-header">
+                            <div class="path-card-icon" style="background: rgba(230, 126, 34, 0.15); color: #e67e22;">&#128176;</div>
+                            <span class="badge badge-orange">Sales</span>
+                        </div>
+                        <h3>Sales Track</h3>
+                        <p>Market positioning, ICP, discovery questions, competitive differentiation, objection handling, pricing, and deal registration.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 4.5 hrs</span>
+                            <span>&#128218; 9 modules</span>
+                            <span>&#127942; 600 XP</span>
+                        </div>
+                        <div class="progress-bar mb-8"><div class="fill" style="width: 0%;"></div></div>
+                        <div class="path-card-footer">
+                            <span class="text-sm text-muted">Not started</span>
+                            <a href="#" class="btn btn-primary btn-sm" data-action="start-course">Start</a>
+                        </div>
+                    </div>
+
+                    <!-- Technical / SE Track -->
+                    <div class="path-card" data-category="intermediate,technical">
+                        <div class="path-card-header">
+                            <div class="path-card-icon" style="background: rgba(155, 89, 182, 0.15); color: #9b59b6;">&#128187;</div>
+                            <span class="badge badge-purple">Technical</span>
+                        </div>
+                        <h3>Technical / SE Track</h3>
+                        <p>Demo environment setup, standard demo flows, POC planning, integration architecture, and customer workshop facilitation.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 5.5 hrs</span>
+                            <span>&#128218; 8 modules</span>
+                            <span>&#127942; 550 XP</span>
+                        </div>
+                        <div class="progress-bar mb-8"><div class="fill" style="width: 0%;"></div></div>
+                        <div class="path-card-footer">
+                            <span class="text-sm text-muted">Not started</span>
+                            <a href="#" class="btn btn-primary btn-sm" data-action="start-course">Start</a>
+                        </div>
+                    </div>
+
+                    <!-- Developer Track -->
+                    <div class="path-card" data-category="intermediate,technical">
+                        <div class="path-card-header">
+                            <div class="path-card-icon" style="background: rgba(41, 128, 185, 0.15); color: #2980b9;">&#128421;</div>
+                            <span class="badge badge-blue">Developer</span>
+                        </div>
+                        <h3>Developer Track</h3>
+                        <p>Mend.io for developers: IDE plugins, CLI scanning, GitHub Actions, API deep dive, custom integrations, and webhooks.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 4.5 hrs</span>
+                            <span>&#128218; 7 modules</span>
+                            <span>&#127942; 500 XP</span>
+                        </div>
+                        <div class="progress-bar mb-8"><div class="fill" style="width: 0%;"></div></div>
+                        <div class="path-card-footer">
+                            <span class="text-sm text-muted">Not started</span>
+                            <a href="#" class="btn btn-primary btn-sm" data-action="start-course">Start</a>
+                        </div>
+                    </div>
+
+                    <!-- Executive Track -->
+                    <div class="path-card" data-category="beginner,sales">
+                        <div class="path-card-header">
+                            <div class="path-card-icon" style="background: rgba(241, 196, 15, 0.15); color: #f1c40f;">&#127891;</div>
+                            <span class="badge badge-gold">Executive</span>
+                        </div>
+                        <h3>Executive / Practice Leader</h3>
+                        <p>AppSec market opportunity, building a Mend.io practice, partner economics, go-to-market planning, and QBR preparation.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 2 hrs</span>
+                            <span>&#128218; 6 modules</span>
+                            <span>&#127942; 300 XP</span>
+                        </div>
+                        <div class="progress-bar mb-8"><div class="fill" style="width: 0%;"></div></div>
+                        <div class="path-card-footer">
+                            <span class="text-sm text-muted">Not started</span>
+                            <a href="#" class="btn btn-primary btn-sm" data-action="start-course">Start</a>
+                        </div>
+                    </div>
+
+                    <!-- Enterprise Architecture (L3) -->
+                    <div class="path-card" data-category="expert,technical">
+                        <div class="path-card-header">
+                            <div class="path-card-icon" style="background: rgba(155, 89, 182, 0.15); color: #9b59b6;">&#127959;</div>
+                            <span class="badge badge-purple">Level 3</span>
+                        </div>
+                        <h3>Enterprise Architecture</h3>
+                        <p>Multi-tenant architecture, HA/DR, performance tuning, compliance frameworks, and competitor migration strategies.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 4.25 hrs</span>
+                            <span>&#128218; 5 modules</span>
+                            <span>&#127942; 700 XP</span>
+                        </div>
+                        <div class="progress-bar mb-8"><div class="fill" style="width: 0%;"></div></div>
+                        <div class="path-card-footer">
+                            <span class="tag">Requires: Professional Cert</span>
+                            <span class="btn btn-secondary btn-sm" style="opacity: 0.5;">Locked</span>
+                        </div>
+                    </div>
+
+                    <!-- CI/CD & DevOps (L3) -->
+                    <div class="path-card" data-category="expert,technical">
+                        <div class="path-card-header">
+                            <div class="path-card-icon" style="background: rgba(0, 212, 170, 0.15); color: #00d4aa;">&#9881;</div>
+                            <span class="badge badge-purple">Level 3</span>
+                        </div>
+                        <h3>CI/CD & DevOps Integration</h3>
+                        <p>Advanced pipeline design, GitOps integration, IaC scanning, custom workflow automation, and multi-tool orchestration.</p>
+                        <div class="path-card-meta">
+                            <span>&#128339; 4.25 hrs</span>
+                            <span>&#128218; 5 modules</span>
+                            <span>&#127942; 700 XP</span>
+                        </div>
+                        <div class="progress-bar mb-8"><div class="fill" style="width: 0%;"></div></div>
+                        <div class="path-card-footer">
+                            <span class="tag">Requires: Professional Cert</span>
+                            <span class="btn btn-secondary btn-sm" style="opacity: 0.5;">Locked</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <span>&copy; 2025 Mend.io. All rights reserved.</span>
+                <span><a href="#">Privacy</a> &middot; <a href="#">Terms</a></span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

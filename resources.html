@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="index.html" class="logo"><div class="logo-icon">M</div> Mend <span>Learn</span></a>
+            <ul class="nav-main">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="learning-paths.html">Learning Paths</a></li>
+                <li><a href="certifications.html">Certifications</a></li>
+                <li><a href="labs.html">Labs</a></li>
+                <li><a href="resources.html" class="active">Resources</a></li>
+                <li><a href="leaderboard.html">Leaderboard</a></li>
+                <li><a href="ai-coach.html">AI Coach</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-search">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <input type="text" placeholder="Search courses, labs...">
+                </div>
+                <div class="nav-xp">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    2,450 XP
+                </div>
+                <a href="profile.html" class="nav-avatar">JD</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+    </header>
+
+    <section class="hero" style="padding: 36px 0;">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Partner <span class="accent">Resources</span></h1>
+                <p>Battlecards, playbooks, demo recordings, cheat sheets, and everything you need to win deals.</p>
+            </div>
+        </div>
+    </section>
+
+    <main class="page-content">
+        <div class="container">
+
+            <!-- Filters -->
+            <div class="filter-bar" data-target="resources-grid">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="battlecard">Battlecards</button>
+                <button class="filter-btn" data-filter="playbook">Playbooks</button>
+                <button class="filter-btn" data-filter="demo">Demo Library</button>
+                <button class="filter-btn" data-filter="cheatsheet">Cheat Sheets</button>
+                <button class="filter-btn" data-filter="template">Templates</button>
+                <button class="filter-btn" data-filter="casestudy">Case Studies</button>
+            </div>
+
+            <div id="resources-grid" class="grid-3">
+
+                <!-- Battlecards -->
+                <div class="card" data-category="battlecard">
+                    <div style="display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px;">
+                        <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(231, 76, 60, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">&#9876;</div>
+                        <div>
+                            <span class="badge badge-orange mb-4">Battlecard</span>
+                            <h3 style="font-size: 1rem;">Mend vs. Snyk</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-muted mb-16">Complete competitive positioning guide: feature comparison, win themes, objection handling, and proof points.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-muted">PDF &middot; 2 pages &middot; Updated v3</span>
+                        <a href="#" class="btn btn-primary btn-sm">Download</a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="battlecard">
+                    <div style="display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px;">
+                        <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(231, 76, 60, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">&#9876;</div>
+                        <div>
+                            <span class="badge badge-orange mb-4">Battlecard</span>
+                            <h3 style="font-size: 1rem;">Mend vs. Veracode</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-muted mb-16">Enterprise-focused comparison: deployment flexibility, pricing model, developer experience, and integration depth.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-muted">PDF &middot; 2 pages</span>
+                        <a href="#" class="btn btn-primary btn-sm">Download</a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="battlecard">
+                    <div style="display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px;">
+                        <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(231, 76, 60, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">&#9876;</div>
+                        <div>
+                            <span class="badge badge-orange mb-4">Battlecard</span>
+                            <h3 style="font-size: 1rem;">Mend vs. Checkmarx</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-muted mb-16">SAST-focused battlecard covering code analysis depth, language support, false positive rates, and remediation guidance.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-muted">PDF &middot; 2 pages</span>
+                        <a href="#" class="btn btn-primary btn-sm">Download</a>
+                    </div>
+                </div>
+
+                <!-- Playbooks -->
+                <div class="card" data-category="playbook">
+                    <div style="display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px;">
+                        <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(108, 92, 231, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">&#128214;</div>
+                        <div>
+                            <span class="badge badge-purple mb-4">Playbook</span>
+                            <h3 style="font-size: 1rem;">Partner Sales Playbook</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-muted mb-16">End-to-end sales process: prospecting, discovery, demo, POC, proposal, close. Includes templates and scripts.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-muted">PDF &middot; 24 pages</span>
+                        <a href="#" class="btn btn-primary btn-sm">Download</a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="playbook">
+                    <div style="display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px;">
+                        <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(108, 92, 231, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">&#128214;</div>
+                        <div>
+                            <span class="badge badge-purple mb-4">Playbook</span>
+                            <h3 style="font-size: 1rem;">POC Execution Playbook</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-muted mb-16">Technical evaluation management: success criteria, environment setup, test scenarios, results presentation, and close.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-muted">PDF &middot; 18 pages</span>
+                        <a href="#" class="btn btn-primary btn-sm">Download</a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="playbook">
+                    <div style="display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px;">
+                        <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(108, 92, 231, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">&#128214;</div>
+                        <div>
+                            <span class="badge badge-purple mb-4">Playbook</span>
+                            <h3 style="font-size: 1rem;">Competitive Displacement</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-muted mb-16">Strategy and tactics for displacing Snyk, Veracode, or Checkmarx at existing customer accounts.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-muted">PDF &middot; 16 pages</span>
+                        <a href="#" class="btn btn-primary btn-sm">Download</a>
+                    </div>
+                </div>
+
+                <!-- Demo Library -->
+                <div class="card" data-category="demo">
+                    <div style="display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px;">
+                        <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(0, 212, 170, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">&#127909;</div>
+                        <div>
+                            <span class="badge badge-accent mb-4">Video</span>
+                            <h3 style="font-size: 1rem;">Standard SCA Demo (15 min)</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-muted mb-16">The standard Mend.io SCA demo delivered by a senior SE. Covers scanning, prioritization, remediation, and policy.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-muted">Video &middot; 15 min</span>
+                        <a href="#" class="btn btn-primary btn-sm">Watch</a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="demo">
+                    <div style="display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px;">
+                        <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(0, 212, 170, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">&#127909;</div>
+                        <div>
+                            <span class="badge badge-accent mb-4">Video</span>
+                            <h3 style="font-size: 1rem;">Enterprise SAST Demo (20 min)</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-muted mb-16">Technical deep-dive SAST demo for security teams. Custom rules, CI/CD gates, and IDE integration showcase.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-muted">Video &middot; 20 min</span>
+                        <a href="#" class="btn btn-primary btn-sm">Watch</a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="demo">
+                    <div style="display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px;">
+                        <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(0, 212, 170, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">&#127909;</div>
+                        <div>
+                            <span class="badge badge-accent mb-4">Video</span>
+                            <h3 style="font-size: 1rem;">Executive Overview (10 min)</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-muted mb-16">Business-value-focused demo for CISOs and VPs. Risk reduction, compliance, and developer productivity messaging.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-muted">Video &middot; 10 min</span>
+                        <a href="#" class="btn btn-primary btn-sm">Watch</a>
+                    </div>
+                </div>
+
+                <!-- Cheat Sheets -->
+                <div class="card" data-category="cheatsheet">
+                    <div style="display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px;">
+                        <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(241, 196, 15, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">&#128196;</div>
+                        <div>
+                            <span class="badge badge-gold mb-4">Cheat Sheet</span>
+                            <h3 style="font-size: 1rem;">Discovery Questions</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-muted mb-16">Top 25 discovery questions organized by persona (CISO, VP Eng, Dev Lead, Compliance). Print-ready format.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-muted">PDF &middot; 1 page</span>
+                        <a href="#" class="btn btn-primary btn-sm">Download</a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="cheatsheet">
+                    <div style="display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px;">
+                        <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(241, 196, 15, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">&#128196;</div>
+                        <div>
+                            <span class="badge badge-gold mb-4">Cheat Sheet</span>
+                            <h3 style="font-size: 1rem;">Quick Reference Card</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-muted mb-16">Two-page Mend.io overview: all products, key features, deployment options, and integration matrix.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-muted">PDF &middot; 2 pages</span>
+                        <a href="#" class="btn btn-primary btn-sm">Download</a>
+                    </div>
+                </div>
+
+                <!-- Templates -->
+                <div class="card" data-category="template">
+                    <div style="display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px;">
+                        <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(52, 152, 219, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">&#128203;</div>
+                        <div>
+                            <span class="badge badge-blue mb-4">Template</span>
+                            <h3 style="font-size: 1rem;">POC Success Criteria</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-muted mb-16">Pre-built template for defining POC objectives, test scenarios, success metrics, and evaluation timeline.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-muted">DOCX &middot; 1 page</span>
+                        <a href="#" class="btn btn-primary btn-sm">Download</a>
+                    </div>
+                </div>
+
+                <!-- Case Studies -->
+                <div class="card" data-category="casestudy">
+                    <div style="display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px;">
+                        <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(46, 204, 113, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">&#128188;</div>
+                        <div>
+                            <span class="badge badge-green mb-4">Case Study</span>
+                            <h3 style="font-size: 1rem;">Fortune 500 Financial Services</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-muted mb-16">How a top-10 bank reduced critical vulnerabilities by 85% and achieved SOC2 compliance using Mend.io SCA + SAST.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-muted">PDF &middot; 4 pages</span>
+                        <a href="#" class="btn btn-primary btn-sm">Download</a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="casestudy">
+                    <div style="display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px;">
+                        <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(46, 204, 113, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">&#128188;</div>
+                        <div>
+                            <span class="badge badge-green mb-4">Case Study</span>
+                            <h3 style="font-size: 1rem;">SaaS Platform (500 Devs)</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-muted mb-16">A fast-growing SaaS company automated supply chain security across 200+ repositories using Mend.io's CI/CD integration.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-muted">PDF &middot; 3 pages</span>
+                        <a href="#" class="btn btn-primary btn-sm">Download</a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="casestudy">
+                    <div style="display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px;">
+                        <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(46, 204, 113, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">&#128188;</div>
+                        <div>
+                            <span class="badge badge-green mb-4">Case Study</span>
+                            <h3 style="font-size: 1rem;">Healthcare Provider (HIPAA)</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-muted mb-16">Regional healthcare network achieved HIPAA compliance for their custom patient portal using Mend.io's secrets detection and SAST.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-muted">PDF &middot; 3 pages</span>
+                        <a href="#" class="btn btn-primary btn-sm">Download</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <span>&copy; 2025 Mend.io. All rights reserved.</span>
+                <span><a href="#">Privacy</a> &middot; <a href="#">Terms</a></span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
