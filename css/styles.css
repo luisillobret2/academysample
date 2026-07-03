@@ -3,43 +3,46 @@
    Global Stylesheet
    ============================================ */
 
-/* --- CSS Variables --- */
+/* --- CSS Variables (Mend.io Brand) --- */
 :root {
-    --color-primary: #0a1628;
-    --color-primary-light: #132038;
-    --color-primary-dark: #060e1a;
-    --color-accent: #00d4aa;
-    --color-accent-hover: #00b893;
-    --color-accent-light: rgba(0, 212, 170, 0.1);
-    --color-accent-glow: rgba(0, 212, 170, 0.3);
-    --color-secondary: #6c5ce7;
-    --color-secondary-light: rgba(108, 92, 231, 0.1);
+    --color-primary: #ffffff;
+    --color-primary-light: #f5f8fc;
+    --color-primary-dark: #EEF6FF;
+    --color-accent: #073C8C;
+    --color-accent-hover: #1157c0;
+    --color-accent-light: rgba(7, 60, 140, 0.08);
+    --color-accent-glow: rgba(7, 60, 140, 0.2);
+    --color-secondary: #55C6C2;
+    --color-secondary-light: rgba(85, 198, 194, 0.1);
+    --color-teal: #00C7BA;
+    --color-teal-light: #DEF9F4;
+    --color-teal-dark: #034D4C;
     --color-warning: #f39c12;
     --color-danger: #e74c3c;
     --color-success: #2ecc71;
-    --color-text: #e0e6ed;
-    --color-text-muted: #8899aa;
-    --color-text-bright: #ffffff;
-    --color-border: rgba(255, 255, 255, 0.08);
-    --color-card: #111d30;
-    --color-card-hover: #162440;
-    --color-surface: #0d1929;
-    --color-input: #0f1e33;
+    --color-text: #2a3439;
+    --color-text-muted: #6b7b8d;
+    --color-text-bright: #0B1215;
+    --color-border: #e1e5eb;
+    --color-card: #ffffff;
+    --color-card-hover: #f5f8fc;
+    --color-surface: #EEF6FF;
+    --color-input: #f5f8fc;
     --color-badge-associate: #2ecc71;
-    --color-badge-professional: #3498db;
+    --color-badge-professional: #073C8C;
     --color-badge-expert: #9b59b6;
-    --color-badge-tech-specialist: #1abc9c;
+    --color-badge-tech-specialist: #00C7BA;
     --color-badge-sales-specialist: #e67e22;
     --color-badge-master: #f1c40f;
-    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
     --radius-sm: 6px;
     --radius-md: 10px;
     --radius-lg: 16px;
     --radius-xl: 24px;
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.1);
     --shadow-glow: 0 0 20px var(--color-accent-glow);
     --transition: all 0.2s ease;
     --max-width: 1280px;
@@ -150,7 +153,7 @@ h4 { font-size: 1.1rem; }
 
 /* --- Header / Navigation --- */
 .site-header {
-    background: var(--color-primary-dark);
+    background: #ffffff;
     border-bottom: 1px solid var(--color-border);
     position: sticky;
     top: 0;
@@ -184,11 +187,11 @@ h4 { font-size: 1.1rem; }
     justify-content: center;
     font-weight: 800;
     font-size: 0.875rem;
-    color: var(--color-primary);
+    color: #ffffff;
 }
 
 .logo span {
-    color: var(--color-accent);
+    color: var(--color-text-muted);
     font-weight: 400;
 }
 
@@ -213,12 +216,13 @@ h4 { font-size: 1.1rem; }
 
 .nav-main a:hover,
 .nav-main a.active {
-    color: var(--color-text-bright);
-    background: rgba(255, 255, 255, 0.06);
+    color: var(--color-accent);
+    background: var(--color-accent-light);
 }
 
 .nav-main a.active {
     color: var(--color-accent);
+    font-weight: 600;
 }
 
 .nav-main .nav-icon {
@@ -292,7 +296,7 @@ h4 { font-size: 1.1rem; }
     justify-content: center;
     font-weight: 700;
     font-size: 0.85rem;
-    color: white;
+    color: #ffffff;
     cursor: pointer;
     transition: var(--transition);
 }
@@ -320,7 +324,7 @@ h4 { font-size: 1.1rem; }
 }
 
 .card:hover {
-    border-color: rgba(255, 255, 255, 0.12);
+    border-color: var(--color-accent);
     background: var(--color-card-hover);
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
@@ -356,25 +360,25 @@ h4 { font-size: 1.1rem; }
 
 .btn-primary {
     background: var(--color-accent);
-    color: var(--color-primary);
+    color: #ffffff;
 }
 
 .btn-primary:hover {
     background: var(--color-accent-hover);
-    color: var(--color-primary);
+    color: #ffffff;
     box-shadow: var(--shadow-glow);
 }
 
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--color-primary-light);
     color: var(--color-text);
     border: 1px solid var(--color-border);
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.15);
-    color: var(--color-text-bright);
+    background: var(--color-accent-light);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
 }
 
 .btn-outline {
@@ -415,7 +419,7 @@ h4 { font-size: 1.1rem; }
 .progress-bar .fill {
     height: 100%;
     border-radius: 3px;
-    background: linear-gradient(90deg, var(--color-accent), #00f0c0);
+    background: linear-gradient(90deg, var(--color-secondary), var(--color-teal));
     transition: width 0.5s ease;
 }
 
@@ -441,33 +445,33 @@ h4 { font-size: 1.1rem; }
 }
 
 .badge-green {
-    background: rgba(46, 204, 113, 0.15);
-    color: #2ecc71;
+    background: rgba(46, 204, 113, 0.12);
+    color: #27ae60;
 }
 
 .badge-blue {
-    background: rgba(52, 152, 219, 0.15);
-    color: #3498db;
+    background: rgba(7, 60, 140, 0.1);
+    color: #073C8C;
 }
 
 .badge-purple {
-    background: rgba(155, 89, 182, 0.15);
-    color: #9b59b6;
+    background: rgba(155, 89, 182, 0.12);
+    color: #8e44ad;
 }
 
 .badge-orange {
-    background: rgba(230, 126, 34, 0.15);
-    color: #e67e22;
+    background: rgba(230, 126, 34, 0.12);
+    color: #d35400;
 }
 
 .badge-teal {
-    background: rgba(26, 188, 156, 0.15);
-    color: #1abc9c;
+    background: rgba(0, 199, 186, 0.12);
+    color: #034D4C;
 }
 
 .badge-gold {
     background: rgba(241, 196, 15, 0.15);
-    color: #f1c40f;
+    color: #d4a500;
 }
 
 .badge-accent {
@@ -518,7 +522,7 @@ h4 { font-size: 1.1rem; }
 
 /* --- Hero Banner --- */
 .hero {
-    background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 50%, rgba(0, 212, 170, 0.08) 100%);
+    background: linear-gradient(135deg, #0B1215 0%, #073C8C 50%, #1a337f 100%);
     border-bottom: 1px solid var(--color-border);
     padding: 48px 0;
     position: relative;
@@ -532,7 +536,7 @@ h4 { font-size: 1.1rem; }
     right: -20%;
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, var(--color-accent-glow) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(85, 198, 194, 0.3) 0%, transparent 70%);
     opacity: 0.3;
     pointer-events: none;
 }
@@ -544,14 +548,15 @@ h4 { font-size: 1.1rem; }
 
 .hero h1 {
     margin-bottom: 12px;
+    color: #ffffff;
 }
 
 .hero h1 .accent {
-    color: var(--color-accent);
+    color: var(--color-secondary);
 }
 
 .hero p {
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.8);
     font-size: 1.1rem;
     max-width: 600px;
     margin-bottom: 24px;
@@ -571,12 +576,12 @@ h4 { font-size: 1.1rem; }
 .hero-stat .value {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--color-accent);
+    color: var(--color-secondary);
 }
 
 .hero-stat .label {
     font-size: 0.8rem;
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 /* --- Course / Path Cards --- */
@@ -591,7 +596,7 @@ h4 { font-size: 1.1rem; }
 }
 
 .path-card:hover {
-    border-color: rgba(255, 255, 255, 0.12);
+    border-color: var(--color-accent);
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
@@ -757,7 +762,7 @@ h4 { font-size: 1.1rem; }
 
 .lab-card-visual {
     height: 140px;
-    background: linear-gradient(135deg, var(--color-primary-light), var(--color-card));
+    background: linear-gradient(135deg, var(--color-surface), var(--color-primary-light));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -879,7 +884,7 @@ h4 { font-size: 1.1rem; }
 
 .leaderboard-highlight td {
     background: var(--color-accent-light) !important;
-    border: 1px solid rgba(0, 212, 170, 0.2);
+    border: 1px solid rgba(7, 60, 140, 0.2);
 }
 
 /* --- AI Chat --- */
@@ -911,6 +916,7 @@ h4 { font-size: 1.1rem; }
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
+    color: #ffffff;
 }
 
 .ai-chat-messages {
@@ -952,7 +958,7 @@ h4 { font-size: 1.1rem; }
 
 .chat-message.user .chat-bubble {
     background: var(--color-accent);
-    color: var(--color-primary);
+    color: #ffffff;
     border-top-right-radius: 4px;
 }
 
@@ -978,6 +984,32 @@ h4 { font-size: 1.1rem; }
     background: var(--color-accent-light);
     border-color: var(--color-accent);
     color: var(--color-accent);
+}
+
+/* --- Footer light text overrides --- */
+.site-footer .logo {
+    color: #ffffff;
+}
+
+.site-footer .logo span {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.site-footer .footer-col h4 {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.site-footer .footer-col a {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.site-footer .footer-brand p {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.site-footer .footer-bottom {
+    color: rgba(255, 255, 255, 0.5);
+    border-top-color: rgba(255, 255, 255, 0.1);
 }
 
 .ai-chat-input {
@@ -1025,7 +1057,7 @@ h4 { font-size: 1.1rem; }
     justify-content: center;
     font-size: 2rem;
     font-weight: 700;
-    color: white;
+    color: #ffffff;
     flex-shrink: 0;
 }
 
@@ -1058,7 +1090,7 @@ h4 { font-size: 1.1rem; }
     border-radius: 100px;
     font-size: 0.8rem;
     font-weight: 500;
-    background: rgba(255, 255, 255, 0.04);
+    background: #ffffff;
     border: 1px solid var(--color-border);
     color: var(--color-text-muted);
     cursor: pointer;
@@ -1100,8 +1132,8 @@ h4 { font-size: 1.1rem; }
 }
 
 .streak-day.complete {
-    background: var(--color-accent);
-    color: var(--color-primary);
+    background: var(--color-secondary);
+    color: #ffffff;
 }
 
 .streak-day.today {
@@ -1111,16 +1143,17 @@ h4 { font-size: 1.1rem; }
 }
 
 .streak-day.pending {
-    background: rgba(255, 255, 255, 0.04);
+    background: var(--color-primary-light);
     color: var(--color-text-muted);
 }
 
 /* --- Footer --- */
 .site-footer {
-    background: var(--color-primary-dark);
+    background: #0B1215;
     border-top: 1px solid var(--color-border);
     padding: 48px 0 24px;
     margin-top: 64px;
+    color: #ffffff;
 }
 
 .footer-grid {
@@ -1159,7 +1192,7 @@ h4 { font-size: 1.1rem; }
 }
 
 .footer-col a:hover {
-    color: var(--color-accent);
+    color: var(--color-secondary);
 }
 
 .footer-bottom {
@@ -1264,10 +1297,11 @@ h4 { font-size: 1.1rem; }
         top: 64px;
         left: 0;
         right: 0;
-        background: var(--color-primary-dark);
+        background: #ffffff;
         border-bottom: 1px solid var(--color-border);
         padding: 16px;
         gap: 4px;
+        box-shadow: var(--shadow-md);
     }
 
     .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
