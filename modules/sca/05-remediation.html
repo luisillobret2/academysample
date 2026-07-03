@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto-Remediation &amp; Mend Renovate - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="../../index.html" class="logo"><div class="logo-icon">M</div> Mend <span>Learn</span></a>
+            <ul class="nav-main">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../learning-paths.html" class="active">Learning Paths</a></li>
+                <li><a href="../../certifications.html">Certifications</a></li>
+                <li><a href="../../labs.html">Labs</a></li>
+                <li><a href="../../resources.html">Resources</a></li>
+                <li><a href="../../leaderboard.html">Leaderboard</a></li>
+                <li><a href="../../ai-coach.html">AI Coach</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Search courses, labs..."></div>
+                <div class="nav-xp"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 2,450 XP</div>
+                <a href="../../profile.html" class="nav-avatar">JD</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+    </header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar">
+            <div class="sidebar-header">
+                <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
+                <h3>SCA Deep Dive</h3>
+                <div class="sidebar-progress"><div class="progress-bar"><div class="fill" style="width: 83%"></div></div><span>5/6 Complete</span></div>
+            </div>
+            <nav class="module-nav">
+                <a href="01-sca-overview.html" class="module-link completed"><span class="module-status">&#10003;</span><div><span class="module-title">SCA Overview &amp; Vulnerability Scanning</span><span class="module-duration">45 min</span></div></a>
+                <a href="02-reachability-analysis.html" class="module-link completed"><span class="module-status">&#10003;</span><div><span class="module-title">Reachability Analysis</span><span class="module-duration">40 min</span></div></a>
+                <a href="03-license-compliance.html" class="module-link completed"><span class="module-status">&#10003;</span><div><span class="module-title">License Compliance &amp; Policy</span><span class="module-duration">35 min</span></div></a>
+                <a href="04-prioritization.html" class="module-link completed"><span class="module-status">&#10003;</span><div><span class="module-title">Risk Prioritization &amp; EPSS</span><span class="module-duration">30 min</span></div></a>
+                <a href="05-remediation.html" class="module-link active"><span class="module-status">5</span><div><span class="module-title">Auto-Remediation &amp; Renovate</span><span class="module-duration">40 min</span></div></a>
+                <a href="06-sbom-reporting.html" class="module-link"><span class="module-status">6</span><div><span class="module-title">SBOM Generation &amp; Reporting</span><span class="module-duration">35 min</span></div></a>
+            </nav>
+        </aside>
+
+        <main class="module-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>SCA Deep Dive</span> &rsaquo; <span>Auto-Remediation</span></div>
+
+            <div class="module-header">
+                <div class="module-badge in-progress-badge">In Progress</div>
+                <h1>Auto-Remediation &amp; Mend Renovate</h1>
+                <div class="module-meta">
+                    <span>&#128338; 40 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 200 XP</span>
+                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
+                </div>
+            </div>
+
+            <section class="module-section">
+                <h2>Automated Dependency Updates at Enterprise Scale</h2>
+                <p>Finding vulnerabilities is only half the battle &mdash; fixing them efficiently is what differentiates mature security programs. Mend provides multiple remediation pathways that integrate directly into developer workflows.</p>
+
+                <h3>Mend Renovate</h3>
+                <p>Mend Renovate is the industry-leading automated dependency update tool. It keeps open-source dependencies current with intelligent, non-breaking pull requests. Renovate supports <strong>90+ package managers</strong> and integrates with all major source code platforms.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128260;</div>
+                        <h4>Intelligent PRs</h4>
+                        <p>Renovate creates PRs with changelogs, release notes, and compatibility scores. It groups related updates to reduce PR noise and schedules updates based on your team's preferences.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128736;</div>
+                        <h4>Configurable Rules</h4>
+                        <p>Define rules for auto-merging patch updates, scheduling major version bumps for weekdays, or pinning specific dependencies. Configuration lives in a <code>renovate.json</code> file in your repo.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#127968;</div>
+                        <h4>Enterprise Scale</h4>
+                        <p>Manage Renovate across thousands of repositories with organization-wide presets, centralized configuration, and admin dashboards tracking update adoption.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#129302;</div>
+                        <h4>Agentic Remediation</h4>
+                        <p>Mend SCA feeds vulnerability information with reachability analysis into AI code assistants for rapid remediation of open-source vulnerabilities, directly in the AI workflow.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Renovate Configuration</h2>
+                <p>Renovate is configured through a <code>renovate.json</code> file in the root of each repository. Here&rsquo;s a typical enterprise configuration:</p>
+
+                <pre><code>{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "group:monorepos",
+    ":separateMajorMinor"
+  ],
+  "schedule": ["before 9am on Monday"],
+  "automerge": true,
+  "automergeType": "pr",
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["patch"],
+      "automerge": true
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "assignees": ["@security-team"]
+    },
+    {
+      "matchPackagePatterns": ["eslint"],
+      "groupName": "eslint"
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": ["security"]
+  }
+}</code></pre>
+
+                <div class="key-concept">
+                    <h4>&#128161; Partner Value Proposition</h4>
+                    <p>Mend Renovate is open-source and powers dependency updates for over 1 million repositories globally. The enterprise version adds centralized management, organizational presets, and advanced scheduling &mdash; making it easy to manage thousands of repos consistently. This is a strong differentiator against competitors who only offer basic fix PRs.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Remediation Workflows</h2>
+                <p>Beyond Renovate, Mend provides additional remediation pathways:</p>
+
+                <div class="vuln-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>How It Works</th>
+                                <th>Best For</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Renovate Auto-PR</strong></td>
+                                <td>Automated PRs with version bumps, changelogs, and test results</td>
+                                <td>Ongoing dependency maintenance</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Agentic SCA Fix</strong></td>
+                                <td>AI assistant autonomously finds and fixes vulnerabilities pre-commit</td>
+                                <td>Immediate fixes during development</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Security Fix PR</strong></td>
+                                <td>Priority PRs for security vulnerabilities with fix versions identified</td>
+                                <td>Critical CVE response</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Jira Integration</strong></td>
+                                <td>Automatically create Jira tickets for vulnerabilities requiring manual review</td>
+                                <td>Complex remediation requiring team discussion</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Policy-Driven Blocking</strong></td>
+                                <td>Block PRs that introduce new vulnerabilities above severity threshold</td>
+                                <td>Preventing new risk from entering codebase</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="c">
+                        <p><strong>Question 1:</strong> How many package managers does Mend Renovate support?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> 20+</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> 50+</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> 90+</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> 200+</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="a">
+                        <p><strong>Question 2:</strong> What does Mend&rsquo;s Agentic SCA remediation do?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Feeds vulnerability info into AI assistants for autonomous pre-commit fixes</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Creates Jira tickets for each vulnerability found</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Sends email notifications to the security team</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Rolls back deployments with known vulnerabilities</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <button class="mark-complete-btn" data-xp="200">Mark as Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="04-prioritization.html" class="btn btn-secondary">&#8592; Previous</a>
+                    <a href="06-sbom-reporting.html" class="btn btn-primary">Next: SBOM &amp; Reporting &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/app.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

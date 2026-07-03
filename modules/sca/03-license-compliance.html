@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>License Compliance &amp; Policy - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="../../index.html" class="logo"><div class="logo-icon">M</div> Mend <span>Learn</span></a>
+            <ul class="nav-main">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../learning-paths.html" class="active">Learning Paths</a></li>
+                <li><a href="../../certifications.html">Certifications</a></li>
+                <li><a href="../../labs.html">Labs</a></li>
+                <li><a href="../../resources.html">Resources</a></li>
+                <li><a href="../../leaderboard.html">Leaderboard</a></li>
+                <li><a href="../../ai-coach.html">AI Coach</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Search courses, labs..."></div>
+                <div class="nav-xp"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 2,450 XP</div>
+                <a href="../../profile.html" class="nav-avatar">JD</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+    </header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar">
+            <div class="sidebar-header">
+                <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
+                <h3>SCA Deep Dive</h3>
+                <div class="sidebar-progress"><div class="progress-bar"><div class="fill" style="width: 68%"></div></div><span>4/6 Complete</span></div>
+            </div>
+            <nav class="module-nav">
+                <a href="01-sca-overview.html" class="module-link completed"><span class="module-status">&#10003;</span><div><span class="module-title">SCA Overview &amp; Vulnerability Scanning</span><span class="module-duration">45 min</span></div></a>
+                <a href="02-reachability-analysis.html" class="module-link completed"><span class="module-status">&#10003;</span><div><span class="module-title">Reachability Analysis</span><span class="module-duration">40 min</span></div></a>
+                <a href="03-license-compliance.html" class="module-link active completed"><span class="module-status">&#10003;</span><div><span class="module-title">License Compliance &amp; Policy</span><span class="module-duration">35 min</span></div></a>
+                <a href="04-prioritization.html" class="module-link completed"><span class="module-status">&#10003;</span><div><span class="module-title">Risk Prioritization &amp; EPSS</span><span class="module-duration">30 min</span></div></a>
+                <a href="05-remediation.html" class="module-link"><span class="module-status">5</span><div><span class="module-title">Auto-Remediation &amp; Renovate</span><span class="module-duration">40 min</span></div></a>
+                <a href="06-sbom-reporting.html" class="module-link"><span class="module-status">6</span><div><span class="module-title">SBOM Generation &amp; Reporting</span><span class="module-duration">35 min</span></div></a>
+            </nav>
+        </aside>
+
+        <main class="module-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>SCA Deep Dive</span> &rsaquo; <span>License Compliance</span></div>
+
+            <div class="module-header">
+                <div class="module-badge completed-badge">&#10003; Completed</div>
+                <h1>License Compliance &amp; Policy Management</h1>
+                <div class="module-meta">
+                    <span>&#128338; 35 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 175 XP</span>
+                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
+                </div>
+            </div>
+
+            <section class="module-section">
+                <h2>Govern Compliance of Organizational Standards</h2>
+                <p>Open-source licenses dictate how software can be used, modified, and distributed. Using a library with an incompatible license in a proprietary product can expose an organization to significant legal and financial risk. Mend SCA gives your legal team the visibility and control needed to ensure open-source components meet organizational standards.</p>
+
+                <h3>License Categories</h3>
+                <div class="vuln-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>License Examples</th>
+                                <th>Risk Level</th>
+                                <th>Key Restriction</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Permissive</strong></td>
+                                <td>MIT, Apache 2.0, BSD 2/3-Clause</td>
+                                <td><span style="color: #2ecc71;">Low</span></td>
+                                <td>Minimal &mdash; attribution required</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Weak Copyleft</strong></td>
+                                <td>LGPL 2.1, LGPL 3.0, MPL 2.0</td>
+                                <td><span style="color: #f39c12;">Medium</span></td>
+                                <td>Modifications to the library must be open-sourced</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Strong Copyleft</strong></td>
+                                <td>GPL 2.0, GPL 3.0, AGPL 3.0</td>
+                                <td><span style="color: #e74c3c;">High</span></td>
+                                <td>Entire derivative work must be open-sourced</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Commercial / Proprietary</strong></td>
+                                <td>Vendor-specific licenses</td>
+                                <td><span style="color: #e74c3c;">Variable</span></td>
+                                <td>Requires paid license or specific terms</td>
+                            </tr>
+                            <tr>
+                                <td><strong>No License / Unknown</strong></td>
+                                <td>Unlicensed code</td>
+                                <td><span style="color: #e74c3c;">Critical</span></td>
+                                <td>All rights reserved by default &mdash; cannot be used</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Mend License Detection &amp; Enforcement</h2>
+                <p>When Mend SCA detects license types that violate company policy, it issues <strong>real-time alerts</strong> with automatic remediation capabilities and can even <strong>block license violations before they become part of your code base</strong>.</p>
+
+                <h3>How It Works</h3>
+                <ul>
+                    <li><strong>Automatic Detection</strong> &mdash; Mend identifies the license for every direct and transitive dependency, including dual-licensed packages</li>
+                    <li><strong>Copyright Tracking</strong> &mdash; Tracks copyright information including organization, author, start/end year, and additional metadata</li>
+                    <li><strong>Policy Rules</strong> &mdash; Define rules like &ldquo;Block GPL-licensed packages in the mobile app project&rdquo; or &ldquo;Alert on AGPL in any project&rdquo;</li>
+                    <li><strong>PR Blocking</strong> &mdash; Automatically fail CI/CD checks when a PR introduces a dependency with a banned license</li>
+                    <li><strong>Exception Management</strong> &mdash; Grant exceptions for specific libraries when legal review approves usage</li>
+                </ul>
+
+                <div class="key-concept">
+                    <h4>&#128161; Common Customer Scenario</h4>
+                    <p>A financial services company distributes a proprietary trading platform. A developer adds a seemingly harmless open-source utility that is GPL-3.0 licensed. Without Mend, the company could be forced to open-source their entire application. With Mend&rsquo;s policy enforcement, the PR is blocked with an explanation, and the developer is guided to an MIT-licensed alternative.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Setting Up License Policies</h2>
+                <p>Configure license policies in the Mend AppSec Platform through Automation Workflows:</p>
+
+                <ol class="steps-list">
+                    <li><strong>Navigate to Automation Workflows</strong> &mdash; Access the policy configuration from the Mend AppSec Platform settings</li>
+                    <li><strong>Create a License Policy</strong> &mdash; Define which license types are approved, restricted, or banned for each project or organization</li>
+                    <li><strong>Set Enforcement Actions</strong> &mdash; Choose between Alert (notify only), Warn (non-blocking check), or Block (fail the build/PR)</li>
+                    <li><strong>Configure Exceptions</strong> &mdash; Add specific package exceptions for pre-approved libraries with documentation links</li>
+                    <li><strong>Enable Reporting</strong> &mdash; Generate license compliance reports for legal review and audit trail</li>
+                </ol>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="c">
+                        <p><strong>Question 1:</strong> Which license type poses the highest risk for proprietary software?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> MIT License</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Apache 2.0 License</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> GPL 3.0 (Strong Copyleft)</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> BSD 3-Clause License</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="b">
+                        <p><strong>Question 2:</strong> What happens when Mend detects a license violation in a PR with "Block" enforcement?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Sends an email notification to the legal team</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Automatically fails the CI/CD check on the PR</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Removes the offending dependency from the project</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Creates a Jira ticket for the developer</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned"><span class="xp-icon">&#11088;</span><span>175 XP earned for completing this module</span></div>
+                <div class="module-nav-buttons">
+                    <a href="02-reachability-analysis.html" class="btn btn-secondary">&#8592; Previous</a>
+                    <a href="04-prioritization.html" class="btn btn-primary">Next: Risk Prioritization &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/app.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

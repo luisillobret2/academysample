@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Container Security with Mend - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="../../index.html" class="logo"><div class="logo-icon">M</div> Mend <span>Learn</span></a>
+            <ul class="nav-main">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../learning-paths.html" class="active">Learning Paths</a></li>
+                <li><a href="../../certifications.html">Certifications</a></li>
+                <li><a href="../../labs.html">Labs</a></li>
+                <li><a href="../../resources.html">Resources</a></li>
+                <li><a href="../../leaderboard.html">Leaderboard</a></li>
+                <li><a href="../../ai-coach.html">AI Coach</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Search courses, labs..."></div>
+                <div class="nav-xp"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 2,450 XP</div>
+                <a href="../../profile.html" class="nav-avatar">JD</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+    </header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar">
+            <div class="sidebar-header">
+                <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
+                <h3>Container Security</h3>
+                <div class="sidebar-progress"><div class="progress-bar"><div class="fill" style="width: 0%"></div></div><span>0/3 Complete</span></div>
+            </div>
+            <nav class="module-nav">
+                <a href="01-container-security.html" class="module-link active"><span class="module-status">1</span><div><span class="module-title">Container Security Fundamentals</span><span class="module-duration">45 min</span></div></a>
+                <a href="02-image-scanning.html" class="module-link"><span class="module-status">2</span><div><span class="module-title">Image Scanning &amp; Registry Integration</span><span class="module-duration">40 min</span></div></a>
+                <a href="03-kubernetes-security.html" class="module-link"><span class="module-status">3</span><div><span class="module-title">Kubernetes &amp; Runtime Security</span><span class="module-duration">40 min</span></div></a>
+            </nav>
+        </aside>
+
+        <main class="module-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>Container Security</span> &rsaquo; <span>Fundamentals</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>Container Security Fundamentals</h1>
+                <div class="module-meta">
+                    <span>&#128338; 45 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 200 XP</span>
+                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
+                </div>
+            </div>
+
+            <section class="module-section">
+                <h2>Why Container Security Matters</h2>
+                <p>Containers have become the standard deployment model for modern applications. However, container images inherit vulnerabilities from their base images, added packages, and application dependencies. A single unpatched base image can affect hundreds of deployed containers across an organization.</p>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">75%</div>
+                        <div class="stat-label">of container images have high or critical vulnerabilities</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">60%</div>
+                        <div class="stat-label">of vulnerabilities come from the base image layer</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">300+</div>
+                        <div class="stat-label">average CVEs per unpatched base image</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Mend Container Security</h2>
+                <p>Mend Container provides comprehensive container image scanning as part of the Mend AppSec Platform. It analyzes every layer of your container images to identify vulnerabilities in OS packages, application dependencies, and configurations.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128230;</div>
+                        <h4>Multi-Layer Analysis</h4>
+                        <p>Scans each layer of the Docker image independently, identifying which layer introduced each vulnerability. Helps determine whether to update the base image or a specific package.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128270;</div>
+                        <h4>OS Package Detection</h4>
+                        <p>Identifies vulnerabilities in operating system packages (apt, yum, apk) across Alpine, Debian, Ubuntu, CentOS, and other distributions.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128260;</div>
+                        <h4>Application Dependencies</h4>
+                        <p>Detects application-level dependencies within the container (Node.js modules, Python packages, Java JARs) and applies the same SCA analysis including reachability.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128203;</div>
+                        <h4>Container SBOM</h4>
+                        <p>Generate comprehensive SBOMs for container images in SPDX or CycloneDX format, documenting every component from base image to application layer.</p>
+                    </div>
+                </div>
+
+                <div class="key-concept">
+                    <h4>&#128161; Integration with CI/CD</h4>
+                    <p>Mend Container integrates into your container build pipeline. Scan images during CI/CD before pushing to a registry, and set policies to block deployment of images with Critical or High severity vulnerabilities. This prevents vulnerable containers from ever reaching production.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Container Scanning Workflow</h2>
+                <div class="lifecycle-flow">
+                    <div class="lifecycle-step">
+                        <div class="step-icon">&#128221;</div>
+                        <h4>Dockerfile</h4>
+                        <p>Author your Dockerfile with a base image and application dependencies</p>
+                    </div>
+                    <div class="lifecycle-arrow">&#8594;</div>
+                    <div class="lifecycle-step">
+                        <div class="step-icon">&#128230;</div>
+                        <h4>Build</h4>
+                        <p>Build the container image in your CI pipeline</p>
+                    </div>
+                    <div class="lifecycle-arrow">&#8594;</div>
+                    <div class="lifecycle-step">
+                        <div class="step-icon">&#128270;</div>
+                        <h4>Scan</h4>
+                        <p>Mend scans all layers for OS and app vulnerabilities</p>
+                    </div>
+                    <div class="lifecycle-arrow">&#8594;</div>
+                    <div class="lifecycle-step">
+                        <div class="step-icon">&#9989;</div>
+                        <h4>Gate</h4>
+                        <p>Policy gates approve or block based on findings</p>
+                    </div>
+                    <div class="lifecycle-arrow">&#8594;</div>
+                    <div class="lifecycle-step">
+                        <div class="step-icon">&#128640;</div>
+                        <h4>Deploy</h4>
+                        <p>Push approved images to registry and deploy</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="b">
+                        <p><strong>Question 1:</strong> Where do most container image vulnerabilities originate?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Application code written by developers</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Base image layer (OS packages and system libraries)</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Container orchestration configuration</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Network policies between containers</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="c">
+                        <p><strong>Question 2:</strong> When in the container lifecycle should scanning occur?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Only after deployment to production</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Only when writing the Dockerfile</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> During CI/CD before pushing to a registry</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Monthly via manual review</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <button class="mark-complete-btn" data-xp="200">Mark as Complete</button>
+                <div class="module-nav-buttons">
+                    <span></span>
+                    <a href="02-image-scanning.html" class="btn btn-primary">Next: Image Scanning &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/app.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>
