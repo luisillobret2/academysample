@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCA Overview &amp; Vulnerability Scanning - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="../../index.html" class="logo"><div class="logo-icon">M</div> Mend <span>Learn</span></a>
+            <ul class="nav-main">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../learning-paths.html" class="active">Learning Paths</a></li>
+                <li><a href="../../certifications.html">Certifications</a></li>
+                <li><a href="../../labs.html">Labs</a></li>
+                <li><a href="../../resources.html">Resources</a></li>
+                <li><a href="../../leaderboard.html">Leaderboard</a></li>
+                <li><a href="../../ai-coach.html">AI Coach</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Search courses, labs..."></div>
+                <div class="nav-xp"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 2,450 XP</div>
+                <a href="../../profile.html" class="nav-avatar">JD</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+    </header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar">
+            <div class="sidebar-header">
+                <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
+                <h3>SCA Deep Dive</h3>
+                <div class="sidebar-progress">
+                    <div class="progress-bar"><div class="fill" data-progress="68%" style="width: 68%"></div></div>
+                    <span>4/6 Complete</span>
+                </div>
+            </div>
+            <nav class="module-nav">
+                <a href="01-sca-overview.html" class="module-link active completed">
+                    <span class="module-status">&#10003;</span>
+                    <div><span class="module-title">SCA Overview &amp; Vulnerability Scanning</span><span class="module-duration">45 min</span></div>
+                </a>
+                <a href="02-reachability-analysis.html" class="module-link completed">
+                    <span class="module-status">&#10003;</span>
+                    <div><span class="module-title">Reachability Analysis</span><span class="module-duration">40 min</span></div>
+                </a>
+                <a href="03-license-compliance.html" class="module-link completed">
+                    <span class="module-status">&#10003;</span>
+                    <div><span class="module-title">License Compliance &amp; Policy</span><span class="module-duration">35 min</span></div>
+                </a>
+                <a href="04-prioritization.html" class="module-link completed">
+                    <span class="module-status">&#10003;</span>
+                    <div><span class="module-title">Risk Prioritization &amp; EPSS</span><span class="module-duration">30 min</span></div>
+                </a>
+                <a href="05-remediation.html" class="module-link">
+                    <span class="module-status">5</span>
+                    <div><span class="module-title">Auto-Remediation &amp; Renovate</span><span class="module-duration">40 min</span></div>
+                </a>
+                <a href="06-sbom-reporting.html" class="module-link">
+                    <span class="module-status">6</span>
+                    <div><span class="module-title">SBOM Generation &amp; Reporting</span><span class="module-duration">35 min</span></div>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="module-content">
+            <div class="module-breadcrumb">
+                <a href="../../learning-paths.html">Learning Paths</a> &rsaquo;
+                <span>SCA Deep Dive</span> &rsaquo;
+                <span>SCA Overview</span>
+            </div>
+
+            <div class="module-header">
+                <div class="module-badge completed-badge">&#10003; Completed</div>
+                <h1>SCA Overview &amp; Vulnerability Scanning</h1>
+                <div class="module-meta">
+                    <span>&#128338; 45 min</span>
+                    <span>&#128218; 5 sections</span>
+                    <span>&#11088; 200 XP</span>
+                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
+                </div>
+            </div>
+
+            <section class="module-section">
+                <h2>What is Mend SCA?</h2>
+                <p>Mend SCA (Software Composition Analysis) gives organizations full visibility and control over open-source usage and security. It makes it easy for developers to remediate open-source risk directly from the tools they already use. Mend SCA can issue real-time alerts with automatic remediation capabilities, and can even proactively block malicious packages and licensing violations.</p>
+
+                <div class="video-placeholder">
+                    <div class="play-icon">&#9654;</div>
+                    <div class="video-title">Introduction to Mend SCA</div>
+                    <div class="video-duration">8:42</div>
+                </div>
+
+                <h3>How SCA Scanning Works</h3>
+                <p>Mend SCA scans your project&rsquo;s dependency manifests (e.g., <code>package.json</code>, <code>pom.xml</code>, <code>requirements.txt</code>, <code>go.mod</code>) and lockfiles to build a complete dependency tree. It then cross-references every component against:</p>
+                <ul>
+                    <li><strong>Mend Vulnerability Database</strong> &mdash; Curated from NVD, GitHub Advisories, and proprietary research</li>
+                    <li><strong>Malicious Package Database</strong> &mdash; Real-time feeds identifying typosquatting, dependency confusion, and compromised packages</li>
+                    <li><strong>License Database</strong> &mdash; Complete license classification for compliance enforcement</li>
+                </ul>
+            </section>
+
+            <section class="module-section">
+                <h2>Getting Started with Mend AppSec Platform</h2>
+                <p>Before running your first SCA scan, you need to set up your environment within the Mend AppSec Platform:</p>
+
+                <ol class="steps-list">
+                    <li><strong>Set Up Sign-In (SSO)</strong> &mdash; Configure secure login access for your organization with seamless SSO integration via SAML 2.0 or OpenID Connect</li>
+                    <li><strong>Configure Your Organization</strong> &mdash; Set up your account structure with organizations, applications, and projects that mirror your development teams</li>
+                    <li><strong>Connect Repository Integrations</strong> &mdash; Link your source code repositories from GitHub, GitLab, Bitbucket, or Azure DevOps for automatic scanning</li>
+                    <li><strong>Configure Automation Workflows</strong> &mdash; Set up security policies that automatically enforce rules and streamline remediation processes</li>
+                    <li><strong>Run Your First Scan</strong> &mdash; Use the Mend CLI or repository integration to scan a project and review findings in the dashboard</li>
+                </ol>
+
+                <div class="key-concept">
+                    <h4>&#128161; Scanning Methods</h4>
+                    <p>Mend SCA offers multiple scanning methods: <strong>Repository Integrations</strong> scan automatically on every commit/PR, the <strong>Mend CLI</strong> provides on-demand scanning from any terminal or CI/CD pipeline, and the <strong>Unified Agent</strong> offers advanced scanning within the CLI for complex projects.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Scan Using the Mend CLI</h2>
+                <p>The Mend CLI is the primary tool for running SCA scans. It supports scanning from developer workstations, CI/CD pipelines, and automated workflows.</p>
+
+                <pre><code># Install the Mend CLI
+npm install -g @mend/cli
+
+# Authenticate with your organization
+mend auth login
+
+# Run an SCA scan on your project
+mend sca scan --dir ./my-project
+
+# Run with specific configuration
+mend sca scan --dir ./my-project --scope "dependencies" --format json</code></pre>
+
+                <h3>Configuration Parameters</h3>
+                <p>The Mend CLI supports extensive configuration through command-line flags and configuration files:</p>
+
+                <div class="vuln-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Description</th>
+                                <th>Default</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>--dir</code></td>
+                                <td>Project directory to scan</td>
+                                <td>Current directory</td>
+                            </tr>
+                            <tr>
+                                <td><code>--scope</code></td>
+                                <td>Scan scope: dependencies, devDependencies, or all</td>
+                                <td>dependencies</td>
+                            </tr>
+                            <tr>
+                                <td><code>--severity</code></td>
+                                <td>Minimum severity to report: low, medium, high, critical</td>
+                                <td>low</td>
+                            </tr>
+                            <tr>
+                                <td><code>--format</code></td>
+                                <td>Output format: table, json, sarif</td>
+                                <td>table</td>
+                            </tr>
+                            <tr>
+                                <td><code>--fail-on</code></td>
+                                <td>Fail the scan if findings exceed severity threshold</td>
+                                <td>none</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Understanding Scan Results</h2>
+                <p>After a scan completes, Mend SCA categorizes findings by severity and provides actionable context for each vulnerability:</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128270;</div>
+                        <h4>Security Findings</h4>
+                        <p>View CVEs identified in your dependencies with CVSS scores, EPSS predictions, reachability status, and available fix versions.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128203;</div>
+                        <h4>License Violations</h4>
+                        <p>Identify dependencies with licenses that violate your organization&rsquo;s policy (e.g., GPL in a proprietary product).</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9888;&#65039;</div>
+                        <h4>Malicious Packages</h4>
+                        <p>Real-time alerts for packages flagged as typosquatting, dependency confusion, or containing known malware.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128200;</div>
+                        <h4>Dashboards</h4>
+                        <p>Organization-wide visibility into vulnerability trends, remediation progress, and compliance status across all projects.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="b">
+                        <p><strong>Question 1:</strong> What files does Mend SCA scan to build a dependency tree?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Source code files (.js, .java, .py)</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Dependency manifests and lockfiles (package.json, pom.xml, etc.)</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Compiled binary files</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> CI/CD pipeline configuration files</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="c">
+                        <p><strong>Question 2:</strong> What does the <code>--fail-on</code> CLI parameter do?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Automatically fixes vulnerabilities above the threshold</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Sends email notifications for critical findings</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Fails the scan if findings exceed the severity threshold</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Filters the output to show only failures</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>200 XP earned for completing this module</span>
+                </div>
+                <div class="module-nav-buttons">
+                    <span></span>
+                    <a href="02-reachability-analysis.html" class="btn btn-primary">Next: Reachability Analysis &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/app.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

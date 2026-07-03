@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Remediation - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="../../index.html" class="logo"><div class="logo-icon">M</div> Mend <span>Learn</span></a>
+            <ul class="nav-main">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../learning-paths.html" class="active">Learning Paths</a></li>
+                <li><a href="../../certifications.html">Certifications</a></li>
+                <li><a href="../../labs.html">Labs</a></li>
+                <li><a href="../../resources.html">Resources</a></li>
+                <li><a href="../../leaderboard.html">Leaderboard</a></li>
+                <li><a href="../../ai-coach.html">AI Coach</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Search courses, labs..."></div>
+                <div class="nav-xp"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 2,450 XP</div>
+                <a href="../../profile.html" class="nav-avatar">JD</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+    </header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar">
+            <div class="sidebar-header">
+                <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
+                <h3>SAST Product Track</h3>
+                <div class="sidebar-progress"><div class="progress-bar"><div class="fill" style="width: 25%"></div></div><span>1/4 Complete</span></div>
+            </div>
+            <nav class="module-nav">
+                <a href="01-sast-overview.html" class="module-link completed"><span class="module-status">&#10003;</span><div><span class="module-title">SAST Overview &amp; Code Analysis</span><span class="module-duration">45 min</span></div></a>
+                <a href="02-ai-remediation.html" class="module-link active"><span class="module-status">2</span><div><span class="module-title">AI-Powered Remediation</span><span class="module-duration">40 min</span></div></a>
+                <a href="03-cicd-integration.html" class="module-link"><span class="module-status">3</span><div><span class="module-title">CI/CD Pipeline Integration</span><span class="module-duration">40 min</span></div></a>
+                <a href="04-custom-rules.html" class="module-link"><span class="module-status">4</span><div><span class="module-title">Custom Rules &amp; Policies</span><span class="module-duration">35 min</span></div></a>
+            </nav>
+        </aside>
+
+        <main class="module-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>SAST Product Track</span> &rsaquo; <span>AI-Powered Remediation</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>AI-Powered Remediation</h1>
+                <div class="module-meta">
+                    <span>&#128338; 40 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 200 XP</span>
+                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
+                </div>
+            </div>
+
+            <section class="module-section">
+                <h2>From Detection to Resolution in Seconds</h2>
+                <p>Finding vulnerabilities is only useful if developers can fix them quickly. Mend SAST goes beyond detection by providing <strong>AI-powered remediation suggestions</strong> that understand the context of your code and generate precise, secure fixes.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9889;</div>
+                        <h4>Instant Fix Suggestions</h4>
+                        <p>When Mend SAST identifies a vulnerability, it simultaneously generates a secure code fix. The fix is context-aware &mdash; it understands your coding patterns, frameworks, and language idioms.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128187;</div>
+                        <h4>IDE Integration</h4>
+                        <p>Get real-time SAST feedback directly in VS Code, IntelliJ, and other popular IDEs. Vulnerabilities are highlighted inline with one-click fix application.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#129302;</div>
+                        <h4>Agentic AI Workflow</h4>
+                        <p>Mend SAST feeds vulnerability information into AI code assistants (Copilot, Claude, custom models) to automatically remediate code flaws pre-commit.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128260;</div>
+                        <h4>Verification Loop</h4>
+                        <p>After applying a fix, Mend re-scans to verify the vulnerability is resolved and no new issues were introduced &mdash; closing the remediation loop.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Remediation Example: SQL Injection</h2>
+                <p>Here&rsquo;s how Mend SAST detects and fixes a SQL injection vulnerability:</p>
+
+                <h3>Vulnerable Code (Detected)</h3>
+                <pre><code>// VULNERABLE: User input concatenated directly into SQL query
+app.get('/users', (req, res) => {
+    const name = req.query.name;
+    const query = `SELECT * FROM users WHERE name = '${name}'`;
+    db.execute(query, (err, results) => {
+        res.json(results);
+    });
+});</code></pre>
+
+                <h3>Mend SAST Fix (Suggested)</h3>
+                <pre><code>// SECURE: Parameterized query prevents SQL injection
+app.get('/users', (req, res) => {
+    const name = req.query.name;
+    const query = 'SELECT * FROM users WHERE name = ?';
+    db.execute(query, [name], (err, results) => {
+        res.json(results);
+    });
+});</code></pre>
+
+                <div class="key-concept">
+                    <h4>&#128161; What Makes Mend&rsquo;s Fixes Different</h4>
+                    <p>Mend&rsquo;s AI-powered fixes are not generic templates. They analyze the <strong>specific context</strong> of your code &mdash; the database driver you&rsquo;re using, the framework patterns in your project, and the data flow &mdash; to generate a fix that fits naturally into your codebase. The recommended fix is marked as available in the scan results alongside the severity classification.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Remediation at Scale</h2>
+                <p>For enterprise customers with thousands of findings across hundreds of repositories, Mend provides bulk remediation capabilities:</p>
+
+                <ul>
+                    <li><strong>Priority-Based Remediation</strong> &mdash; Focus on Critical and High severity findings first, with recommended fix availability indicators showing which findings can be auto-fixed</li>
+                    <li><strong>Batch Fix PRs</strong> &mdash; Generate pull requests that fix multiple related findings in a single commit, reducing PR noise and review burden</li>
+                    <li><strong>Jira Integration</strong> &mdash; Connect Mend to Jira to automatically create tickets for findings that require manual review, with full context and suggested fixes</li>
+                    <li><strong>Trend Tracking</strong> &mdash; Dashboard metrics show remediation velocity over time &mdash; how fast are new vulnerabilities being fixed vs. introduced?</li>
+                </ul>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">80%</div>
+                        <div class="stat-label">faster MTTR with AI-powered fixes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">52%</div>
+                        <div class="stat-label">typical scan coverage when running all checks</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">7</div>
+                        <div class="stat-label">Critical findings identified per project (avg)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">138</div>
+                        <div class="stat-label">High severity findings with fixes available (avg)</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="b">
+                        <p><strong>Question 1:</strong> How does Mend SAST&rsquo;s AI fix a SQL injection vulnerability?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Adds input validation with regex patterns</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Converts to parameterized queries based on the database driver being used</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Removes the SQL query entirely and suggests an ORM</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Encrypts the user input before inserting into the query</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="d">
+                        <p><strong>Question 2:</strong> What happens after Mend applies an AI-generated fix?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> The fix is deployed directly to production</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> A Jira ticket is created for manual review</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> The developer must manually verify the fix</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Mend re-scans to verify the vulnerability is resolved and no new issues were introduced</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <button class="mark-complete-btn" data-xp="200">Mark as Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="01-sast-overview.html" class="btn btn-secondary">&#8592; Previous</a>
+                    <a href="03-cicd-integration.html" class="btn btn-primary">Next: CI/CD Integration &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/app.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

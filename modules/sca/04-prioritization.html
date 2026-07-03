@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Prioritization &amp; EPSS - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="../../index.html" class="logo"><div class="logo-icon">M</div> Mend <span>Learn</span></a>
+            <ul class="nav-main">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../learning-paths.html" class="active">Learning Paths</a></li>
+                <li><a href="../../certifications.html">Certifications</a></li>
+                <li><a href="../../labs.html">Labs</a></li>
+                <li><a href="../../resources.html">Resources</a></li>
+                <li><a href="../../leaderboard.html">Leaderboard</a></li>
+                <li><a href="../../ai-coach.html">AI Coach</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Search courses, labs..."></div>
+                <div class="nav-xp"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 2,450 XP</div>
+                <a href="../../profile.html" class="nav-avatar">JD</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+    </header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar">
+            <div class="sidebar-header">
+                <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
+                <h3>SCA Deep Dive</h3>
+                <div class="sidebar-progress"><div class="progress-bar"><div class="fill" style="width: 68%"></div></div><span>4/6 Complete</span></div>
+            </div>
+            <nav class="module-nav">
+                <a href="01-sca-overview.html" class="module-link completed"><span class="module-status">&#10003;</span><div><span class="module-title">SCA Overview &amp; Vulnerability Scanning</span><span class="module-duration">45 min</span></div></a>
+                <a href="02-reachability-analysis.html" class="module-link completed"><span class="module-status">&#10003;</span><div><span class="module-title">Reachability Analysis</span><span class="module-duration">40 min</span></div></a>
+                <a href="03-license-compliance.html" class="module-link completed"><span class="module-status">&#10003;</span><div><span class="module-title">License Compliance &amp; Policy</span><span class="module-duration">35 min</span></div></a>
+                <a href="04-prioritization.html" class="module-link active completed"><span class="module-status">&#10003;</span><div><span class="module-title">Risk Prioritization &amp; EPSS</span><span class="module-duration">30 min</span></div></a>
+                <a href="05-remediation.html" class="module-link"><span class="module-status">5</span><div><span class="module-title">Auto-Remediation &amp; Renovate</span><span class="module-duration">40 min</span></div></a>
+                <a href="06-sbom-reporting.html" class="module-link"><span class="module-status">6</span><div><span class="module-title">SBOM Generation &amp; Reporting</span><span class="module-duration">35 min</span></div></a>
+            </nav>
+        </aside>
+
+        <main class="module-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>SCA Deep Dive</span> &rsaquo; <span>Risk Prioritization</span></div>
+
+            <div class="module-header">
+                <div class="module-badge completed-badge">&#10003; Completed</div>
+                <h1>Risk Prioritization &amp; EPSS Scoring</h1>
+                <div class="module-meta">
+                    <span>&#128338; 30 min</span>
+                    <span>&#128218; 3 sections</span>
+                    <span>&#11088; 175 XP</span>
+                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
+                </div>
+            </div>
+
+            <section class="module-section">
+                <h2>Prioritize Threats Based on Severity</h2>
+                <p>With thousands of CVEs published annually, knowing <em>what to fix first</em> is as important as finding vulnerabilities. Mend SCA leverages comprehensive vulnerability assessment to identify true risks affecting your application, including those powered by AI.</p>
+
+                <h3>Mend&rsquo;s Risk Prioritization Stack</h3>
+                <p>Mend combines four signals to create an effective prioritization:</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128200;</div>
+                        <h4>CVSS 4.0 Severity</h4>
+                        <p>The Common Vulnerability Scoring System measures the intrinsic qualities of a vulnerability. Mend uses the latest CVSS 4.0 standard for more accurate severity classification.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#127919;</div>
+                        <h4>EPSS Prediction</h4>
+                        <p>The Exploit Prediction Scoring System estimates the probability a CVE will be exploited in the wild within 30 days, ranging from 0% to 100%.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128279;</div>
+                        <h4>Reachability Status</h4>
+                        <p>Whether your application code actually calls the vulnerable function. Unreachable CVEs are deprioritized regardless of severity.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128295;</div>
+                        <h4>Fix Availability</h4>
+                        <p>Whether a patched version of the dependency exists. Vulnerabilities with available fixes are prioritized since remediation is actionable.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Understanding EPSS</h2>
+                <p>EPSS is a data-driven effort to estimate the likelihood that a software vulnerability will be exploited in the wild. It produces a score between 0 and 1 (0% to 100%).</p>
+
+                <div class="key-concept">
+                    <h4>&#128161; Why EPSS Matters More Than CVSS Alone</h4>
+                    <p>CVSS measures theoretical severity &mdash; how <em>bad</em> a vulnerability could be if exploited. EPSS measures practical likelihood &mdash; how <em>likely</em> it is to actually be exploited. A CVSS 9.8 Critical vulnerability with an EPSS of 0.01% is far less urgent than a CVSS 7.5 High vulnerability with an EPSS of 85%. Mend combines both to surface the most actionable risks.</p>
+                </div>
+
+                <h3>Mend Findings Dashboard</h3>
+                <p>The Mend SCA dashboard provides a funnel view of your findings, helping you focus on what matters:</p>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">120</div>
+                        <div class="stat-label">Total Findings</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">32</div>
+                        <div class="stat-label">Critical / High Severity</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">18</div>
+                        <div class="stat-label">Reachable</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">16</div>
+                        <div class="stat-label">Fix Available</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">10</div>
+                        <div class="stat-label">Exploitable (EPSS &gt; 10%)</div>
+                    </div>
+                </div>
+                <p>In this example, 120 raw findings funnel down to <strong>10 truly urgent items</strong> that need immediate attention &mdash; the ones that are Critical/High severity, reachable, have a fix available, and have a meaningful probability of exploitation.</p>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="b">
+                        <p><strong>Question 1:</strong> What does EPSS measure?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> The severity of a vulnerability on a 0-10 scale</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> The probability that a CVE will be exploited in the wild within 30 days</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> The number of endpoints affected by a vulnerability</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> The time required to remediate a vulnerability</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="d">
+                        <p><strong>Question 2:</strong> Which combination represents the highest-priority vulnerability?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> CVSS 9.8, EPSS 0.01%, Unreachable, No Fix</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> CVSS 4.0, EPSS 50%, Reachable, Fix Available</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> CVSS 7.5, EPSS 2%, Unreachable, Fix Available</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> CVSS 9.1, EPSS 85%, Reachable, Fix Available</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned"><span class="xp-icon">&#11088;</span><span>175 XP earned for completing this module</span></div>
+                <div class="module-nav-buttons">
+                    <a href="03-license-compliance.html" class="btn btn-secondary">&#8592; Previous</a>
+                    <a href="05-remediation.html" class="btn btn-primary">Next: Auto-Remediation &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/app.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

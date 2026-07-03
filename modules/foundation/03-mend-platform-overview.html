@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mend Platform Overview - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="../../index.html" class="logo"><div class="logo-icon">M</div> Mend <span>Learn</span></a>
+            <ul class="nav-main">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../learning-paths.html" class="active">Learning Paths</a></li>
+                <li><a href="../../certifications.html">Certifications</a></li>
+                <li><a href="../../labs.html">Labs</a></li>
+                <li><a href="../../resources.html">Resources</a></li>
+                <li><a href="../../leaderboard.html">Leaderboard</a></li>
+                <li><a href="../../ai-coach.html">AI Coach</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Search courses, labs..."></div>
+                <div class="nav-xp"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 2,450 XP</div>
+                <a href="../../profile.html" class="nav-avatar">JD</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+    </header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar">
+            <div class="sidebar-header">
+                <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
+                <h3>Foundation Track</h3>
+                <div class="sidebar-progress">
+                    <div class="progress-bar"><div class="fill" style="width: 100%"></div></div>
+                    <span>3/3 Complete</span>
+                </div>
+            </div>
+            <nav class="module-nav">
+                <a href="01-appsec-fundamentals.html" class="module-link completed">
+                    <span class="module-status">&#10003;</span>
+                    <div><span class="module-title">Application Security Fundamentals</span><span class="module-duration">45 min</span></div>
+                </a>
+                <a href="02-supply-chain-security.html" class="module-link completed">
+                    <span class="module-status">&#10003;</span>
+                    <div><span class="module-title">Software Supply Chain Security</span><span class="module-duration">40 min</span></div>
+                </a>
+                <a href="03-mend-platform-overview.html" class="module-link active completed">
+                    <span class="module-status">&#10003;</span>
+                    <div><span class="module-title">Mend Platform Overview</span><span class="module-duration">50 min</span></div>
+                </a>
+            </nav>
+            <div class="sidebar-cert">
+                <span class="cert-icon">&#127942;</span>
+                <div>
+                    <strong>Certification Unlocked</strong>
+                    <p>Certified Associate exam now available</p>
+                </div>
+            </div>
+        </aside>
+
+        <main class="module-content">
+            <div class="module-breadcrumb">
+                <a href="../../learning-paths.html">Learning Paths</a> &rsaquo;
+                <a href="01-appsec-fundamentals.html">Foundation Track</a> &rsaquo;
+                <span>Mend Platform Overview</span>
+            </div>
+
+            <div class="module-header">
+                <div class="module-badge completed-badge">&#10003; Completed</div>
+                <h1>Mend.io Platform Overview</h1>
+                <div class="module-meta">
+                    <span>&#128338; 50 min</span>
+                    <span>&#128218; 6 sections</span>
+                    <span>&#11088; 200 XP</span>
+                    <span class="level-badge beginner">Level 1 - Beginner</span>
+                </div>
+            </div>
+
+            <section class="module-section">
+                <h2>Three Products, One Lifecycle</h2>
+                <p>Mend.io provides full-spectrum application security across three integrated products. Each addresses a distinct security surface, and together they deliver application security testing, AI security testing, and automated remediation across the complete development lifecycle.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #6c5ce7;">&#127760;</div>
+                        <h4>Mend AppSec</h4>
+                        <p>Application security testing including SAST (static analysis), SCA (software composition analysis), Container Security, DAST, API security, and license compliance. Scans source code and dependencies to find and fix vulnerabilities.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #e74c7d;">&#129302;</div>
+                        <h4>Mend AI</h4>
+                        <p>AI security from inventory to runtime. Full visibility and governance over AI components &mdash; models, agents, RAG pipelines, and MCPs &mdash; with automated red teaming and runtime guardrails enforced inside your infrastructure.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #00b894;">&#128260;</div>
+                        <h4>Mend Renovate</h4>
+                        <p>Automated dependency updates at enterprise scale. Keeps open-source dependencies current with intelligent, non-breaking pull requests. Supports 90+ package managers and integrates with all major source code platforms.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Mend AppSec Platform Architecture</h2>
+                <p>The Mend AppSec Platform provides a unified interface for managing application security across your organization. Here is how the key components connect:</p>
+
+                <div class="architecture-diagram">
+                    <h4 style="color: var(--color-text-bright); margin-bottom: 16px;">Mend AppSec Platform</h4>
+                    <div class="diagram-row">
+                        <div class="diagram-box primary">Mend SCA</div>
+                        <div class="diagram-box primary">Mend SAST</div>
+                        <div class="diagram-box primary">Container Security</div>
+                        <div class="diagram-box primary">Mend AI</div>
+                    </div>
+                    <div class="diagram-arrow">&#8595;</div>
+                    <div class="diagram-row">
+                        <div class="diagram-box secondary">Repository Integrations</div>
+                        <div class="diagram-box secondary">Pipeline Integration (CLI)</div>
+                        <div class="diagram-box secondary">AppSec Platform API</div>
+                    </div>
+                    <div class="diagram-arrow">&#8595;</div>
+                    <div class="diagram-row">
+                        <div class="diagram-box neutral">GitHub / GitLab / Bitbucket / Azure DevOps</div>
+                    </div>
+                    <div class="diagram-arrow">&#8595;</div>
+                    <div class="diagram-row">
+                        <div class="diagram-box neutral">Dashboards</div>
+                        <div class="diagram-box neutral">Reports &amp; SBOMs</div>
+                        <div class="diagram-box neutral">Jira Integration</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Mend SCA &mdash; Software Composition Analysis</h2>
+                <p>Mend SCA gives organizations full visibility and control over open-source usage and security. It makes it easy for developers to remediate open-source risk directly from the tools they already use, with automatic remediation capabilities that can even proactively block malicious packages and licensing violations.</p>
+
+                <h3>Key Capabilities</h3>
+                <ul>
+                    <li><strong>Reachability Analysis</strong> &mdash; Determines whether your code actually calls the vulnerable function in a dependency, dramatically reducing false positives</li>
+                    <li><strong>Agentic SCA for AI</strong> &mdash; Feeds vulnerability information with reachability analysis into AI code assistants for autonomous remediation pre-commit</li>
+                    <li><strong>CVSS 4.0 + EPSS Scoring</strong> &mdash; Gauges impact with the latest severity ratings and incorporates exploit prediction data</li>
+                    <li><strong>License Compliance</strong> &mdash; Detects license types (GPL, LGPL, MIT, Apache) that violate company policy with real-time alerts and auto-remediation</li>
+                    <li><strong>SBOM Generation</strong> &mdash; Produces SPDX 2.2 and CycloneDX 1.4 format SBOMs with VEX data for government and customer compliance</li>
+                    <li><strong>Malicious Package Detection</strong> &mdash; Identifies typosquatting, dependency confusion, and compromised packages in real-time</li>
+                </ul>
+
+                <div class="key-concept">
+                    <h4>&#128161; Partner Talking Point</h4>
+                    <p>Mend SCA supports <strong>200+ languages and package managers</strong> &mdash; far more than competitors like Snyk (~30 languages). Combined with reachability analysis, this means customers see <strong>fewer false positives</strong> and can focus remediation on vulnerabilities that actually matter.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Mend SAST &mdash; Static Application Security Testing</h2>
+                <p>Mend SAST embeds code security directly into AI workflows, enabling proactive vulnerability remediation. Developers can resolve code flaws, whether human or AI generated, with near real-time feedback and AI powered fixes.</p>
+
+                <h3>Key Capabilities</h3>
+                <ul>
+                    <li><strong>Agentic SAST</strong> &mdash; Feeds vulnerability information into AI code assistants to automatically remediate custom code flaws directly in the AI workflow, pre-commit</li>
+                    <li><strong>AI-Powered Remediation</strong> &mdash; Suggests context-aware fixes with one-click application</li>
+                    <li><strong>IDE Integration</strong> &mdash; Real-time feedback in VS Code, IntelliJ, and other popular IDEs</li>
+                    <li><strong>CI/CD Pipeline Scanning</strong> &mdash; Enforces security gates in GitHub Actions, Jenkins, Azure Pipelines, and GitLab CI</li>
+                    <li><strong>Custom Rules</strong> &mdash; Define organization-specific security policies and coding standards</li>
+                    <li><strong>Low False Positive Rate</strong> &mdash; Advanced data flow and taint analysis reduces noise</li>
+                </ul>
+            </section>
+
+            <section class="module-section">
+                <h2>Platform Benefits for Partners</h2>
+                <p>Understanding the platform&rsquo;s key differentiators helps partners position Mend.io effectively against competitors:</p>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">10x</div>
+                        <div class="stat-label">Faster scan speed than competitors</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">80%</div>
+                        <div class="stat-label">Faster MTTR (Mean Time To Remediate)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">3x</div>
+                        <div class="stat-label">More risks resolved vs. manual approaches</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">200+</div>
+                        <div class="stat-label">Languages and package managers supported</div>
+                    </div>
+                </div>
+
+                <h3>Competitive Differentiators</h3>
+                <div class="vuln-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Capability</th>
+                                <th>Mend.io</th>
+                                <th>Competitors</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Reachability Analysis</strong></td>
+                                <td>Native, identifies if vulnerable code is actually called</td>
+                                <td>Limited or unavailable</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Agentic AI Security</strong></td>
+                                <td>SCA + SAST feed directly into AI coding assistants pre-commit</td>
+                                <td>Post-commit scanning only</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Language Support</strong></td>
+                                <td>200+ languages and package managers</td>
+                                <td>Typically 20-50 languages</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Auto-Remediation</strong></td>
+                                <td>Automated PR generation with Renovate + AI fixes</td>
+                                <td>Manual remediation guidance</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Malicious Package Detection</strong></td>
+                                <td>Real-time blocking of typosquatting and supply chain attacks</td>
+                                <td>Advisory-based detection only</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="b">
+                        <p><strong>Question 1:</strong> What are Mend.io&rsquo;s three main products?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> SCA, SAST, and DAST</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Mend AppSec, Mend AI, and Mend Renovate</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Mend Scan, Mend Fix, and Mend Report</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Mend Cloud, Mend On-Premise, and Mend Hybrid</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="c">
+                        <p><strong>Question 2:</strong> What is Mend&rsquo;s key differentiator for reducing false positives in SCA?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Faster scan speeds</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> More languages supported</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Reachability analysis that determines if vulnerable code is actually called</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> CVSS 4.0 scoring</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="d">
+                        <p><strong>Question 3:</strong> What does Mend Renovate do?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q3" value="a"> Performs static analysis on source code</label>
+                            <label class="quiz-option"><input type="radio" name="q3" value="b"> Scans container images for vulnerabilities</label>
+                            <label class="quiz-option"><input type="radio" name="q3" value="c"> Provides AI model security testing</label>
+                            <label class="quiz-option"><input type="radio" name="q3" value="d"> Automates dependency updates with intelligent pull requests</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>200 XP earned for completing this module</span>
+                </div>
+                <div class="module-nav-buttons">
+                    <a href="02-supply-chain-security.html" class="btn btn-secondary">&#8592; Previous</a>
+                    <a href="../../certifications.html" class="btn btn-primary">Take Certification Exam &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/app.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

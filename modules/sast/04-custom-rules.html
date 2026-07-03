@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Rules &amp; Policies - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="../../index.html" class="logo"><div class="logo-icon">M</div> Mend <span>Learn</span></a>
+            <ul class="nav-main">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../learning-paths.html" class="active">Learning Paths</a></li>
+                <li><a href="../../certifications.html">Certifications</a></li>
+                <li><a href="../../labs.html">Labs</a></li>
+                <li><a href="../../resources.html">Resources</a></li>
+                <li><a href="../../leaderboard.html">Leaderboard</a></li>
+                <li><a href="../../ai-coach.html">AI Coach</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Search courses, labs..."></div>
+                <div class="nav-xp"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 2,450 XP</div>
+                <a href="../../profile.html" class="nav-avatar">JD</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+    </header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar">
+            <div class="sidebar-header">
+                <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
+                <h3>SAST Product Track</h3>
+                <div class="sidebar-progress"><div class="progress-bar"><div class="fill" style="width: 75%"></div></div><span>3/4 Complete</span></div>
+            </div>
+            <nav class="module-nav">
+                <a href="01-sast-overview.html" class="module-link completed"><span class="module-status">&#10003;</span><div><span class="module-title">SAST Overview &amp; Code Analysis</span><span class="module-duration">45 min</span></div></a>
+                <a href="02-ai-remediation.html" class="module-link completed"><span class="module-status">&#10003;</span><div><span class="module-title">AI-Powered Remediation</span><span class="module-duration">40 min</span></div></a>
+                <a href="03-cicd-integration.html" class="module-link completed"><span class="module-status">&#10003;</span><div><span class="module-title">CI/CD Pipeline Integration</span><span class="module-duration">40 min</span></div></a>
+                <a href="04-custom-rules.html" class="module-link active"><span class="module-status">4</span><div><span class="module-title">Custom Rules &amp; Policies</span><span class="module-duration">35 min</span></div></a>
+            </nav>
+        </aside>
+
+        <main class="module-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>SAST Product Track</span> &rsaquo; <span>Custom Rules</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>Custom Rules &amp; Security Policies</h1>
+                <div class="module-meta">
+                    <span>&#128338; 35 min</span>
+                    <span>&#128218; 3 sections</span>
+                    <span>&#11088; 175 XP</span>
+                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
+                </div>
+            </div>
+
+            <section class="module-section">
+                <h2>Organization-Specific Security Standards</h2>
+                <p>Every organization has unique security requirements beyond standard vulnerability detection. Mend SAST allows security teams to define custom rules and policies that enforce organization-specific coding standards, regulatory requirements, and security best practices.</p>
+
+                <h3>Automation Workflows in the Mend AppSec Platform</h3>
+                <p>The Mend AppSec Platform provides <strong>Automation Workflows</strong> that allow you to automatically enforce security rules and streamline processes across your organization:</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128736;</div>
+                        <h4>Severity Thresholds</h4>
+                        <p>Set minimum severity levels that trigger different actions &mdash; auto-create Jira tickets for Critical, send Slack alerts for High, log Medium for quarterly review.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128274;</div>
+                        <h4>Compliance Rules</h4>
+                        <p>Map SAST findings to compliance frameworks (OWASP Top 10, SANS Top 25, PCI DSS) and generate compliance-specific reports for auditors.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128101;</div>
+                        <h4>Team Routing</h4>
+                        <p>Automatically assign findings to the right team based on file path, severity, or finding type. Security-critical findings go to the security team; code quality issues go to developers.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128226;</div>
+                        <h4>Notification Channels</h4>
+                        <p>Configure alerts via email, Slack, Microsoft Teams, or webhooks. Set different notification rules for different severity levels and teams.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Managing Access &amp; Organizational Structure</h2>
+                <p>The Mend AppSec Platform uses a hierarchical structure to organize security management across large enterprises:</p>
+
+                <div class="architecture-diagram">
+                    <h4 style="color: var(--color-text-bright); margin-bottom: 16px;">Mend Account Structure</h4>
+                    <div class="diagram-row">
+                        <div class="diagram-box primary">Organization</div>
+                    </div>
+                    <div class="diagram-arrow">&#8595;</div>
+                    <div class="diagram-row">
+                        <div class="diagram-box secondary">Application A</div>
+                        <div class="diagram-box secondary">Application B</div>
+                        <div class="diagram-box secondary">Application C</div>
+                    </div>
+                    <div class="diagram-arrow">&#8595;</div>
+                    <div class="diagram-row">
+                        <div class="diagram-box neutral">Project 1</div>
+                        <div class="diagram-box neutral">Project 2</div>
+                        <div class="diagram-box neutral">Project 3</div>
+                        <div class="diagram-box neutral">Project 4</div>
+                    </div>
+                </div>
+
+                <ul>
+                    <li><strong>Organization</strong> &mdash; Top-level entity representing your company. Organization-wide policies apply to all applications and projects.</li>
+                    <li><strong>Applications</strong> &mdash; Logical groupings (e.g., by product, team, or business unit). Each application can have its own policies and access controls.</li>
+                    <li><strong>Projects</strong> &mdash; Individual repositories or codebases. Scan results and findings are tracked at the project level.</li>
+                </ul>
+
+                <h3>Access Levels</h3>
+                <p>Mend supports role-based access control with granular permissions at each level of the hierarchy, ensuring security teams have admin access while developers see only their relevant projects.</p>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="b">
+                        <p><strong>Question 1:</strong> In Mend&rsquo;s organizational structure, what is the relationship between Applications and Projects?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Applications contain Organizations which contain Projects</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Organizations contain Applications which contain Projects</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Projects contain Applications which contain Organizations</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> They are all independent and flat</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="c">
+                        <p><strong>Question 2:</strong> What can Automation Workflows in the Mend platform do?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Only send email notifications</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Only create Jira tickets</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Enforce security rules, route findings to teams, create tickets, and send alerts across multiple channels</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Only block deployments</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <button class="mark-complete-btn" data-xp="175">Mark as Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="03-cicd-integration.html" class="btn btn-secondary">&#8592; Previous</a>
+                    <a href="../../certifications.html" class="btn btn-primary">Take SAST Certification &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/app.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

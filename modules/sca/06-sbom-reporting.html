@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SBOM Generation &amp; Reporting - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="../../index.html" class="logo"><div class="logo-icon">M</div> Mend <span>Learn</span></a>
+            <ul class="nav-main">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../learning-paths.html" class="active">Learning Paths</a></li>
+                <li><a href="../../certifications.html">Certifications</a></li>
+                <li><a href="../../labs.html">Labs</a></li>
+                <li><a href="../../resources.html">Resources</a></li>
+                <li><a href="../../leaderboard.html">Leaderboard</a></li>
+                <li><a href="../../ai-coach.html">AI Coach</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Search courses, labs..."></div>
+                <div class="nav-xp"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 2,450 XP</div>
+                <a href="../../profile.html" class="nav-avatar">JD</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+    </header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar">
+            <div class="sidebar-header">
+                <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
+                <h3>SCA Deep Dive</h3>
+                <div class="sidebar-progress"><div class="progress-bar"><div class="fill" style="width: 83%"></div></div><span>5/6 Complete</span></div>
+            </div>
+            <nav class="module-nav">
+                <a href="01-sca-overview.html" class="module-link completed"><span class="module-status">&#10003;</span><div><span class="module-title">SCA Overview &amp; Vulnerability Scanning</span><span class="module-duration">45 min</span></div></a>
+                <a href="02-reachability-analysis.html" class="module-link completed"><span class="module-status">&#10003;</span><div><span class="module-title">Reachability Analysis</span><span class="module-duration">40 min</span></div></a>
+                <a href="03-license-compliance.html" class="module-link completed"><span class="module-status">&#10003;</span><div><span class="module-title">License Compliance &amp; Policy</span><span class="module-duration">35 min</span></div></a>
+                <a href="04-prioritization.html" class="module-link completed"><span class="module-status">&#10003;</span><div><span class="module-title">Risk Prioritization &amp; EPSS</span><span class="module-duration">30 min</span></div></a>
+                <a href="05-remediation.html" class="module-link completed"><span class="module-status">&#10003;</span><div><span class="module-title">Auto-Remediation &amp; Renovate</span><span class="module-duration">40 min</span></div></a>
+                <a href="06-sbom-reporting.html" class="module-link active"><span class="module-status">6</span><div><span class="module-title">SBOM Generation &amp; Reporting</span><span class="module-duration">35 min</span></div></a>
+            </nav>
+        </aside>
+
+        <main class="module-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>SCA Deep Dive</span> &rsaquo; <span>SBOM &amp; Reporting</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>SBOM Generation &amp; Reporting</h1>
+                <div class="module-meta">
+                    <span>&#128338; 35 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 175 XP</span>
+                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
+                </div>
+            </div>
+
+            <section class="module-section">
+                <h2>Demonstrate Transparency of Your Supply Chain</h2>
+                <p>Mend SCA generates a precise inventory of a software&rsquo;s open-source components, detailing all libraries and dependencies. You can easily export your SBOM in standardized formats (SPDX and CycloneDX) and import third-party SBOMs leveraging VEX data to meet government and customer compliance requirements.</p>
+
+                <div class="video-placeholder">
+                    <div class="play-icon">&#9654;</div>
+                    <div class="video-title">SBOM Generation with Mend SCA</div>
+                    <div class="video-duration">6:15</div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>SBOM Formats &amp; Standards</h2>
+                <p>Mend supports two industry-standard SBOM formats:</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128220;</div>
+                        <h4>SPDX 2.2</h4>
+                        <p>Linux Foundation standard (ISO/IEC 5962:2021). The de facto standard for government compliance, including US Executive Order 14028. Focuses on license and copyright information alongside component inventory.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128196;</div>
+                        <h4>CycloneDX 1.4</h4>
+                        <p>OWASP standard designed specifically for security use cases. Rich vulnerability information including VEX (Vulnerability Exploitability eXchange) data for communicating whether a product is affected by a specific CVE.</p>
+                    </div>
+                </div>
+
+                <h3>Generating an SBOM</h3>
+                <p>Generate an SBOM through the Mend platform or CLI:</p>
+
+                <pre><code># Generate an SPDX SBOM
+mend sca report --type sbom --format spdx --output sbom-spdx.json
+
+# Generate a CycloneDX SBOM
+mend sca report --type sbom --format cyclonedx --output sbom-cdx.json
+
+# Generate a Dependencies SBOM via the Mend AppSec Platform
+# Navigate to: Reports > Create Report > Dependencies SBOM
+# Select: SBOM Standard (SPDX 2.2 or CycloneDX 1.4)
+# Select: Format (JSON or XML)
+# Select: Scope (Organization, Application, or Project)</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Mend Dashboards &amp; Reporting</h2>
+                <p>The Mend AppSec Platform provides comprehensive dashboards for monitoring your security posture across the entire organization:</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128202;</div>
+                        <h4>Organization Dashboard</h4>
+                        <p>Executive view of security posture across all applications: total findings, severity trends, remediation velocity, and compliance metrics.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128187;</div>
+                        <h4>Application Dashboard</h4>
+                        <p>Per-application view showing dependency inventory, vulnerability breakdown, license compliance status, and historical trend data.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128203;</div>
+                        <h4>Compliance Reports</h4>
+                        <p>Generate audit-ready reports for regulatory compliance (SOC 2, ISO 27001, FedRAMP) with evidence of vulnerability management practices.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128279;</div>
+                        <h4>API Access</h4>
+                        <p>The Mend API 3.0 provides programmatic access to all scan results, vulnerability data, and reporting capabilities for integration with custom dashboards and workflows.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="b">
+                        <p><strong>Question 1:</strong> Which SBOM format is specifically designed for security use cases and includes VEX data?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> SPDX 2.2</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> CycloneDX 1.4</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> SARIF</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> CSAF</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="a">
+                        <p><strong>Question 2:</strong> Which US regulation requires SBOMs from vendors selling software to the federal government?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Executive Order 14028</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> GDPR</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> SOX</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> HIPAA</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <button class="mark-complete-btn" data-xp="175">Mark as Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="05-remediation.html" class="btn btn-secondary">&#8592; Previous</a>
+                    <a href="../../certifications.html" class="btn btn-primary">Take SCA Certification &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/app.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>
