@@ -3,6 +3,9 @@
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
+    if (typeof MendStore !== 'undefined') {
+        MendStore.applyToPage();
+    }
     initQuiz();
     initMarkComplete();
     initVideoPlaceholders();
@@ -62,6 +65,14 @@ function initQuiz() {
             }
         }
 
+        // Save quiz score to localStorage
+        if (typeof MendStore !== 'undefined') {
+            const moduleId = MendStore.getCurrentModuleId();
+            if (moduleId) {
+                MendStore.saveQuizScore(moduleId, correct, total);
+            }
+        }
+
         submitBtn.textContent = 'Retry';
         submitBtn.addEventListener('click', () => {
             questions.forEach(q => {
@@ -82,13 +93,35 @@ function initQuiz() {
 /* --- Mark Complete --- */
 function initMarkComplete() {
     const btn = document.querySelector('.mark-complete-btn');
-    if (!btn || btn.classList.contains('completed')) return;
+    if (!btn) return;
+
+    // Check if already completed in store
+    if (typeof MendStore !== 'undefined') {
+        const moduleId = MendStore.getCurrentModuleId();
+        if (moduleId && MendStore.isModuleCompleted(moduleId)) {
+            btn.classList.add('completed');
+            btn.innerHTML = '&#10003; Module Completed';
+            return;
+        }
+    }
+
+    if (btn.classList.contains('completed')) return;
 
     btn.addEventListener('click', () => {
         btn.classList.add('completed');
         btn.innerHTML = '&#10003; Module Completed';
 
-        const xpAmount = btn.dataset.xp || '150';
+        const xpAmount = parseInt(btn.dataset.xp || '150', 10);
+
+        // Persist to localStorage
+        if (typeof MendStore !== 'undefined') {
+            const moduleId = MendStore.getCurrentModuleId();
+            if (moduleId) {
+                MendStore.completeModule(moduleId, xpAmount);
+                MendStore.applyToPage();
+            }
+        }
+
         showModuleToast(`Module completed! +${xpAmount} XP earned`);
 
         const moduleLink = document.querySelector('.module-link.active');

@@ -4,6 +4,9 @@
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
+    if (typeof MendStore !== 'undefined') {
+        MendStore.applyToPage();
+    }
     initMobileMenu();
     initFilters();
     initTabs();
