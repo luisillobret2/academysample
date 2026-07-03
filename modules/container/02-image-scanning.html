@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Container Image Scanning - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="../../index.html" class="logo"><img src="../../img/mend-logo.svg" alt="Mend.io" class="logo-img"> Mend <span>Learn</span></a>
+            <ul class="nav-main">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../learning-paths.html" class="active">Learning Paths</a></li>
+                <li><a href="../../certifications.html">Certifications</a></li>
+                <li><a href="../../labs.html">Labs</a></li>
+                <li><a href="../../resources.html">Resources</a></li>
+                <li><a href="../../leaderboard.html">Leaderboard</a></li>
+                <li><a href="../../ai-coach.html">AI Coach</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Search courses, labs..."></div>
+                <div class="nav-xp"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <span class="xp-display">2,450 XP</span></div>
+                <a href="../../profile.html" class="nav-avatar">JD</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+    </header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar">
+            <div class="sidebar-header">
+                <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
+                <h3>Container Security</h3>
+                <div class="sidebar-progress">
+                    <div class="progress-bar"><div class="fill" data-progress="33%" style="width: 33%"></div></div>
+                    <span>1/3 Complete</span>
+                </div>
+            </div>
+            <nav class="module-nav">
+                <a href="01-container-security.html" class="module-link completed">
+                    <span class="module-status">&#10003;</span>
+                    <div><span class="module-title">Container Security Fundamentals</span><span class="module-duration">35 min</span></div>
+                </a>
+                <a href="02-image-scanning.html" class="module-link active">
+                    <span class="module-status">2</span>
+                    <div><span class="module-title">Container Image Scanning</span><span class="module-duration">40 min</span></div>
+                </a>
+                <a href="03-kubernetes-security.html" class="module-link">
+                    <span class="module-status">3</span>
+                    <div><span class="module-title">Kubernetes Security &amp; Policies</span><span class="module-duration">45 min</span></div>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="module-content">
+            <div class="breadcrumb">
+                <a href="../../learning-paths.html">Learning Paths</a> &#8250; Container Security &#8250; Image Scanning
+            </div>
+
+            <h1>Container Image Scanning</h1>
+            <div class="module-meta">
+                <span>&#128336; 40 min</span>
+                <span>&#128218; 4 sections</span>
+                <span>&#11088; 200 XP</span>
+                <span class="module-level">Level 2 - Intermediate</span>
+            </div>
+
+            <section class="module-section">
+                <h2>Understanding Container Image Layers</h2>
+                <p>Container images are built in layers, each adding files and dependencies on top of a base image. Vulnerabilities can exist at any layer — from the OS packages in the base image to the application dependencies installed during the build process.</p>
+
+                <div class="video-placeholder">
+                    <div class="play-btn">&#9654;</div>
+                    <p>Container Image Layer Analysis</p>
+                    <span>6:00</span>
+                </div>
+
+                <h3>Where Vulnerabilities Hide</h3>
+                <ul>
+                    <li><strong>Base Image OS Packages</strong> — Ubuntu, Alpine, Debian base images contain OS-level packages (openssl, glibc, curl) that may have known CVEs</li>
+                    <li><strong>Language Runtime</strong> — The Node.js, Python, Java, or Go runtime installed in the image may have vulnerabilities</li>
+                    <li><strong>Application Dependencies</strong> — npm, pip, Maven packages installed during <code>docker build</code></li>
+                    <li><strong>Custom Binaries</strong> — Compiled binaries copied into the image may link against vulnerable libraries</li>
+                    <li><strong>Configuration Files</strong> — Exposed ports, hardcoded credentials, overly permissive file permissions</li>
+                </ul>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Base Image Selection</h4>
+                    <p>Start with minimal base images (Alpine, distroless, or scratch) to reduce your attack surface. A typical <code>ubuntu:latest</code> image contains 100+ OS packages; <code>alpine:latest</code> contains fewer than 20.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Scanning with Mend</h2>
+                <p>Mend scans container images at multiple stages of the development lifecycle:</p>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#128187;</div>
+                        <h4>Local Development</h4>
+                        <p>Scan images on your workstation before pushing to a registry. Catch vulnerabilities during development.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#9881;&#65039;</div>
+                        <h4>CI/CD Pipeline</h4>
+                        <p>Automatically scan images during build. Block deployment if vulnerabilities exceed policy thresholds.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128230;</div>
+                        <h4>Registry Scanning</h4>
+                        <p>Continuously monitor images in Docker Hub, ECR, ACR, GCR, and other registries for new vulnerabilities.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#9729;&#65039;</div>
+                        <h4>Runtime Monitoring</h4>
+                        <p>Monitor running containers in Kubernetes clusters for newly discovered vulnerabilities.</p>
+                    </div>
+                </div>
+
+                <h3>CLI Scanning Commands</h3>
+                <pre><code># Scan a local image
+mend image scan myapp:latest
+
+# Scan an image from a registry
+mend image scan registry.example.com/myapp:v2.1
+
+# Scan a Dockerfile (before building)
+mend image scan --dockerfile ./Dockerfile
+
+# Scan with policy enforcement
+mend image scan myapp:latest --policy production --fail-on critical
+
+# Output results in JSON
+mend image scan myapp:latest --format json --output results.json</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Remediation Strategies</h2>
+                <p>When vulnerabilities are found in container images, Mend recommends specific remediation actions:</p>
+
+                <h3>Base Image Upgrade</h3>
+                <pre><code># BEFORE: Vulnerable base image
+FROM node:18.15.0-bullseye
+
+# AFTER: Updated base image with patched OS packages
+FROM node:18.20.0-bullseye
+
+# BEST: Minimal image with smallest attack surface
+FROM node:18.20.0-alpine</code></pre>
+
+                <h3>Multi-Stage Builds</h3>
+                <pre><code># Stage 1: Build (includes dev dependencies)
+FROM node:18-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+# Stage 2: Production (minimal runtime only)
+FROM node:18-alpine
+WORKDIR /app
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+EXPOSE 3000
+CMD ["node", "dist/server.js"]</code></pre>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Image Size Matters</h4>
+                    <p>Multi-stage builds reduce image size by 60-80% by excluding build tools, source code, and dev dependencies. Smaller images have fewer vulnerabilities and deploy faster.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="d">
+                        <p><strong>Question 1:</strong> What is the primary benefit of using Alpine-based container images?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> They run faster than other Linux distributions</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> They include more pre-installed development tools</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> They are compatible with more CPU architectures</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> They have a smaller attack surface with fewer OS packages</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="b">
+                        <p><strong>Question 2:</strong> What does a multi-stage Docker build achieve?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> It allows running multiple applications in one container</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> It separates build dependencies from the production image, reducing size and vulnerabilities</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> It enables parallel builds across multiple CI runners</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> It creates separate images for each microservice</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>200 XP earned for completing this module</span>
+                </div>
+                <button class="btn btn-primary mark-complete-btn" data-xp="200">Mark Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="01-container-security.html" class="btn btn-secondary">&#8592; Previous: Container Fundamentals</a>
+                    <a href="03-kubernetes-security.html" class="btn btn-primary">Next: Kubernetes Security &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/store.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

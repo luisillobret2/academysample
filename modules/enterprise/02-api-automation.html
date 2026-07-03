@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API &amp; Automation at Scale - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="../../index.html" class="logo"><img src="../../img/mend-logo.svg" alt="Mend.io" class="logo-img"> Mend <span>Learn</span></a>
+            <ul class="nav-main">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../learning-paths.html" class="active">Learning Paths</a></li>
+                <li><a href="../../certifications.html">Certifications</a></li>
+                <li><a href="../../labs.html">Labs</a></li>
+                <li><a href="../../resources.html">Resources</a></li>
+                <li><a href="../../leaderboard.html">Leaderboard</a></li>
+                <li><a href="../../ai-coach.html">AI Coach</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Search courses, labs..."></div>
+                <div class="nav-xp"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <span class="xp-display">2,450 XP</span></div>
+                <a href="../../profile.html" class="nav-avatar">JD</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+    </header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar">
+            <div class="sidebar-header">
+                <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
+                <h3>Enterprise Architecture</h3>
+                <div class="sidebar-progress">
+                    <div class="progress-bar"><div class="fill" data-progress="50%" style="width: 50%"></div></div>
+                    <span>1/2 Complete</span>
+                </div>
+            </div>
+            <nav class="module-nav">
+                <a href="01-enterprise-deployment.html" class="module-link completed">
+                    <span class="module-status">&#10003;</span>
+                    <div><span class="module-title">Enterprise Deployment Architecture</span><span class="module-duration">45 min</span></div>
+                </a>
+                <a href="02-api-automation.html" class="module-link active">
+                    <span class="module-status">2</span>
+                    <div><span class="module-title">API &amp; Automation at Scale</span><span class="module-duration">40 min</span></div>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="module-content">
+            <div class="breadcrumb">
+                <a href="../../learning-paths.html">Learning Paths</a> &#8250; Enterprise Architecture &#8250; API &amp; Automation
+            </div>
+
+            <h1>API &amp; Automation at Scale</h1>
+            <div class="module-meta">
+                <span>&#128336; 40 min</span>
+                <span>&#128218; 4 sections</span>
+                <span>&#11088; 250 XP</span>
+                <span class="module-level">Level 3 - Expert</span>
+            </div>
+
+            <section class="module-section">
+                <h2>Mend API Overview</h2>
+                <p>The Mend API enables programmatic access to all platform capabilities — from triggering scans to exporting reports. At enterprise scale, the API is the primary interface for integrating Mend into custom workflows, building dashboards, and automating security operations.</p>
+
+                <div class="video-placeholder">
+                    <div class="play-btn">&#9654;</div>
+                    <p>Mend API Architecture &amp; Best Practices</p>
+                    <span>7:30</span>
+                </div>
+
+                <h3>API Authentication</h3>
+                <pre><code># Generate an API key from the Mend dashboard
+# Settings → API Keys → Generate New Key
+
+# Authenticate with the API
+curl -X POST https://api.mend.io/v2/auth/token \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "service-account@example.com",
+    "apiKey": "your-api-key-here",
+    "orgUuid": "org-uuid-here"
+  }'
+
+# Use the returned JWT token for subsequent requests
+export MEND_TOKEN="eyJhbGciOiJSUzI1..."
+
+curl -X GET https://api.mend.io/v2/orgs/{orgUuid}/projects \
+  -H "Authorization: Bearer $MEND_TOKEN"</code></pre>
+
+                <div class="callout-box warning">
+                    <h4>&#9888;&#65039; Security Best Practice</h4>
+                    <p>Use dedicated service accounts for API access, not individual user credentials. Rotate API keys every 90 days. Store keys in a secrets manager, never in code or CI/CD configuration files.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Common API Use Cases</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#128202;</div>
+                        <h4>Custom Dashboards</h4>
+                        <p>Pull vulnerability data into Grafana, Power BI, or custom portals for executive reporting.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#9881;&#65039;</div>
+                        <h4>CI/CD Integration</h4>
+                        <p>Trigger scans, retrieve results, and enforce policies in custom build pipelines.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128196;</div>
+                        <h4>Compliance Reporting</h4>
+                        <p>Auto-generate SBOM exports, license reports, and vulnerability summaries for auditors.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128276;</div>
+                        <h4>Alert Routing</h4>
+                        <p>Forward security findings to Jira, ServiceNow, PagerDuty, or custom ticketing systems.</p>
+                    </div>
+                </div>
+
+                <h3>Example: Exporting Vulnerability Report</h3>
+                <pre><code># Get all vulnerabilities for a project
+curl -X GET "https://api.mend.io/v2/orgs/{orgUuid}/projects/{projectUuid}/vulnerabilities" \
+  -H "Authorization: Bearer $MEND_TOKEN" \
+  -H "Accept: application/json" | jq '.vulnerabilities[] | {
+    cve: .name,
+    severity: .severity,
+    library: .library.name,
+    version: .library.version,
+    fixVersion: .topFix.fixResolution,
+    reachable: .reachability.isReachable
+  }'
+
+# Export SBOM for a project
+curl -X GET "https://api.mend.io/v2/orgs/{orgUuid}/projects/{projectUuid}/sbom?format=cyclonedx" \
+  -H "Authorization: Bearer $MEND_TOKEN" \
+  -o sbom.json</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Webhooks &amp; Event-Driven Automation</h2>
+                <p>Mend can push events to your systems via webhooks, enabling real-time automation:</p>
+
+                <h3>Webhook Events</h3>
+                <ul>
+                    <li><strong>NEW_VULNERABILITY</strong> — Triggered when a new vulnerability is discovered in a monitored dependency</li>
+                    <li><strong>POLICY_VIOLATION</strong> — Triggered when a scan result violates an organization policy</li>
+                    <li><strong>SCAN_COMPLETE</strong> — Triggered when a scan finishes, with summary results</li>
+                    <li><strong>FIX_AVAILABLE</strong> — Triggered when a fix becomes available for a previously unfixable vulnerability</li>
+                </ul>
+
+                <h3>Webhook Handler Example</h3>
+                <pre><code># Express.js webhook handler
+app.post('/mend-webhook', (req, res) => {
+  const event = req.body;
+
+  switch (event.type) {
+    case 'NEW_VULNERABILITY':
+      if (event.severity === 'CRITICAL') {
+        // Create PagerDuty incident
+        createPagerDutyIncident(event);
+        // Create Jira ticket
+        createJiraTicket(event);
+      }
+      break;
+
+    case 'POLICY_VIOLATION':
+      // Notify team in Slack
+      sendSlackAlert(event);
+      break;
+
+    case 'SCAN_COMPLETE':
+      // Update dashboard metrics
+      updateDashboard(event.summary);
+      break;
+  }
+
+  res.status(200).send('OK');
+});</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="c">
+                        <p><strong>Question 1:</strong> How often should API keys be rotated according to security best practices?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Every 30 days</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Every 60 days</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Every 90 days</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Only when compromised</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="a">
+                        <p><strong>Question 2:</strong> Which webhook event is triggered when a fix becomes available for a previously unfixable vulnerability?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> FIX_AVAILABLE</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> NEW_VULNERABILITY</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> SCAN_COMPLETE</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> POLICY_VIOLATION</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>250 XP earned for completing this module</span>
+                </div>
+                <button class="btn btn-primary mark-complete-btn" data-xp="250">Mark Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="01-enterprise-deployment.html" class="btn btn-secondary">&#8592; Previous: Enterprise Deployment</a>
+                    <a href="../../learning-paths.html" class="btn btn-primary">Back to Learning Paths</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/store.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>
