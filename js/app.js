@@ -24,17 +24,14 @@ function initMobileMenu() {
     if (!btn || !nav) return;
 
     btn.addEventListener('click', () => {
-        nav.classList.toggle('mobile-open');
-        const icon = btn.querySelector('svg use');
-        if (icon) {
-            const isOpen = nav.classList.contains('mobile-open');
-            btn.setAttribute('aria-expanded', isOpen);
-        }
+        const isOpen = nav.classList.toggle('mobile-open');
+        btn.setAttribute('aria-expanded', String(isOpen));
     });
 
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.site-header')) {
             nav.classList.remove('mobile-open');
+            btn.setAttribute('aria-expanded', 'false');
         }
     });
 }

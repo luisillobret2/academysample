@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Workflow Automation - Mend Learn</title>
+    <meta name="description" content="Automate remediation and notifications with Mend.io webhooks, APIs, and Renovate.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar">
+            <div class="sidebar-header">
+                <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
+                <h3>CI/CD &amp; DevOps</h3>
+                <div class="sidebar-progress"><div class="progress-bar"><div class="fill" style="width: 0%"></div></div><span>0/5 Complete</span></div>
+            </div>
+            <nav class="module-nav">
+                <a href="01-pipeline-fundamentals.html" class="module-link"><span class="module-status">1</span><div><span class="module-title">Pipeline Security Fundamentals</span><span class="module-duration">45 min</span></div></a>
+                <a href="02-gitops-integration.html" class="module-link"><span class="module-status">2</span><div><span class="module-title">GitOps &amp; SCM Integration</span><span class="module-duration">40 min</span></div></a>
+                <a href="03-iac-scanning.html" class="module-link"><span class="module-status">3</span><div><span class="module-title">IaC Scanning</span><span class="module-duration">40 min</span></div></a>
+                <a href="04-workflow-automation.html" class="module-link active"><span class="module-status">4</span><div><span class="module-title">Custom Workflow Automation</span><span class="module-duration">40 min</span></div></a>
+                <a href="05-multi-tool-orchestration.html" class="module-link"><span class="module-status">5</span><div><span class="module-title">Multi-Tool Orchestration</span><span class="module-duration">45 min</span></div></a>
+            </nav>
+        </aside>
+
+        <main class="module-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>CI/CD &amp; DevOps</span> &rsaquo; <span>Custom Workflow Automation</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>Custom Workflow Automation</h1>
+                <div class="module-meta">
+                    <span>&#128338; 40 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 175 XP</span>
+                    <span class="level-badge expert">Level 3 - Expert</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <ul>
+                    <li>Automate remediation with Renovate configuration</li>
+                    <li>Trigger downstream actions with webhooks</li>
+                    <li>Use the Mend API to build custom automations</li>
+                    <li>Route findings to the right teams automatically</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>Automated Remediation with Renovate</h2>
+                <p>Renovate opens intelligent update PRs so dependencies stay current without manual effort. Tune it to match your risk appetite.</p>
+                <pre><code>// renovate.json
+{
+  "extends": ["config:recommended"],
+  "vulnerabilityAlerts": { "labels": ["security"] },
+  "prConcurrentLimit": 10,
+  "schedule": ["after 10pm every weekday"]
+}</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Webhooks &amp; API</h2>
+                <p>React to scan events in real time. Webhooks push events to your systems; the API lets you pull data and drive actions.</p>
+                <pre><code># Fetch findings for a project via the Mend API
+curl -H "Authorization: Bearer $MEND_TOKEN" \
+  "https://api.mend.io/v3/projects/$PROJECT_ID/findings?severity=high"</code></pre>
+                <div class="key-concept">
+                    <h4>&#128161; Event-Driven Security</h4>
+                    <p>A webhook on &ldquo;new critical finding&rdquo; can open a ticket, page on-call, and post to chat, no human polling required.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Route to the Right Team</h2>
+                <p>Automatically assign findings by repository, service owner, or label so nothing sits unowned.</p>
+                <div class="warning-box">
+                    <h4>&#9888;&#65039; Secure Your Automation Credentials</h4>
+                    <p>API tokens and webhook secrets are high-value targets. Store them in a secrets manager and rotate regularly.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../enterprise/02-api-automation.html"><span class="resource-icon">&#128295;</span><span>API &amp; Automation<span class="resource-meta">Enterprise Module</span></span></a>
+                    <a class="module-resource" href="../sca/05-remediation.html"><span class="resource-icon">&#128260;</span><span>Auto-Remediation &amp; Renovate<span class="resource-meta">SCA Module</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Renovate config examples<span class="resource-meta">Template</span></span></a>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="a">
+                        <p><strong>Question 1:</strong> What does Renovate primarily automate?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Dependency update pull requests</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Firewall rules</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> User provisioning</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Log rotation</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question" data-correct="c">
+                        <p><strong>Question 2:</strong> What is the advantage of webhooks over polling?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> They require no credentials</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> They are slower but simpler</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> They deliver events in real time without constant polling</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> They disable the API</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <button class="mark-complete-btn" data-xp="175">Mark as Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="03-iac-scanning.html" class="btn btn-secondary">&#8592; Previous</a>
+                    <a href="05-multi-tool-orchestration.html" class="btn btn-primary">Next: Multi-Tool Orchestration &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/layout.js"></script>
+    <script src="../../js/store.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

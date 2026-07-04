@@ -9,32 +9,7 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header class="site-header">
-        <div class="container">
-            <a href="index.html" class="logo"><img src="img/mend-logo.svg" alt="Mend.io" class="logo-img"> Mend <span>Learn</span></a>
-            <ul class="nav-main">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="learning-paths.html">Learning Paths</a></li>
-                <li><a href="certifications.html">Certifications</a></li>
-                <li><a href="labs.html">Labs</a></li>
-                <li><a href="resources.html" class="active">Resources</a></li>
-                <li><a href="leaderboard.html">Leaderboard</a></li>
-                <li><a href="ai-coach.html">AI Coach</a></li>
-            </ul>
-            <div class="nav-right">
-                <div class="nav-search">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                    <input type="text" placeholder="Search courses, labs...">
-                </div>
-                <div class="nav-xp">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                    2,450 XP
-                </div>
-                <a href="profile.html" class="nav-avatar">JD</a>
-            </div>
-            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
-        </div>
-    </header>
+    <header id="site-header" class="site-header"></header>
 
     <section class="hero" style="padding: 36px 0;">
         <div class="container">
@@ -70,10 +45,10 @@
                             <h3 style="font-size: 1rem;">Mend vs. Snyk</h3>
                         </div>
                     </div>
-                    <p class="text-sm text-muted mb-16">Complete competitive positioning guide: feature comparison, win themes, objection handling, and proof points.</p>
+                    <p class="text-sm text-muted mb-16">Developer-first competitor: win on scan accuracy, deep license governance, and production-ready AI security.</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-xs text-muted">PDF &middot; 2 pages &middot; Updated v3</span>
-                        <a href="#" class="btn btn-primary btn-sm">Download</a>
+                        <span class="text-xs text-muted">Interactive &middot; Updated</span>
+                        <a href="battlecard-snyk.html" class="btn btn-primary btn-sm">View</a>
                     </div>
                 </div>
 
@@ -85,10 +60,10 @@
                             <h3 style="font-size: 1rem;">Mend vs. Veracode</h3>
                         </div>
                     </div>
-                    <p class="text-sm text-muted mb-16">Enterprise-focused comparison: deployment flexibility, pricing model, developer experience, and integration depth.</p>
+                    <p class="text-sm text-muted mb-16">Legacy enterprise SAST: win on time-to-value, developer flow, transparent pricing, and unified AI coverage.</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-xs text-muted">PDF &middot; 2 pages</span>
-                        <a href="#" class="btn btn-primary btn-sm">Download</a>
+                        <span class="text-xs text-muted">Interactive</span>
+                        <a href="battlecard-veracode.html" class="btn btn-primary btn-sm">View</a>
                     </div>
                 </div>
 
@@ -100,10 +75,55 @@
                             <h3 style="font-size: 1rem;">Mend vs. Checkmarx</h3>
                         </div>
                     </div>
-                    <p class="text-sm text-muted mb-16">SAST-focused battlecard covering code analysis depth, language support, false positive rates, and remediation guidance.</p>
+                    <p class="text-sm text-muted mb-16">SAST incumbent: win on scan speed, precision, fewer false positives, and total cost of ownership.</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-xs text-muted">PDF &middot; 2 pages</span>
-                        <a href="#" class="btn btn-primary btn-sm">Download</a>
+                        <span class="text-xs text-muted">Interactive</span>
+                        <a href="battlecard-checkmarx.html" class="btn btn-primary btn-sm">View</a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="battlecard">
+                    <div style="display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px;">
+                        <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(231, 76, 60, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">&#9876;</div>
+                        <div>
+                            <span class="badge badge-orange mb-4">Battlecard</span>
+                            <h3 style="font-size: 1rem;">Mend vs. Black Duck</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-muted mb-16">Legacy SCA/compliance: win on unified platform, deployment speed, AI security, and single-SKU pricing.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-muted">Interactive</span>
+                        <a href="battlecard-black-duck.html" class="btn btn-primary btn-sm">View</a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="battlecard">
+                    <div style="display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px;">
+                        <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(231, 76, 60, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">&#9876;</div>
+                        <div>
+                            <span class="badge badge-orange mb-4">Battlecard</span>
+                            <h3 style="font-size: 1rem;">Mend vs. GitHub Advanced Security</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-muted mb-16">GitHub-native AppSec: win on ecosystem breadth, reachability prioritization, and enterprise policy control.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-muted">Interactive</span>
+                        <a href="battlecard-github-advanced-security.html" class="btn btn-primary btn-sm">View</a>
+                    </div>
+                </div>
+
+                <div class="card" data-category="battlecard">
+                    <div style="display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px;">
+                        <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(231, 76, 60, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">&#9876;</div>
+                        <div>
+                            <span class="badge badge-orange mb-4">Battlecard</span>
+                            <h3 style="font-size: 1rem;">Mend vs. Sonatype</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-muted mb-16">Supply chain specialist: win on custom code (SAST) coverage, AI security, and unified pricing.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-muted">Interactive</span>
+                        <a href="battlecard-sonatype.html" class="btn btn-primary btn-sm">View</a>
                     </div>
                 </div>
 
@@ -296,15 +316,9 @@
         </div>
     </main>
 
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-bottom">
-                <span>&copy; 2025 Mend.io. All rights reserved.</span>
-                <span><a href="#">Privacy</a> &middot; <a href="#">Terms</a></span>
-            </div>
-        </div>
-    </footer>
+    <footer id="site-footer" class="site-footer"></footer>
 
+    <script src="js/layout.js"></script>
     <script src="js/store.js"></script>
     <script src="js/app.js"></script>
 </body>

@@ -10,26 +10,7 @@
     <link rel="stylesheet" href="../../css/module.css">
 </head>
 <body>
-    <header class="site-header">
-        <div class="container">
-            <a href="../../index.html" class="logo"><img src="../../img/mend-logo.svg" alt="Mend.io" class="logo-img"> Mend <span>Learn</span></a>
-            <ul class="nav-main">
-                <li><a href="../../index.html">Home</a></li>
-                <li><a href="../../learning-paths.html" class="active">Learning Paths</a></li>
-                <li><a href="../../certifications.html">Certifications</a></li>
-                <li><a href="../../labs.html">Labs</a></li>
-                <li><a href="../../resources.html">Resources</a></li>
-                <li><a href="../../leaderboard.html">Leaderboard</a></li>
-                <li><a href="../../ai-coach.html">AI Coach</a></li>
-            </ul>
-            <div class="nav-right">
-                <div class="nav-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Search courses, labs..."></div>
-                <div class="nav-xp"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 2,450 XP</div>
-                <a href="../../profile.html" class="nav-avatar">JD</a>
-            </div>
-            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
-        </div>
-    </header>
+    <header id="site-header" class="site-header"></header>
 
     <div class="module-layout">
         <aside class="module-sidebar">
@@ -60,6 +41,15 @@
                     <span>&#11088; 175 XP</span>
                     <span class="level-badge intermediate">Level 2 - Intermediate</span>
                 </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>Prioritize Threats Based on Severity</li>
+                    <li>Understanding EPSS</li>
+                </ul>
             </div>
 
             <section class="module-section">
@@ -160,6 +150,15 @@
                 </div>
             </section>
 
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
             <div class="module-footer">
                 <div class="module-xp-earned"><span class="xp-icon">&#11088;</span><span>175 XP earned for completing this module</span></div>
                 <div class="module-nav-buttons">
@@ -170,6 +169,7 @@
         </main>
     </div>
 
+    <script src="../../js/layout.js"></script>
     <script src="../../js/store.js"></script>
     <script src="../../js/app.js"></script>
     <script src="../../js/module.js"></script>

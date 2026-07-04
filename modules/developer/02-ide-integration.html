@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDE &amp; CLI Integration - Mend Learn</title>
+    <meta name="description" content="Integrate Mend.io into the developer workflow: IDE plugins, CLI scanning, and pre-commit checks.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar">
+            <div class="sidebar-header">
+                <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
+                <h3>Developer Track</h3>
+                <div class="sidebar-progress"><div class="progress-bar"><div class="fill" style="width: 0%"></div></div><span>0/3 Complete</span></div>
+            </div>
+            <nav class="module-nav">
+                <a href="01-developer-quickstart.html" class="module-link"><span class="module-status">1</span><div><span class="module-title">Developer Quickstart</span><span class="module-duration">30 min</span></div></a>
+                <a href="02-ide-integration.html" class="module-link active"><span class="module-status">2</span><div><span class="module-title">IDE &amp; CLI Integration</span><span class="module-duration">35 min</span></div></a>
+                <a href="03-secure-coding.html" class="module-link"><span class="module-status">3</span><div><span class="module-title">Secure Coding Best Practices</span><span class="module-duration">40 min</span></div></a>
+            </nav>
+        </aside>
+
+        <main class="module-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>Developer Track</span> &rsaquo; <span>IDE &amp; CLI Integration</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>IDE &amp; CLI Integration</h1>
+                <div class="module-meta">
+                    <span>&#128338; 35 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 150 XP</span>
+                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <ul>
+                    <li>Install and configure the Mend IDE extension</li>
+                    <li>Scan from the CLI and interpret results locally</li>
+                    <li>Shift security left with pre-commit and local gates</li>
+                    <li>Reduce feedback loops so issues are caught before push</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>Mend in Your IDE</h2>
+                <p>The Mend IDE extension surfaces vulnerabilities, license issues, and fix suggestions inline as you code, available for VS Code, IntelliJ, and other JetBrains IDEs.</p>
+                <ol class="steps-list">
+                    <li>Install the Mend extension from your IDE marketplace.</li>
+                    <li>Authenticate with <code>mend auth login</code> or a personal access token.</li>
+                    <li>Open a project; findings appear inline with severity and reachability.</li>
+                    <li>Apply suggested fixes or open the recommended upgrade directly from the editor.</li>
+                </ol>
+
+                <div class="video-placeholder">
+                    <div class="play-icon">&#9654;</div>
+                    <div class="video-title">Setting up the Mend IDE Extension</div>
+                    <div class="video-duration">5:02</div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Scanning from the CLI</h2>
+                <p>The Mend CLI runs the same engines locally and in CI, so results are consistent everywhere.</p>
+                <pre><code># Scan open-source dependencies
+mend sca scan --dir .
+
+# Scan source code (SAST)
+mend sast scan --dir .
+
+# Fail locally on high or critical findings
+mend sca scan --dir . --fail-on high</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Shift Left with Pre-Commit</h2>
+                <p>Catch issues before they ever reach a pull request by gating locally.</p>
+                <pre><code># .git/hooks/pre-commit
+#!/bin/sh
+mend sca scan --dir . --fail-on critical || {
+  echo "Critical vulnerabilities found. Commit blocked."
+  exit 1
+}</code></pre>
+                <div class="key-concept">
+                    <h4>&#128161; Faster Feedback = Cheaper Fixes</h4>
+                    <p>A vulnerability caught in the IDE costs minutes; the same issue caught in production costs orders of magnitude more.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>CLI scanning lab<span class="resource-meta">Hands-on Lab</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128221;</span><span>Mend CLI cheat sheet<span class="resource-meta">Cheat Sheet</span></span></a>
+                    <a class="module-resource" href="03-secure-coding.html"><span class="resource-icon">&#128272;</span><span>Next: Secure Coding<span class="resource-meta">Module</span></span></a>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="b">
+                        <p><strong>Question 1:</strong> What does <code>--fail-on high</code> do in a local scan?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Automatically fixes high findings</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Exits non-zero when findings reach the high threshold</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Emails the security team</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Ignores high findings</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question" data-correct="c">
+                        <p><strong>Question 2:</strong> Why integrate scanning into the IDE and pre-commit hooks?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> To replace CI scanning entirely</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> To slow developers down deliberately</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> To catch issues earlier where they are cheapest to fix</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Because CLI scans are less accurate</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <button class="mark-complete-btn" data-xp="150">Mark as Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="01-developer-quickstart.html" class="btn btn-secondary">&#8592; Previous</a>
+                    <a href="03-secure-coding.html" class="btn btn-primary">Next: Secure Coding Best Practices &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/layout.js"></script>
+    <script src="../../js/store.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

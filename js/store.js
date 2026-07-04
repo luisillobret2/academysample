@@ -6,6 +6,9 @@ const MendStore = {
     STORAGE_KEY: 'mendlearn_data',
 
     defaults: {
+        userName: 'Jane Doe',
+        company: 'Acme Security',
+        partnerTier: 'Silver Partner',
         xp: 0,
         level: 1,
         streak: 0,
@@ -15,6 +18,52 @@ const MendStore = {
         completedLabs: [],
         certifications: [],
         courseProgress: {}
+    },
+
+    /* Catalog of certifications that can be issued as certificates. */
+    certCatalog: {
+        associate: {
+            title: 'Mend.io Certified Associate',
+            level: 'Level 1',
+            code: 'ASC',
+            theme: 'associate',
+            description: 'Has demonstrated foundational knowledge of the Mend.io platform, application security fundamentals, market positioning, and the partner program.'
+        },
+        professional: {
+            title: 'Mend.io Certified Professional',
+            level: 'Level 2',
+            code: 'PRO',
+            theme: 'professional',
+            description: 'Has demonstrated hands-on proficiency in platform configuration, CI/CD integration, vulnerability management, and administration.'
+        },
+        expert: {
+            title: 'Mend.io Certified Expert',
+            level: 'Level 3',
+            code: 'EXP',
+            theme: 'expert',
+            description: 'Has demonstrated mastery of enterprise architecture, advanced integration, governance, and migration strategy through examination and practical labs.'
+        },
+        'tech-specialist': {
+            title: 'Mend.io Partner Technical Specialist',
+            level: 'Specialist',
+            code: 'PTS',
+            theme: 'tech-specialist',
+            description: 'Has been recognized as a premier Sales Engineer credential holder, validated through a knowledge exam, practical labs, and a demo evaluation.'
+        },
+        'sales-specialist': {
+            title: 'Mend.io Partner Sales Specialist',
+            level: 'Specialist',
+            code: 'PSS',
+            theme: 'sales-specialist',
+            description: 'Has validated expertise in pitch delivery, objection handling, competitive positioning, and deal management.'
+        },
+        master: {
+            title: 'Mend.io Master Architect',
+            level: 'Capstone',
+            code: 'MAR',
+            theme: 'master',
+            description: 'Has achieved the elite Master Architect credential through a design challenge and live defense panel.'
+        }
     },
 
     load() {
@@ -143,6 +192,51 @@ const MendStore = {
         return this.load().completedLabs.includes(labId);
     },
 
+    /* --- Certifications --- */
+    getCertMeta(certId) {
+        return this.certCatalog[certId] || null;
+    },
+
+    makeCredentialId(certId, name) {
+        const meta = this.getCertMeta(certId);
+        const code = meta ? meta.code : (certId || 'GEN').slice(0, 3).toUpperCase();
+        const seed = (name || '') + '|' + certId;
+        let hash = 0;
+        for (let i = 0; i < seed.length; i++) {
+            hash = ((hash << 5) - hash + seed.charCodeAt(i)) | 0;
+        }
+        const suffix = Math.abs(hash).toString(36).toUpperCase().padStart(6, '0').slice(0, 6);
+        return `MEND-${code}-${suffix}`;
+    },
+
+    getCertification(certId) {
+        return this.load().certifications.find(c => c.id === certId) || null;
+    },
+
+    hasCertification(certId) {
+        return this.load().certifications.some(c => c.id === certId);
+    },
+
+    /* Issue a certificate, persisting recipient, date and credential ID.
+       Idempotent: returns the existing record if already earned. */
+    earnCertification(certId, opts) {
+        const data = this.load();
+        const existing = data.certifications.find(c => c.id === certId);
+        if (existing) return existing;
+
+        const meta = this.getCertMeta(certId);
+        const record = {
+            id: certId,
+            title: meta ? meta.title : certId,
+            recipient: (opts && opts.recipient) || data.userName,
+            date: (opts && opts.date) || new Date().toISOString().slice(0, 10),
+            credentialId: this.makeCredentialId(certId, (opts && opts.recipient) || data.userName)
+        };
+        data.certifications.push(record);
+        this.save(data);
+        return record;
+    },
+
     /* --- Streak --- */
     updateStreak(data) {
         const today = new Date().toISOString().slice(0, 10);
@@ -159,10 +253,9 @@ const MendStore = {
 
     /* --- UI Updates --- */
     updateXPDisplay(xp) {
-        document.querySelectorAll('.xp-display .xp-amount, .xp-display').forEach(el => {
-            const amountEl = el.querySelector('.xp-amount') || el;
-            if (amountEl.textContent.includes('XP')) {
-                amountEl.textContent = xp.toLocaleString() + ' XP';
+        document.querySelectorAll('.xp-display, .nav-xp').forEach(el => {
+            if (el.textContent.includes('XP')) {
+                el.innerHTML = el.innerHTML.replace(/[\d,]+\s*XP/, xp.toLocaleString() + ' XP');
             }
         });
     },
@@ -170,13 +263,8 @@ const MendStore = {
     applyToPage() {
         const data = this.load();
 
-        // Update XP displays
-        document.querySelectorAll('.xp-display').forEach(el => {
-            const txt = el.textContent;
-            if (txt.includes('XP')) {
-                el.innerHTML = el.innerHTML.replace(/[\d,]+\s*XP/, data.xp.toLocaleString() + ' XP');
-            }
-        });
+        // Update XP displays (both the standalone badge and the nav counter)
+        this.updateXPDisplay(data.xp);
 
         // Update hero stats on homepage
         const heroStats = document.querySelectorAll('.hero-stats .stat-value');
@@ -323,14 +411,34 @@ const MendStore = {
                 'sast/03-cicd-integration',
                 'sast/04-custom-rules'
             ],
-            sales: ['sales/01-selling-mend'],
-            developer: ['developer/01-developer-quickstart'],
+            sales: [
+                'sales/01-selling-mend',
+                'sales/02-competitive-positioning',
+                'sales/03-discovery-qualification',
+                'sales/04-objection-handling'
+            ],
+            developer: [
+                'developer/01-developer-quickstart',
+                'developer/02-ide-integration',
+                'developer/03-secure-coding'
+            ],
             container: [
                 'container/01-container-security',
                 'container/02-image-scanning',
                 'container/03-kubernetes-security'
             ],
-            technical: ['technical/01-technical-deep-dive'],
+            technical: [
+                'technical/01-technical-deep-dive',
+                'technical/02-demo-mastery',
+                'technical/03-poc-management'
+            ],
+            cicd: [
+                'cicd/01-pipeline-fundamentals',
+                'cicd/02-gitops-integration',
+                'cicd/03-iac-scanning',
+                'cicd/04-workflow-automation',
+                'cicd/05-multi-tool-orchestration'
+            ],
             secrets: [
                 'secrets/01-secrets-scanning',
                 'secrets/02-incident-response'

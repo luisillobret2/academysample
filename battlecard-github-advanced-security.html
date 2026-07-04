@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battlecard: Mend vs. GitHub Advanced Security - Mend Learn</title>
+    <meta name="description" content="Competitive battlecard: how Mend.io compares to GitHub Advanced Security. Feature matrix, win themes, and proof points.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/module.css">
+    <link rel="stylesheet" href="css/battlecard.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <section class="hero" style="padding: 36px 0;">
+        <div class="container">
+            <div class="hero-content">
+                <span class="badge badge-orange mb-4">&#9876; Battlecard</span>
+                <h1>Mend.io vs. <span class="accent">GitHub Advanced Security</span></h1>
+                <p>GHAS is convenient inside GitHub, but it stops at the edge of the GitHub ecosystem.</p>
+            </div>
+        </div>
+    </section>
+
+    <main class="battlecard-main">
+        <div class="container">
+            <a href="resources.html" class="battlecard-back">&#8592; Back to Resources</a>
+
+            <section class="battlecard-section">
+                <h2>Positioning Summary</h2>
+                <div class="key-concept">
+                    <h4>&#128161; The One-Liner</h4>
+                    <p>GitHub Advanced Security (GHAS) is attractive for GitHub-native teams, but it only covers the GitHub/Azure DevOps ecosystem, lacks reachability, and struggles with false positives and scale, especially as AI-generated code volume grows. Win on ecosystem breadth, prioritization, and enterprise policy control.</p>
+                </div>
+            </section>
+
+            <section class="battlecard-section">
+                <h2>Feature Comparison</h2>
+                <div class="compare-table">
+                    <table>
+                        <thead>
+                            <tr><th class="col-feature">Feature</th><th class="col-mend">Mend.io</th><th>GitHub Advanced Security</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="col-feature">Supported ecosystems</td><td class="col-mend">GitHub, Azure, GitLab, Bitbucket, or self-hosted, plus IDEs, package managers, and CI/CD tools.</td><td>GitHub and Azure DevOps ecosystem only.</td></tr>
+                            <tr><td class="col-feature">AI &amp; AppSec coverage</td><td class="col-mend">AI, SAST, SCA, Container, and automated dependency updates.</td><td>SAST, secrets, dependency updates; incomplete for modern AI risk.</td></tr>
+                            <tr><td class="col-feature">Accuracy, speed &amp; scale</td><td class="col-mend">10x faster scans with +38% precision and +48% recall; built for large-scale apps.</td><td>False positives, struggles with complex risks, performance degradation on large codebases, worse with AI-generated code.</td></tr>
+                            <tr><td class="col-feature">Risk prioritization</td><td class="col-mend">Reachability and exploitability-based.</td><td>Lacks reachability and execution-flow insight.</td></tr>
+                            <tr><td class="col-feature">Malicious package detection</td><td class="col-mend">Behavioral analysis, heuristics, threat intelligence.</td><td>Limited to dependency manifests.</td></tr>
+                            <tr><td class="col-feature">Transitive dependencies</td><td class="col-mend">Deep visibility using 1.7B Renovate installs for optimal upgrade paths.</td><td>Incomplete, noisy suggestions.</td></tr>
+                            <tr><td class="col-feature">Policies &amp; reporting</td><td class="col-mend">Pre-built templates, custom policy builders, and workflows to enforce risk tolerances.</td><td>Lacks sophisticated workflows and centralized reporting; needs custom scripts.</td></tr>
+                            <tr><td class="col-feature">Operationalization</td><td class="col-mend">Global configuration, high adoption for both developers and AppSec.</td><td>Steep learning curve, custom queries required.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="battlecard-section">
+                <h2>Why Teams Switch to Mend.io</h2>
+                <div class="win-grid">
+                    <div class="win-card"><h4>Built for AI</h4><p>GHAS leaves teams buried in alert fatigue and backlogs as AI-generated code accelerates. Mend.io delivers high-precision detection and automated remediation that scales.</p></div>
+                    <div class="win-card"><h4>Secure all your code, not just GitHub</h4><p>If your stack spans multiple repos, containers, or AI components, GHAS won't cover it. Mend.io unifies GitHub, Bitbucket, GitLab, Kubernetes, and beyond.</p></div>
+                    <div class="win-card"><h4>Detect and block malicious packages</h4><p>GHAS analyzes manifests but lacks behavioral analysis. Mend.io blocks malicious packages using ML models, heuristics, and real-time intelligence.</p></div>
+                    <div class="win-card"><h4>Reachability and exploitability insight</h4><p>GHAS can't deeply assess reachability. Mend.io traces vulnerabilities through execution flow, focusing on what's actually at risk.</p></div>
+                </div>
+            </section>
+
+            <section class="battlecard-section">
+                <h2>Mend.io Proof Points</h2>
+                <div class="proof-grid">
+                    <div class="proof-stat"><div class="num">10x</div><div class="lbl">Faster SAST scans than traditional tools</div></div>
+                    <div class="proof-stat"><div class="num">+38%</div><div class="lbl">Better SAST precision</div></div>
+                    <div class="proof-stat"><div class="num">+48%</div><div class="lbl">Better SAST recall</div></div>
+                    <div class="proof-stat"><div class="num">200+</div><div class="lbl">Languages &amp; frameworks supported</div></div>
+                    <div class="proof-stat"><div class="num">1.7B</div><div class="lbl">Mend Renovate installs powering upgrade paths</div></div>
+                    <div class="proof-stat"><div class="num">70%</div><div class="lbl">Risk reduction reported by AppSec teams</div></div>
+                </div>
+            </section>
+
+            <section class="battlecard-section">
+                <h2>Objection-Handling Reminder</h2>
+                <div class="warning-box">
+                    <h4>&#9888;&#65039; Keep It Classy</h4>
+                    <p>Never disparage a competitor by name in front of a customer. Contrast on outcomes (noise reduction, time-to-fix, total cost of ownership) and let the buyer draw their own conclusion.</p>
+                </div>
+            </section>
+
+            <section class="battlecard-section">
+                <h2>Other Battlecards</h2>
+                <div class="flex" style="flex-wrap: wrap; gap: 8px;">
+                    <a href="battlecard-snyk.html" class="btn btn-secondary btn-sm">vs. Snyk</a>
+                    <a href="battlecard-veracode.html" class="btn btn-secondary btn-sm">vs. Veracode</a>
+                    <a href="battlecard-checkmarx.html" class="btn btn-secondary btn-sm">vs. Checkmarx</a>
+                    <a href="battlecard-black-duck.html" class="btn btn-secondary btn-sm">vs. Black Duck</a>
+                    <a href="battlecard-sonatype.html" class="btn btn-secondary btn-sm">vs. Sonatype</a>
+                </div>
+            </section>
+
+            <p class="battlecard-source">Source: Mend.io &ldquo;Compare by AppSec&rdquo; &middot; <a href="https://www.mend.io/mend-vs-github-advanced-security/" target="_blank" rel="noopener">mend.io/mend-vs-github-advanced-security</a>. For partner enablement use.</p>
+        </div>
+    </main>
+
+    <footer id="site-footer" class="site-footer"></footer>
+
+    <script src="js/layout.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

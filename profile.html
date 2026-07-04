@@ -9,32 +9,7 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header class="site-header">
-        <div class="container">
-            <a href="index.html" class="logo"><img src="img/mend-logo.svg" alt="Mend.io" class="logo-img"> Mend <span>Learn</span></a>
-            <ul class="nav-main">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="learning-paths.html">Learning Paths</a></li>
-                <li><a href="certifications.html">Certifications</a></li>
-                <li><a href="labs.html">Labs</a></li>
-                <li><a href="resources.html">Resources</a></li>
-                <li><a href="leaderboard.html">Leaderboard</a></li>
-                <li><a href="ai-coach.html">AI Coach</a></li>
-            </ul>
-            <div class="nav-right">
-                <div class="nav-search">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                    <input type="text" placeholder="Search courses, labs...">
-                </div>
-                <div class="nav-xp">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                    2,450 XP
-                </div>
-                <a href="profile.html" class="nav-avatar" style="box-shadow: 0 0 0 2px var(--color-accent);">JD</a>
-            </div>
-            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
-        </div>
-    </header>
+    <header id="site-header" class="site-header"></header>
 
     <main class="page-content">
         <div class="container">
@@ -102,7 +77,7 @@
                                 <div style="font-weight: 600; color: var(--color-text-bright);">Certified Associate</div>
                                 <div class="text-xs text-muted">Earned June 15, 2025 &middot; Expires June 15, 2026</div>
                             </div>
-                            <span class="badge badge-green">Active</span>
+                            <a href="certificate.html?cert=associate" class="btn btn-secondary btn-sm">View Certificate</a>
                         </div>
                         <div class="card-flat" style="display: flex; gap: 16px; align-items: center; padding: 16px;">
                             <div style="width: 48px; height: 48px; border-radius: 50%; background: rgba(52, 152, 219, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">&#9881;</div>
@@ -247,15 +222,9 @@
         </div>
     </main>
 
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-bottom">
-                <span>&copy; 2025 Mend.io. All rights reserved.</span>
-                <span><a href="#">Privacy</a> &middot; <a href="#">Terms</a></span>
-            </div>
-        </div>
-    </footer>
+    <footer id="site-footer" class="site-footer"></footer>
 
+    <script src="js/layout.js"></script>
     <script src="js/store.js"></script>
     <script src="js/app.js"></script>
 </body>

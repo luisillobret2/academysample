@@ -1,17 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none">
-  <defs>
-    <clipPath id="circle-clip">
-      <circle cx="20" cy="20" r="20"/>
-    </clipPath>
-  </defs>
-  <g clip-path="url(#circle-clip)">
-    <!-- Teal background -->
-    <circle cx="20" cy="20" r="20" fill="#7CC9C6"/>
-    <!-- Dark blue bottom with wave top edge -->
-    <path d="M-1 40 L-1 26 C2 26, 4 22, 6 18 C8 14, 10 12, 12 12 C14 12, 14 18, 14 22 C14 26, 14 26, 16 26 C16 26, 16 22, 18 18 C20 14, 22 12, 24 12 C26 12, 26 18, 28 22 C30 26, 32 26, 34 26 C36 26, 38 22, 41 18 L41 40 Z" fill="#073C8C"/>
-    <!-- White wave strokes (three U-shapes) -->
-    <path d="M3 16 C3 16, 3 28, 10 28 C14 28, 14 16, 14 16" stroke="#ffffff" stroke-width="3.8" stroke-linecap="round" fill="none"/>
-    <path d="M14 16 C14 16, 14 28, 20 28 C26 28, 26 16, 26 16" stroke="#ffffff" stroke-width="3.8" stroke-linecap="round" fill="none"/>
-    <path d="M26 16 C26 16, 26 28, 32 28 C36 28, 37 16, 37 16" stroke="#ffffff" stroke-width="3.8" stroke-linecap="round" fill="none"/>
-  </g>
+  <!-- Monochrome white variant for dark backgrounds -->
+  <circle cx="20" cy="20" r="18.5" stroke="#ffffff" stroke-width="2" fill="none"/>
+  <path d="M3 16 C3 16, 3 28, 10 28 C14 28, 14 16, 14 16" stroke="#ffffff" stroke-width="3.8" stroke-linecap="round" fill="none"/>
+  <path d="M14 16 C14 16, 14 28, 20 28 C26 28, 26 16, 26 16" stroke="#ffffff" stroke-width="3.8" stroke-linecap="round" fill="none"/>
+  <path d="M26 16 C26 16, 26 28, 32 28 C36 28, 37 16, 37 16" stroke="#ffffff" stroke-width="3.8" stroke-linecap="round" fill="none"/>
 </svg>

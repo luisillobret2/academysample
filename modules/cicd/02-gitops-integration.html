@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitOps &amp; SCM Integration - Mend Learn</title>
+    <meta name="description" content="Integrate Mend.io with GitHub, GitLab, Bitbucket, and Azure DevOps using GitOps workflows.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar">
+            <div class="sidebar-header">
+                <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
+                <h3>CI/CD &amp; DevOps</h3>
+                <div class="sidebar-progress"><div class="progress-bar"><div class="fill" style="width: 0%"></div></div><span>0/5 Complete</span></div>
+            </div>
+            <nav class="module-nav">
+                <a href="01-pipeline-fundamentals.html" class="module-link"><span class="module-status">1</span><div><span class="module-title">Pipeline Security Fundamentals</span><span class="module-duration">45 min</span></div></a>
+                <a href="02-gitops-integration.html" class="module-link active"><span class="module-status">2</span><div><span class="module-title">GitOps &amp; SCM Integration</span><span class="module-duration">40 min</span></div></a>
+                <a href="03-iac-scanning.html" class="module-link"><span class="module-status">3</span><div><span class="module-title">IaC Scanning</span><span class="module-duration">40 min</span></div></a>
+                <a href="04-workflow-automation.html" class="module-link"><span class="module-status">4</span><div><span class="module-title">Custom Workflow Automation</span><span class="module-duration">40 min</span></div></a>
+                <a href="05-multi-tool-orchestration.html" class="module-link"><span class="module-status">5</span><div><span class="module-title">Multi-Tool Orchestration</span><span class="module-duration">45 min</span></div></a>
+            </nav>
+        </aside>
+
+        <main class="module-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>CI/CD &amp; DevOps</span> &rsaquo; <span>GitOps &amp; SCM Integration</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>GitOps &amp; SCM Integration</h1>
+                <div class="module-meta">
+                    <span>&#128338; 40 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 175 XP</span>
+                    <span class="level-badge expert">Level 3 - Expert</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <ul>
+                    <li>Connect Mend.io to major source control platforms</li>
+                    <li>Enable PR checks and automated fix pull requests</li>
+                    <li>Apply policy as code stored alongside the repository</li>
+                    <li>Scale onboarding across many repositories at once</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>Connect Your SCM</h2>
+                <p>Mend.io integrates natively with GitHub, GitLab, Bitbucket, and Azure DevOps. Repository integrations scan automatically on every commit and pull request.</p>
+                <ol class="steps-list">
+                    <li>Install the Mend app or configure an SCM token with least-privilege scopes.</li>
+                    <li>Select the organizations and repositories to onboard.</li>
+                    <li>Enable PR status checks and automated fix PRs.</li>
+                    <li>Confirm the first scan and review inline PR annotations.</li>
+                </ol>
+            </section>
+
+            <section class="module-section">
+                <h2>Policy as Code</h2>
+                <p>Store security policy in the repo so it is versioned, reviewed, and consistent across teams.</p>
+                <pre><code># .mend/policy.yml
+sca:
+  fail_on: high
+  reachable_only: true
+license:
+  deny: [GPL-3.0, AGPL-3.0]
+remediation:
+  auto_pr: true</code></pre>
+                <div class="key-concept">
+                    <h4>&#128161; Review Policy Like Code</h4>
+                    <p>Because policy lives in Git, changes go through pull requests, giving security and engineering shared ownership.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Scale Onboarding</h2>
+                <p>Use organization-level integration and templates to onboard hundreds of repos without per-repo toil.</p>
+                <div class="warning-box">
+                    <h4>&#9888;&#65039; Mind Token Scope</h4>
+                    <p>Grant the minimum permissions required. Over-scoped SCM tokens are a supply-chain risk in themselves.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>SCM integration lab<span class="resource-meta">Hands-on Lab</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Policy-as-code examples<span class="resource-meta">Template</span></span></a>
+                    <a class="module-resource" href="03-iac-scanning.html"><span class="resource-icon">&#127959;</span><span>Next: IaC Scanning<span class="resource-meta">Module</span></span></a>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="b">
+                        <p><strong>Question 1:</strong> What is the main benefit of policy as code?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> It removes the need for scanning</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Policy is versioned and reviewed through pull requests</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> It hides findings from developers</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> It disables PR checks</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question" data-correct="a">
+                        <p><strong>Question 2:</strong> What principle should guide SCM token permissions?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Least privilege</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Maximum access for convenience</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Shared admin tokens</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> No authentication</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <button class="mark-complete-btn" data-xp="175">Mark as Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="01-pipeline-fundamentals.html" class="btn btn-secondary">&#8592; Previous</a>
+                    <a href="03-iac-scanning.html" class="btn btn-primary">Next: IaC Scanning &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/layout.js"></script>
+    <script src="../../js/store.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

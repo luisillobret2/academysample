@@ -9,32 +9,7 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header class="site-header">
-        <div class="container">
-            <a href="index.html" class="logo"><img src="img/mend-logo.svg" alt="Mend.io" class="logo-img"> Mend <span>Learn</span></a>
-            <ul class="nav-main">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="learning-paths.html" class="active">Learning Paths</a></li>
-                <li><a href="certifications.html">Certifications</a></li>
-                <li><a href="labs.html">Labs</a></li>
-                <li><a href="resources.html">Resources</a></li>
-                <li><a href="leaderboard.html">Leaderboard</a></li>
-                <li><a href="ai-coach.html">AI Coach</a></li>
-            </ul>
-            <div class="nav-right">
-                <div class="nav-search">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                    <input type="text" placeholder="Search courses, labs...">
-                </div>
-                <div class="nav-xp">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                    2,450 XP
-                </div>
-                <a href="profile.html" class="nav-avatar">JD</a>
-            </div>
-            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
-        </div>
-    </header>
+    <header id="site-header" class="site-header"></header>
 
     <section class="hero" style="padding: 36px 0;">
         <div class="container">
@@ -79,7 +54,7 @@
                         <p>Application security fundamentals, supply chain security, and Mend.io platform overview. Required for all partners.</p>
                         <div class="path-card-meta">
                             <span>&#128339; 2 hrs</span>
-                            <span>&#128218; 4 modules</span>
+                            <span>&#128218; 3 modules</span>
                             <span>&#127942; 200 XP</span>
                         </div>
                         <div class="progress-bar mb-8"><div class="fill" style="width: 100%;"></div></div>
@@ -99,7 +74,7 @@
                         <p>Master Software Composition Analysis: vulnerability scanning, license compliance, policy configuration, and integration patterns.</p>
                         <div class="path-card-meta">
                             <span>&#128339; 5 hrs</span>
-                            <span>&#128218; 8 modules</span>
+                            <span>&#128218; 6 modules</span>
                             <span>&#127942; 500 XP</span>
                         </div>
                         <div class="progress-bar mb-8"><div class="fill" style="width: 68%;"></div></div>
@@ -118,8 +93,8 @@
                         <h3>SAST Product Track</h3>
                         <p>Static application security testing, code analysis, custom rules, false positive management, and CI/CD pipeline integration.</p>
                         <div class="path-card-meta">
-                            <span>&#128339; 5 hrs</span>
-                            <span>&#128218; 8 modules</span>
+                            <span>&#128339; 3 hrs</span>
+                            <span>&#128218; 4 modules</span>
                             <span>&#127942; 500 XP</span>
                         </div>
                         <div class="progress-bar mb-8"><div class="fill" style="width: 25%;"></div></div>
@@ -198,8 +173,8 @@
                         <h3>Sales Track</h3>
                         <p>Market positioning, ICP, discovery questions, competitive differentiation, objection handling, pricing, and deal registration.</p>
                         <div class="path-card-meta">
-                            <span>&#128339; 4.5 hrs</span>
-                            <span>&#128218; 9 modules</span>
+                            <span>&#128339; 2.5 hrs</span>
+                            <span>&#128218; 4 modules</span>
                             <span>&#127942; 600 XP</span>
                         </div>
                         <div class="progress-bar mb-8"><div class="fill" style="width: 0%;"></div></div>
@@ -218,8 +193,8 @@
                         <h3>Technical / SE Track</h3>
                         <p>Demo environment setup, standard demo flows, POC planning, integration architecture, and customer workshop facilitation.</p>
                         <div class="path-card-meta">
-                            <span>&#128339; 5.5 hrs</span>
-                            <span>&#128218; 8 modules</span>
+                            <span>&#128339; 2.25 hrs</span>
+                            <span>&#128218; 3 modules</span>
                             <span>&#127942; 550 XP</span>
                         </div>
                         <div class="progress-bar mb-8"><div class="fill" style="width: 0%;"></div></div>
@@ -238,8 +213,8 @@
                         <h3>Developer Track</h3>
                         <p>Mend.io for developers: IDE plugins, CLI scanning, GitHub Actions, API deep dive, custom integrations, and webhooks.</p>
                         <div class="path-card-meta">
-                            <span>&#128339; 4.5 hrs</span>
-                            <span>&#128218; 7 modules</span>
+                            <span>&#128339; 1.75 hrs</span>
+                            <span>&#128218; 3 modules</span>
                             <span>&#127942; 500 XP</span>
                         </div>
                         <div class="progress-bar mb-8"><div class="fill" style="width: 0%;"></div></div>
@@ -298,14 +273,14 @@
                         <h3>CI/CD & DevOps Integration</h3>
                         <p>Advanced pipeline design, GitOps integration, IaC scanning, custom workflow automation, and multi-tool orchestration.</p>
                         <div class="path-card-meta">
-                            <span>&#128339; 4.25 hrs</span>
+                            <span>&#128339; 3.5 hrs</span>
                             <span>&#128218; 5 modules</span>
                             <span>&#127942; 700 XP</span>
                         </div>
                         <div class="progress-bar mb-8"><div class="fill" style="width: 0%;"></div></div>
                         <div class="path-card-footer">
-                            <span class="tag">Requires: Professional Cert</span>
-                            <span class="btn btn-secondary btn-sm" style="opacity: 0.5;">Locked</span>
+                            <span class="text-sm text-muted">Recommended: Professional Cert</span>
+                            <a href="modules/cicd/01-pipeline-fundamentals.html" class="btn btn-primary btn-sm">Start</a>
                         </div>
                     </div>
                 </div>
@@ -313,15 +288,9 @@
         </div>
     </main>
 
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-bottom">
-                <span>&copy; 2025 Mend.io. All rights reserved.</span>
-                <span><a href="#">Privacy</a> &middot; <a href="#">Terms</a></span>
-            </div>
-        </div>
-    </footer>
+    <footer id="site-footer" class="site-footer"></footer>
 
+    <script src="js/layout.js"></script>
     <script src="js/store.js"></script>
     <script src="js/app.js"></script>
 </body>

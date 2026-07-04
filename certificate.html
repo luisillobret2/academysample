@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate - Mend Learn</title>
+    <meta name="description" content="View, print, and download your Mend.io partner certification certificate.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/certificate.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <main class="page-content">
+        <div class="container">
+
+            <div class="cert-actions no-print">
+                <a href="certifications.html" class="btn btn-outline btn-sm">&#8592; Back to Certifications</a>
+                <div class="cert-actions-right">
+                    <button type="button" class="btn btn-secondary btn-sm" id="cert-copy-btn">Copy Verification Link</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="cert-print-btn">Download PDF</button>
+                </div>
+            </div>
+
+            <!-- Rendered when a valid, earned certificate is requested -->
+            <div class="certificate" id="certificate" hidden>
+                <div class="certificate-frame">
+                    <div class="cert-doc-header">
+                        <div class="cert-doc-brand">
+                            <img src="img/mend-logo.svg" alt="Mend.io" class="cert-doc-logo">
+                            <span>Mend <strong>Learn</strong></span>
+                        </div>
+                        <div class="cert-doc-org">Partner Certification Program</div>
+                    </div>
+
+                    <div class="cert-doc-body">
+                        <div class="cert-doc-eyebrow">Certificate of Achievement</div>
+                        <p class="cert-doc-line">This is to certify that</p>
+                        <div class="cert-recipient" id="cert-recipient">Jane Doe</div>
+                        <p class="cert-doc-line">has successfully earned the credential</p>
+                        <div class="cert-title" id="cert-title">Mend.io Certified Associate</div>
+                        <p class="cert-desc" id="cert-desc"></p>
+                    </div>
+
+                    <div class="cert-doc-footer">
+                        <div class="cert-meta">
+                            <div class="cert-meta-item">
+                                <span class="cert-meta-label">Issued</span>
+                                <span class="cert-meta-value" id="cert-date">&mdash;</span>
+                            </div>
+                            <div class="cert-meta-item">
+                                <span class="cert-meta-label">Credential ID</span>
+                                <span class="cert-meta-value" id="cert-id">&mdash;</span>
+                            </div>
+                        </div>
+                        <div class="cert-seal" id="cert-seal" aria-hidden="true">
+                            <span class="cert-seal-code" id="cert-seal-code">ASC</span>
+                            <span class="cert-seal-text">Mend.io Certified</span>
+                        </div>
+                        <div class="cert-signature">
+                            <div class="cert-signature-name">Rami Sass</div>
+                            <div class="cert-signature-line"></div>
+                            <div class="cert-signature-title">CEO, Mend.io</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rendered when the requested certificate is unknown / not earned -->
+            <div class="cert-empty card-flat" id="cert-missing" hidden>
+                <div class="cert-empty-icon">&#128274;</div>
+                <h2 id="cert-missing-title">Certificate not available</h2>
+                <p class="text-muted" id="cert-missing-msg">You haven't earned this certification yet. Complete the required learning path and exam to unlock your certificate.</p>
+                <a href="certifications.html" class="btn btn-primary btn-sm">View Certifications</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer id="site-footer" class="site-footer"></footer>
+
+    <script src="js/layout.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/certificate.js"></script>
+</body>
+</html>

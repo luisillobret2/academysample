@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battlecard: Mend vs. Black Duck - Mend Learn</title>
+    <meta name="description" content="Competitive battlecard: how Mend.io compares to Black Duck. Feature matrix, win themes, and proof points.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/module.css">
+    <link rel="stylesheet" href="css/battlecard.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <section class="hero" style="padding: 36px 0;">
+        <div class="container">
+            <div class="hero-content">
+                <span class="badge badge-orange mb-4">&#9876; Battlecard</span>
+                <h1>Mend.io vs. <span class="accent">Black Duck</span></h1>
+                <p>Black Duck built its name on compliance, but compliance isn't security, and it isn't speed.</p>
+            </div>
+        </div>
+    </section>
+
+    <main class="battlecard-main">
+        <div class="container">
+            <a href="resources.html" class="battlecard-back">&#8592; Back to Resources</a>
+
+            <section class="battlecard-section">
+                <h2>Positioning Summary</h2>
+                <div class="key-concept">
+                    <h4>&#128161; The One-Liner</h4>
+                    <p>Black Duck (now part of a fragmented Coverity + Black Duck + Polaris + Seeker portfolio) is strong on open-source license compliance but relies on legacy, service-heavy tooling with disjointed licensing and no AI security. Win on unified platform, deployment speed, and modern AI coverage.</p>
+                </div>
+            </section>
+
+            <section class="battlecard-section">
+                <h2>Feature Comparison</h2>
+                <div class="compare-table">
+                    <table>
+                        <thead>
+                            <tr><th class="col-feature">Feature</th><th class="col-mend">Mend.io</th><th>Black Duck</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="col-feature">Unified AppSec platform</td><td class="col-mend">Unified cloud-native platform for SAST, SCA, Container, and AI Security, tightly integrated.</td><td>Fragmented legacy tools (Coverity, Black Duck, Seeker) requiring separate deployments and training.</td></tr>
+                            <tr><td class="col-feature">IDE experience</td><td class="col-mend">Real-time, in-IDE remediation (VS Code, IntelliJ, AI-native IDEs) with actionable fixes.</td><td>Limited IDE plugins; often forces devs into external portals.</td></tr>
+                            <tr><td class="col-feature">AI-powered remediation &amp; AI security</td><td class="col-mend">AI remediation, AI-generated code support, AI components, and AI red teaming built in.</td><td>No AI-security offering; no AI-generated code remediation or model-level governance.</td></tr>
+                            <tr><td class="col-feature">Automated dependency updates</td><td class="col-mend">Mend Renovate Enterprise auto-PRs for public/private packages with auto-fix workflows.</td><td>No native automated dependency updates; lower patch velocity.</td></tr>
+                            <tr><td class="col-feature">Scalable modern deployment</td><td class="col-mend">Hybrid SaaS, hosted cloud, or dedicated instance; fast rollout.</td><td>On-prem or legacy hybrid setups, complex maintenance, slower time-to-value.</td></tr>
+                            <tr><td class="col-feature">Transparent pricing, single SKU</td><td class="col-mend">Simple, transparent pricing with no scan limits or hidden upsells.</td><td>Disjointed licensing across Coverity, Black Duck, and Polaris; unpredictable pricing.</td></tr>
+                            <tr><td class="col-feature">Faster time-to-fix</td><td class="col-mend">Best-fix location surfaced across sources/sinks; remediate directly in pull requests.</td><td>Generic guidance; transitive dependency issues lead to longer remediation cycles.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="battlecard-section">
+                <h2>Why Teams Switch to Mend.io</h2>
+                <div class="win-grid">
+                    <div class="win-card"><h4>Faster, simpler deployment</h4><p>Black Duck's multi-component rollout can take weeks and needs consultants. Mend.io deploys in minutes, cloud-native and integrated into SCM, CI/CD, and IDEs.</p></div>
+                    <div class="win-card"><h4>Shorter MTTR, happier devs</h4><p>Mend.io automates remediation with auto-PRs, Merge Confidence, and in-IDE fixes, plus reachability-based prioritization that spots what's truly exploitable.</p></div>
+                    <div class="win-card"><h4>Security that understands AI</h4><p>Mend.io covers AI-generated code, AI components, behavioral AI risks, and AI BoM, and runs AI Red Teaming, visibility legacy tools lack.</p></div>
+                    <div class="win-card"><h4>Simple pricing that scales</h4><p>Transparent pricing with no scan limits. Black Duck's modular model (Black Duck + Coverity + Polaris) piles on contracts, add-ons, and service fees.</p></div>
+                </div>
+            </section>
+
+            <section class="battlecard-section">
+                <h2>Voice of the Customer</h2>
+                <p class="text-sm text-muted mb-16">Public G2 / Capterra review themes comparing Black Duck and Mend.io.</p>
+                <div class="quote-grid">
+                    <div class="quote-card"><div class="quote-topic">Accuracy</div><blockquote>&ldquo;It's still a bit inconsistent. Sometimes a scan reveals components or vulnerabilities, and the next day they don't show up. It doesn't clearly show whether vulnerabilities are direct or transitive.&rdquo;</blockquote><div class="quote-attr">Black Duck user</div><blockquote class="quote-mend">&ldquo;The accuracy of vulnerability detection is impressive, and we have rarely encountered false positives.&rdquo;</blockquote><div class="quote-attr">Mend.io user</div></div>
+                    <div class="quote-card"><div class="quote-topic">Cost</div><blockquote>&ldquo;The price charged by Black Duck is exorbitant. There are many other products that offer better features and support at a lower cost.&rdquo;</blockquote><div class="quote-attr">Black Duck user</div><blockquote class="quote-mend">&ldquo;The pricing is reasonable and scalable, making it a good fit for our growing business.&rdquo;</blockquote><div class="quote-attr">Mend.io user</div></div>
+                    <div class="quote-card"><div class="quote-topic">Integration</div><blockquote>&ldquo;Black Duck SCA lacks integration with IntelliJ IDEA and needs more native integration with Coverity.&rdquo;</blockquote><div class="quote-attr">Black Duck user</div><blockquote class="quote-mend">&ldquo;The integration with our existing tools (JIRA, Jenkins) was seamless, saving us a lot of time and effort.&rdquo;</blockquote><div class="quote-attr">Mend.io user</div></div>
+                    <div class="quote-card"><div class="quote-topic">Support</div><blockquote>&ldquo;I don't find reliable or feasible documents to help me debug issues, and contacting support is difficult.&rdquo;</blockquote><div class="quote-attr">Black Duck user</div><blockquote class="quote-mend">&ldquo;The support team is knowledgeable and responsive, and the documentation is thorough and easy to understand.&rdquo;</blockquote><div class="quote-attr">Mend.io user</div></div>
+                </div>
+            </section>
+
+            <section class="battlecard-section">
+                <h2>Mend.io Proof Points</h2>
+                <div class="proof-grid">
+                    <div class="proof-stat"><div class="num">10x</div><div class="lbl">Faster SAST scans than traditional tools</div></div>
+                    <div class="proof-stat"><div class="num">+38%</div><div class="lbl">Better SAST precision</div></div>
+                    <div class="proof-stat"><div class="num">+48%</div><div class="lbl">Better SAST recall</div></div>
+                    <div class="proof-stat"><div class="num">200+</div><div class="lbl">Languages &amp; frameworks supported</div></div>
+                    <div class="proof-stat"><div class="num">1.7B</div><div class="lbl">Mend Renovate installs powering upgrade paths</div></div>
+                    <div class="proof-stat"><div class="num">70%</div><div class="lbl">Risk reduction reported by AppSec teams</div></div>
+                </div>
+            </section>
+
+            <section class="battlecard-section">
+                <h2>Objection-Handling Reminder</h2>
+                <div class="warning-box">
+                    <h4>&#9888;&#65039; Keep It Classy</h4>
+                    <p>Never disparage a competitor by name in front of a customer. Contrast on outcomes (noise reduction, time-to-fix, total cost of ownership) and let the buyer draw their own conclusion.</p>
+                </div>
+            </section>
+
+            <section class="battlecard-section">
+                <h2>Other Battlecards</h2>
+                <div class="flex" style="flex-wrap: wrap; gap: 8px;">
+                    <a href="battlecard-snyk.html" class="btn btn-secondary btn-sm">vs. Snyk</a>
+                    <a href="battlecard-veracode.html" class="btn btn-secondary btn-sm">vs. Veracode</a>
+                    <a href="battlecard-checkmarx.html" class="btn btn-secondary btn-sm">vs. Checkmarx</a>
+                    <a href="battlecard-github-advanced-security.html" class="btn btn-secondary btn-sm">vs. GitHub Advanced Security</a>
+                    <a href="battlecard-sonatype.html" class="btn btn-secondary btn-sm">vs. Sonatype</a>
+                </div>
+            </section>
+
+            <p class="battlecard-source">Source: Mend.io &ldquo;Compare by AppSec&rdquo; &middot; <a href="https://www.mend.io/mend-vs-black-duck/" target="_blank" rel="noopener">mend.io/mend-vs-black-duck</a>. For partner enablement use.</p>
+        </div>
+    </main>
+
+    <footer id="site-footer" class="site-footer"></footer>
+
+    <script src="js/layout.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
