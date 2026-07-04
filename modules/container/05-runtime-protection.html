@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Runtime Protection &amp; Monitoring - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="../../index.html" class="logo"><img src="../../img/mend-logo.svg" alt="Mend.io" class="logo-img"> Mend <span>Learn</span></a>
+            <ul class="nav-main">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../learning-paths.html" class="active">Learning Paths</a></li>
+                <li><a href="../../certifications.html">Certifications</a></li>
+                <li><a href="../../labs.html">Labs</a></li>
+                <li><a href="../../resources.html">Resources</a></li>
+                <li><a href="../../leaderboard.html">Leaderboard</a></li>
+                <li><a href="../../ai-coach.html">AI Coach</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Search courses, labs..."></div>
+                <div class="nav-xp"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <span class="xp-display">2,450 XP</span></div>
+                <a href="../../profile.html" class="nav-avatar">JD</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+    </header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar">
+            <div class="sidebar-header">
+                <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
+                <h3>Container Security</h3>
+                <div class="sidebar-progress">
+                    <div class="progress-bar"><div class="fill" data-progress="0%" style="width: 0%"></div></div>
+                    <span>0/5 Complete</span>
+                </div>
+            </div>
+            <nav class="module-nav">
+                <a href="01-container-security.html" class="module-link">
+                    <span class="module-status">1</span>
+                    <div><span class="module-title">Container Security Fundamentals</span><span class="module-duration">45 min</span></div>
+                </a>
+                <a href="02-image-scanning.html" class="module-link">
+                    <span class="module-status">2</span>
+                    <div><span class="module-title">Container Image Scanning</span><span class="module-duration">40 min</span></div>
+                </a>
+                <a href="03-kubernetes-security.html" class="module-link">
+                    <span class="module-status">3</span>
+                    <div><span class="module-title">Kubernetes Security</span><span class="module-duration">45 min</span></div>
+                </a>
+                <a href="04-registry-scanning.html" class="module-link">
+                    <span class="module-status">4</span>
+                    <div><span class="module-title">Registry Scanning &amp; Image Lifecycle</span><span class="module-duration">35 min</span></div>
+                </a>
+                <a href="05-runtime-protection.html" class="module-link active">
+                    <span class="module-status">5</span>
+                    <div><span class="module-title">Runtime Protection &amp; Monitoring</span><span class="module-duration">40 min</span></div>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="module-content">
+            <div class="breadcrumb">
+                <a href="../../learning-paths.html">Learning Paths</a> &#8250; Container Security &#8250; Runtime Protection
+            </div>
+
+            <div class="completed-badge">&#10003; Not Started</div>
+            <h1>Runtime Protection &amp; Monitoring</h1>
+            <div class="module-meta">
+                <span>&#128336; 40 min</span>
+                <span>&#128218; 4 sections</span>
+                <span>&#11088; 225 XP</span>
+                <span class="module-level">Level 3 - Advanced</span>
+            </div>
+
+
+            <section class="module-section">
+                <h2>Beyond Build-Time Security</h2>
+                <p>Scanning containers at build time is essential but not sufficient. Runtime protection detects and prevents attacks against running containers, covering threats that can't be identified by static analysis alone.</p>
+
+                <h3>The Security Lifecycle</h3>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#128295;</div>
+                        <h4>Build</h4>
+                        <p>Scan images during CI/CD. Fix known vulnerabilities and enforce base image policies before deployment.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128230;</div>
+                        <h4>Ship</h4>
+                        <p>Registry scanning, image signing, and admission control ensure only verified images are deployed.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128187;</div>
+                        <h4>Run</h4>
+                        <p>Runtime monitoring detects anomalous behavior, unauthorized access, and zero-day exploits in production.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128202;</div>
+                        <h4>Monitor</h4>
+                        <p>Continuous visibility into container behavior, network connections, file access, and process execution.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Runtime Threat Detection</h2>
+                <p>Runtime security tools monitor container behavior and alert on anomalies:</p>
+
+                <ul>
+                    <li><strong>Process Monitoring</strong> &mdash; Detect unexpected processes (e.g., a web server container running bash or curl)</li>
+                    <li><strong>File System Integrity</strong> &mdash; Alert when containers modify files outside expected paths</li>
+                    <li><strong>Network Anomalies</strong> &mdash; Identify unexpected outbound connections (data exfiltration, reverse shells)</li>
+                    <li><strong>Privilege Escalation</strong> &mdash; Detect containers attempting to gain elevated privileges</li>
+                    <li><strong>Cryptomining</strong> &mdash; Identify containers using excessive CPU for cryptocurrency mining</li>
+                </ul>
+
+                <h3>Falco Rules Example</h3>
+                <pre><code># Detect shell execution in a container
+- rule: Shell Spawned in Container
+  desc: Detect shell execution in a running container
+  condition: >
+    spawned_process and container and
+    proc.name in (bash, sh, zsh, ksh, csh) and
+    not proc.pname in (expected_shell_parents)
+  output: >
+    Shell spawned in container
+    (user=%user.name container=%container.name
+     image=%container.image.repository
+     process=%proc.name parent=%proc.pname)
+  priority: WARNING
+
+# Detect outbound connections to suspicious ports
+- rule: Unexpected Outbound Connection
+  desc: Container making outbound connection to non-standard port
+  condition: >
+    outbound and container and
+    fd.sport not in (80, 443, 53, 8080, 8443)
+  output: >
+    Unexpected outbound connection from container
+    (container=%container.name image=%container.image.repository
+     connection=%fd.name)
+  priority: NOTICE</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Network Policies</h2>
+                <p>Kubernetes Network Policies restrict pod-to-pod communication, implementing zero-trust networking at the container level:</p>
+
+                <pre><code># Default deny all ingress traffic
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+  namespace: production
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+
+# Allow specific communication patterns
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-frontend-to-api
+  namespace: production
+spec:
+  podSelector:
+    matchLabels:
+      app: api-server
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: frontend
+      ports:
+        - port: 8080
+          protocol: TCP</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Security Observability</h2>
+                <p>Effective runtime protection requires comprehensive observability:</p>
+
+                <ul>
+                    <li><strong>Centralized Logging</strong> &mdash; Aggregate container logs to a SIEM for correlation and analysis</li>
+                    <li><strong>Metrics &amp; Alerting</strong> &mdash; Monitor resource usage patterns that may indicate compromise</li>
+                    <li><strong>Distributed Tracing</strong> &mdash; Track request flows across microservices to identify lateral movement</li>
+                    <li><strong>Audit Logs</strong> &mdash; Kubernetes API audit logs track all cluster operations for forensic analysis</li>
+                </ul>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Defense in Depth</h4>
+                    <p>Runtime protection is most effective when combined with strong build-time scanning. Mend's vulnerability data enriches runtime alerts by identifying which running containers have known vulnerabilities, prioritizing response efforts.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="c">
+                        <p><strong>Question 1:</strong> What type of runtime threat involves a container making unexpected outbound network connections?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Privilege escalation</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Cryptomining</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Data exfiltration or reverse shell</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> File system tampering</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="b">
+                        <p><strong>Question 2:</strong> What is the purpose of a Kubernetes "default deny" Network Policy?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Block all traffic to the internet</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Block all pod-to-pod traffic by default, requiring explicit allow rules</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Prevent pods from being scheduled</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Disable DNS resolution for security</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>225 XP earned for completing this module</span>
+                </div>
+                <button class="btn btn-primary mark-complete-btn" data-xp="225">Mark Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="04-registry-scanning.html" class="btn btn-secondary">&#8592; Previous: Registry Scanning</a>
+                    <span></span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/store.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

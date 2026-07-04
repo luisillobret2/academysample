@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC &amp; Trial Management - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="../../index.html" class="logo"><img src="../../img/mend-logo.svg" alt="Mend.io" class="logo-img"> Mend <span>Learn</span></a>
+            <ul class="nav-main">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../learning-paths.html" class="active">Learning Paths</a></li>
+                <li><a href="../../certifications.html">Certifications</a></li>
+                <li><a href="../../labs.html">Labs</a></li>
+                <li><a href="../../resources.html">Resources</a></li>
+                <li><a href="../../leaderboard.html">Leaderboard</a></li>
+                <li><a href="../../ai-coach.html">AI Coach</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Search courses, labs..."></div>
+                <div class="nav-xp"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <span class="xp-display">2,450 XP</span></div>
+                <a href="../../profile.html" class="nav-avatar">JD</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+    </header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar">
+            <div class="sidebar-header">
+                <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
+                <h3>Technical SE Track</h3>
+                <div class="sidebar-progress">
+                    <div class="progress-bar"><div class="fill" data-progress="0%" style="width: 0%"></div></div>
+                    <span>0/5 Complete</span>
+                </div>
+            </div>
+            <nav class="module-nav">
+                <a href="01-technical-deep-dive.html" class="module-link">
+                    <span class="module-status">1</span>
+                    <div><span class="module-title">Architecture &amp; Deployment Deep Dive</span><span class="module-duration">50 min</span></div>
+                </a>
+                <a href="02-demo-mastery.html" class="module-link">
+                    <span class="module-status">2</span>
+                    <div><span class="module-title">Demo Mastery &amp; Lab Setup</span><span class="module-duration">45 min</span></div>
+                </a>
+                <a href="03-poc-management.html" class="module-link active">
+                    <span class="module-status">3</span>
+                    <div><span class="module-title">POC &amp; Trial Management</span><span class="module-duration">40 min</span></div>
+                </a>
+                <a href="04-advanced-integrations.html" class="module-link">
+                    <span class="module-status">4</span>
+                    <div><span class="module-title">Advanced Integrations</span><span class="module-duration">40 min</span></div>
+                </a>
+                <a href="05-troubleshooting.html" class="module-link">
+                    <span class="module-status">5</span>
+                    <div><span class="module-title">Troubleshooting &amp; Support</span><span class="module-duration">35 min</span></div>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="module-content">
+            <div class="breadcrumb">
+                <a href="../../learning-paths.html">Learning Paths</a> &#8250; Technical SE Track &#8250; POC Management
+            </div>
+
+            <div class="completed-badge">&#10003; Not Started</div>
+            <h1>POC &amp; Trial Management</h1>
+            <div class="module-meta">
+                <span>&#128336; 40 min</span>
+                <span>&#128218; 4 sections</span>
+                <span>&#11088; 225 XP</span>
+                <span class="module-level">Level 2 - Intermediate</span>
+            </div>
+
+
+            <section class="module-section">
+                <h2>Designing Successful POCs</h2>
+                <p>A Proof of Concept (POC) or technical trial is the most critical phase of an enterprise sales cycle. A well-designed POC validates Mend's value against the prospect's actual environment and pain points.</p>
+
+                <h3>POC vs. Free Trial vs. Pilot</h3>
+                <ul>
+                    <li><strong>POC (2-3 weeks)</strong> &mdash; Focused evaluation with defined success criteria. Best for enterprise deals where technical validation drives the decision.</li>
+                    <li><strong>Free Trial (14-30 days)</strong> &mdash; Self-service exploration. Best for developer-led adoption and SMB customers.</li>
+                    <li><strong>Pilot (1-3 months)</strong> &mdash; Extended production deployment with a subset of repositories. Best for large enterprises needing to prove organizational readiness.</li>
+                </ul>
+            </section>
+
+            <section class="module-section">
+                <h2>POC Planning &amp; Execution</h2>
+
+                <h3>Pre-POC Preparation</h3>
+                <pre><code>POC Planning Checklist:
+
+1. Success Criteria (agree BEFORE starting)
+   [ ] Define 3-5 measurable outcomes
+   [ ] Get written sign-off from economic buyer
+   [ ] Set clear timeline with milestones
+
+2. Technical Scope
+   [ ] Identify 3-5 representative repositories
+   [ ] Confirm tech stacks and languages
+   [ ] Understand current tooling and pain points
+   [ ] Map integration requirements (CI/CD, SCM, ticketing)
+
+3. Stakeholders
+   [ ] Security champion identified
+   [ ] Engineering lead assigned
+   [ ] 2-3 developers committed to participate
+   [ ] Executive sponsor confirmed
+
+4. Environment
+   [ ] Mend organization provisioned
+   [ ] SSO/SCIM configured (if required)
+   [ ] CI/CD integration prepared
+   [ ] IDE plugins ready for distribution</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Common POC Scenarios</h2>
+
+                <h3>Scenario 1: "We have too many alerts from our current tool"</h3>
+                <p>Setup: Scan the same repositories with both Mend and the current tool. Compare total findings vs. actionable findings.</p>
+                <p>Expected result: Mend's reachability analysis reduces actionable alerts by 60-80% while catching the same real vulnerabilities.</p>
+
+                <h3>Scenario 2: "Our developers won't adopt security tools"</h3>
+                <p>Setup: Install Mend IDE plugins for the developer participants. Track time-to-fix for Mend findings vs. their current workflow.</p>
+                <p>Expected result: Developers fix issues 5-10x faster with inline fix suggestions and one-click upgrades.</p>
+
+                <h3>Scenario 3: "We need compliance-ready reporting"</h3>
+                <p>Setup: Configure Mend to scan all POC repositories and generate SBOM + compliance reports.</p>
+                <p>Expected result: Automated report generation saves 100+ hours per audit cycle vs. manual evidence collection.</p>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; POC Success Rule</h4>
+                    <p>Never start a POC without agreed-upon success criteria signed by the economic buyer. Without this, a "successful" POC can still result in no deal because stakeholders disagree on what success means.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>POC Results Presentation</h2>
+                <p>The results presentation is where you convert technical success into a purchase decision:</p>
+
+                <ol>
+                    <li><strong>Recap Success Criteria</strong> &mdash; Show each criterion and whether it was met</li>
+                    <li><strong>Quantified Results</strong> &mdash; Use specific numbers: "Scanned 847 dependencies, found 23 critical reachable vulnerabilities, reduced noise by 78%"</li>
+                    <li><strong>Developer Feedback</strong> &mdash; Share quotes and satisfaction scores from participating developers</li>
+                    <li><strong>ROI Projection</strong> &mdash; Extrapolate POC results to the full organization</li>
+                    <li><strong>Deployment Plan</strong> &mdash; Present a phased rollout plan for full organization deployment</li>
+                    <li><strong>Commercial Proposal</strong> &mdash; If all criteria are met, present the commercial terms</li>
+                </ol>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="b">
+                        <p><strong>Question 1:</strong> What must always be agreed upon before starting a POC?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> The final contract price</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Measurable success criteria signed by the economic buyer</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> The number of developers who will use the tool</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Which competitor to replace</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="a">
+                        <p><strong>Question 2:</strong> What is the recommended duration for a focused enterprise POC?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> 2-3 weeks</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> 3-6 months</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> 1 week</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> 1 year</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>225 XP earned for completing this module</span>
+                </div>
+                <button class="btn btn-primary mark-complete-btn" data-xp="225">Mark Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="02-demo-mastery.html" class="btn btn-secondary">&#8592; Previous: Demo Mastery</a>
+                    <a href="04-advanced-integrations.html" class="btn btn-primary">Next: Advanced Integrations &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/store.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

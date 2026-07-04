@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language-Specific SAST Analysis - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="../../index.html" class="logo"><img src="../../img/mend-logo.svg" alt="Mend.io" class="logo-img"> Mend <span>Learn</span></a>
+            <ul class="nav-main">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../learning-paths.html" class="active">Learning Paths</a></li>
+                <li><a href="../../certifications.html">Certifications</a></li>
+                <li><a href="../../labs.html">Labs</a></li>
+                <li><a href="../../resources.html">Resources</a></li>
+                <li><a href="../../leaderboard.html">Leaderboard</a></li>
+                <li><a href="../../ai-coach.html">AI Coach</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Search courses, labs..."></div>
+                <div class="nav-xp"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <span class="xp-display">2,450 XP</span></div>
+                <a href="../../profile.html" class="nav-avatar">JD</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+    </header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar">
+            <div class="sidebar-header">
+                <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
+                <h3>SAST Deep Dive</h3>
+                <div class="sidebar-progress">
+                    <div class="progress-bar"><div class="fill" data-progress="0%" style="width: 0%"></div></div>
+                    <span>0/5 Complete</span>
+                </div>
+            </div>
+            <nav class="module-nav">
+                <a href="01-sast-overview.html" class="module-link">
+                    <span class="module-status">1</span>
+                    <div><span class="module-title">SAST Fundamentals</span><span class="module-duration">30 min</span></div>
+                </a>
+                <a href="02-ai-remediation.html" class="module-link">
+                    <span class="module-status">2</span>
+                    <div><span class="module-title">AI-Powered Remediation</span><span class="module-duration">35 min</span></div>
+                </a>
+                <a href="03-cicd-integration.html" class="module-link">
+                    <span class="module-status">3</span>
+                    <div><span class="module-title">CI/CD Integration</span><span class="module-duration">30 min</span></div>
+                </a>
+                <a href="04-custom-rules.html" class="module-link">
+                    <span class="module-status">4</span>
+                    <div><span class="module-title">Custom Rules &amp; Configuration</span><span class="module-duration">35 min</span></div>
+                </a>
+                <a href="05-language-analysis.html" class="module-link active">
+                    <span class="module-status">5</span>
+                    <div><span class="module-title">Language-Specific Analysis</span><span class="module-duration">35 min</span></div>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="module-content">
+            <div class="breadcrumb">
+                <a href="../../learning-paths.html">Learning Paths</a> &#8250; SAST Deep Dive &#8250; Language Analysis
+            </div>
+
+            <div class="completed-badge">&#10003; Not Started</div>
+            <h1>Language-Specific SAST Analysis</h1>
+            <div class="module-meta">
+                <span>&#128336; 35 min</span>
+                <span>&#128218; 4 sections</span>
+                <span>&#11088; 200 XP</span>
+                <span class="module-level">Level 2 - Intermediate</span>
+            </div>
+
+
+            <section class="module-section">
+                <h2>Language-Specific Security Patterns</h2>
+                <p>Each programming language has unique security characteristics, common vulnerability patterns, and best practices. Mend's SAST engine includes language-specific rules that understand the nuances of each ecosystem.</p>
+
+                <h3>Supported Languages</h3>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#9749;</div>
+                        <h4>Java / Kotlin</h4>
+                        <p>Deserialization, SQL injection via JDBC/JPA, XXE in XML parsers, Spring Security misconfigurations.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128013;</div>
+                        <h4>Python</h4>
+                        <p>Pickle deserialization, Jinja2 template injection, SQL injection in Django/Flask ORM, SSRF via requests library.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128218;</div>
+                        <h4>JavaScript / TypeScript</h4>
+                        <p>Prototype pollution, XSS in React/Angular, eval() injection, insecure regex, path traversal in Express.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128295;</div>
+                        <h4>C# / .NET</h4>
+                        <p>SQL injection via raw ADO.NET, insecure deserialization (BinaryFormatter), XSS in Razor views, SSRF.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Java Security Deep Dive</h2>
+                <p>Java applications face specific security challenges due to the language's rich serialization support and extensive framework ecosystem:</p>
+
+                <h3>Common Java Vulnerabilities</h3>
+                <pre><code>// VULNERABLE: SQL Injection via string concatenation
+String query = "SELECT * FROM users WHERE id = " + userId;
+Statement stmt = conn.createStatement();
+ResultSet rs = stmt.executeQuery(query);
+
+// SECURE: Parameterized query
+String query = "SELECT * FROM users WHERE id = ?";
+PreparedStatement pstmt = conn.prepareStatement(query);
+pstmt.setInt(1, userId);
+ResultSet rs = pstmt.executeQuery();
+
+// VULNERABLE: Unsafe deserialization
+ObjectInputStream ois = new ObjectInputStream(untrustedInput);
+Object obj = ois.readObject();  // Can execute arbitrary code
+
+// SECURE: Use allowlist-based deserialization
+ObjectInputFilter filter = ObjectInputFilter.Config.createFilter(
+    "com.myapp.model.*;!*"
+);
+ois.setObjectInputFilter(filter);</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>JavaScript/TypeScript Security</h2>
+                <p>JavaScript's dynamic nature creates unique security challenges:</p>
+
+                <pre><code>// VULNERABLE: Prototype pollution
+function merge(target, source) {
+    for (let key in source) {
+        target[key] = source[key]; // Can modify Object.prototype
+    }
+}
+// Attack: merge({}, JSON.parse('{"__proto__":{"isAdmin":true}}'))
+
+// SECURE: Check for prototype pollution
+function safeMerge(target, source) {
+    for (let key in source) {
+        if (key === '__proto__' || key === 'constructor' || key === 'prototype') continue;
+        if (!source.hasOwnProperty(key)) continue;
+        target[key] = source[key];
+    }
+}
+
+// VULNERABLE: XSS in React (rare but possible)
+function UserProfile({ bio }) {
+    return &lt;div dangerouslySetInnerHTML={{__html: bio}} /&gt;;
+}
+
+// SECURE: Use DOMPurify for sanitization
+import DOMPurify from 'dompurify';
+function UserProfile({ bio }) {
+    return &lt;div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(bio)}} /&gt;;
+}</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Python Security Considerations</h2>
+                <p>Python's flexibility and dynamic typing create specific security concerns:</p>
+
+                <pre><code># VULNERABLE: Pickle deserialization (arbitrary code execution)
+import pickle
+data = pickle.loads(untrusted_bytes)  # Never do this!
+
+# SECURE: Use JSON or MessagePack for untrusted data
+import json
+data = json.loads(untrusted_string)
+
+# VULNERABLE: SQL injection in Django raw queries
+User.objects.raw("SELECT * FROM users WHERE name = '%s'" % name)
+
+# SECURE: Use parameterized queries
+User.objects.raw("SELECT * FROM users WHERE name = %s", [name])
+
+# VULNERABLE: SSTI (Server-Side Template Injection)
+from jinja2 import Template
+Template(user_input).render()  # User controls the template
+
+# SECURE: Never let users control templates
+from jinja2 import Environment, select_autoescape
+env = Environment(autoescape=select_autoescape(['html', 'xml']))
+template = env.get_template('fixed_template.html')
+template.render(user_data=user_input)</code></pre>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; SAST Configuration Tip</h4>
+                    <p>Configure Mend SAST to use language-specific rule sets for each repository. A Java Spring Boot API needs different rules than a React frontend. Tailored rule sets reduce false positives and catch language-specific issues that generic rules miss.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="b">
+                        <p><strong>Question 1:</strong> What is the most secure way to handle SQL queries in Java?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> String concatenation with input validation</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> PreparedStatement with parameterized queries</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Encoding special characters before concatenation</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Using stored procedures exclusively</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="a">
+                        <p><strong>Question 2:</strong> What is "prototype pollution" in JavaScript?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Modifying Object.prototype to inject properties into all objects</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Creating too many object instances causing memory leaks</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Using deprecated prototype-based inheritance</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Overwriting built-in Array methods</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>200 XP earned for completing this module</span>
+                </div>
+                <button class="btn btn-primary mark-complete-btn" data-xp="200">Mark Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="04-custom-rules.html" class="btn btn-secondary">&#8592; Previous: Custom Rules</a>
+                    <span></span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/store.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>
