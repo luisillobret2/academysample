@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Security Policies for Developers - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar">
+            <div class="sidebar-header">
+                <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
+                <h3>Developer Track</h3>
+                <div class="sidebar-progress">
+                    <div class="progress-bar"><div class="fill" data-progress="0%" style="width: 0%"></div></div>
+                    <span>0/5 Complete</span>
+                </div>
+            </div>
+            <nav class="module-nav">
+                <a href="01-developer-quickstart.html" class="module-link">
+                    <span class="module-status">1</span>
+                    <div><span class="module-title">Developer Quickstart</span><span class="module-duration">30 min</span></div>
+                </a>
+                <a href="02-ide-integration.html" class="module-link">
+                    <span class="module-status">2</span>
+                    <div><span class="module-title">IDE Plugins &amp; Developer Workflow</span><span class="module-duration">35 min</span></div>
+                </a>
+                <a href="03-cli-automation.html" class="module-link">
+                    <span class="module-status">3</span>
+                    <div><span class="module-title">Mend CLI &amp; Automation</span><span class="module-duration">35 min</span></div>
+                </a>
+                <a href="04-renovate-setup.html" class="module-link">
+                    <span class="module-status">4</span>
+                    <div><span class="module-title">Mend Renovate Setup &amp; Configuration</span><span class="module-duration">40 min</span></div>
+                </a>
+                <a href="05-custom-policies.html" class="module-link active">
+                    <span class="module-status">5</span>
+                    <div><span class="module-title">Custom Security Policies for Developers</span><span class="module-duration">30 min</span></div>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="module-content">
+            <div class="breadcrumb">
+                <a href="../../learning-paths.html">Learning Paths</a> &#8250; Developer Track &#8250; Custom Policies
+            </div>
+
+            <div class="completed-badge">&#10003; Not Started</div>
+            <h1>Custom Security Policies for Developers</h1>
+            <div class="module-meta">
+                <span>&#128336; 30 min</span>
+                <span>&#128218; 4 sections</span>
+                <span>&#11088; 175 XP</span>
+                <span class="module-level">Level 2 - Intermediate</span>
+            </div>
+
+
+            <section class="module-section">
+                <h2>Policy-as-Code for Security</h2>
+                <p>Security policies should be defined as code, version-controlled, and enforced automatically. This ensures consistent security standards across all projects without manual gate-keeping that slows down development.</p>
+
+                <h3>Policy Types</h3>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#128027;</div>
+                        <h4>Vulnerability Policies</h4>
+                        <p>Define which severity levels block builds, which get warnings, and which are accepted risk.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128209;</div>
+                        <h4>License Policies</h4>
+                        <p>Allowlist and blocklist licenses. Flag copyleft licenses, restrict AGPL, require legal review for unknown licenses.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128230;</div>
+                        <h4>Package Policies</h4>
+                        <p>Block specific packages, enforce minimum versions, restrict packages based on age or reputation.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128295;</div>
+                        <h4>Code Quality Policies</h4>
+                        <p>SAST rule enforcement, custom code patterns to flag, and framework-specific security requirements.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Creating Custom Policies</h2>
+                <pre><code># .mend/policy.yml
+version: "1.0"
+
+vulnerability_policies:
+  - name: "Block Critical Vulnerabilities"
+    severity: ["critical"]
+    action: block
+    message: "Critical vulnerabilities must be fixed before merge"
+
+  - name: "Warn on High Vulnerabilities"
+    severity: ["high"]
+    action: warn
+    message: "High vulnerabilities should be addressed within 7 days"
+
+  - name: "Ignore Test Dependencies"
+    scope:
+      dependency_type: ["devDependencies", "test"]
+    action: ignore
+
+license_policies:
+  - name: "Block Copyleft in Production"
+    licenses: ["GPL-2.0", "GPL-3.0", "AGPL-3.0"]
+    scope:
+      dependency_type: ["dependencies"]
+    action: block
+    message: "Copyleft licenses not permitted in production dependencies"
+
+  - name: "Allow Common Permissive"
+    licenses: ["MIT", "Apache-2.0", "BSD-2-Clause", "BSD-3-Clause", "ISC"]
+    action: allow
+
+package_policies:
+  - name: "Block Known Malicious"
+    packages: ["event-stream@3.3.6", "ua-parser-js@0.7.29"]
+    action: block
+
+  - name: "Require Minimum Package Age"
+    min_age_days: 7
+    action: warn
+    message: "New packages should be at least 7 days old"</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Policy Inheritance &amp; Overrides</h2>
+                <p>Mend supports a hierarchical policy model where organization-wide policies provide the baseline and individual teams can add (but not relax) restrictions:</p>
+
+                <ul>
+                    <li><strong>Organization Level</strong> &mdash; Global policies that apply to all repositories (e.g., block critical CVEs, no GPL)</li>
+                    <li><strong>Team/Group Level</strong> &mdash; Additional restrictions for specific teams (e.g., payment team blocks all dependencies older than 2 years)</li>
+                    <li><strong>Repository Level</strong> &mdash; Project-specific exceptions with documented justification and expiration dates</li>
+                </ul>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Developer Tip</h4>
+                    <p>When a policy blocks your build, don't bypass it. Instead, file a policy exception request with a justification. Temporary exceptions can be granted with an expiration date, giving you time to find an alternative.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Working with Policy Exceptions</h2>
+                <p>Sometimes legitimate business needs require temporary policy exceptions. Mend provides a structured exception workflow:</p>
+
+                <pre><code># .mend/exceptions.yml
+exceptions:
+  - id: "EXC-2025-001"
+    description: "Temporary exception for legacy payment module migration"
+    package: "xmlsec@1.3.5"
+    vulnerability: "CVE-2024-12345"
+    justification: "Not reachable in our code path; migrating to v2.0 in Q2"
+    approved_by: "security-team@company.com"
+    expires: "2025-06-30"
+    jira_ticket: "SEC-1234"</code></pre>
+
+                <ul>
+                    <li><strong>Every Exception Needs a Ticket</strong> &mdash; Link to the tracking issue for remediation</li>
+                    <li><strong>Expiration Required</strong> &mdash; No permanent exceptions; maximum 90 days, renewable with review</li>
+                    <li><strong>Security Approval</strong> &mdash; All exceptions require sign-off from the security team</li>
+                </ul>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="b">
+                        <p><strong>Question 1:</strong> In Mend's policy hierarchy, can a repository-level policy relax an organization-level restriction?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Yes, repository owners have full control</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> No, repository policies can only add restrictions, not relax them</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Only with CTO approval</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Only for test dependencies</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="c">
+                        <p><strong>Question 2:</strong> What should developers do when a security policy blocks their build?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Bypass the policy using a force flag</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Remove the dependency entirely</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> File a policy exception request with justification and expiration date</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Ask the security team to disable the policy</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>175 XP earned for completing this module</span>
+                </div>
+                <button class="btn btn-primary mark-complete-btn" data-xp="175">Mark Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="04-renovate-setup.html" class="btn btn-secondary">&#8592; Previous: Renovate Setup</a>
+                    <span></span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/layout.js"></script>
+    <script src="../../js/store.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

@@ -152,10 +152,32 @@ const MendStore = {
     saveQuizScore(moduleId, score, total) {
         const data = this.load();
         const pct = Math.round((score / total) * 100);
+        const now = new Date().toISOString();
         const existing = data.quizScores[moduleId];
-        if (!existing || pct > existing.pct) {
-            data.quizScores[moduleId] = { score, total, pct, date: new Date().toISOString() };
+
+        if (!existing) {
+            data.quizScores[moduleId] = {
+                score: score,
+                total: total,
+                pct: pct,
+                date: now,
+                attempts: 1,
+                history: [{ score, total, pct, date: now }]
+            };
+        } else {
+            existing.attempts = (existing.attempts || 1) + 1;
+            if (!existing.history) {
+                existing.history = [{ score: existing.score, total: existing.total, pct: existing.pct, date: existing.date }];
+            }
+            existing.history.push({ score, total, pct, date: now });
+            existing.date = now;
+            if (pct > existing.pct) {
+                existing.score = score;
+                existing.total = total;
+                existing.pct = pct;
+            }
         }
+
         this.save(data);
         return data.quizScores[moduleId];
     },
@@ -395,7 +417,9 @@ const MendStore = {
             foundation: [
                 'foundation/01-appsec-fundamentals',
                 'foundation/02-supply-chain-security',
-                'foundation/03-mend-platform-overview'
+                'foundation/03-mend-platform-overview',
+                'foundation/04-vulnerability-types',
+                'foundation/05-compliance-overview'
             ],
             sca: [
                 'sca/01-sca-overview',
@@ -409,28 +433,36 @@ const MendStore = {
                 'sast/01-sast-overview',
                 'sast/02-ai-remediation',
                 'sast/03-cicd-integration',
-                'sast/04-custom-rules'
+                'sast/04-custom-rules',
+                'sast/05-language-analysis'
             ],
             sales: [
                 'sales/01-selling-mend',
                 'sales/02-competitive-positioning',
-                'sales/03-discovery-qualification',
-                'sales/04-objection-handling'
+                'sales/03-objection-handling',
+                'sales/04-demo-pov',
+                'sales/05-deal-registration'
             ],
             developer: [
                 'developer/01-developer-quickstart',
                 'developer/02-ide-integration',
-                'developer/03-secure-coding'
+                'developer/03-cli-automation',
+                'developer/04-renovate-setup',
+                'developer/05-custom-policies'
             ],
             container: [
                 'container/01-container-security',
                 'container/02-image-scanning',
-                'container/03-kubernetes-security'
+                'container/03-kubernetes-security',
+                'container/04-registry-scanning',
+                'container/05-runtime-protection'
             ],
             technical: [
                 'technical/01-technical-deep-dive',
                 'technical/02-demo-mastery',
-                'technical/03-poc-management'
+                'technical/03-poc-management',
+                'technical/04-advanced-integrations',
+                'technical/05-troubleshooting'
             ],
             cicd: [
                 'cicd/01-pipeline-fundamentals',
@@ -441,19 +473,31 @@ const MendStore = {
             ],
             secrets: [
                 'secrets/01-secrets-scanning',
-                'secrets/02-incident-response'
+                'secrets/02-incident-response',
+                'secrets/03-secrets-rotation',
+                'secrets/04-vault-integration',
+                'secrets/05-secrets-compliance'
             ],
             'supply-chain': [
                 'supply-chain/01-supply-chain-threats',
-                'supply-chain/02-sbom-governance'
+                'supply-chain/02-sbom-governance',
+                'supply-chain/03-dependency-risk',
+                'supply-chain/04-package-security',
+                'supply-chain/05-supply-chain-prevention'
             ],
             executive: [
                 'executive/01-security-strategy',
-                'executive/02-building-practice'
+                'executive/02-building-practice',
+                'executive/03-roi-metrics',
+                'executive/04-customer-success',
+                'executive/05-partner-growth'
             ],
             enterprise: [
                 'enterprise/01-enterprise-deployment',
-                'enterprise/02-api-automation'
+                'enterprise/02-api-automation',
+                'enterprise/03-compliance-governance',
+                'enterprise/04-sso-user-management',
+                'enterprise/05-reporting-analytics'
             ]
         };
         return trackMap[track] || [];

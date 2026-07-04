@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IDE &amp; CLI Integration - Mend Learn</title>
-    <meta name="description" content="Integrate Mend.io into the developer workflow: IDE plugins, CLI scanning, and pre-commit checks.">
+    <title>IDE Plugins &amp; Developer Workflow - Mend Learn</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css/styles.css">
@@ -18,113 +17,153 @@
             <div class="sidebar-header">
                 <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
                 <h3>Developer Track</h3>
-                <div class="sidebar-progress"><div class="progress-bar"><div class="fill" style="width: 0%"></div></div><span>0/3 Complete</span></div>
+                <div class="sidebar-progress">
+                    <div class="progress-bar"><div class="fill" data-progress="0%" style="width: 0%"></div></div>
+                    <span>0/5 Complete</span>
+                </div>
             </div>
             <nav class="module-nav">
-                <a href="01-developer-quickstart.html" class="module-link"><span class="module-status">1</span><div><span class="module-title">Developer Quickstart</span><span class="module-duration">30 min</span></div></a>
-                <a href="02-ide-integration.html" class="module-link active"><span class="module-status">2</span><div><span class="module-title">IDE &amp; CLI Integration</span><span class="module-duration">35 min</span></div></a>
-                <a href="03-secure-coding.html" class="module-link"><span class="module-status">3</span><div><span class="module-title">Secure Coding Best Practices</span><span class="module-duration">40 min</span></div></a>
+                <a href="01-developer-quickstart.html" class="module-link">
+                    <span class="module-status">1</span>
+                    <div><span class="module-title">Developer Quickstart</span><span class="module-duration">30 min</span></div>
+                </a>
+                <a href="02-ide-integration.html" class="module-link active">
+                    <span class="module-status">2</span>
+                    <div><span class="module-title">IDE Plugins &amp; Developer Workflow</span><span class="module-duration">35 min</span></div>
+                </a>
+                <a href="03-cli-automation.html" class="module-link">
+                    <span class="module-status">3</span>
+                    <div><span class="module-title">Mend CLI &amp; Automation</span><span class="module-duration">35 min</span></div>
+                </a>
+                <a href="04-renovate-setup.html" class="module-link">
+                    <span class="module-status">4</span>
+                    <div><span class="module-title">Mend Renovate Setup &amp; Configuration</span><span class="module-duration">40 min</span></div>
+                </a>
+                <a href="05-custom-policies.html" class="module-link">
+                    <span class="module-status">5</span>
+                    <div><span class="module-title">Custom Security Policies for Developers</span><span class="module-duration">30 min</span></div>
+                </a>
             </nav>
         </aside>
 
         <main class="module-content">
-            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>Developer Track</span> &rsaquo; <span>IDE &amp; CLI Integration</span></div>
-
-            <div class="module-header">
-                <div class="module-badge not-started-badge">Not Started</div>
-                <h1>IDE &amp; CLI Integration</h1>
-                <div class="module-meta">
-                    <span>&#128338; 35 min</span>
-                    <span>&#128218; 4 sections</span>
-                    <span>&#11088; 150 XP</span>
-                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
-                </div>
+            <div class="breadcrumb">
+                <a href="../../learning-paths.html">Learning Paths</a> &#8250; Developer Track &#8250; IDE Integration
             </div>
 
-            <div class="module-objectives">
-                <h4>&#127919; Learning Objectives</h4>
+            <div class="completed-badge">&#10003; Not Started</div>
+            <h1>IDE Plugins &amp; Developer Workflow</h1>
+            <div class="module-meta">
+                <span>&#128336; 35 min</span>
+                <span>&#128218; 4 sections</span>
+                <span>&#11088; 175 XP</span>
+                <span class="module-level">Level 1 - Beginner</span>
+            </div>
+
+
+            <section class="module-section">
+                <h2>Shift-Left with IDE Integration</h2>
+                <p>The fastest way to fix vulnerabilities is to find them before they leave the developer's machine. Mend's IDE plugins bring security scanning directly into VS Code, IntelliJ, and other popular editors, showing vulnerabilities inline as developers write code.</p>
+
+                <h3>Supported IDEs</h3>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#128187;</div>
+                        <h4>VS Code Extension</h4>
+                        <p>Real-time SCA and SAST scanning with inline vulnerability annotations, quick-fix suggestions, and dependency tree visualization.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128187;</div>
+                        <h4>IntelliJ Plugin</h4>
+                        <p>Full integration with IntelliJ IDEA, WebStorm, and PyCharm. Scans on save with results in the Problems panel.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128187;</div>
+                        <h4>Eclipse Plugin</h4>
+                        <p>Enterprise Java development support with Maven/Gradle dependency scanning and fix recommendations.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128187;</div>
+                        <h4>Visual Studio</h4>
+                        <p>.NET and NuGet package scanning with inline annotations in Visual Studio 2019/2022.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Installing the VS Code Extension</h2>
+                <pre><code># Install from the VS Code Marketplace
+# 1. Open VS Code
+# 2. Go to Extensions (Ctrl+Shift+X)
+# 3. Search for "Mend"
+# 4. Click Install
+
+# Or install from the command line:
+code --install-extension mend.mend-vscode
+
+# Configure your API key
+# Settings > Extensions > Mend > API Key
+# Enter your organization's API key</code></pre>
+
+                <h3>Key Features</h3>
                 <ul>
-                    <li>Install and configure the Mend IDE extension</li>
-                    <li>Scan from the CLI and interpret results locally</li>
-                    <li>Shift security left with pre-commit and local gates</li>
-                    <li>Reduce feedback loops so issues are caught before push</li>
+                    <li><strong>Inline Annotations</strong> &mdash; Vulnerable dependencies are highlighted with severity indicators directly in package files</li>
+                    <li><strong>Quick Fixes</strong> &mdash; One-click upgrade to the nearest safe version</li>
+                    <li><strong>Dependency Tree</strong> &mdash; Visualize your full dependency tree with vulnerability indicators at every level</li>
+                    <li><strong>SAST Findings</strong> &mdash; Code-level security issues highlighted inline with remediation guidance</li>
                 </ul>
-            </div>
+            </section>
 
             <section class="module-section">
-                <h2>Mend in Your IDE</h2>
-                <p>The Mend IDE extension surfaces vulnerabilities, license issues, and fix suggestions inline as you code, available for VS Code, IntelliJ, and other JetBrains IDEs.</p>
-                <ol class="steps-list">
-                    <li>Install the Mend extension from your IDE marketplace.</li>
-                    <li>Authenticate with <code>mend auth login</code> or a personal access token.</li>
-                    <li>Open a project; findings appear inline with severity and reachability.</li>
-                    <li>Apply suggested fixes or open the recommended upgrade directly from the editor.</li>
-                </ol>
+                <h2>Developer Workflow Integration</h2>
+                <p>Mend fits into existing development workflows without disrupting developer productivity:</p>
 
-                <div class="video-placeholder">
-                    <div class="play-icon">&#9654;</div>
-                    <div class="video-title">Setting up the Mend IDE Extension</div>
-                    <div class="video-duration">5:02</div>
+                <ul>
+                    <li><strong>Pre-commit</strong> &mdash; Scan before committing to catch issues earliest</li>
+                    <li><strong>On Save</strong> &mdash; IDE plugin scans automatically when files are saved</li>
+                    <li><strong>PR Check</strong> &mdash; Automated scanning on every pull request with inline comments</li>
+                    <li><strong>CLI</strong> &mdash; Run scans from the terminal for scripting and automation</li>
+                </ul>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Developer Tip</h4>
+                    <p>Configure the IDE plugin to show only high and critical vulnerabilities initially. As your team builds the habit of addressing security issues, gradually include medium-severity findings.</p>
                 </div>
             </section>
 
             <section class="module-section">
-                <h2>Scanning from the CLI</h2>
-                <p>The Mend CLI runs the same engines locally and in CI, so results are consistent everywhere.</p>
-                <pre><code># Scan open-source dependencies
-mend sca scan --dir .
+                <h2>PR Integration &amp; Review</h2>
+                <p>Mend automatically comments on pull requests with security findings, making security review a natural part of code review:</p>
 
-# Scan source code (SAST)
-mend sast scan --dir .
-
-# Fail locally on high or critical findings
-mend sca scan --dir . --fail-on high</code></pre>
-            </section>
-
-            <section class="module-section">
-                <h2>Shift Left with Pre-Commit</h2>
-                <p>Catch issues before they ever reach a pull request by gating locally.</p>
-                <pre><code># .git/hooks/pre-commit
-#!/bin/sh
-mend sca scan --dir . --fail-on critical || {
-  echo "Critical vulnerabilities found. Commit blocked."
-  exit 1
-}</code></pre>
-                <div class="key-concept">
-                    <h4>&#128161; Faster Feedback = Cheaper Fixes</h4>
-                    <p>A vulnerability caught in the IDE costs minutes; the same issue caught in production costs orders of magnitude more.</p>
-                </div>
-            </section>
-
-            <section class="module-section">
-                <h2>Resources &amp; Related Labs</h2>
-                <div class="module-resources">
-                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>CLI scanning lab<span class="resource-meta">Hands-on Lab</span></span></a>
-                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128221;</span><span>Mend CLI cheat sheet<span class="resource-meta">Cheat Sheet</span></span></a>
-                    <a class="module-resource" href="03-secure-coding.html"><span class="resource-icon">&#128272;</span><span>Next: Secure Coding<span class="resource-meta">Module</span></span></a>
-                </div>
+                <ul>
+                    <li><strong>New Vulnerability Alerts</strong> &mdash; Only flags issues introduced in the PR, not pre-existing ones</li>
+                    <li><strong>Fix Suggestions</strong> &mdash; Suggests specific version upgrades or code changes to resolve the issue</li>
+                    <li><strong>Policy Checks</strong> &mdash; Pass/fail status based on your organization's security policies</li>
+                    <li><strong>License Alerts</strong> &mdash; Flags new dependencies with incompatible licenses</li>
+                </ul>
             </section>
 
             <section class="module-section">
                 <h2>Knowledge Check</h2>
                 <div class="quiz-container">
-                    <div class="quiz-question" data-correct="b">
-                        <p><strong>Question 1:</strong> What does <code>--fail-on high</code> do in a local scan?</p>
+                    <div class="quiz-question" data-correct="a">
+                        <p><strong>Question 1:</strong> What is the primary benefit of IDE-based security scanning?</p>
                         <div class="quiz-options">
-                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Automatically fixes high findings</label>
-                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Exits non-zero when findings reach the high threshold</label>
-                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Emails the security team</label>
-                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Ignores high findings</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Finding vulnerabilities before code leaves the developer's machine</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Replacing CI/CD pipeline scanning entirely</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Generating compliance reports automatically</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Running penetration tests on localhost</label>
                         </div>
                         <div class="quiz-feedback"></div>
                     </div>
+
                     <div class="quiz-question" data-correct="c">
-                        <p><strong>Question 2:</strong> Why integrate scanning into the IDE and pre-commit hooks?</p>
+                        <p><strong>Question 2:</strong> How does Mend handle PR security comments to avoid noise?</p>
                         <div class="quiz-options">
-                            <label class="quiz-option"><input type="radio" name="q2" value="a"> To replace CI scanning entirely</label>
-                            <label class="quiz-option"><input type="radio" name="q2" value="b"> To slow developers down deliberately</label>
-                            <label class="quiz-option"><input type="radio" name="q2" value="c"> To catch issues earlier where they are cheapest to fix</label>
-                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Because CLI scans are less accurate</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> It comments on every vulnerability in the entire codebase</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> It only comments on critical vulnerabilities</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> It only flags issues introduced in the PR, not pre-existing ones</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> It posts a single summary without details</label>
                         </div>
                         <div class="quiz-feedback"></div>
                     </div>
@@ -134,10 +173,14 @@ mend sca scan --dir . --fail-on critical || {
             </section>
 
             <div class="module-footer">
-                <button class="mark-complete-btn" data-xp="150">Mark as Complete</button>
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>175 XP earned for completing this module</span>
+                </div>
+                <button class="btn btn-primary mark-complete-btn" data-xp="175">Mark Complete</button>
                 <div class="module-nav-buttons">
-                    <a href="01-developer-quickstart.html" class="btn btn-secondary">&#8592; Previous</a>
-                    <a href="03-secure-coding.html" class="btn btn-primary">Next: Secure Coding Best Practices &#8594;</a>
+                    <a href="01-developer-quickstart.html" class="btn btn-secondary">&#8592; Previous: Developer Quickstart</a>
+                    <a href="03-cli-automation.html" class="btn btn-primary">Next: CLI & Automation &#8594;</a>
                 </div>
             </div>
         </main>
