@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Package Manager Security - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="../../index.html" class="logo"><img src="../../img/mend-logo.svg" alt="Mend.io" class="logo-img"> Mend <span>Learn</span></a>
+            <ul class="nav-main">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../learning-paths.html" class="active">Learning Paths</a></li>
+                <li><a href="../../certifications.html">Certifications</a></li>
+                <li><a href="../../labs.html">Labs</a></li>
+                <li><a href="../../resources.html">Resources</a></li>
+                <li><a href="../../leaderboard.html">Leaderboard</a></li>
+                <li><a href="../../ai-coach.html">AI Coach</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Search courses, labs..."></div>
+                <div class="nav-xp"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <span class="xp-display">2,450 XP</span></div>
+                <a href="../../profile.html" class="nav-avatar">JD</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+    </header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar">
+            <div class="sidebar-header">
+                <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
+                <h3>Supply Chain Security</h3>
+                <div class="sidebar-progress">
+                    <div class="progress-bar"><div class="fill" data-progress="0%" style="width: 0%"></div></div>
+                    <span>0/5 Complete</span>
+                </div>
+            </div>
+            <nav class="module-nav">
+                <a href="01-supply-chain-threats.html" class="module-link">
+                    <span class="module-status">1</span>
+                    <div><span class="module-title">Supply Chain Threat Landscape</span><span class="module-duration">45 min</span></div>
+                </a>
+                <a href="02-sbom-governance.html" class="module-link">
+                    <span class="module-status">2</span>
+                    <div><span class="module-title">SBOM &amp; Governance</span><span class="module-duration">40 min</span></div>
+                </a>
+                <a href="03-dependency-risk.html" class="module-link">
+                    <span class="module-status">3</span>
+                    <div><span class="module-title">Dependency Risk Assessment</span><span class="module-duration">40 min</span></div>
+                </a>
+                <a href="04-package-security.html" class="module-link active">
+                    <span class="module-status">4</span>
+                    <div><span class="module-title">Package Manager Security</span><span class="module-duration">35 min</span></div>
+                </a>
+                <a href="05-supply-chain-prevention.html" class="module-link">
+                    <span class="module-status">5</span>
+                    <div><span class="module-title">Supply Chain Attack Prevention</span><span class="module-duration">35 min</span></div>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="module-content">
+            <div class="breadcrumb">
+                <a href="../../learning-paths.html">Learning Paths</a> &#8250; Supply Chain Security &#8250; Package Security
+            </div>
+
+            <div class="completed-badge">&#10003; Not Started</div>
+            <h1>Package Manager Security</h1>
+            <div class="module-meta">
+                <span>&#128336; 35 min</span>
+                <span>&#128218; 4 sections</span>
+                <span>&#11088; 175 XP</span>
+                <span class="module-level">Level 2 - Intermediate</span>
+            </div>
+
+
+            <section class="module-section">
+                <h2>Package Manager Attack Surfaces</h2>
+                <p>Package managers (npm, PyPI, Maven, NuGet, RubyGems) are the primary distribution mechanism for open-source software. Each ecosystem has unique security characteristics and attack vectors that organizations must understand.</p>
+
+                <h3>Common Attack Patterns</h3>
+                <ul>
+                    <li><strong>Typosquatting</strong> &mdash; Registering packages with names similar to popular ones (e.g., <code>lodahs</code> instead of <code>lodash</code>)</li>
+                    <li><strong>Dependency Confusion</strong> &mdash; Publishing a higher-version public package with the same name as a private internal package</li>
+                    <li><strong>Account Takeover</strong> &mdash; Compromising a maintainer's account to publish malicious updates</li>
+                    <li><strong>Install Scripts</strong> &mdash; Malicious <code>postinstall</code>, <code>preinstall</code>, or setup.py scripts that execute during installation</li>
+                    <li><strong>Star Jacking</strong> &mdash; Linking a malicious package's repository URL to a legitimate popular project</li>
+                </ul>
+            </section>
+
+            <section class="module-section">
+                <h2>Ecosystem-Specific Security</h2>
+
+                <h3>npm (JavaScript/Node.js)</h3>
+                <pre><code># Use lockfiles to pin exact versions
+npm ci  # Clean install from lockfile (never npm install in CI)
+
+# Audit for known vulnerabilities
+npm audit
+
+# Enable package-lock.json enforcement
+# .npmrc
+package-lock=true
+save-exact=true
+
+# Scope private packages to prevent dependency confusion
+@mycompany:registry=https://npm.mycompany.com</code></pre>
+
+                <h3>Python (pip/Poetry)</h3>
+                <pre><code># Pin versions with hashes for integrity verification
+pip install --require-hashes -r requirements.txt
+
+# requirements.txt with hashes
+requests==2.31.0 \
+    --hash=sha256:58cd2187c01e70e6e26505bca751777aa9f2ee0b7f4300988b709f44e013003eb
+
+# Use a private index for internal packages
+[global]
+extra-index-url = https://pypi.mycompany.com/simple/</code></pre>
+
+                <h3>Maven (Java)</h3>
+                <pre><code>&lt;!-- Enforce dependency verification --&gt;
+&lt;plugin&gt;
+    &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+    &lt;artifactId&gt;maven-enforcer-plugin&lt;/artifactId&gt;
+    &lt;configuration&gt;
+        &lt;rules&gt;
+            &lt;requireReleaseDeps&gt;
+                &lt;message&gt;No SNAPSHOT dependencies allowed in release builds&lt;/message&gt;
+            &lt;/requireReleaseDeps&gt;
+            &lt;banDuplicatePomDependencyVersions/&gt;
+        &lt;/rules&gt;
+    &lt;/configuration&gt;
+&lt;/plugin&gt;</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Registry Security Controls</h2>
+                <p>Organizations should implement controls at the registry level to prevent malicious packages from entering their build pipelines:</p>
+
+                <ul>
+                    <li><strong>Private Registry Proxies</strong> &mdash; Use Artifactory, Nexus, or similar tools to proxy and cache public packages with scanning</li>
+                    <li><strong>Allowlist Policies</strong> &mdash; Only permit pre-approved packages in sensitive projects</li>
+                    <li><strong>Namespace Reservation</strong> &mdash; Register your organization's namespace on public registries to prevent dependency confusion</li>
+                    <li><strong>Integrity Verification</strong> &mdash; Verify package checksums and signatures before installation</li>
+                </ul>
+            </section>
+
+            <section class="module-section">
+                <h2>Mend Supply Chain Security Features</h2>
+                <p>Mend provides several capabilities specifically designed to protect against supply chain attacks through package managers:</p>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#128737;</div>
+                        <h4>Malicious Package Detection</h4>
+                        <p>Behavioral analysis identifies packages with suspicious install scripts, data exfiltration, or reverse shells.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128269;</div>
+                        <h4>Reputation Scoring</h4>
+                        <p>Evaluates package age, maintainer history, download patterns, and code changes to assess trustworthiness.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128276;</div>
+                        <h4>Real-Time Alerts</h4>
+                        <p>Immediate notification when a dependency you use is flagged as malicious or compromised.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128196;</div>
+                        <h4>Policy Enforcement</h4>
+                        <p>Block builds that include packages below minimum age, reputation score, or without verified provenance.</p>
+                    </div>
+                </div>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Best Practice</h4>
+                    <p>Configure Mend to block any new dependency published less than 7 days ago. Most supply chain attacks are detected within the first week of publication.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="b">
+                        <p><strong>Question 1:</strong> What is a "dependency confusion" attack?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Installing dependencies in the wrong order</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Publishing a higher-version public package with the same name as a private internal package</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Using different versions of the same package in a monorepo</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Forgetting to update the lockfile</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="c">
+                        <p><strong>Question 2:</strong> Why should you use <code>npm ci</code> instead of <code>npm install</code> in CI pipelines?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> It runs faster on slow networks</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> It automatically updates all packages</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> It does a clean install from the lockfile, ensuring reproducible builds</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> It skips optional dependencies</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>175 XP earned for completing this module</span>
+                </div>
+                <button class="btn btn-primary mark-complete-btn" data-xp="175">Mark Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="03-dependency-risk.html" class="btn btn-secondary">&#8592; Previous: Dependency Risk</a>
+                    <a href="05-supply-chain-prevention.html" class="btn btn-primary">Next: Attack Prevention &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/store.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

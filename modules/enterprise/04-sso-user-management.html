@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSO &amp; User Management - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="../../index.html" class="logo"><img src="../../img/mend-logo.svg" alt="Mend.io" class="logo-img"> Mend <span>Learn</span></a>
+            <ul class="nav-main">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../learning-paths.html" class="active">Learning Paths</a></li>
+                <li><a href="../../certifications.html">Certifications</a></li>
+                <li><a href="../../labs.html">Labs</a></li>
+                <li><a href="../../resources.html">Resources</a></li>
+                <li><a href="../../leaderboard.html">Leaderboard</a></li>
+                <li><a href="../../ai-coach.html">AI Coach</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Search courses, labs..."></div>
+                <div class="nav-xp"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <span class="xp-display">2,450 XP</span></div>
+                <a href="../../profile.html" class="nav-avatar">JD</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+    </header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar">
+            <div class="sidebar-header">
+                <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
+                <h3>Enterprise Architecture</h3>
+                <div class="sidebar-progress">
+                    <div class="progress-bar"><div class="fill" data-progress="0%" style="width: 0%"></div></div>
+                    <span>0/5 Complete</span>
+                </div>
+            </div>
+            <nav class="module-nav">
+                <a href="01-enterprise-deployment.html" class="module-link">
+                    <span class="module-status">1</span>
+                    <div><span class="module-title">Enterprise Deployment Architecture</span><span class="module-duration">45 min</span></div>
+                </a>
+                <a href="02-api-automation.html" class="module-link">
+                    <span class="module-status">2</span>
+                    <div><span class="module-title">API &amp; Automation</span><span class="module-duration">45 min</span></div>
+                </a>
+                <a href="03-compliance-governance.html" class="module-link">
+                    <span class="module-status">3</span>
+                    <div><span class="module-title">Compliance &amp; Governance Frameworks</span><span class="module-duration">40 min</span></div>
+                </a>
+                <a href="04-sso-user-management.html" class="module-link active">
+                    <span class="module-status">4</span>
+                    <div><span class="module-title">SSO &amp; User Management</span><span class="module-duration">35 min</span></div>
+                </a>
+                <a href="05-reporting-analytics.html" class="module-link">
+                    <span class="module-status">5</span>
+                    <div><span class="module-title">Reporting &amp; Security Analytics</span><span class="module-duration">35 min</span></div>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="module-content">
+            <div class="breadcrumb">
+                <a href="../../learning-paths.html">Learning Paths</a> &#8250; Enterprise Architecture &#8250; SSO & Users
+            </div>
+
+            <div class="completed-badge">&#10003; Not Started</div>
+            <h1>SSO &amp; User Management</h1>
+            <div class="module-meta">
+                <span>&#128336; 35 min</span>
+                <span>&#128218; 4 sections</span>
+                <span>&#11088; 225 XP</span>
+                <span class="module-level">Level 3 - Expert</span>
+            </div>
+
+
+            <section class="module-section">
+                <h2>Enterprise Identity Integration</h2>
+                <p>Enterprise organizations require seamless integration with their identity providers for secure, scalable user management. Mend supports SAML 2.0, OIDC, and SCIM for complete identity lifecycle management.</p>
+
+                <h3>Supported Identity Providers</h3>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#128100;</div>
+                        <h4>Okta</h4>
+                        <p>SAML 2.0 and OIDC integration with automated user provisioning via SCIM 2.0.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128100;</div>
+                        <h4>Azure AD / Entra ID</h4>
+                        <p>Enterprise SSO with group-based role mapping and conditional access policies.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128100;</div>
+                        <h4>Google Workspace</h4>
+                        <p>Google SSO with organization unit-based access control.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128100;</div>
+                        <h4>OneLogin / PingIdentity</h4>
+                        <p>Standard SAML/OIDC integration with JIT provisioning support.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>SAML SSO Configuration</h2>
+                <pre><code># Mend SAML SSO Configuration
+# Navigate to: Organization Settings > Authentication > SSO
+
+# Required SAML attributes:
+# - NameID: user email address
+# - firstName: user first name
+# - lastName: user last name
+# - groups: comma-separated group names (for role mapping)
+
+# Mend SP metadata:
+# Entity ID: https://app.mend.io/saml/metadata
+# ACS URL: https://app.mend.io/saml/acs
+# SLO URL: https://app.mend.io/saml/slo
+
+# Okta configuration example:
+# 1. Create new SAML 2.0 application in Okta
+# 2. Set Single Sign On URL to ACS URL above
+# 3. Set Audience URI to Entity ID above
+# 4. Map attributes: email, firstName, lastName, groups
+# 5. Assign users/groups to the application</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Automated User Provisioning (SCIM)</h2>
+                <p>SCIM (System for Cross-domain Identity Management) automates user lifecycle management:</p>
+
+                <ul>
+                    <li><strong>Just-In-Time Provisioning</strong> &mdash; Users are automatically created in Mend on first SSO login</li>
+                    <li><strong>SCIM Provisioning</strong> &mdash; Proactive user/group sync from your IdP to Mend</li>
+                    <li><strong>Deprovisioning</strong> &mdash; Users removed from IdP groups are automatically deactivated in Mend</li>
+                    <li><strong>Group Sync</strong> &mdash; IdP groups map to Mend roles and permissions automatically</li>
+                </ul>
+            </section>
+
+            <section class="module-section">
+                <h2>Role-Based Access Control</h2>
+                <p>Mend provides granular RBAC to ensure users have appropriate access levels:</p>
+
+                <ul>
+                    <li><strong>Organization Admin</strong> &mdash; Full control over organization settings, policies, and user management</li>
+                    <li><strong>Security Admin</strong> &mdash; Manage security policies, view all findings, configure integrations</li>
+                    <li><strong>Project Admin</strong> &mdash; Manage specific projects, view findings for assigned projects</li>
+                    <li><strong>Developer</strong> &mdash; View findings for their repositories, resolve/dismiss findings</li>
+                    <li><strong>Viewer</strong> &mdash; Read-only access to dashboards and reports</li>
+                </ul>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Security Best Practice</h4>
+                    <p>Always enforce SSO for all users and disable password-based login. This ensures that user access is governed by your central identity provider and its policies (MFA, conditional access, session management).</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="b">
+                        <p><strong>Question 1:</strong> What protocol does Mend support for automated user provisioning and deprovisioning?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> LDAP</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> SCIM 2.0</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> OAuth 2.0</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> RADIUS</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="a">
+                        <p><strong>Question 2:</strong> What is the recommended security practice for enterprise SSO?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Enforce SSO for all users and disable password-based login</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Allow both SSO and password login for flexibility</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Use SSO only for admin users</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Rotate SSO certificates every week</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>225 XP earned for completing this module</span>
+                </div>
+                <button class="btn btn-primary mark-complete-btn" data-xp="225">Mark Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="03-compliance-governance.html" class="btn btn-secondary">&#8592; Previous: Compliance</a>
+                    <a href="05-reporting-analytics.html" class="btn btn-primary">Next: Reporting &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/store.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

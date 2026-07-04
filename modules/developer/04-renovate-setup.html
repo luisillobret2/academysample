@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mend Renovate Setup &amp; Configuration - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="../../index.html" class="logo"><img src="../../img/mend-logo.svg" alt="Mend.io" class="logo-img"> Mend <span>Learn</span></a>
+            <ul class="nav-main">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../learning-paths.html" class="active">Learning Paths</a></li>
+                <li><a href="../../certifications.html">Certifications</a></li>
+                <li><a href="../../labs.html">Labs</a></li>
+                <li><a href="../../resources.html">Resources</a></li>
+                <li><a href="../../leaderboard.html">Leaderboard</a></li>
+                <li><a href="../../ai-coach.html">AI Coach</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Search courses, labs..."></div>
+                <div class="nav-xp"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <span class="xp-display">2,450 XP</span></div>
+                <a href="../../profile.html" class="nav-avatar">JD</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+    </header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar">
+            <div class="sidebar-header">
+                <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
+                <h3>Developer Track</h3>
+                <div class="sidebar-progress">
+                    <div class="progress-bar"><div class="fill" data-progress="0%" style="width: 0%"></div></div>
+                    <span>0/5 Complete</span>
+                </div>
+            </div>
+            <nav class="module-nav">
+                <a href="01-developer-quickstart.html" class="module-link">
+                    <span class="module-status">1</span>
+                    <div><span class="module-title">Developer Quickstart</span><span class="module-duration">30 min</span></div>
+                </a>
+                <a href="02-ide-integration.html" class="module-link">
+                    <span class="module-status">2</span>
+                    <div><span class="module-title">IDE Plugins &amp; Developer Workflow</span><span class="module-duration">35 min</span></div>
+                </a>
+                <a href="03-cli-automation.html" class="module-link">
+                    <span class="module-status">3</span>
+                    <div><span class="module-title">Mend CLI &amp; Automation</span><span class="module-duration">35 min</span></div>
+                </a>
+                <a href="04-renovate-setup.html" class="module-link active">
+                    <span class="module-status">4</span>
+                    <div><span class="module-title">Mend Renovate Setup &amp; Configuration</span><span class="module-duration">40 min</span></div>
+                </a>
+                <a href="05-custom-policies.html" class="module-link">
+                    <span class="module-status">5</span>
+                    <div><span class="module-title">Custom Security Policies for Developers</span><span class="module-duration">30 min</span></div>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="module-content">
+            <div class="breadcrumb">
+                <a href="../../learning-paths.html">Learning Paths</a> &#8250; Developer Track &#8250; Renovate Setup
+            </div>
+
+            <div class="completed-badge">&#10003; Not Started</div>
+            <h1>Mend Renovate Setup &amp; Configuration</h1>
+            <div class="module-meta">
+                <span>&#128336; 40 min</span>
+                <span>&#128218; 4 sections</span>
+                <span>&#11088; 200 XP</span>
+                <span class="module-level">Level 2 - Intermediate</span>
+            </div>
+
+
+            <section class="module-section">
+                <h2>What is Mend Renovate?</h2>
+                <p>Mend Renovate is the industry-leading open-source tool for automated dependency updates. It creates pull requests to update your dependencies, reducing security risk and technical debt with minimal manual effort. Used by thousands of organizations including Google, Mozilla, and Uber.</p>
+
+                <h3>Why Renovate?</h3>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#128260;</div>
+                        <h4>Automated Updates</h4>
+                        <p>Automatically detects outdated dependencies and creates PRs with changelogs and release notes.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128230;</div>
+                        <h4>Multi-Ecosystem</h4>
+                        <p>Supports 90+ package managers: npm, pip, Maven, NuGet, Go, Cargo, Helm, Docker, Terraform, and more.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128295;</div>
+                        <h4>Highly Configurable</h4>
+                        <p>Fine-grained control over update scheduling, grouping, auto-merge rules, and version constraints.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128272;</div>
+                        <h4>Security-First</h4>
+                        <p>Prioritizes security updates and can be configured to fast-track vulnerability fixes.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Getting Started with Renovate</h2>
+
+                <h3>GitHub App Installation</h3>
+                <pre><code># 1. Install the Mend Renovate GitHub App
+#    Go to: github.com/apps/renovate
+#    Click "Install" and select your repositories
+
+# 2. Renovate will create an onboarding PR with a default config
+#    Review and merge the PR to activate
+
+# 3. Default renovate.json
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ]
+}</code></pre>
+
+                <h3>Self-Hosted Renovate</h3>
+                <pre><code># Run Renovate as a Docker container
+docker run --rm \
+  -e RENOVATE_TOKEN=YOUR_GITHUB_TOKEN \
+  -e RENOVATE_REPOSITORIES='["org/repo1","org/repo2"]' \
+  renovate/renovate
+
+# Or as a GitHub Action
+name: Renovate
+on:
+  schedule:
+    - cron: '0 4 * * *'
+jobs:
+  renovate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: renovatebot/github-action@v40
+        with:
+          token: ${{ secrets.RENOVATE_TOKEN }}
+          configurationFile: renovate.json</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Advanced Configuration</h2>
+                <pre><code>// renovate.json - Advanced configuration
+{
+  "extends": ["config:recommended"],
+  "schedule": ["before 7am on Monday"],
+  "timezone": "America/New_York",
+  "packageRules": [
+    {
+      "description": "Auto-merge patch updates for non-major deps",
+      "matchUpdateTypes": ["patch"],
+      "automerge": true,
+      "automergeType": "pr"
+    },
+    {
+      "description": "Group all ESLint packages",
+      "matchPackagePatterns": ["^eslint"],
+      "groupName": "ESLint"
+    },
+    {
+      "description": "Prioritize security updates",
+      "matchUpdateTypes": ["patch", "minor"],
+      "matchCategories": ["security"],
+      "schedule": ["at any time"],
+      "automerge": true,
+      "prPriority": 10
+    },
+    {
+      "description": "Pin Docker digests",
+      "matchDatasources": ["docker"],
+      "pinDigests": true
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": ["security"]
+  }
+}</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Renovate Best Practices</h2>
+                <ul>
+                    <li><strong>Start with Recommended Config</strong> &mdash; The <code>config:recommended</code> preset handles most common scenarios well</li>
+                    <li><strong>Enable Auto-merge for Patches</strong> &mdash; When CI passes, auto-merge patch updates to reduce PR noise</li>
+                    <li><strong>Group Related Updates</strong> &mdash; Group monorepo packages (e.g., all @angular/* packages) into single PRs</li>
+                    <li><strong>Schedule Updates</strong> &mdash; Run updates on a schedule that aligns with your team's review capacity</li>
+                    <li><strong>Fast-Track Security</strong> &mdash; Configure security updates to bypass scheduling and get merged ASAP</li>
+                    <li><strong>Pin Docker Digests</strong> &mdash; Pin container images to digests for reproducible builds</li>
+                </ul>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Pro Tip</h4>
+                    <p>Use Renovate's Dependency Dashboard (an issue in your repo) to get an overview of all pending updates and manually trigger or dismiss specific updates.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="c">
+                        <p><strong>Question 1:</strong> How many package managers does Mend Renovate support?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> 10+</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> 30+</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> 90+</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> 5</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="b">
+                        <p><strong>Question 2:</strong> What is the best practice for handling security-related dependency updates in Renovate?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Schedule them for the next quarterly update cycle</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Configure them to bypass scheduling and auto-merge when CI passes</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Manually review and merge each one</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Ignore them if the CVSS score is below 9.0</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>200 XP earned for completing this module</span>
+                </div>
+                <button class="btn btn-primary mark-complete-btn" data-xp="200">Mark Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="03-cli-automation.html" class="btn btn-secondary">&#8592; Previous: CLI & Automation</a>
+                    <a href="05-custom-policies.html" class="btn btn-primary">Next: Custom Policies &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/store.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

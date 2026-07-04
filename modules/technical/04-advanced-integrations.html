@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Integrations &amp; Architecture - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="../../index.html" class="logo"><img src="../../img/mend-logo.svg" alt="Mend.io" class="logo-img"> Mend <span>Learn</span></a>
+            <ul class="nav-main">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../learning-paths.html" class="active">Learning Paths</a></li>
+                <li><a href="../../certifications.html">Certifications</a></li>
+                <li><a href="../../labs.html">Labs</a></li>
+                <li><a href="../../resources.html">Resources</a></li>
+                <li><a href="../../leaderboard.html">Leaderboard</a></li>
+                <li><a href="../../ai-coach.html">AI Coach</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Search courses, labs..."></div>
+                <div class="nav-xp"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <span class="xp-display">2,450 XP</span></div>
+                <a href="../../profile.html" class="nav-avatar">JD</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+    </header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar">
+            <div class="sidebar-header">
+                <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
+                <h3>Technical SE Track</h3>
+                <div class="sidebar-progress">
+                    <div class="progress-bar"><div class="fill" data-progress="0%" style="width: 0%"></div></div>
+                    <span>0/5 Complete</span>
+                </div>
+            </div>
+            <nav class="module-nav">
+                <a href="01-technical-deep-dive.html" class="module-link">
+                    <span class="module-status">1</span>
+                    <div><span class="module-title">Architecture &amp; Deployment Deep Dive</span><span class="module-duration">50 min</span></div>
+                </a>
+                <a href="02-demo-mastery.html" class="module-link">
+                    <span class="module-status">2</span>
+                    <div><span class="module-title">Demo Mastery &amp; Lab Setup</span><span class="module-duration">45 min</span></div>
+                </a>
+                <a href="03-poc-management.html" class="module-link">
+                    <span class="module-status">3</span>
+                    <div><span class="module-title">POC &amp; Trial Management</span><span class="module-duration">40 min</span></div>
+                </a>
+                <a href="04-advanced-integrations.html" class="module-link active">
+                    <span class="module-status">4</span>
+                    <div><span class="module-title">Advanced Integrations</span><span class="module-duration">40 min</span></div>
+                </a>
+                <a href="05-troubleshooting.html" class="module-link">
+                    <span class="module-status">5</span>
+                    <div><span class="module-title">Troubleshooting &amp; Support</span><span class="module-duration">35 min</span></div>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="module-content">
+            <div class="breadcrumb">
+                <a href="../../learning-paths.html">Learning Paths</a> &#8250; Technical SE Track &#8250; Advanced Integrations
+            </div>
+
+            <div class="completed-badge">&#10003; Not Started</div>
+            <h1>Advanced Integrations &amp; Architecture</h1>
+            <div class="module-meta">
+                <span>&#128336; 40 min</span>
+                <span>&#128218; 4 sections</span>
+                <span>&#11088; 250 XP</span>
+                <span class="module-level">Level 3 - Advanced</span>
+            </div>
+
+
+            <section class="module-section">
+                <h2>Enterprise Integration Architecture</h2>
+                <p>Enterprise customers require Mend to integrate seamlessly with their existing security and development infrastructure. Understanding common integration patterns helps you design solutions that maximize value.</p>
+
+                <h3>Integration Categories</h3>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#128279;</div>
+                        <h4>Source Code Management</h4>
+                        <p>GitHub, GitLab, Bitbucket, Azure DevOps. Automated scanning on push, PR comments, and branch policies.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128295;</div>
+                        <h4>CI/CD Pipelines</h4>
+                        <p>Jenkins, GitHub Actions, GitLab CI, CircleCI, Azure Pipelines. Build-time scanning with policy gates.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128203;</div>
+                        <h4>Issue Tracking</h4>
+                        <p>JIRA, ServiceNow, Azure Boards. Automatic ticket creation with SLA tracking and assignment rules.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128225;</div>
+                        <h4>Communication</h4>
+                        <p>Slack, Microsoft Teams, PagerDuty, OpsGenie. Real-time alerts and digest notifications.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>SIEM &amp; SOAR Integration</h2>
+                <p>Enterprise security teams require Mend data in their security operations platforms:</p>
+
+                <h3>Splunk Integration</h3>
+                <pre><code># Forward Mend findings to Splunk via webhook
+# Configure in Mend: Settings > Integrations > Webhooks
+
+# Webhook payload includes:
+# - Finding severity, CVE, package, version
+# - Repository and branch information
+# - Remediation recommendation
+# - CVSS score and reachability status
+
+# Splunk HEC (HTTP Event Collector) configuration
+curl -X POST "https://splunk.company.com:8088/services/collector/event" \
+    -H "Authorization: Splunk $HEC_TOKEN" \
+    -H "Content-Type: application/json" \
+    -d '{
+        "event": {
+            "source": "mend",
+            "severity": "critical",
+            "cve": "CVE-2024-12345",
+            "package": "lodash@4.17.20",
+            "reachable": true
+        }
+    }'</code></pre>
+
+                <h3>ServiceNow Integration</h3>
+                <pre><code># Automated ticket creation in ServiceNow
+# Mend creates security incidents based on policies:
+# - Critical + Reachable = P1 incident
+# - High + Reachable = P2 incident
+# - Medium = P3 vulnerability record
+
+# Integration via ServiceNow REST API
+# Configuration: Settings > Integrations > ServiceNow
+# Required: Instance URL, OAuth credentials, table mappings</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Custom Webhook Architecture</h2>
+                <p>Webhooks enable event-driven architectures that react to Mend findings in real-time:</p>
+
+                <pre><code># Example: Auto-remediation webhook handler
+from flask import Flask, request
+import subprocess
+
+app = Flask(__name__)
+
+@app.route('/mend-webhook', methods=['POST'])
+def handle_finding():
+    data = request.json
+    event_type = data.get('eventType')
+
+    if event_type == 'NEW_VULNERABILITY':
+        severity = data['finding']['severity']
+        package = data['finding']['package']
+        fix_version = data['finding']['fixVersion']
+
+        if severity == 'CRITICAL' and fix_version:
+            # Auto-create remediation PR
+            create_fix_pr(
+                repo=data['repository'],
+                package=package,
+                target_version=fix_version
+            )
+            notify_slack(f"Auto-fix PR created for {package}")
+        elif severity == 'HIGH':
+            create_jira_ticket(data)
+
+    return {'status': 'ok'}, 200</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Multi-SCM Architecture</h2>
+                <p>Enterprise customers often use multiple source code management platforms. Mend provides unified scanning across all of them:</p>
+
+                <ul>
+                    <li><strong>Unified Dashboard</strong> &mdash; Single pane of glass for findings across GitHub, GitLab, Bitbucket, and Azure DevOps</li>
+                    <li><strong>Consistent Policies</strong> &mdash; Same security policies enforced regardless of SCM platform</li>
+                    <li><strong>Cross-Platform Reporting</strong> &mdash; Aggregate metrics and compliance data across all platforms</li>
+                    <li><strong>SCM-Native Experience</strong> &mdash; PR comments and status checks work natively in each platform</li>
+                </ul>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Integration Tip</h4>
+                    <p>Start integrations with the highest-value, lowest-effort connections first: SCM integration (immediate scanning value) and Slack notifications (immediate visibility). Then layer on JIRA, SIEM, and custom webhooks as the deployment matures.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="a">
+                        <p><strong>Question 1:</strong> What is the recommended order for deploying enterprise integrations?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> SCM first, then notifications, then ticketing, then SIEM</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> SIEM first for security visibility, then everything else</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> All integrations simultaneously for maximum value</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Ticketing first to track all findings</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="c">
+                        <p><strong>Question 2:</strong> How does Mend handle organizations with multiple SCM platforms?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Each SCM requires a separate Mend instance</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Only GitHub is supported natively</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Unified dashboard with consistent policies across all SCM platforms</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Organizations must migrate to a single SCM first</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>250 XP earned for completing this module</span>
+                </div>
+                <button class="btn btn-primary mark-complete-btn" data-xp="250">Mark Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="03-poc-management.html" class="btn btn-secondary">&#8592; Previous: POC Management</a>
+                    <a href="05-troubleshooting.html" class="btn btn-primary">Next: Troubleshooting &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/store.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>
