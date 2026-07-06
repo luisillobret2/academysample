@@ -42,6 +42,11 @@
                     <input id="nav-search-input" type="text" placeholder="Search courses, labs...">
                 </div>
                 <button class="dark-mode-toggle" id="dark-mode-toggle" title="Toggle dark mode" aria-label="Toggle dark mode">&#9790;</button>
+                <div class="nav-notifications" id="nav-notifications" title="Notifications">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    <span class="notif-badge" id="notif-count" style="display:none;">0</span>
+                    <div class="notif-dropdown" id="notif-dropdown"></div>
+                </div>
                 <div class="nav-xp">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                     <span class="xp-display">2,450 XP</span>
@@ -150,10 +155,93 @@
         });
     }
 
+    function initNotifications() {
+        const bell = document.getElementById('nav-notifications');
+        const dropdown = document.getElementById('notif-dropdown');
+        const countEl = document.getElementById('notif-count');
+        if (!bell || !dropdown || !countEl) return;
+
+        /* Load notifications from localStorage */
+        let notifs = [];
+        try {
+            const raw = localStorage.getItem('mendlearn_notifications');
+            if (raw) notifs = JSON.parse(raw);
+        } catch (_) {}
+
+        /* Seed default notifications if empty */
+        if (!notifs.length) {
+            notifs = [
+                { icon: '\uD83C\uDF89', text: '<strong>New Track!</strong> Enterprise Architecture track is now available.', time: '1 hour ago', read: false },
+                { icon: '\uD83D\uDD25', text: '<strong>Streak alert!</strong> Log in tomorrow to keep your streak going.', time: '3 hours ago', read: false },
+                { icon: '\uD83C\uDF1F', text: '<strong>New Badge!</strong> You earned the "Early Adopter" badge.', time: '1 day ago', read: false },
+                { icon: '\uD83D\uDCDA', text: '<strong>Content Update:</strong> Container Security module has a new video.', time: '2 days ago', read: true },
+                { icon: '\uD83C\uDFC6', text: '<strong>Leaderboard:</strong> You moved up to #4 this week!', time: '3 days ago', read: true }
+            ];
+            try { localStorage.setItem('mendlearn_notifications', JSON.stringify(notifs)); } catch (_) {}
+        }
+
+        function render() {
+            const unread = notifs.filter(n => !n.read).length;
+            if (unread > 0) {
+                countEl.textContent = unread;
+                countEl.style.display = 'flex';
+            } else {
+                countEl.style.display = 'none';
+            }
+
+            if (!notifs.length) {
+                dropdown.innerHTML = '<div class="notif-header"><span>Notifications</span></div><div class="notif-empty">No notifications yet</div>';
+                return;
+            }
+
+            const items = notifs.map(n =>
+                `<div class="notif-item${n.read ? '' : ' unread'}">
+                    <span class="notif-icon">${n.icon}</span>
+                    <div class="notif-text">${n.text}<div class="notif-time">${n.time}</div></div>
+                </div>`
+            ).join('');
+
+            dropdown.innerHTML = `
+                <div class="notif-header">
+                    <span>Notifications</span>
+                    ${unread > 0 ? '<a href="#" id="notif-mark-read" style="font-size:0.75rem;color:var(--color-accent);text-decoration:none;">Mark all read</a>' : ''}
+                </div>
+                ${items}
+            `;
+
+            const markBtn = dropdown.querySelector('#notif-mark-read');
+            if (markBtn) {
+                markBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    notifs.forEach(n => n.read = true);
+                    try { localStorage.setItem('mendlearn_notifications', JSON.stringify(notifs)); } catch (_) {}
+                    render();
+                });
+            }
+        }
+
+        render();
+
+        bell.addEventListener('click', function (e) {
+            e.stopPropagation();
+            dropdown.classList.toggle('open');
+        });
+
+        document.addEventListener('click', function () {
+            dropdown.classList.remove('open');
+        });
+
+        dropdown.addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+    }
+
     function injectAndSetup() {
         inject();
         applyDarkMode();
         initDarkModeToggle();
+        initNotifications();
     }
 
     // Apply dark mode immediately (before paint) to avoid flash
