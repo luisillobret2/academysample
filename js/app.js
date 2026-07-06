@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initComingSoon();
     initProfileEdit();
     initHomepageDynamic();
+    initPrerequisites();
+    initDynamicLeaderboard();
 });
 
 /* --- Coming Soon (placeholder actions) --- */
@@ -620,6 +622,207 @@ function initHomepageDynamic() {
                 }
             }
         }
+    });
+}
+
+/* --- Prerequisites Locking --- */
+function initPrerequisites() {
+    if (typeof MendStore === 'undefined') return;
+
+    const trackNames = {
+        foundation: 'Foundation Track',
+        sca: 'SCA Deep Dive',
+        sast: 'SAST Product Track',
+        sales: 'Sales Enablement',
+        developer: 'Developer Track',
+        container: 'Container Security',
+        technical: 'Technical SE Track',
+        cicd: 'CI/CD Integration',
+        secrets: 'Secrets Detection',
+        'supply-chain': 'Supply Chain Security',
+        executive: 'Executive / Practice Leader',
+        enterprise: 'Enterprise Architecture'
+    };
+
+    /* Lock path cards on learning-paths page */
+    document.querySelectorAll('.path-card').forEach(card => {
+        const link = card.querySelector('a[href*="modules/"]');
+        if (!link) return;
+        const href = link.getAttribute('href');
+        const track = MendStore.trackFromHref(href);
+        if (!track) return;
+
+        const status = MendStore.getTrackPrereqStatus(track);
+        if (status.unlocked) return;
+
+        card.classList.add('locked');
+
+        /* Replace the start button with a locked indicator */
+        const btn = card.querySelector('.path-card-footer .btn');
+        if (btn) {
+            btn.textContent = 'Locked';
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-secondary');
+        }
+
+        /* Add prereq banner */
+        const footer = card.querySelector('.path-card-footer');
+        if (footer) {
+            const banner = document.createElement('div');
+            banner.className = 'prereq-banner';
+            const prereqLines = status.prereqs.map(p => {
+                const name = trackNames[p.track] || p.track;
+                const pct = p.total > 0 ? Math.round((p.done / p.total) * 100) : 0;
+                const icon = p.complete ? '&#10003;' : '&#128274;';
+                return `<div class="prereq-progress"><span>${icon}</span> <span class="prereq-track">${name}</span> <span>(${pct}%)</span></div>`;
+            }).join('');
+            banner.innerHTML = `<span class="prereq-icon">&#128274;</span><div><strong>Prerequisites required:</strong>${prereqLines}</div>`;
+            footer.parentElement.insertBefore(banner, footer);
+        }
+    });
+
+    /* Check if current module page is locked */
+    const moduleId = MendStore.getCurrentModuleId();
+    if (!moduleId) return;
+    const trackId = moduleId.split('/')[0];
+    const status = MendStore.getTrackPrereqStatus(trackId);
+    if (status.unlocked) return;
+
+    /* Show lock overlay on module page */
+    const overlay = document.createElement('div');
+    overlay.className = 'module-lock-overlay';
+    const prereqItems = status.prereqs.map(p => {
+        const name = trackNames[p.track] || p.track;
+        const icon = p.complete ? '<span class="check">&#10003;</span>' : '<span class="pending">&#9711;</span>';
+        const pct = p.total > 0 ? Math.round((p.done / p.total) * 100) : 0;
+        return `<div class="prereq-item">${icon} <span>${name}</span> <span class="text-muted" style="margin-left:auto;">${pct}%</span></div>`;
+    }).join('');
+    overlay.innerHTML = `
+        <div class="module-lock-card">
+            <div class="lock-icon">&#128274;</div>
+            <h3>Track Locked</h3>
+            <p>Complete the prerequisite tracks below to unlock <strong>${trackNames[trackId] || trackId}</strong>.</p>
+            <div class="prereq-list">${prereqItems}</div>
+            <a href="../../learning-paths.html" class="btn btn-primary" style="width:100%;">Go to Learning Paths</a>
+        </div>
+    `;
+    document.body.appendChild(overlay);
+}
+
+/* --- Dynamic Leaderboard --- */
+function initDynamicLeaderboard() {
+    if (typeof MendStore === 'undefined') return;
+    const table = document.querySelector('.leaderboard-table');
+    if (!table) return;
+
+    const data = MendStore.load();
+    const userXP = data.xp;
+    const userName = data.userName || 'Jane Doe';
+    const userCompany = data.company || 'Acme Security';
+    const userLevel = data.level;
+    const userCerts = data.certifications ? data.certifications.length : 0;
+
+    function getInitials(name) {
+        if (!name) return 'JD';
+        const parts = name.trim().split(/\s+/);
+        if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+        return parts[0].slice(0, 2).toUpperCase();
+    }
+
+    function levelBadge(lvl) {
+        if (lvl >= 7) return '<span class="badge badge-purple">Expert</span>';
+        if (lvl >= 4) return '<span class="badge badge-blue">Professional</span>';
+        return '<span class="badge badge-green">Associate</span>';
+    }
+
+    /* Base competitors with static XP */
+    const competitors = [
+        { name: 'Alex Kumar', company: 'SecureStack Partners', xp: 12300, level: 10, certs: 3, gradient: 'linear-gradient(135deg, #3498db, #2980b9)' },
+        { name: 'Maria Chen', company: 'CyberGuard Solutions', xp: 8750, level: 8, certs: 2, gradient: 'linear-gradient(135deg, #9b59b6, #8e44ad)' },
+        { name: 'Sarah Park', company: 'AppShield Inc.', xp: 7200, level: 7, certs: 2, gradient: 'linear-gradient(135deg, #e67e22, #d35400)' },
+        { name: 'Raj Mehta', company: 'CloudSec Global', xp: 6800, level: 7, certs: 2, gradient: 'linear-gradient(135deg, #1abc9c, #16a085)' },
+        { name: 'Lisa Wong', company: 'DevSecure Partners', xp: 5400, level: 6, certs: 1, gradient: 'linear-gradient(135deg, #2ecc71, #27ae60)' },
+        { name: 'Tom Jensen', company: 'NordSec AB', xp: 4100, level: 5, certs: 1, gradient: 'linear-gradient(135deg, #f39c12, #e67e22)' },
+        { name: 'Aisha Nakamura', company: 'SecureStack Partners', xp: 3600, level: 5, certs: 1, gradient: 'linear-gradient(135deg, #e74c3c, #c0392b)' },
+        { name: 'Pierre Gomez', company: 'AppShield Inc.', xp: 2900, level: 4, certs: 1, gradient: 'linear-gradient(135deg, #2ecc71, #27ae60)' },
+        { name: 'Yuki Tanaka', company: 'SecureOps Tokyo', xp: 2100, level: 4, certs: 0, gradient: 'linear-gradient(135deg, #8e44ad, #6c3483)' },
+        { name: 'Carlos Ruiz', company: 'CyberSur Consulting', xp: 1500, level: 3, certs: 0, gradient: 'linear-gradient(135deg, #16a085, #1abc9c)' },
+        { name: 'Emma Brown', company: 'ShieldWorks Ltd', xp: 900, level: 2, certs: 0, gradient: 'linear-gradient(135deg, #3498db, #2980b9)' },
+        { name: 'David Kim', company: 'CodeGuard Inc.', xp: 400, level: 1, certs: 0, gradient: 'linear-gradient(135deg, #e74c3c, #c0392b)' }
+    ];
+
+    /* Insert current user into the sorted list */
+    const userEntry = {
+        name: userName,
+        company: userCompany,
+        xp: userXP,
+        level: userLevel,
+        certs: userCerts,
+        gradient: 'linear-gradient(135deg, var(--color-accent), var(--color-secondary))',
+        isUser: true
+    };
+
+    const all = [...competitors, userEntry].sort((a, b) => b.xp - a.xp);
+
+    /* Assign ranks */
+    all.forEach((entry, i) => { entry.rank = i + 1; });
+
+    /* Rebuild podium */
+    const podiumGrid = document.querySelector('.section .grid-3');
+    if (podiumGrid) {
+        const top3 = all.slice(0, 3);
+        const podiumColors = [
+            { bg: 'linear-gradient(135deg, #f1c40f, #f39c12)', color: '#f1c40f', crown: true, size: '64px', fontSize: '2rem', mt: '0' },
+            { bg: 'linear-gradient(135deg, #bdc3c7, #95a5a6)', color: '#bdc3c7', crown: false, size: '56px', fontSize: '1.75rem', mt: '24px' },
+            { bg: 'linear-gradient(135deg, #e67e22, #d35400)', color: '#e67e22', crown: false, size: '52px', fontSize: '1.5rem', mt: '40px' }
+        ];
+        /* Podium order: 2nd, 1st, 3rd */
+        const order = [1, 0, 2];
+        const labels = ['1st', '2nd', '3rd'];
+        const podiumCards = podiumGrid.querySelectorAll('.card-flat');
+        order.forEach((posIdx, cardIdx) => {
+            const entry = top3[posIdx];
+            const p = podiumColors[posIdx];
+            const card = podiumCards[cardIdx];
+            if (!entry || !card) return;
+            const initials = getInitials(entry.name);
+            const certLevel = entry.level >= 7 ? 'Expert Certified' : entry.level >= 4 ? 'Professional Certified' : 'Associate';
+            const highlight = entry.isUser ? ' style="border: 2px solid var(--color-accent);"' : '';
+            const youTag = entry.isUser ? ' (You)' : '';
+            card.setAttribute('style', `text-align: center; margin-top: ${p.mt};${entry.isUser ? ' border: 2px solid var(--color-accent);' : ''}`);
+            card.innerHTML = `
+                ${p.crown ? '<div style="font-size: 1.5rem; margin-bottom: 8px;">&#128081;</div>' : ''}
+                <div style="width: ${p.size}; height: ${p.size}; border-radius: 50%; background: ${entry.isUser ? userEntry.gradient : p.bg}; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: ${posIdx === 0 ? '1.5rem' : posIdx === 1 ? '1.25rem' : '1.1rem'}; font-weight: 700; color: white;">${initials}</div>
+                <div style="font-size: ${p.fontSize}; font-weight: 700; color: ${p.color};">${labels[posIdx]}</div>
+                <h4>${entry.name}${youTag}</h4>
+                <div class="text-sm text-muted mb-8">${entry.company}</div>
+                <div style="font-size: ${posIdx === 0 ? '1.5rem' : posIdx === 1 ? '1.25rem' : '1.1rem'}; font-weight: 700; color: var(--color-accent);">${entry.xp.toLocaleString()} XP</div>
+                <div class="text-xs text-muted">${certLevel}</div>
+            `;
+        });
+    }
+
+    /* Rebuild table body */
+    const tbody = table.querySelector('tbody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+
+    const rankClasses = { 1: 'gold', 2: 'silver', 3: 'bronze' };
+    all.forEach(entry => {
+        const tr = document.createElement('tr');
+        if (entry.isUser) tr.className = 'leaderboard-highlight';
+        const rankClass = rankClasses[entry.rank] ? ` ${rankClasses[entry.rank]}` : '';
+        const initials = getInitials(entry.name);
+        const youTag = entry.isUser ? ' (You)' : '';
+        tr.innerHTML = `
+            <td class="leaderboard-rank${rankClass}">${entry.rank}</td>
+            <td><div class="leaderboard-user"><div class="leaderboard-avatar" style="background: ${entry.gradient};">${initials}</div><span class="leaderboard-name">${entry.name}${youTag}</span></div></td>
+            <td class="text-muted">${entry.company}</td>
+            <td>${levelBadge(entry.level)}</td>
+            <td>${entry.certs}</td>
+            <td class="leaderboard-xp" style="text-align: right;">${entry.xp.toLocaleString()}</td>
+        `;
+        tbody.appendChild(tr);
     });
 }
 

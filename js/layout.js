@@ -41,6 +41,7 @@
                     <label class="sr-only" for="nav-search-input">Search courses and labs</label>
                     <input id="nav-search-input" type="text" placeholder="Search courses, labs...">
                 </div>
+                <button class="dark-mode-toggle" id="dark-mode-toggle" title="Toggle dark mode" aria-label="Toggle dark mode">&#9790;</button>
                 <div class="nav-xp">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                     <span class="xp-display">2,450 XP</span>
@@ -128,12 +129,42 @@
         } catch (_) { /* ignore */ }
     }
 
+    /* --- Dark Mode --- */
+    function applyDarkMode() {
+        try {
+            if (localStorage.getItem('mendlearn_darkmode') === 'true') {
+                document.body.classList.add('dark-mode');
+            }
+        } catch (_) { /* ignore */ }
+    }
+
+    function initDarkModeToggle() {
+        const btn = document.getElementById('dark-mode-toggle');
+        if (!btn) return;
+        const isDark = document.body.classList.contains('dark-mode');
+        btn.innerHTML = isDark ? '&#9788;' : '&#9790;';
+        btn.addEventListener('click', () => {
+            const nowDark = document.body.classList.toggle('dark-mode');
+            btn.innerHTML = nowDark ? '&#9788;' : '&#9790;';
+            try { localStorage.setItem('mendlearn_darkmode', nowDark ? 'true' : 'false'); } catch (_) {}
+        });
+    }
+
+    function injectAndSetup() {
+        inject();
+        applyDarkMode();
+        initDarkModeToggle();
+    }
+
+    // Apply dark mode immediately (before paint) to avoid flash
+    applyDarkMode();
+
     // Run before other DOMContentLoaded handlers (store.js/app.js) that
     // query the header, since listeners fire in registration order and
     // this script is loaded first.
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', inject);
+        document.addEventListener('DOMContentLoaded', injectAndSetup);
     } else {
-        inject();
+        injectAndSetup();
     }
 })();
