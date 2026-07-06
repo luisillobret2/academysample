@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initComingSoon();
     initProfileEdit();
     initHomepageDynamic();
-    initPrerequisites();
     initDynamicLeaderboard();
 });
 
@@ -623,90 +622,6 @@ function initHomepageDynamic() {
             }
         }
     });
-}
-
-/* --- Prerequisites Locking --- */
-function initPrerequisites() {
-    if (typeof MendStore === 'undefined') return;
-
-    const trackNames = {
-        foundation: 'Foundation Track',
-        sca: 'SCA Deep Dive',
-        sast: 'SAST Product Track',
-        sales: 'Sales Enablement',
-        developer: 'Developer Track',
-        container: 'Container Security',
-        technical: 'Technical SE Track',
-        cicd: 'CI/CD Integration',
-        secrets: 'Secrets Detection',
-        'supply-chain': 'Supply Chain Security',
-        executive: 'Executive / Practice Leader',
-        enterprise: 'Enterprise Architecture'
-    };
-
-    /* Lock path cards on learning-paths page */
-    document.querySelectorAll('.path-card').forEach(card => {
-        const link = card.querySelector('a[href*="modules/"]');
-        if (!link) return;
-        const href = link.getAttribute('href');
-        const track = MendStore.trackFromHref(href);
-        if (!track) return;
-
-        const status = MendStore.getTrackPrereqStatus(track);
-        if (status.unlocked) return;
-
-        card.classList.add('locked');
-
-        /* Replace the start button with a locked indicator */
-        const btn = card.querySelector('.path-card-footer .btn');
-        if (btn) {
-            btn.textContent = 'Locked';
-            btn.classList.remove('btn-primary');
-            btn.classList.add('btn-secondary');
-        }
-
-        /* Add prereq banner */
-        const footer = card.querySelector('.path-card-footer');
-        if (footer) {
-            const banner = document.createElement('div');
-            banner.className = 'prereq-banner';
-            const prereqLines = status.prereqs.map(p => {
-                const name = trackNames[p.track] || p.track;
-                const pct = p.total > 0 ? Math.round((p.done / p.total) * 100) : 0;
-                const icon = p.complete ? '&#10003;' : '&#128274;';
-                return `<div class="prereq-progress"><span>${icon}</span> <span class="prereq-track">${name}</span> <span>(${pct}%)</span></div>`;
-            }).join('');
-            banner.innerHTML = `<span class="prereq-icon">&#128274;</span><div><strong>Prerequisites required:</strong>${prereqLines}</div>`;
-            footer.parentElement.insertBefore(banner, footer);
-        }
-    });
-
-    /* Check if current module page is locked */
-    const moduleId = MendStore.getCurrentModuleId();
-    if (!moduleId) return;
-    const trackId = moduleId.split('/')[0];
-    const status = MendStore.getTrackPrereqStatus(trackId);
-    if (status.unlocked) return;
-
-    /* Show lock overlay on module page */
-    const overlay = document.createElement('div');
-    overlay.className = 'module-lock-overlay';
-    const prereqItems = status.prereqs.map(p => {
-        const name = trackNames[p.track] || p.track;
-        const icon = p.complete ? '<span class="check">&#10003;</span>' : '<span class="pending">&#9711;</span>';
-        const pct = p.total > 0 ? Math.round((p.done / p.total) * 100) : 0;
-        return `<div class="prereq-item">${icon} <span>${name}</span> <span class="text-muted" style="margin-left:auto;">${pct}%</span></div>`;
-    }).join('');
-    overlay.innerHTML = `
-        <div class="module-lock-card">
-            <div class="lock-icon">&#128274;</div>
-            <h3>Track Locked</h3>
-            <p>Complete the prerequisite tracks below to unlock <strong>${trackNames[trackId] || trackId}</strong>.</p>
-            <div class="prereq-list">${prereqItems}</div>
-            <a href="../../learning-paths.html" class="btn btn-primary" style="width:100%;">Go to Learning Paths</a>
-        </div>
-    `;
-    document.body.appendChild(overlay);
 }
 
 /* --- Dynamic Leaderboard --- */
