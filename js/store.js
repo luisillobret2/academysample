@@ -505,6 +505,61 @@ const MendStore = {
         return trackMap[track] || [];
     },
 
+    /* --- Prerequisites --- */
+    trackPrereqs: {
+        sca: ['foundation'],
+        sast: ['foundation'],
+        sales: [],
+        developer: ['foundation'],
+        container: ['foundation'],
+        cicd: ['foundation', 'developer'],
+        technical: ['sca', 'sast'],
+        secrets: ['foundation'],
+        'supply-chain': ['foundation', 'sca'],
+        executive: [],
+        enterprise: ['sca', 'sast', 'cicd']
+    },
+
+    getTrackPrereqs(track) {
+        return this.trackPrereqs[track] || [];
+    },
+
+    isTrackUnlocked(track) {
+        if (track === 'foundation' || track === 'sales' || track === 'executive') return true;
+        const prereqs = this.getTrackPrereqs(track);
+        if (!prereqs.length) return true;
+        const data = this.load();
+        return prereqs.every(prereqTrack => {
+            const modules = this.getTrackModules(prereqTrack);
+            return modules.length > 0 && modules.every(m => data.completedModules.includes(m));
+        });
+    },
+
+    getTrackPrereqStatus(track) {
+        const prereqs = this.getTrackPrereqs(track);
+        if (!prereqs.length) return { unlocked: true, prereqs: [] };
+        const data = this.load();
+        const details = prereqs.map(pt => {
+            const modules = this.getTrackModules(pt);
+            const done = modules.filter(m => data.completedModules.includes(m)).length;
+            return { track: pt, done, total: modules.length, complete: done === modules.length };
+        });
+        return { unlocked: details.every(d => d.complete), prereqs: details };
+    },
+
+    /* --- Dark Mode --- */
+    getDarkMode() {
+        try {
+            return localStorage.getItem('mendlearn_darkmode') === 'true';
+        } catch (_) { return false; }
+    },
+
+    setDarkMode(on) {
+        try {
+            localStorage.setItem('mendlearn_darkmode', on ? 'true' : 'false');
+        } catch (_) { /* ignore */ }
+    },
+
     /* --- Reset (dev helper) --- */
     reset() {
         localStorage.removeItem(this.STORAGE_KEY);
