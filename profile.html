@@ -16,15 +16,65 @@
 
             <!-- Profile Header -->
             <div class="profile-header">
-                <div class="profile-avatar">JD</div>
+                <div class="profile-avatar" id="profile-avatar">JD</div>
                 <div class="profile-info">
-                    <h1>Jane Doe</h1>
-                    <p>Sales Engineer &middot; Acme Security (VAR) &middot; Silver Partner</p>
+                    <h1 id="profile-name">Jane Doe</h1>
+                    <p id="profile-subtitle">Sales Engineer &middot; Acme Security (VAR) &middot; Silver Partner</p>
                     <div class="profile-badges">
-                        <span class="badge badge-green">Associate Certified</span>
-                        <span class="badge badge-accent">Level 5 &middot; Specialist</span>
-                        <span class="badge badge-orange">14-Day Streak</span>
+                        <span class="badge badge-green" id="profile-cert-badge">Associate Certified</span>
+                        <span class="badge badge-accent" id="profile-level-badge">Level 5 &middot; Specialist</span>
+                        <span class="badge badge-orange" id="profile-streak-badge">14-Day Streak</span>
                     </div>
+                    <button class="btn btn-secondary btn-sm" id="profile-edit-btn" style="margin-top: 12px;">Edit Profile</button>
+                </div>
+            </div>
+
+            <!-- Edit Profile Modal (hidden by default) -->
+            <div id="profile-edit-modal" class="profile-edit-modal" style="display:none;">
+                <div class="profile-edit-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                        <h3 style="margin:0;">Edit Profile</h3>
+                        <button id="profile-edit-close" class="btn btn-secondary btn-sm" style="padding:4px 10px;">&times;</button>
+                    </div>
+                    <form id="profile-edit-form">
+                        <div class="form-group">
+                            <label for="edit-name">Full Name</label>
+                            <input type="text" id="edit-name" class="form-input" placeholder="Your name" maxlength="60">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-role">Role</label>
+                            <select id="edit-role" class="form-input">
+                                <option value="Sales Engineer">Sales Engineer</option>
+                                <option value="Solution Architect">Solution Architect</option>
+                                <option value="Sales Rep">Sales Rep</option>
+                                <option value="Security Consultant">Security Consultant</option>
+                                <option value="Technical Administrator">Technical Administrator</option>
+                                <option value="Customer Success Manager">Customer Success Manager</option>
+                                <option value="Executive">Executive</option>
+                                <option value="Developer">Developer</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-company">Company</label>
+                            <input type="text" id="edit-company" class="form-input" placeholder="Your company" maxlength="80">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-partner-type">Partner Type</label>
+                            <select id="edit-partner-type" class="form-input">
+                                <option value="VAR">VAR</option>
+                                <option value="MSSP">MSSP</option>
+                                <option value="GSI">Global System Integrator</option>
+                                <option value="Technology Partner">Technology Partner</option>
+                                <option value="Distributor">Distributor</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:20px;">
+                            <button type="button" id="profile-cancel-btn" class="btn btn-secondary">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
@@ -226,6 +276,7 @@
 
     <script src="js/layout.js"></script>
     <script src="js/store.js"></script>
+    <script src="js/search.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
