@@ -100,11 +100,32 @@
             </div>
         </div>`;
 
+    function getInitials(name) {
+        if (!name) return 'JD';
+        const parts = name.trim().split(/\s+/);
+        if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+        return parts[0].slice(0, 2).toUpperCase();
+    }
+
     function inject() {
         const header = document.getElementById('site-header');
         if (header) header.innerHTML = headerHTML;
         const footer = document.getElementById('site-footer');
         if (footer) footer.innerHTML = footerHTML;
+
+        /* Personalize header from localStorage if MendStore data exists */
+        try {
+            const raw = localStorage.getItem('mendlearn_data');
+            if (raw) {
+                const d = JSON.parse(raw);
+                const avatar = header && header.querySelector('.nav-avatar');
+                if (avatar && d.userName) avatar.textContent = getInitials(d.userName);
+                const xpEl = header && header.querySelector('.xp-display');
+                if (xpEl && typeof d.xp === 'number') {
+                    xpEl.textContent = d.xp.toLocaleString() + ' XP';
+                }
+            }
+        } catch (_) { /* ignore */ }
     }
 
     // Run before other DOMContentLoaded handlers (store.js/app.js) that

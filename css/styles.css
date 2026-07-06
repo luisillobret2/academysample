@@ -292,6 +292,83 @@ h4 { font-size: 1.1rem; }
     flex-shrink: 0;
 }
 
+/* --- Search Dropdown --- */
+.search-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    min-width: 320px;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 900;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.search-dropdown.open {
+    display: block;
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    text-decoration: none;
+    color: var(--color-text);
+    transition: background 0.15s;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item:hover {
+    background: var(--color-accent-light);
+    color: var(--color-text);
+}
+
+.search-result-category {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-accent);
+    background: var(--color-accent-light);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.search-result-title {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-bright);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.search-result-title mark {
+    background: rgba(7, 60, 140, 0.12);
+    color: var(--color-accent);
+    border-radius: 2px;
+    padding: 0 2px;
+}
+
+.search-no-results {
+    padding: 16px;
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+}
+
 .nav-xp {
     display: flex;
     align-items: center;
@@ -1292,6 +1369,57 @@ h4 { font-size: 1.1rem; }
 .gap-16 { gap: 16px; }
 .gap-24 { gap: 24px; }
 
+/* --- Profile Edit Modal --- */
+.profile-edit-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1100;
+    padding: 20px;
+}
+
+.profile-edit-card {
+    background: var(--color-card);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: var(--shadow-lg);
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-bright);
+    margin-bottom: 6px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    font-family: var(--font-family);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-input);
+    color: var(--color-text);
+    transition: var(--transition);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 2px var(--color-accent-light);
+}
+
 /* --- Responsive --- */
 @media (max-width: 1024px) {
     .grid-4 { grid-template-columns: repeat(2, 1fr); }
@@ -1320,6 +1448,43 @@ h4 { font-size: 1.1rem; }
         padding: 16px;
         gap: 4px;
         box-shadow: var(--shadow-md);
+        z-index: 800;
+    }
+
+    .nav-main.mobile-open li a {
+        display: block;
+        padding: 10px 12px;
+        border-radius: var(--radius-sm);
+        color: var(--color-text);
+        font-weight: 500;
+    }
+
+    .nav-main.mobile-open li a:hover,
+    .nav-main.mobile-open li a.active {
+        background: var(--color-accent-light);
+        color: var(--color-accent);
+    }
+
+    /* Show search in mobile menu */
+    .mobile-search {
+        display: flex;
+        align-items: center;
+        background: var(--color-input);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: 8px 12px;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .mobile-search input {
+        background: none;
+        border: none;
+        color: var(--color-text);
+        font-size: 0.85rem;
+        outline: none;
+        width: 100%;
+        font-family: var(--font-family);
     }
 
     .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }

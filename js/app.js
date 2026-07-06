@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initCourseActions();
     initLeaderboardToggle();
     initComingSoon();
+    initProfileEdit();
+    initHomepageDynamic();
 });
 
 /* --- Coming Soon (placeholder actions) --- */
@@ -37,6 +39,48 @@ function initMobileMenu() {
     btn.addEventListener('click', () => {
         const isOpen = nav.classList.toggle('mobile-open');
         btn.setAttribute('aria-expanded', String(isOpen));
+
+        /* Inject mobile search bar at top of mobile menu if not present */
+        if (isOpen && !nav.querySelector('.mobile-search')) {
+            const inModule = /\/modules\//.test(window.location.pathname);
+            const prefix = inModule ? '../../' : '';
+            const searchLi = document.createElement('li');
+            searchLi.className = 'mobile-search-li';
+            searchLi.style.listStyle = 'none';
+            searchLi.innerHTML = `
+                <div class="mobile-search" style="position: relative;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="flex-shrink:0;color:var(--color-text-muted)"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <input type="text" placeholder="Search courses, labs..." aria-label="Search">
+                </div>`;
+            nav.insertBefore(searchLi, nav.firstChild);
+
+            /* Wire up mobile search */
+            if (typeof MendSearch !== 'undefined') {
+                const mobileInput = searchLi.querySelector('input');
+                const mobileContainer = searchLi.querySelector('.mobile-search');
+                const dropdown = document.createElement('div');
+                dropdown.className = 'search-dropdown';
+                dropdown.setAttribute('role', 'listbox');
+                mobileContainer.appendChild(dropdown);
+
+                let debounce;
+                mobileInput.addEventListener('input', () => {
+                    clearTimeout(debounce);
+                    debounce = setTimeout(() => {
+                        const q = mobileInput.value.trim();
+                        if (q.length < 2) { dropdown.innerHTML = ''; dropdown.classList.remove('open'); return; }
+                        const results = MendSearch.search(q);
+                        MendSearch.renderResults(dropdown, results, prefix, q);
+                    }, 200);
+                });
+                mobileInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        const first = dropdown.querySelector('.search-result-item');
+                        if (first) { first.click(); e.preventDefault(); }
+                    }
+                });
+            }
+        }
     });
 
     document.addEventListener('click', (e) => {
@@ -207,19 +251,11 @@ function initChat() {
     });
 }
 
-/* --- Search --- */
+/* --- Search (delegates to MendSearch in search.js) --- */
 function initSearch() {
-    const searchInput = document.querySelector('.nav-search input');
-    if (!searchInput) return;
-
-    searchInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            const query = searchInput.value.trim();
-            if (query) {
-                alert(`Search results for: "${query}"\n\nThis is a prototype. In production, this would search across all courses, labs, certifications, and resources.`);
-            }
-        }
-    });
+    if (typeof MendSearch !== 'undefined') {
+        MendSearch.init();
+    }
 }
 
 /* --- Course Actions --- */
@@ -303,6 +339,288 @@ function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+}
+
+/* --- Profile Edit --- */
+function initProfileEdit() {
+    const editBtn = document.getElementById('profile-edit-btn');
+    const modal = document.getElementById('profile-edit-modal');
+    if (!editBtn || !modal) return;
+
+    const form = document.getElementById('profile-edit-form');
+    const closeBtn = document.getElementById('profile-edit-close');
+    const cancelBtn = document.getElementById('profile-cancel-btn');
+
+    function openModal() {
+        if (typeof MendStore === 'undefined') return;
+        const data = MendStore.load();
+        document.getElementById('edit-name').value = data.userName || '';
+        document.getElementById('edit-role').value = data.role || 'Sales Engineer';
+        document.getElementById('edit-company').value = data.company || '';
+        document.getElementById('edit-partner-type').value = data.partnerType || 'VAR';
+        modal.style.display = '';
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+    function getInitials(name) {
+        if (!name) return 'JD';
+        const parts = name.trim().split(/\s+/);
+        if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+        return parts[0].slice(0, 2).toUpperCase();
+    }
+
+    editBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    cancelBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (typeof MendStore === 'undefined') return;
+
+        const name = document.getElementById('edit-name').value.trim() || 'Jane Doe';
+        const role = document.getElementById('edit-role').value;
+        const company = document.getElementById('edit-company').value.trim() || 'Acme Security';
+        const partnerType = document.getElementById('edit-partner-type').value;
+
+        MendStore.set('userName', name);
+        MendStore.set('role', role);
+        MendStore.set('company', company);
+        MendStore.set('partnerType', partnerType);
+
+        /* Update profile page elements */
+        const nameEl = document.getElementById('profile-name');
+        if (nameEl) nameEl.textContent = name;
+
+        const subtitleEl = document.getElementById('profile-subtitle');
+        if (subtitleEl) subtitleEl.textContent = `${role} \u00B7 ${company} (${partnerType}) \u00B7 ${MendStore.get('partnerTier')}`;
+
+        const avatarEl = document.getElementById('profile-avatar');
+        if (avatarEl) avatarEl.textContent = getInitials(name);
+
+        /* Update nav avatar */
+        const navAvatar = document.querySelector('.nav-avatar');
+        if (navAvatar) navAvatar.textContent = getInitials(name);
+
+        closeModal();
+        showToast('Profile updated');
+    });
+
+    /* Apply persisted profile data on load */
+    if (typeof MendStore !== 'undefined') {
+        const data = MendStore.load();
+        const nameEl = document.getElementById('profile-name');
+        if (nameEl) nameEl.textContent = data.userName;
+
+        const subtitleEl = document.getElementById('profile-subtitle');
+        if (subtitleEl) subtitleEl.textContent = `${data.role || 'Sales Engineer'} \u00B7 ${data.company} (${data.partnerType || 'VAR'}) \u00B7 ${data.partnerTier}`;
+
+        const avatarEl = document.getElementById('profile-avatar');
+        if (avatarEl) avatarEl.textContent = getInitials(data.userName);
+
+        /* Update stat cards */
+        const statCards = document.querySelectorAll('.grid-4 .card-flat');
+        statCards.forEach(card => {
+            const label = card.querySelector('.stat-label');
+            const value = card.querySelector('.stat-value');
+            if (!label || !value) return;
+            const lt = label.textContent.toLowerCase();
+            if (lt.includes('total xp')) value.textContent = data.xp.toLocaleString();
+            else if (lt.includes('modules done')) value.textContent = data.completedModules.length;
+            else if (lt.includes('labs done')) value.textContent = data.completedLabs.length;
+        });
+
+        /* Update level badge */
+        const levelBadge = document.getElementById('profile-level-badge');
+        if (levelBadge) levelBadge.textContent = `Level ${data.level} \u00B7 ${MendStore.levelTitle(data.level)}`;
+
+        /* Update streak badge */
+        const streakBadge = document.getElementById('profile-streak-badge');
+        if (streakBadge) streakBadge.textContent = `${data.streak}-Day Streak`;
+
+        /* Update cert badge */
+        const certBadge = document.getElementById('profile-cert-badge');
+        if (certBadge) {
+            const certCount = data.certifications.length;
+            certBadge.textContent = certCount > 0 ? `${certCount} Certification${certCount > 1 ? 's' : ''}` : 'No Certifications Yet';
+            if (certCount === 0) {
+                certBadge.className = 'badge badge-blue';
+            }
+        }
+
+        /* Update XP-to-next-level bar */
+        const xpThresholds = [0, 200, 600, 1200, 2000, 3000, 4000, 5500, 7500, 10000, 15000];
+        const currentThreshold = xpThresholds[data.level - 1] || 0;
+        const nextThreshold = xpThresholds[data.level] || xpThresholds[xpThresholds.length - 1];
+        const xpProgress = nextThreshold > currentThreshold ? Math.min(100, Math.round(((data.xp - currentThreshold) / (nextThreshold - currentThreshold)) * 100)) : 100;
+
+        const levelCard = document.querySelector('.mb-24 h4');
+        if (levelCard) {
+            levelCard.textContent = `Level ${data.level}: ${MendStore.levelTitle(data.level)}`;
+            const muted = levelCard.parentElement.querySelector('.text-muted');
+            if (muted) muted.textContent = `${nextThreshold - data.xp} XP to Level ${data.level + 1}: ${MendStore.levelTitle(data.level + 1)}`;
+            const xpSpan = levelCard.closest('.flex')?.querySelector('[style*="color"]');
+            if (xpSpan) xpSpan.textContent = `${data.xp.toLocaleString()} / ${nextThreshold.toLocaleString()} XP`;
+        }
+        const levelFill = document.querySelector('.mb-24 .progress-bar .fill');
+        if (levelFill) levelFill.style.width = xpProgress + '%';
+    }
+}
+
+/* --- Homepage Dynamic Stats --- */
+function initHomepageDynamic() {
+    if (typeof MendStore === 'undefined') return;
+    const data = MendStore.load();
+
+    /* Update hero welcome */
+    const heroH1 = document.querySelector('.hero h1');
+    if (heroH1) {
+        const firstName = data.userName.split(/\s+/)[0];
+        heroH1.innerHTML = `Welcome back, <span class="accent">${firstName}</span>`;
+    }
+
+    /* Update hero subtitle */
+    const heroP = document.querySelector('.hero .hero-content > p');
+    if (heroP) {
+        const totalModules = 61;
+        const completedCount = data.completedModules.length;
+        const overallPct = Math.round((completedCount / totalModules) * 100);
+        if (completedCount === 0) {
+            heroP.textContent = `Start your journey to becoming Mend.io certified. ${totalModules} modules across 12 tracks are waiting for you.`;
+        } else {
+            heroP.textContent = `You've completed ${completedCount} of ${totalModules} modules (${overallPct}%). Keep going to earn your next certification!`;
+        }
+    }
+
+    /* Update hero stats */
+    const heroStats = document.querySelectorAll('.hero-stats .hero-stat');
+    heroStats.forEach(stat => {
+        const valueEl = stat.querySelector('.value');
+        const labelEl = stat.querySelector('.label');
+        if (!valueEl || !labelEl) return;
+        const lt = labelEl.textContent.toLowerCase();
+        if (lt.includes('level') || lt.includes('specialist') || lt.includes('beginner') || lt.includes('learner') || lt.includes('explorer') || lt.includes('practitioner') || lt.includes('advanced') || lt.includes('expert') || lt.includes('master') || lt.includes('authority') || lt.includes('legend')) {
+            /* This is the level stat - label is the title */
+        } else if (lt.includes('xp') || lt.includes('total')) {
+            valueEl.textContent = data.xp.toLocaleString();
+        } else if (lt.includes('streak') || lt.includes('day')) {
+            valueEl.textContent = data.streak;
+        } else if (lt.includes('badge')) {
+            valueEl.textContent = Math.floor(data.completedModules.length / 3);
+        } else if (lt.includes('cert')) {
+            valueEl.textContent = data.certifications.length;
+        }
+    });
+
+    /* Update "Your Progress" stat cards */
+    const progressCards = document.querySelectorAll('.page-content .grid-4 .card-flat');
+    progressCards.forEach(card => {
+        const value = card.querySelector('.stat-value');
+        const label = card.querySelector('.stat-label');
+        const sub = card.querySelector('.text-xs');
+        const fill = card.querySelector('.progress-bar .fill');
+        if (!value || !label) return;
+        const lt = label.textContent.toLowerCase();
+        if (lt.includes('modules completed')) {
+            const total = 61;
+            const done = data.completedModules.length;
+            value.textContent = done;
+            if (sub) sub.textContent = `${done} of ${total} available`;
+            if (fill) fill.style.width = Math.round((done / total) * 100) + '%';
+        } else if (lt.includes('labs completed')) {
+            const done = data.completedLabs.length;
+            value.textContent = done;
+            if (sub) sub.textContent = `${done} of 10 available`;
+            if (fill) fill.style.width = Math.round((done / 10) * 100) + '%';
+        } else if (lt.includes('certifications')) {
+            const done = data.certifications.length;
+            value.textContent = done;
+            if (sub) sub.textContent = `${done} of 6 available`;
+            if (fill) fill.style.width = Math.round((done / 6) * 100) + '%';
+        }
+    });
+
+    /* Update streak badge */
+    const streakBadge = document.querySelector('.section-header .badge.badge-accent');
+    if (streakBadge && streakBadge.textContent.includes('Day')) {
+        streakBadge.textContent = data.streak + ' Days';
+    }
+
+    /* Update streak widget text */
+    const streakText = document.querySelector('.streak-widget .text-muted');
+    if (streakText) {
+        streakText.textContent = `Complete a module today to extend your streak to ${data.streak + 1} days`;
+    }
+
+    /* Update "Continue Learning" cards with dynamic progress */
+    document.querySelectorAll('.path-card').forEach(card => {
+        const link = card.querySelector('a[href*="modules/"]');
+        if (!link) return;
+        const href = link.getAttribute('href');
+        const track = MendStore.trackFromHref(href);
+        if (!track) return;
+
+        const trackModules = MendStore.getTrackModules(track);
+        const completed = trackModules.filter(m => data.completedModules.includes(m)).length;
+        const total = trackModules.length;
+        const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+        const progressFill = card.querySelector('.progress-bar .fill');
+        if (progressFill) progressFill.style.width = pct + '%';
+
+        const pctText = card.querySelector('.path-card-footer .text-sm');
+        if (pctText) {
+            if (pct === 100) pctText.textContent = 'Completed!';
+            else if (pct > 0) pctText.textContent = pct + '% complete';
+            else pctText.textContent = 'Not started';
+        }
+
+        const statusBadge = card.querySelector('.path-card-header .badge');
+        if (statusBadge) {
+            if (pct === 100) {
+                statusBadge.textContent = 'Completed';
+                statusBadge.className = 'badge badge-green';
+            } else if (pct > 0) {
+                statusBadge.textContent = 'In Progress';
+                statusBadge.className = 'badge badge-blue';
+            } else {
+                statusBadge.textContent = 'Not Started';
+                statusBadge.className = 'badge badge-orange';
+            }
+        }
+
+        /* Update button text */
+        const actionBtn = card.querySelector('.path-card-footer .btn');
+        if (actionBtn) {
+            if (pct === 100) actionBtn.textContent = 'Review';
+            else if (pct > 0) actionBtn.textContent = 'Continue';
+            else actionBtn.textContent = 'Start';
+        }
+    });
+
+    /* Update certification progress cards */
+    const certCards = document.querySelectorAll('.card-flat.card-accent');
+    certCards.forEach(card => {
+        const h4 = card.querySelector('h4');
+        if (!h4) return;
+        const text = h4.textContent.toLowerCase();
+        if (text.includes('associate')) {
+            const earned = MendStore.hasCertification('associate');
+            const badge = card.querySelector('.badge');
+            const muted = card.querySelector('.text-muted');
+            if (earned && badge) {
+                badge.textContent = 'Certified';
+                badge.className = 'badge badge-green';
+                if (muted) {
+                    const cert = MendStore.getCertification('associate');
+                    muted.textContent = cert ? `Earned ${cert.date}` : 'Earned';
+                }
+            }
+        }
+    });
 }
 
 /* --- Animations --- */

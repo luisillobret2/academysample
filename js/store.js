@@ -7,7 +7,9 @@ const MendStore = {
 
     defaults: {
         userName: 'Jane Doe',
+        role: 'Sales Engineer',
         company: 'Acme Security',
+        partnerType: 'VAR',
         partnerTier: 'Silver Partner',
         xp: 0,
         level: 1,
