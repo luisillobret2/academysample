@@ -75,27 +75,27 @@
                     <h4>Community</h4>
                     <ul>
                         <li><a href="${prefix}leaderboard.html">Leaderboard</a></li>
-                        <li><a href="#">Forums</a></li>
-                        <li><a href="#">Events</a></li>
-                        <li><a href="#">Partner Showcase</a></li>
+                        <li><a href="#" data-action="coming-soon">Forums</a></li>
+                        <li><a href="#" data-action="coming-soon">Events</a></li>
+                        <li><a href="#" data-action="coming-soon">Partner Showcase</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>Support</h4>
                     <ul>
                         <li><a href="${prefix}ai-coach.html">AI Coach</a></li>
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Allbound Portal</a></li>
+                        <li><a href="#" data-action="coming-soon">Documentation</a></li>
+                        <li><a href="#" data-action="coming-soon">Contact</a></li>
+                        <li><a href="#" data-action="coming-soon">Allbound Portal</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
                 <span>&copy; 2025 Mend.io. All rights reserved.</span>
                 <span>
-                    <a href="#">Privacy</a> &middot;
-                    <a href="#">Terms</a> &middot;
-                    <a href="#">Cookie Policy</a>
+                    <a href="#" data-action="coming-soon">Privacy</a> &middot;
+                    <a href="#" data-action="coming-soon">Terms</a> &middot;
+                    <a href="#" data-action="coming-soon">Cookie Policy</a>
                 </span>
             </div>
         </div>`;

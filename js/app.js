@@ -15,7 +15,18 @@ document.addEventListener('DOMContentLoaded', () => {
     initSearch();
     initCourseActions();
     initLeaderboardToggle();
+    initComingSoon();
 });
+
+/* --- Coming Soon (placeholder actions) --- */
+function initComingSoon() {
+    document.querySelectorAll('[data-action="coming-soon"]').forEach(el => {
+        el.addEventListener('click', (e) => {
+            e.preventDefault();
+            showToast('This is a prototype \u2014 this feature will be available in the full platform.');
+        });
+    });
+}
 
 /* --- Mobile Menu --- */
 function initMobileMenu() {
@@ -135,7 +146,7 @@ function initChat() {
         },
         {
             keywords: ['sast', 'static', 'code analysis'],
-            response: "Mend SAST performs static analysis on your source code to find security vulnerabilities before they reach production. The <strong>SAST Product Track</strong> includes 8 modules covering code analysis, custom rules, and CI/CD integration. Ready to start?"
+            response: "Mend SAST performs static analysis on your source code to find security vulnerabilities before they reach production. The <strong>SAST Product Track</strong> includes 5 modules covering code analysis, custom rules, and CI/CD integration. Ready to start?"
         },
         {
             keywords: ['certification', 'cert', 'exam', 'certified'],

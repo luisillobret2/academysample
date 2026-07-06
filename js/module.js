@@ -12,6 +12,11 @@ document.addEventListener('DOMContentLoaded', () => {
     initCertificateCheck();
 });
 
+/* --- Quiz answer decode (light obfuscation, not security) --- */
+function decodeAnswer(encoded) {
+    try { return atob(encoded); } catch (e) { return encoded; }
+}
+
 /* --- Quiz Functionality --- */
 function initQuiz() {
     const submitBtn = document.querySelector('.quiz-submit');
@@ -33,7 +38,7 @@ function initQuiz() {
         let total = questions.length;
 
         questions.forEach(q => {
-            const correctAnswer = q.dataset.correct;
+            const correctAnswer = q.dataset.c ? decodeAnswer(q.dataset.c) : q.dataset.correct;
             const selected = q.querySelector('input:checked');
             const feedback = q.querySelector('.quiz-feedback');
             const options = q.querySelectorAll('.quiz-option');
