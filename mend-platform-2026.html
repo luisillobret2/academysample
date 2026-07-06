@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Mend Platform (2026) - Mend Learn</title>
+    <meta name="description" content="The Mend Platform 2026 narrative: securing the code layer and the AI layer, and the interaction between them. Mend AppSec, Mend AI, and Mend Renovate.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/module.css">
+    <link rel="stylesheet" href="css/battlecard.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <section class="hero" style="padding: 40px 0;">
+        <div class="container">
+            <div class="hero-content">
+                <span class="badge badge-accent mb-4">Platform Narrative &middot; 2026</span>
+                <h1>The <span class="accent">Mend Platform</span></h1>
+                <p>Modern AI risk doesn&rsquo;t live in one layer. It lives between them.</p>
+            </div>
+        </div>
+    </section>
+
+    <main class="battlecard-main">
+        <div class="container">
+            <a href="index.html" class="battlecard-back">&#8592; Back to Home</a>
+
+            <section class="battlecard-section">
+                <h2>Positioning Statement</h2>
+                <div class="key-concept">
+                    <h4>&#128161; The Narrative</h4>
+                    <p>Mend.io secures the <strong>code layer</strong> (code, libraries, containers, dependencies) and the <strong>AI layer</strong> (AI system prompts, agents, RAGs), and continuously protects the <strong>interaction between them</strong>, where modern risk emerges. Discovery powers red teaming. Red teaming strengthens guardrails. Guardrails reinforce prompts. The result is continuous protection across the entire AI lifecycle.</p>
+                </div>
+            </section>
+
+            <section class="battlecard-section">
+                <h2>The Continuous Protection Loop</h2>
+                <p class="text-sm text-muted mb-16">Each stage feeds the next, closing the loop across the AI lifecycle.</p>
+                <div class="architecture-diagram">
+                    <div class="diagram-row">
+                        <div class="diagram-box primary">Discovery</div>
+                        <div class="diagram-arrow" style="display:inline-flex; align-items:center;">&#8594;</div>
+                        <div class="diagram-box primary">Red Teaming</div>
+                        <div class="diagram-arrow" style="display:inline-flex; align-items:center;">&#8594;</div>
+                        <div class="diagram-box primary">Guardrails</div>
+                        <div class="diagram-arrow" style="display:inline-flex; align-items:center;">&#8594;</div>
+                        <div class="diagram-box primary">Prompts</div>
+                    </div>
+                    <p class="text-xs text-muted" style="margin-top:12px;">Discovery powers red teaming &middot; Red teaming strengthens guardrails &middot; Guardrails reinforce prompts &middot; and the loop continues.</p>
+                </div>
+            </section>
+
+            <section class="battlecard-section">
+                <h2>Three Pillars, One Platform</h2>
+                <p class="text-sm text-muted mb-16">The Mend Platform encompasses all products. Packaging is organized into Mend AppSec, Mend AI, and Mend Renovate.</p>
+                <div class="grid-3">
+
+                    <div class="card">
+                        <div style="display:flex; gap:12px; align-items:center; margin-bottom:12px;">
+                            <div style="width:44px; height:44px; border-radius:var(--radius-md); background:rgba(3,77,76,0.12); display:flex; align-items:center; justify-content:center; font-size:1.25rem;">&#127760;</div>
+                            <div><span class="badge badge-teal mb-4">Code Layer</span><h3 style="font-size:1.05rem;">Mend AppSec</h3></div>
+                        </div>
+                        <p class="text-sm text-muted mb-16">Continuously discovers and prioritizes risk across the modern code layer &mdash; code, libraries, containers, dependencies &mdash; giving teams the coverage and clarity to secure applications.</p>
+                        <p class="text-xs" style="font-weight:700; color:var(--color-text-bright);">Includes</p>
+                        <ul class="text-sm text-muted" style="margin:6px 0 14px 18px; line-height:1.7;">
+                            <li>SAST (high-accuracy code analysis)</li>
+                            <li>SCA (open source + container risk with reachability)</li>
+                            <li>AI discovery (identifying AI usage in code)</li>
+                        </ul>
+                        <p class="text-xs text-muted"><strong>Role in stack:</strong> Find and prioritize real, exploitable code risk.</p>
+                    </div>
+
+                    <div class="card">
+                        <div style="display:flex; gap:12px; align-items:center; margin-bottom:12px;">
+                            <div style="width:44px; height:44px; border-radius:var(--radius-md); background:rgba(231,76,125,0.12); display:flex; align-items:center; justify-content:center; font-size:1.25rem;">&#129302;</div>
+                            <div><span class="badge badge-purple mb-4">AI Layer + Interaction</span><h3 style="font-size:1.05rem;">Mend AI</h3></div>
+                        </div>
+                        <p class="text-sm text-muted mb-16">A lifecycle AI security and governance solution that discovers, tests, and hardens system prompts and agent behavior through automated red teaming and adaptive guardrails.</p>
+                        <p class="text-xs" style="font-weight:700; color:var(--color-text-bright);">Includes (Premium)</p>
+                        <ul class="text-sm text-muted" style="margin:6px 0 14px 18px; line-height:1.7;">
+                            <li>AI-BOM (models, agents, prompts, RAG)</li>
+                            <li>AI risk insights (malicious models, vulns, licenses)</li>
+                            <li>System prompt detection + hardening</li>
+                            <li>Automated AI red teaming (behavioral testing)</li>
+                            <li>Runtime guardrails (infrastructure-resident)</li>
+                        </ul>
+                        <p class="text-xs text-muted"><strong>Role in stack:</strong> Secure AI behavior, logic, and runtime interactions.</p>
+                    </div>
+
+                    <div class="card">
+                        <div style="display:flex; gap:12px; align-items:center; margin-bottom:12px;">
+                            <div style="width:44px; height:44px; border-radius:var(--radius-md); background:rgba(0,184,148,0.12); display:flex; align-items:center; justify-content:center; font-size:1.25rem;">&#128260;</div>
+                            <div><span class="badge badge-green mb-4">Automated Remediation</span><h3 style="font-size:1.05rem;">Mend Renovate</h3></div>
+                        </div>
+                        <p class="text-sm text-muted mb-16">Continuously reduces supply chain risk in the code layer by automatically updating dependencies with intelligent, confidence-driven remediation &mdash; keeping applications secure without slowing development.</p>
+                        <p class="text-xs" style="font-weight:700; color:var(--color-text-bright);">Includes</p>
+                        <ul class="text-sm text-muted" style="margin:6px 0 14px 18px; line-height:1.7;">
+                            <li>Automated dependency updates via PRs</li>
+                            <li>Compatibility grouping + merge confidence</li>
+                            <li>Scales across large repos</li>
+                        </ul>
+                        <p class="text-xs text-muted"><strong>Role in stack:</strong> Turn findings into automated fixes at scale.</p>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="battlecard-section">
+                <h2>Packaging Structure</h2>
+                <div class="compare-table">
+                    <table>
+                        <thead>
+                            <tr><th class="col-feature">Package</th><th>How it is sold</th><th>Notes</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="col-feature">Mend AppSec</td><td>Core AppSec testing layer</td><td>SAST + SCA + AI discovery; the foundation of the platform.</td></tr>
+                            <tr><td class="col-feature">Mend AI Premium</td><td>Add-on to Mend AppSec</td><td>Full AI security: AI-BOM, red teaming, prompt hardening, guardrails.</td></tr>
+                            <tr><td class="col-feature">Mend AI (full)</td><td>Standalone or add-on</td><td>Complete AI security solution; can be purchased on its own.</td></tr>
+                            <tr><td class="col-feature">Mend Renovate Community</td><td>Free</td><td>Automated dependency updates for teams getting started.</td></tr>
+                            <tr><td class="col-feature">Mend Renovate Enterprise</td><td>Paid</td><td>Enterprise-scale automation, grouping, and merge confidence.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-xs text-muted" style="margin-top:8px;">Mend Core is an add-on to Mend AppSec, available to existing customers.</p>
+            </section>
+
+            <section class="battlecard-section">
+                <h2>Why It Matters for Partners</h2>
+                <div class="win-grid">
+                    <div class="win-card"><h4>Sell the platform, not point tools</h4><p>Competitors force customers to stitch together fragmented tools. Mend positions one platform spanning code and AI, with a single narrative.</p></div>
+                    <div class="win-card"><h4>Own the AI conversation</h4><p>Mend AI covers discovery, red teaming, prompt hardening, and runtime guardrails, capabilities most competitors are still building.</p></div>
+                    <div class="win-card"><h4>Findings to fixes</h4><p>Mend Renovate turns findings into automated, confidence-driven pull requests at enterprise scale.</p></div>
+                    <div class="win-card"><h4>Clear packaging</h4><p>Three simple pillars (AppSec, AI, Renovate) make scoping and expansion conversations straightforward.</p></div>
+                </div>
+            </section>
+
+            <section class="battlecard-section">
+                <h2>Related</h2>
+                <div class="flex" style="flex-wrap:wrap; gap:8px;">
+                    <a href="modules/foundation/03-mend-platform-overview.html" class="btn btn-secondary btn-sm">Platform Overview module</a>
+                    <a href="resources.html" class="btn btn-secondary btn-sm">Resources &amp; Battlecards</a>
+                    <a href="learning-paths.html" class="btn btn-secondary btn-sm">Learning Paths</a>
+                </div>
+            </section>
+
+            <p class="battlecard-source">Source: Mend.io Platform Narrative 2026. For partner enablement use.</p>
+        </div>
+    </main>
+
+    <footer id="site-footer" class="site-footer"></footer>
+
+    <script src="js/layout.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

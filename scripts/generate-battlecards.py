@@ -20,6 +20,17 @@ PROOF = [
     ("70%", "Risk reduction reported by AppSec teams"),
 ]
 
+# The Mend Platform 2026 framing (code layer + AI layer + interaction),
+# shown on every battlecard so reps position the whole platform.
+PILLARS = [
+    ("&#127760;", "Mend AppSec", "Code Layer",
+     "Continuously discovers and prioritizes risk across code, libraries, containers, and dependencies (SAST + SCA with reachability)."),
+    ("&#129302;", "Mend AI", "AI Layer + Interaction",
+     "Lifecycle AI security: AI-BOM, malicious-model insights, system-prompt hardening, automated red teaming, and runtime guardrails."),
+    ("&#128260;", "Mend Renovate", "Automated Remediation",
+     "Turns findings into fixes at scale with confidence-driven automated dependency-update pull requests."),
+]
+
 COMPETITORS = {
     "snyk": {
         "name": "Snyk",
@@ -209,6 +220,13 @@ def build_page(slug, d):
         for s in ORDER if s != slug
     )
 
+    pillars = "\n".join(
+        f'                    <div class="win-card"><h4>{icon} {pname} '
+        f'<span class="badge badge-accent" style="font-size:0.6rem; vertical-align:middle;">{layer}</span></h4>'
+        f'<p>{desc}</p></div>'
+        for (icon, pname, layer, desc) in PILLARS
+    )
+
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -265,6 +283,14 @@ def build_page(slug, d):
                 <h2>Why Teams Switch to Mend.io</h2>
                 <div class="win-grid">
 {wins}
+                </div>
+            </section>
+
+            <section class="battlecard-section">
+                <h2>The Mend Platform Advantage</h2>
+                <p class="text-sm text-muted mb-16">Modern AI risk lives between the code and AI layers. Mend secures both and the interaction between them across three pillars. <a href="mend-platform-2026.html">See the full platform narrative &rarr;</a></p>
+                <div class="win-grid">
+{pillars}
                 </div>
             </section>
 {quotes_section}
