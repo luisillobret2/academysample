@@ -24,6 +24,29 @@ function initQuiz() {
 
     const moduleId = (typeof MendStore !== 'undefined') ? MendStore.getCurrentModuleId() : null;
 
+    /* Accessibility: label quiz container and options */
+    const quizContainer = document.querySelector('.quiz-container');
+    if (quizContainer) {
+        quizContainer.setAttribute('role', 'region');
+        quizContainer.setAttribute('aria-label', 'Knowledge check quiz');
+    }
+    document.querySelectorAll('.quiz-question').forEach((q, i) => {
+        q.setAttribute('role', 'group');
+        q.setAttribute('aria-labelledby', 'quiz-q' + (i + 1));
+        const questionP = q.querySelector('p');
+        if (questionP) questionP.id = 'quiz-q' + (i + 1);
+    });
+    document.querySelectorAll('.quiz-option').forEach(opt => {
+        opt.setAttribute('tabindex', '0');
+        opt.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                const input = opt.querySelector('input');
+                if (input) { input.checked = true; input.dispatchEvent(new Event('change')); }
+            }
+        });
+    });
+
     // Show previous best score if exists
     if (moduleId && typeof MendStore !== 'undefined') {
         const prev = MendStore.getQuizScore(moduleId);

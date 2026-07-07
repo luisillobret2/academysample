@@ -26,6 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
 /* --- Coming Soon (placeholder actions) --- */
 function initComingSoon() {
     document.querySelectorAll('[data-action="coming-soon"]').forEach(el => {
+        el.setAttribute('aria-disabled', 'true');
+        el.setAttribute('title', 'Coming soon');
+        el.style.opacity = '0.6';
+        el.style.cursor = 'default';
         el.addEventListener('click', (e) => {
             e.preventDefault();
             showToast('This is a prototype \u2014 this feature will be available in the full platform.');
@@ -97,18 +101,26 @@ function initMobileMenu() {
 /* --- Filter Buttons --- */
 function initFilters() {
     document.querySelectorAll('.filter-bar').forEach(bar => {
+        bar.setAttribute('role', 'toolbar');
+        bar.setAttribute('aria-label', 'Content filters');
         const buttons = bar.querySelectorAll('.filter-btn');
         const targetId = bar.dataset.target;
         const targetContainer = targetId ? document.getElementById(targetId) : null;
 
         buttons.forEach(btn => {
+            btn.setAttribute('role', 'button');
+            btn.setAttribute('aria-pressed', btn.classList.contains('active') ? 'true' : 'false');
             btn.addEventListener('click', () => {
                 const isMulti = bar.dataset.multi === 'true';
 
                 if (!isMulti) {
-                    buttons.forEach(b => b.classList.remove('active'));
+                    buttons.forEach(b => {
+                        b.classList.remove('active');
+                        b.setAttribute('aria-pressed', 'false');
+                    });
                 }
                 btn.classList.toggle('active');
+                btn.setAttribute('aria-pressed', btn.classList.contains('active') ? 'true' : 'false');
 
                 if (targetContainer) {
                     const filter = btn.dataset.filter;
@@ -139,20 +151,52 @@ function filterItems(container, bar, filter) {
 /* --- Tabs --- */
 function initTabs() {
     document.querySelectorAll('.tabs').forEach(tabGroup => {
+        tabGroup.setAttribute('role', 'tablist');
         const tabs = tabGroup.querySelectorAll('.tab');
 
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
+        tabs.forEach((tab, index) => {
+            tab.setAttribute('role', 'tab');
+            tab.setAttribute('aria-selected', tab.classList.contains('active') ? 'true' : 'false');
+            tab.setAttribute('tabindex', tab.classList.contains('active') ? '0' : '-1');
+            const targetId = tab.dataset.tab;
+            if (targetId) tab.setAttribute('aria-controls', targetId);
 
-                const targetId = tab.dataset.tab;
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => {
+                    t.classList.remove('active');
+                    t.setAttribute('aria-selected', 'false');
+                    t.setAttribute('tabindex', '-1');
+                });
+                tab.classList.add('active');
+                tab.setAttribute('aria-selected', 'true');
+                tab.setAttribute('tabindex', '0');
+
                 if (targetId) {
                     const parent = tabGroup.parentElement;
                     parent.querySelectorAll('.tab-content').forEach(content => {
                         content.style.display = content.id === targetId ? '' : 'none';
+                        content.setAttribute('role', 'tabpanel');
                     });
                 }
+            });
+
+            /* Arrow-key navigation between tabs */
+            tab.addEventListener('keydown', (e) => {
+                let newIndex = index;
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                    newIndex = (index + 1) % tabs.length;
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    newIndex = (index - 1 + tabs.length) % tabs.length;
+                } else if (e.key === 'Home') {
+                    newIndex = 0;
+                } else if (e.key === 'End') {
+                    newIndex = tabs.length - 1;
+                } else {
+                    return;
+                }
+                e.preventDefault();
+                tabs[newIndex].click();
+                tabs[newIndex].focus();
             });
         });
     });
@@ -185,6 +229,13 @@ function initChat() {
     const chatMessages = document.querySelector('.ai-chat-messages');
 
     if (!chatInput || !chatSend || !chatMessages) return;
+
+    /* Accessibility: ARIA roles for chat */
+    chatMessages.setAttribute('role', 'log');
+    chatMessages.setAttribute('aria-label', 'Chat messages');
+    chatMessages.setAttribute('aria-live', 'polite');
+    chatInput.setAttribute('aria-label', 'Type a message to Mend Mentor');
+    chatSend.setAttribute('aria-label', 'Send message');
 
     /* Build context from user progress */
     let ctx = { modules: 0, xp: 0, level: 1, certs: 0, streak: 0, name: 'Jane' };
@@ -335,8 +386,16 @@ function initChat() {
     });
 
     document.querySelectorAll('.chat-suggestion').forEach(btn => {
+        btn.setAttribute('role', 'button');
+        btn.setAttribute('tabindex', '0');
         btn.addEventListener('click', () => {
             sendMessage(btn.textContent);
+        });
+        btn.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                sendMessage(btn.textContent);
+            }
         });
     });
 }
@@ -380,7 +439,7 @@ function initCourseActions() {
     });
 }
 
-/* --- Leaderboard Toggle --- */
+/* --- Leaderboard Toggle & Time Period Filtering --- */
 function initLeaderboardToggle() {
     const toggles = document.querySelectorAll('.leaderboard-toggle .tab');
     toggles.forEach(toggle => {
@@ -389,6 +448,76 @@ function initLeaderboardToggle() {
             toggle.classList.add('active');
         });
     });
+
+    /* Leaderboard page tabs: Individual / Partner Org / Monthly */
+    const pageTabs = document.querySelectorAll('.tabs .tab[data-tab]');
+    const table = document.querySelector('.leaderboard-table');
+    if (!pageTabs.length || !table) return;
+
+    pageTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.dataset.tab;
+            const tbody = table.querySelector('tbody');
+            if (!tbody) return;
+            const rows = tbody.querySelectorAll('tr');
+
+            if (tabId === 'tab-individual') {
+                /* Show all rows */
+                rows.forEach(r => r.style.display = '');
+                table.querySelector('thead tr').innerHTML = '<th>Rank</th><th>Partner</th><th>Organization</th><th>Level</th><th>Certifications</th><th style="text-align: right;">XP</th>';
+            } else if (tabId === 'tab-team') {
+                /* Group by company, show org totals */
+                var orgMap = {};
+                rows.forEach(r => {
+                    var cells = r.querySelectorAll('td');
+                    if (cells.length < 6) return;
+                    var org = cells[2].textContent.trim();
+                    var xp = parseInt(cells[5].textContent.replace(/,/g, '')) || 0;
+                    if (!orgMap[org]) orgMap[org] = { xp: 0, members: 0 };
+                    orgMap[org].xp += xp;
+                    orgMap[org].members++;
+                });
+                var orgs = Object.entries(orgMap).sort((a, b) => b[1].xp - a[1].xp);
+                table.querySelector('thead tr').innerHTML = '<th>Rank</th><th colspan="2">Organization</th><th>Members</th><th>Avg XP</th><th style="text-align: right;">Total XP</th>';
+                tbody.innerHTML = '';
+                orgs.forEach(function (entry, i) {
+                    var tr = document.createElement('tr');
+                    var rankClass = i === 0 ? ' gold' : i === 1 ? ' silver' : i === 2 ? ' bronze' : '';
+                    tr.innerHTML = '<td class="leaderboard-rank' + rankClass + '">' + (i + 1) + '</td>' +
+                        '<td colspan="2"><strong>' + entry[0] + '</strong></td>' +
+                        '<td>' + entry[1].members + '</td>' +
+                        '<td>' + Math.round(entry[1].xp / entry[1].members).toLocaleString() + '</td>' +
+                        '<td class="leaderboard-xp" style="text-align: right;">' + entry[1].xp.toLocaleString() + '</td>';
+                    tbody.appendChild(tr);
+                });
+            } else if (tabId === 'tab-monthly') {
+                /* Monthly view: show individual but with simulated monthly XP (fraction of total) */
+                rows.forEach(r => r.style.display = '');
+                table.querySelector('thead tr').innerHTML = '<th>Rank</th><th>Partner</th><th>Organization</th><th>Level</th><th>Certifications</th><th style="text-align: right;">XP This Month</th>';
+                var allRows = Array.from(rows);
+                allRows.forEach(r => {
+                    var xpCell = r.querySelector('.leaderboard-xp');
+                    if (xpCell) {
+                        var fullXP = parseInt(xpCell.textContent.replace(/,/g, '')) || 0;
+                        /* Simulate monthly XP as ~15-30% of total */
+                        var monthlyXP = Math.round(fullXP * (0.15 + Math.random() * 0.15));
+                        xpCell.textContent = monthlyXP.toLocaleString();
+                    }
+                });
+            }
+        });
+    });
+
+    /* Dynamic quarterly challenge badge on leaderboard page */
+    var challengeBadge = document.getElementById('leaderboard-challenge-badge');
+    if (challengeBadge) {
+        var now = new Date();
+        var quarter = Math.ceil((now.getMonth() + 1) / 3);
+        var endMonth = quarter * 3;
+        var quarterEnd = new Date(now.getFullYear(), endMonth, 0, 23, 59, 59);
+        var daysLeft = Math.max(0, Math.ceil((quarterEnd - now) / (1000 * 60 * 60 * 24)));
+        challengeBadge.textContent = daysLeft + ' days remaining';
+    }
 }
 
 /* --- Toast Notifications --- */
@@ -449,10 +578,34 @@ function initProfileEdit() {
         document.getElementById('edit-company').value = data.company || '';
         document.getElementById('edit-partner-type').value = data.partnerType || 'VAR';
         modal.style.display = '';
+        modal.setAttribute('role', 'dialog');
+        modal.setAttribute('aria-modal', 'true');
+        modal.setAttribute('aria-label', 'Edit profile');
+        /* Focus first input */
+        setTimeout(() => document.getElementById('edit-name').focus(), 50);
+        /* Trap focus inside modal */
+        modal.addEventListener('keydown', trapFocus);
     }
 
     function closeModal() {
         modal.style.display = 'none';
+        modal.removeEventListener('keydown', trapFocus);
+        editBtn.focus();
+    }
+
+    function trapFocus(e) {
+        if (e.key === 'Escape') { closeModal(); return; }
+        if (e.key !== 'Tab') return;
+        const focusable = modal.querySelectorAll('input, select, button, [tabindex]:not([tabindex="-1"])');
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+        }
     }
 
     function getInitials(name) {
@@ -711,6 +864,21 @@ function initHomepageDynamic() {
             }
         }
     });
+
+    /* Quarterly Challenge - dynamic quarter/days */
+    var qEl = document.getElementById('challenge-quarter');
+    var dEl = document.getElementById('challenge-days');
+    if (qEl && dEl) {
+        var now = new Date();
+        var quarter = Math.ceil((now.getMonth() + 1) / 3);
+        var year = now.getFullYear();
+        /* Quarter end dates: Q1=Mar 31, Q2=Jun 30, Q3=Sep 30, Q4=Dec 31 */
+        var endMonth = quarter * 3;
+        var quarterEnd = new Date(year, endMonth, 0, 23, 59, 59);
+        var daysLeft = Math.max(0, Math.ceil((quarterEnd - now) / (1000 * 60 * 60 * 24)));
+        qEl.textContent = 'Q' + quarter + ' ' + year;
+        dEl.textContent = daysLeft;
+    }
 }
 
 /* --- Dynamic Leaderboard --- */
