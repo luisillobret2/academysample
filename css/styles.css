@@ -48,6 +48,43 @@
     --max-width: 1280px;
 }
 
+/* --- Skip Link (accessibility) --- */
+.skip-link {
+    position: absolute;
+    top: -100%;
+    left: 16px;
+    z-index: 10000;
+    padding: 12px 24px;
+    background: var(--color-accent);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    box-shadow: var(--shadow-lg);
+    transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+    top: 12px;
+    color: #fff;
+}
+
+/* --- Focus Styles (accessibility) --- */
+:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
 /* --- Reset & Base --- */
 *, *::before, *::after {
     margin: 0;
@@ -1425,19 +1462,19 @@ body.dark-mode {
     --color-primary: #0f1419;
     --color-primary-light: #1a2332;
     --color-primary-dark: #131b27;
-    --color-accent: #5b9cf5;
-    --color-accent-hover: #7eb3fa;
-    --color-accent-light: rgba(91, 156, 245, 0.12);
-    --color-accent-glow: rgba(91, 156, 245, 0.25);
-    --color-secondary: #55C6C2;
-    --color-secondary-light: rgba(85, 198, 194, 0.1);
-    --color-teal: #00C7BA;
-    --color-teal-light: rgba(0, 199, 186, 0.1);
-    --color-teal-dark: #55C6C2;
-    --color-text: #c8d1db;
-    --color-text-muted: #8899a8;
-    --color-text-bright: #e8edf2;
-    --color-border: #2a3544;
+    --color-accent: #6ba6f7;
+    --color-accent-hover: #8ebcfa;
+    --color-accent-light: rgba(107, 166, 247, 0.14);
+    --color-accent-glow: rgba(107, 166, 247, 0.25);
+    --color-secondary: #6dd4d0;
+    --color-secondary-light: rgba(109, 212, 208, 0.12);
+    --color-teal: #1ad4c8;
+    --color-teal-light: rgba(26, 212, 200, 0.12);
+    --color-teal-dark: #6dd4d0;
+    --color-text: #d0d8e1;
+    --color-text-muted: #9aaab8;
+    --color-text-bright: #edf1f5;
+    --color-border: #2e3b4e;
     --color-card: #1a2332;
     --color-card-hover: #1f2b3d;
     --color-surface: #131b27;

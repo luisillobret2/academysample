@@ -48,7 +48,7 @@
         </div>
     </section>
 
-    <main class="page-content">
+    <main class="page-content" id="main-content">
         <div class="container">
 
             <!-- Learning Streak -->
@@ -282,20 +282,20 @@
                 </div>
             </div>
 
-            <!-- Quarterly Challenge -->
-            <div class="section">
+            <!-- Quarterly Challenge (dynamic) -->
+            <div class="section" id="quarterly-challenge">
                 <div class="section-header">
                     <h2>Quarterly Challenge</h2>
                 </div>
                 <div class="card-flat" style="background: linear-gradient(135deg, var(--color-card) 0%, rgba(108, 92, 231, 0.1) 100%); border-color: rgba(108, 92, 231, 0.3);">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
                         <div>
-                            <div class="badge badge-purple" style="margin-bottom: 12px;">Q3 2025</div>
+                            <div class="badge badge-purple" style="margin-bottom: 12px;" id="challenge-quarter"></div>
                             <h3>Certification Sprint</h3>
                             <p class="text-muted" style="margin-top: 8px; max-width: 500px;">Earn a new certification this quarter to win 2,000 bonus XP + exclusive badge + $50 gift card. Top 10 performers are recognized at Partner Summit.</p>
                         </div>
                         <div style="text-align: center;">
-                            <div style="font-size: 2rem; font-weight: 700; color: var(--color-secondary);">47</div>
+                            <div style="font-size: 2rem; font-weight: 700; color: var(--color-secondary);" id="challenge-days"></div>
                             <div class="text-sm text-muted">Days Remaining</div>
                             <a href="certifications.html" class="btn btn-outline btn-sm" style="margin-top: 12px; border-color: var(--color-secondary); color: var(--color-secondary);">Join Challenge</a>
                         </div>
