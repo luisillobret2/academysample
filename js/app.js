@@ -21,7 +21,145 @@ document.addEventListener('DOMContentLoaded', () => {
     initDynamicLeaderboard();
     initAchievementBadges();
     initCertRecommendations();
+    initSavedModules();
+    initTranscript();
 });
+
+/* --- Saved Modules (profile page) --- */
+function initSavedModules() {
+    const section = document.getElementById('saved-modules-section');
+    const list = document.getElementById('saved-modules-list');
+    if (!section || !list || typeof MendStore === 'undefined') return;
+
+    const catalog = (typeof MendSearch !== 'undefined' && MendSearch.catalog) ? MendSearch.catalog : [];
+    const byId = {};
+    catalog.forEach(item => {
+        const m = item.href.match(/modules\/(.+)\.html$/);
+        if (m) byId[m[1]] = item;
+    });
+
+    function render() {
+        const bookmarks = MendStore.getBookmarks();
+        if (!bookmarks.length) {
+            section.style.display = 'none';
+            return;
+        }
+        section.style.display = '';
+        list.innerHTML = '';
+
+        bookmarks.forEach(id => {
+            const item = byId[id];
+            const title = item ? item.title : id.split('/').pop().replace(/^\d+-/, '').replace(/-/g, ' ');
+            const category = item ? item.category : (id.split('/')[0] || 'Module');
+            const href = 'modules/' + id + '.html';
+            const completed = MendStore.isModuleCompleted(id);
+
+            const card = document.createElement('div');
+            card.className = 'card-flat';
+            card.style.cssText = 'display:flex; gap:16px; align-items:center; padding:16px;';
+            card.innerHTML =
+                '<span style="font-size:1.1rem; color:var(--color-accent);" aria-hidden="true">\u2605</span>' +
+                '<div style="flex:1;">' +
+                    '<a href="' + href + '" style="font-weight:600; color:var(--color-text-bright);">' + title + '</a>' +
+                    '<div class="text-xs text-muted">' + category + (completed ? ' \u00b7 Completed' : '') + '</div>' +
+                '</div>';
+
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'btn btn-secondary btn-sm';
+            removeBtn.type = 'button';
+            removeBtn.textContent = 'Remove';
+            removeBtn.setAttribute('aria-label', 'Remove ' + title + ' from saved modules');
+            removeBtn.addEventListener('click', () => {
+                MendStore.toggleBookmark(id);
+                render();
+                if (typeof showToast === 'function') showToast('Removed from saved');
+            });
+            card.appendChild(removeBtn);
+            list.appendChild(card);
+        });
+    }
+
+    render();
+}
+
+/* --- Progress Transcript (printable / downloadable) --- */
+function initTranscript() {
+    const btn = document.getElementById('profile-transcript-btn');
+    if (!btn || typeof MendStore === 'undefined') return;
+
+    btn.addEventListener('click', () => {
+        const data = MendStore.load();
+        const catalog = (typeof MendSearch !== 'undefined' && MendSearch.catalog) ? MendSearch.catalog : [];
+        const byId = {};
+        catalog.forEach(item => {
+            const m = item.href.match(/modules\/(.+)\.html$/);
+            if (m) byId[m[1]] = item;
+        });
+
+        const esc = (s) => String(s == null ? '' : s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+        const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+        const moduleRows = (data.completedModules || []).map(id => {
+            const item = byId[id];
+            const title = item ? item.title : id;
+            const category = item ? item.category : (id.split('/')[0] || '');
+            const quiz = MendStore.getQuizScore(id);
+            const score = quiz ? quiz.pct + '%' : '\u2014';
+            return '<tr><td>' + esc(title) + '</td><td>' + esc(category) + '</td><td style="text-align:right;">' + score + '</td></tr>';
+        }).join('');
+
+        const certRows = (data.certifications || []).map(c => {
+            const name = c.title || c.name || c.id || '';
+            const dateStr = c.date ? new Date(c.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+            const cred = c.credentialId ? ' \u00b7 ' + c.credentialId : '';
+            return '<li>' + esc(name) + (dateStr ? ' <span class="muted">(' + esc(dateStr) + esc(cred) + ')</span>' : '') + '</li>';
+        }).join('');
+
+        const win = window.open('', '_blank', 'width=800,height=900');
+        if (!win) {
+            if (typeof showToast === 'function') showToast('Please allow pop-ups to download your transcript');
+            return;
+        }
+        win.document.write(
+'<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Mend Learn Transcript</title>' +
+'<style>' +
+'*{box-sizing:border-box;margin:0;padding:0;}' +
+'body{font-family:Arial,Helvetica,sans-serif;color:#1a1a2e;padding:48px;max-width:800px;margin:0 auto;}' +
+'.head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #073C8C;padding-bottom:16px;margin-bottom:24px;}' +
+'.brand{font-size:1.4rem;font-weight:800;color:#073C8C;}.brand span{color:#55C6C2;}' +
+'h1{font-size:1.2rem;margin-bottom:4px;}h2{font-size:1rem;color:#073C8C;margin:24px 0 8px;border-bottom:1px solid #e0e6ed;padding-bottom:4px;}' +
+'.meta{color:#555;font-size:0.85rem;}' +
+'.stats{display:flex;gap:24px;flex-wrap:wrap;margin:12px 0;}' +
+'.stat{font-size:0.85rem;}.stat strong{display:block;font-size:1.3rem;color:#073C8C;}' +
+'table{width:100%;border-collapse:collapse;font-size:0.85rem;}' +
+'th,td{text-align:left;padding:6px 8px;border-bottom:1px solid #eee;}th{color:#666;font-size:0.75rem;text-transform:uppercase;}' +
+'ul{margin-left:20px;font-size:0.9rem;}.muted{color:#888;font-size:0.8rem;}' +
+'.empty{color:#888;font-size:0.85rem;font-style:italic;}' +
+'.foot{margin-top:32px;padding-top:12px;border-top:1px solid #e0e6ed;color:#999;font-size:0.75rem;text-align:center;}' +
+'@media print{body{padding:24px;}.noprint{display:none;}}' +
+'</style></head><body>' +
+'<div class="head"><div><div class="brand">Mend <span>Learn</span></div><div class="meta">Partner Learning Transcript</div></div>' +
+'<div class="meta">Issued ' + esc(today) + '</div></div>' +
+'<h1>' + esc(data.userName) + '</h1>' +
+'<div class="meta">' + esc(data.role) + ' \u00b7 ' + esc(data.company) + ' \u00b7 ' + esc(data.partnerTier || data.partnerType || '') + '</div>' +
+'<div class="stats">' +
+'<div class="stat"><strong>' + (data.xp || 0).toLocaleString() + '</strong>Total XP</div>' +
+'<div class="stat"><strong>' + MendStore.calcLevel(data.xp || 0) + '</strong>Level \u2014 ' + esc(MendStore.levelTitle(MendStore.calcLevel(data.xp || 0))) + '</div>' +
+'<div class="stat"><strong>' + (data.completedModules || []).length + '</strong>Modules</div>' +
+'<div class="stat"><strong>' + (data.completedLabs || []).length + '</strong>Labs</div>' +
+'<div class="stat"><strong>' + (data.certifications || []).length + '</strong>Certifications</div>' +
+'<div class="stat"><strong>' + (data.streak || 0) + '</strong>Day Streak</div>' +
+'</div>' +
+'<h2>Certifications</h2>' + (certRows ? '<ul>' + certRows + '</ul>' : '<p class="empty">No certifications earned yet.</p>') +
+'<h2>Completed Modules</h2>' +
+(moduleRows ? '<table><thead><tr><th>Module</th><th>Track</th><th style="text-align:right;">Quiz</th></tr></thead><tbody>' + moduleRows + '</tbody></table>' : '<p class="empty">No modules completed yet.</p>') +
+'<div class="foot">Generated by Mend Learn \u2014 Mend.io Partner Academy. This transcript reflects locally stored progress.</div>' +
+'</body></html>');
+        win.document.close();
+        win.focus();
+        setTimeout(() => win.print(), 400);
+    });
+}
 
 /* --- Coming Soon (placeholder actions) --- */
 function initComingSoon() {

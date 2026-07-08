@@ -19,7 +19,8 @@ const MendStore = {
         quizScores: {},
         completedLabs: [],
         certifications: [],
-        courseProgress: {}
+        courseProgress: {},
+        bookmarks: []
     },
 
     /* Catalog of certifications that can be issued as certificates. */
@@ -214,6 +215,32 @@ const MendStore = {
 
     isLabCompleted(labId) {
         return this.load().completedLabs.includes(labId);
+    },
+
+    /* --- Bookmarks / Saved modules --- */
+    getBookmarks() {
+        return this.load().bookmarks || [];
+    },
+
+    isBookmarked(moduleId) {
+        return this.getBookmarks().includes(moduleId);
+    },
+
+    /* Toggle a module bookmark. Returns true if now bookmarked, false if removed. */
+    toggleBookmark(moduleId) {
+        const data = this.load();
+        if (!Array.isArray(data.bookmarks)) data.bookmarks = [];
+        const idx = data.bookmarks.indexOf(moduleId);
+        let bookmarked;
+        if (idx === -1) {
+            data.bookmarks.push(moduleId);
+            bookmarked = true;
+        } else {
+            data.bookmarks.splice(idx, 1);
+            bookmarked = false;
+        }
+        this.save(data);
+        return bookmarked;
     },
 
     /* --- Certifications --- */

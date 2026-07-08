@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://luisillobret2.github.io/academysample/sitemap.xml

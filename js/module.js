@@ -8,9 +8,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     initQuiz();
     initMarkComplete();
+    initBookmark();
     initVideoPlaceholders();
     initCertificateCheck();
 });
+
+/* --- Bookmark / Save this module --- */
+function initBookmark() {
+    if (typeof MendStore === 'undefined') return;
+    const header = document.querySelector('.module-header');
+    const moduleId = MendStore.getCurrentModuleId();
+    if (!header || !moduleId || header.querySelector('.bookmark-btn')) return;
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'bookmark-btn';
+
+    const render = (saved) => {
+        btn.classList.toggle('saved', saved);
+        btn.setAttribute('aria-pressed', saved ? 'true' : 'false');
+        btn.setAttribute('aria-label', saved ? 'Remove bookmark' : 'Save this module');
+        btn.title = saved ? 'Saved \u2014 click to remove' : 'Save this module';
+        btn.innerHTML = (saved ? '\u2605' : '\u2606') + '<span>' + (saved ? 'Saved' : 'Save') + '</span>';
+    };
+
+    render(MendStore.isBookmarked(moduleId));
+
+    btn.addEventListener('click', () => {
+        const saved = MendStore.toggleBookmark(moduleId);
+        render(saved);
+        if (typeof showModuleToast === 'function') {
+            showModuleToast(saved ? 'Saved to your profile' : 'Removed from saved');
+        }
+    });
+
+    header.appendChild(btn);
+}
 
 /* --- Quiz answer decode (light obfuscation, not security) --- */
 function decodeAnswer(encoded) {

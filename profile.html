@@ -3,6 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href="img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="img/mend-logo.png">
+    <link rel="apple-touch-icon" href="img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <!-- seo -->
+    <meta name="description" content="Your Mend Learn profile: XP, level, badges, streaks, saved modules, and a downloadable progress transcript.">
+    <link rel="canonical" href="https://luisillobret2.github.io/academysample/profile.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Mend Learn">
+    <meta property="og:title" content="Profile - Mend Learn">
+    <meta property="og:description" content="Your Mend Learn profile: XP, level, badges, streaks, saved modules, and a downloadable progress transcript.">
+    <meta property="og:url" content="https://luisillobret2.github.io/academysample/profile.html">
+    <meta property="og:image" content="https://luisillobret2.github.io/academysample/img/mend-logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Profile - Mend Learn">
+    <meta name="twitter:description" content="Your Mend Learn profile: XP, level, badges, streaks, saved modules, and a downloadable progress transcript.">
+    <meta name="twitter:image" content="https://luisillobret2.github.io/academysample/img/mend-logo.png">
     <title>Profile - Mend Learn</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -25,7 +43,10 @@
                         <span class="badge badge-accent" id="profile-level-badge">Level 5 &middot; Specialist</span>
                         <span class="badge badge-orange" id="profile-streak-badge">14-Day Streak</span>
                     </div>
-                    <button class="btn btn-secondary btn-sm" id="profile-edit-btn" style="margin-top: 12px;">Edit Profile</button>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top: 12px;">
+                        <button class="btn btn-secondary btn-sm" id="profile-edit-btn">Edit Profile</button>
+                        <button class="btn btn-secondary btn-sm" id="profile-transcript-btn">&#128196; Download Transcript</button>
+                    </div>
                 </div>
             </div>
 
@@ -150,6 +171,14 @@
                         <!-- Badges are rendered dynamically by initAchievementBadges() -->
                     </div>
                 </div>
+            </div>
+
+            <!-- Saved Modules (dynamically rendered) -->
+            <div class="section" id="saved-modules-section" style="display:none;">
+                <div class="section-header">
+                    <h2>Saved Modules</h2>
+                </div>
+                <div id="saved-modules-list" class="flex flex-col gap-8"></div>
             </div>
 
             <!-- Skill Points -->
