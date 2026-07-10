@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initProfileEdit();
     initHomepageDynamic();
     initDynamicLeaderboard();
+    initCertificationExams();
 });
 
 /* --- Coming Soon (placeholder actions) --- */
@@ -286,6 +287,11 @@ function initCourseActions() {
             e.preventDefault();
             const card = btn.closest('.lab-card');
             const title = card ? card.querySelector('h3')?.textContent : 'Lab';
+            const labId = title ? title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') : null;
+            if (typeof MendStore !== 'undefined' && labId) {
+                MendStore.completeLab(labId, parseInt(card?.querySelector('.path-card-meta span:last-child')?.textContent?.match(/(\d+)/)?.[1] || '100', 10));
+                MendStore.applyToPage();
+            }
             showToast(`Launching lab environment: ${title}`);
         });
     });
@@ -622,6 +628,121 @@ function initHomepageDynamic() {
             }
         }
     });
+
+    updateHomepageRecommendations(data);
+    updateHomepageNewContent(data);
+    updateHomepageReadiness(data);
+}
+
+function updateHomepageRecommendations(data) {
+    const cards = document.querySelectorAll('.section h2');
+    const recommendedSection = Array.from(cards).find(h => h.textContent.includes('Recommended For You'))?.closest('.section');
+    if (!recommendedSection) return;
+    const items = [
+        { title: 'Vulnerability Prioritization', meta: 'SCA Track - 30 min - 75 XP', href: 'modules/sca/04-prioritization.html', tags: ['sca', 'prioritization', 'vulnerability', 'risk'] },
+        { title: 'CI/CD Pipeline Fundamentals', meta: 'CI/CD Track - 60 min - 100 XP', href: 'modules/cicd/01-pipeline-fundamentals.html', tags: ['cicd', 'pipeline', 'integration'] },
+        { title: 'Competitive Positioning', meta: 'Sales Track - 40 min - 150 XP', href: 'modules/sales/02-competitive-positioning.html', tags: ['sales', 'competitive', 'snyk'] }
+    ];
+    const profile = (data.role || '').toLowerCase() + ' ' + (data.partnerType || '').toLowerCase();
+    const completed = new Set(data.completedModules || []);
+    const scored = items.map(item => {
+        let score = item.tags.some(t => profile.includes(t)) ? 2 : 0;
+        if (!completed.has(item.href.replace('modules/', '').replace('.html', ''))) score += 1;
+        return { ...item, score };
+    }).sort((a, b) => b.score - a.score);
+    const container = recommendedSection.querySelector('.flex.flex-col.gap-12');
+    if (!container) return;
+    container.innerHTML = scored.map(item => `
+        <div class="card-flat" style="display:flex;gap:16px;align-items:center;padding:16px;">
+            <div style="width:40px;height:40px;border-radius:var(--radius-sm);background:rgba(7,60,140,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;">★</div>
+            <div style="flex:1;">
+                <div style="font-weight:600;font-size:0.9rem;color:var(--color-text-bright);">${item.title}</div>
+                <div class="text-xs text-muted">${item.meta}</div>
+            </div>
+            <a href="${item.href}" class="btn btn-sm btn-secondary">Start</a>
+        </div>`).join('');
+}
+
+function updateHomepageNewContent(data) {
+    const section = Array.from(document.querySelectorAll('.section h2')).find(h => h.textContent.includes('New & Updated'))?.closest('.section');
+    if (!section) return;
+    const container = section.querySelector('.flex.flex-col.gap-12');
+    if (!container) return;
+    const recent = [
+        { title: 'Secrets Detection Lab', meta: 'New lab - 45 min - Added 2 days ago', badge: 'New' },
+        { title: 'Battlecard: Mend vs Snyk (v3)', meta: 'Updated - PDF - Last week', badge: 'Updated' },
+        { title: 'Professional Exam Prep', meta: `${(data.quizScores && Object.keys(data.quizScores).length) || 0} completed quizzes`, badge: 'New' }
+    ];
+    container.innerHTML = recent.map(item => `
+        <div class="card-flat" style="display:flex;gap:16px;align-items:center;padding:16px;">
+            <div style="width:40px;height:40px;border-radius:var(--radius-sm);background:rgba(46,204,113,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">•</div>
+            <div style="flex:1;">
+                <div style="font-weight:600;font-size:0.9rem;color:var(--color-text-bright);">${item.title}</div>
+                <div class="text-xs text-muted">${item.meta}</div>
+            </div>
+            <span class="badge badge-accent">${item.badge}</span>
+        </div>`).join('');
+}
+
+function updateHomepageReadiness(data) {
+    const section = Array.from(document.querySelectorAll('.section h2')).find(h => h.textContent.includes('Certification Progress'))?.closest('.section');
+    if (!section) return;
+    const professionalCard = Array.from(section.querySelectorAll('.card-flat')).find(card => (card.textContent || '').includes('Mend.io Certified Professional'));
+    if (!professionalCard) return;
+    const required = ['sca', 'sast', 'sales'];
+    const done = required.reduce((n, track) => n + (MendStore.getCourseProgress(track) >= 100 ? 1 : 0), 0);
+    const pct = Math.round((done / required.length) * 100);
+    const muted = professionalCard.querySelector('.text-muted');
+    const fill = professionalCard.querySelector('.progress-bar .fill');
+    if (muted) muted.textContent = `${pct}% of prerequisite tracks complete`;
+    if (fill) fill.style.width = `${pct}%`;
+}
+
+function initCertificationExams() {
+    const buttons = document.querySelectorAll('[data-cert-exam]');
+    if (!buttons.length) return;
+    buttons.forEach(btn => btn.addEventListener('click', () => openCertificationExam(btn.dataset.certExam)));
+}
+
+function openCertificationExam(certId) {
+    const questionsByCert = {
+        professional: [
+            { q: 'What is the main purpose of SCA?', a: ['Find vulnerable dependencies', 'Scan only source code', 'Generate invoices', 'Manage users'], c: 0 },
+            { q: 'What does a CI/CD integration do?', a: ['Adds security checks to pipelines', 'Creates certificates', 'Replaces source control', 'Disables tests'], c: 0 },
+            { q: 'What should you do with high-risk findings?', a: ['Prioritize and remediate', 'Ignore them', 'Delete the repo', 'Wait for next quarter'], c: 0 }
+        ],
+        'sales-specialist': [
+            { q: 'What is a key competitive differentiator?', a: ['Reachability analysis', 'More ads', 'No reporting', 'Fewer options'], c: 0 },
+            { q: 'What is the goal of objection handling?', a: ['Address concerns clearly', 'Avoid questions', 'End the deal', 'Change the topic'], c: 0 },
+            { q: 'What should a strong demo include?', a: ['Customer outcome and value', 'Random features', 'No storyline', 'Only pricing'], c: 0 }
+        ]
+    };
+    const cert = questionsByCert[certId];
+    if (!cert) return;
+    const overlay = document.createElement('div');
+    overlay.className = 'cert-modal-overlay';
+    overlay.innerHTML = `<div class="cert-modal" style="max-width:760px;"><div style="padding:24px;"><h3 style="margin-bottom:8px;">Practice Exam</h3><p class="text-muted" style="margin-bottom:16px;">Answer all questions to earn this certification.</p><div class="exam-questions"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:20px;"><button class="btn btn-secondary exam-cancel">Close</button><button class="btn btn-primary exam-submit">Submit</button></div></div></div>`;
+    document.body.appendChild(overlay);
+    const host = overlay.querySelector('.exam-questions');
+    host.innerHTML = cert.map((item, idx) => `<div style="margin-bottom:16px;"><div style="font-weight:600;margin-bottom:8px;">${idx + 1}. ${item.q}</div>${item.a.map((opt, i) => `<label class="quiz-option" style="display:block;margin:6px 0;"><input type="radio" name="exam-${idx}" value="${i}"> ${opt}</label>`).join('')}</div>`).join('');
+    overlay.querySelector('.exam-cancel').onclick = () => overlay.remove();
+    overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
+    overlay.querySelector('.exam-submit').onclick = () => {
+        let correct = 0;
+        cert.forEach((item, idx) => {
+            const sel = overlay.querySelector(`input[name="exam-${idx}"]:checked`);
+            if (sel && Number(sel.value) === item.c) correct++;
+        });
+        const pct = Math.round((correct / cert.length) * 100);
+        if (pct >= 70) {
+            if (typeof MendStore !== 'undefined') MendStore.earnCertification(certId);
+            showToast('Certification earned');
+            overlay.remove();
+            location.reload();
+        } else {
+            showToast('Not quite, try again');
+        }
+    };
 }
 
 /* --- Dynamic Leaderboard --- */
