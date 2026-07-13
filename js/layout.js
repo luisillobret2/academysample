@@ -262,11 +262,23 @@
         });
     }
 
+    function registerServiceWorker() {
+        if (!('serviceWorker' in navigator)) return;
+        // file:// has no origin for SW; only register over http(s).
+        if (window.location.protocol === 'file:') return;
+        window.addEventListener('load', function () {
+            navigator.serviceWorker.register(prefix + 'sw.js').catch(function () {
+                /* offline support is progressive enhancement; ignore failures */
+            });
+        });
+    }
+
     function injectAndSetup() {
         inject();
         applyDarkMode();
         initDarkModeToggle();
         initNotifications();
+        registerServiceWorker();
     }
 
     // Apply dark mode immediately (before paint) to avoid flash

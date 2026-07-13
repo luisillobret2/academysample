@@ -1298,3 +1298,48 @@
     from { opacity: 0; }
     to { opacity: 1; }
 }
+
+/* --- Mobile polish: larger quiz tap targets & responsive certificate modal --- */
+@media (max-width: 600px) {
+    .quiz-option {
+        padding: 14px 16px;
+        font-size: 0.95rem;
+        min-height: 48px;
+        gap: 12px;
+    }
+
+    .quiz-option input {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+    }
+
+    .quiz-submit {
+        width: 100%;
+    }
+
+    .cert-content {
+        padding: 16px;
+    }
+
+    .cert-border {
+        padding: 24px 16px;
+    }
+
+    .cert-footer {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .cert-actions {
+        flex-direction: column;
+        padding: 16px;
+    }
+
+    .cert-actions .btn,
+    .cert-download-pdf,
+    .cert-modal-dismiss {
+        width: 100%;
+    }
+}

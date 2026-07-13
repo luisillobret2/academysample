@@ -196,6 +196,7 @@ function initMobileMenu() {
                 <div class="mobile-search" style="position: relative;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="flex-shrink:0;color:var(--color-text-muted)"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
                     <input type="text" placeholder="Search courses, labs..." aria-label="Search">
+                    <button type="button" class="mobile-search-clear" aria-label="Clear search" hidden>&times;</button>
                 </div>`;
             nav.insertBefore(searchLi, nav.firstChild);
 
@@ -203,13 +204,23 @@ function initMobileMenu() {
             if (typeof MendSearch !== 'undefined') {
                 const mobileInput = searchLi.querySelector('input');
                 const mobileContainer = searchLi.querySelector('.mobile-search');
+                const clearBtn = searchLi.querySelector('.mobile-search-clear');
                 const dropdown = document.createElement('div');
                 dropdown.className = 'search-dropdown';
                 dropdown.setAttribute('role', 'listbox');
                 mobileContainer.appendChild(dropdown);
 
+                clearBtn.addEventListener('click', () => {
+                    mobileInput.value = '';
+                    dropdown.innerHTML = '';
+                    dropdown.classList.remove('open');
+                    clearBtn.hidden = true;
+                    mobileInput.focus();
+                });
+
                 let debounce;
                 mobileInput.addEventListener('input', () => {
+                    clearBtn.hidden = mobileInput.value.length === 0;
                     clearTimeout(debounce);
                     debounce = setTimeout(() => {
                         const q = mobileInput.value.trim();
