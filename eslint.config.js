@@ -18,6 +18,7 @@ const appGlobals = {
     initDynamicLeaderboard: 'readonly',
     initCertRecommendations: 'readonly',
     initAchievementBadges: 'readonly',
+    initCertificationExams: 'readonly',
 };
 
 module.exports = [

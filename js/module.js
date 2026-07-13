@@ -294,6 +294,9 @@ function checkTrackCompletion() {
             });
             MendStore.save(data);
         }
+        if (typeof MendStore.setCourseProgress === 'function') {
+            MendStore.setCourseProgress(trackId, 100);
+        }
 
         // Show certificate modal
         setTimeout(() => showCertificateModal(trackName, trackModules.length), 500);

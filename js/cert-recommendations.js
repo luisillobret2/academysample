@@ -352,4 +352,50 @@ function initCertRecommendations() {
     }
 }
 
-/* --- Achievement Badges System --- */
+/* --- Certification Practice Exams --- */
+function initCertificationExams() {
+    const buttons = document.querySelectorAll('[data-cert-exam]');
+    if (!buttons.length) return;
+    buttons.forEach(btn => btn.addEventListener('click', () => openCertificationExam(btn.dataset.certExam)));
+}
+
+function openCertificationExam(certId) {
+    const questionsByCert = {
+        professional: [
+            { q: 'What is the main purpose of SCA?', a: ['Find vulnerable dependencies', 'Scan only source code', 'Generate invoices', 'Manage users'], c: 0 },
+            { q: 'What does a CI/CD integration do?', a: ['Adds security checks to pipelines', 'Creates certificates', 'Replaces source control', 'Disables tests'], c: 0 },
+            { q: 'What should you do with high-risk findings?', a: ['Prioritize and remediate', 'Ignore them', 'Delete the repo', 'Wait for next quarter'], c: 0 }
+        ],
+        'sales-specialist': [
+            { q: 'What is a key competitive differentiator?', a: ['Reachability analysis', 'More ads', 'No reporting', 'Fewer options'], c: 0 },
+            { q: 'What is the goal of objection handling?', a: ['Address concerns clearly', 'Avoid questions', 'End the deal', 'Change the topic'], c: 0 },
+            { q: 'What should a strong demo include?', a: ['Customer outcome and value', 'Random features', 'No storyline', 'Only pricing'], c: 0 }
+        ]
+    };
+    const cert = questionsByCert[certId];
+    if (!cert) return;
+    const overlay = document.createElement('div');
+    overlay.className = 'cert-modal-overlay';
+    overlay.innerHTML = `<div class="cert-modal" style="max-width:760px;"><div style="padding:24px;"><h3 style="margin-bottom:8px;">Practice Exam</h3><p class="text-muted" style="margin-bottom:16px;">Answer all questions to earn this certification.</p><div class="exam-questions"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:20px;"><button class="btn btn-secondary exam-cancel">Close</button><button class="btn btn-primary exam-submit">Submit</button></div></div></div>`;
+    document.body.appendChild(overlay);
+    const host = overlay.querySelector('.exam-questions');
+    host.innerHTML = cert.map((item, idx) => `<div style="margin-bottom:16px;"><div style="font-weight:600;margin-bottom:8px;">${idx + 1}. ${item.q}</div>${item.a.map((opt, i) => `<label class="quiz-option" style="display:block;margin:6px 0;"><input type="radio" name="exam-${idx}" value="${i}"> ${opt}</label>`).join('')}</div>`).join('');
+    overlay.querySelector('.exam-cancel').onclick = () => overlay.remove();
+    overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
+    overlay.querySelector('.exam-submit').onclick = () => {
+        let correct = 0;
+        cert.forEach((item, idx) => {
+            const sel = overlay.querySelector(`input[name="exam-${idx}"]:checked`);
+            if (sel && Number(sel.value) === item.c) correct++;
+        });
+        const pct = Math.round((correct / cert.length) * 100);
+        if (pct >= 70) {
+            if (typeof MendStore !== 'undefined') MendStore.earnCertification(certId);
+            showToast('Certification earned');
+            overlay.remove();
+            location.reload();
+        } else {
+            showToast('Not quite, try again');
+        }
+    };
+}

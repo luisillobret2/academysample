@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initDynamicLeaderboard();
     initAchievementBadges();
     initCertRecommendations();
+    initCertificationExams();
     initSavedModules();
     initTranscript();
 });
@@ -405,6 +406,11 @@ function initCourseActions() {
             e.preventDefault();
             const card = btn.closest('.lab-card');
             const title = card ? card.querySelector('h3')?.textContent : 'Lab';
+            const labId = title ? title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') : null;
+            if (typeof MendStore !== 'undefined' && labId) {
+                MendStore.completeLab(labId, parseInt(card?.querySelector('.path-card-meta span:last-child')?.textContent?.match(/(\d+)/)?.[1] || '100', 10));
+                MendStore.applyToPage();
+            }
             showToast(`Launching lab environment: ${title}`);
         });
     });
