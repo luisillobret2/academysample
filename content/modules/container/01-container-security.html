@@ -1,0 +1,168 @@
+---
+title: Container Security with Mend - Mend Learn
+---
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>Container Security</span> &rsaquo; <span>Fundamentals</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>Container Security Fundamentals</h1>
+                <div class="module-meta">
+                    <span>&#128338; 45 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 200 XP</span>
+                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>Why Container Security Matters</li>
+                    <li>Mend Container Security</li>
+                    <li>Container Scanning Workflow</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>Demo: Reachable Risk &amp; Docker VEX</h2>
+                <p>See how Mend and Docker work together to cut through container CVE noise. This demo shows how reachability analysis and Docker VEX statements reduce 94 CVEs down to just 8 actionable findings.</p>
+                <div class="video-embed" style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius: var(--radius-md); margin-bottom: 24px;">
+                    <iframe src="https://www.youtube.com/embed/PzG7i464BI4" title="Stop Drowning in Container CVE Alerts: Reachable Risk &amp; Docker VEX with Mend.io" style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Why Container Security Matters</h2>
+                <p>Containers have become the standard deployment model for modern applications. However, container images inherit vulnerabilities from their base images, added packages, and application dependencies. A single unpatched base image can affect hundreds of deployed containers across an organization.</p>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">75%</div>
+                        <div class="stat-label">of container images have high or critical vulnerabilities</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">60%</div>
+                        <div class="stat-label">of vulnerabilities come from the base image layer</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">300+</div>
+                        <div class="stat-label">average CVEs per unpatched base image</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Mend Container Security</h2>
+                <p>Mend Container provides comprehensive container image scanning as part of the Mend AppSec Platform. It analyzes every layer of your container images to identify vulnerabilities in OS packages, application dependencies, and configurations.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128230;</div>
+                        <h4>Multi-Layer Analysis</h4>
+                        <p>Scans each layer of the Docker image independently, identifying which layer introduced each vulnerability. Helps determine whether to update the base image or a specific package.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128270;</div>
+                        <h4>OS Package Detection</h4>
+                        <p>Identifies vulnerabilities in operating system packages (apt, yum, apk) across Alpine, Debian, Ubuntu, CentOS, and other distributions.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128260;</div>
+                        <h4>Application Dependencies</h4>
+                        <p>Detects application-level dependencies within the container (Node.js modules, Python packages, Java JARs) and applies the same SCA analysis including reachability.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128203;</div>
+                        <h4>Container SBOM</h4>
+                        <p>Generate comprehensive SBOMs for container images in SPDX or CycloneDX format, documenting every component from base image to application layer.</p>
+                    </div>
+                </div>
+
+                <div class="key-concept">
+                    <h4>&#128161; Integration with CI/CD</h4>
+                    <p>Mend Container integrates into your container build pipeline. Scan images during CI/CD before pushing to a registry, and set policies to block deployment of images with Critical or High severity vulnerabilities. This prevents vulnerable containers from ever reaching production.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Container Scanning Workflow</h2>
+                <div class="lifecycle-flow">
+                    <div class="lifecycle-step">
+                        <div class="step-icon">&#128221;</div>
+                        <h4>Dockerfile</h4>
+                        <p>Author your Dockerfile with a base image and application dependencies</p>
+                    </div>
+                    <div class="lifecycle-arrow">&#8594;</div>
+                    <div class="lifecycle-step">
+                        <div class="step-icon">&#128230;</div>
+                        <h4>Build</h4>
+                        <p>Build the container image in your CI pipeline</p>
+                    </div>
+                    <div class="lifecycle-arrow">&#8594;</div>
+                    <div class="lifecycle-step">
+                        <div class="step-icon">&#128270;</div>
+                        <h4>Scan</h4>
+                        <p>Mend scans all layers for OS and app vulnerabilities</p>
+                    </div>
+                    <div class="lifecycle-arrow">&#8594;</div>
+                    <div class="lifecycle-step">
+                        <div class="step-icon">&#9989;</div>
+                        <h4>Gate</h4>
+                        <p>Policy gates approve or block based on findings</p>
+                    </div>
+                    <div class="lifecycle-arrow">&#8594;</div>
+                    <div class="lifecycle-step">
+                        <div class="step-icon">&#128640;</div>
+                        <h4>Deploy</h4>
+                        <p>Push approved images to registry and deploy</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 1:</strong> Where do most container image vulnerabilities originate?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Application code written by developers</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Base image layer (OS packages and system libraries)</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Container orchestration configuration</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Network policies between containers</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-c="Yw==">
+                        <p><strong>Question 2:</strong> When in the container lifecycle should scanning occur?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Only after deployment to production</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Only when writing the Dockerfile</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> During CI/CD before pushing to a registry</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Monthly via manual review</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <button class="mark-complete-btn" data-xp="200">Mark as Complete</button>
+                <div class="module-nav-buttons">
+                    <span></span>
+                    <a href="02-image-scanning.html" class="btn btn-primary">Next: Image Scanning &#8594;</a>
+                </div>
+            </div>

@@ -1,0 +1,164 @@
+---
+title: Troubleshooting &amp; Support Escalation - Mend Learn
+---
+            <div class="breadcrumb">
+                <a href="../../learning-paths.html">Learning Paths</a> &#8250; Technical SE Track &#8250; Troubleshooting
+            </div>
+
+            <div class="completed-badge">&#10003; Not Started</div>
+            <h1>Troubleshooting &amp; Support Escalation</h1>
+            <div class="module-meta">
+                <span>&#128336; 35 min</span>
+                <span>&#128218; 4 sections</span>
+                <span>&#11088; 200 XP</span>
+                <span class="module-level">Level 2 - Intermediate</span>
+            </div>
+
+
+            <section class="module-section">
+                <h2>Common Integration Issues</h2>
+                <p>As a Technical SE, you'll encounter common integration and deployment issues. Knowing how to quickly diagnose and resolve these issues builds customer confidence and accelerates deployment.</p>
+
+                <h3>Top 5 Integration Issues</h3>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#128274;</div>
+                        <h4>Authentication Failures</h4>
+                        <p>API key expired, incorrect permissions, SSO misconfiguration, token scope too narrow.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128203;</div>
+                        <h4>Missing Scan Results</h4>
+                        <p>Unsupported package manager, no manifest file found, gitignore excluding dependency files.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128295;</div>
+                        <h4>CI/CD Pipeline Failures</h4>
+                        <p>Timeout issues, exit code misinterpretation, missing environment variables, network connectivity.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128225;</div>
+                        <h4>Webhook Delivery Failures</h4>
+                        <p>Firewall blocking, incorrect URL, SSL certificate issues, payload format mismatch.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Diagnostic Toolkit</h2>
+                <p>Use these tools and techniques to quickly diagnose issues:</p>
+
+                <h3>CLI Diagnostics</h3>
+                <pre><code># Check CLI version and configuration
+mend version
+mend config show
+
+# Verbose scan output for debugging
+mend sca scan --verbose --debug
+
+# Test API connectivity
+mend auth verify
+
+# Check supported file types in a directory
+mend sca scan --dry-run --dir ./project
+
+# Generate diagnostic bundle for support
+mend diagnostic --output diagnostic.zip</code></pre>
+
+                <h3>Common Error Messages &amp; Solutions</h3>
+                <pre><code># Error: "No supported manifest files found"
+# Solution: Check file paths, ensure package.json/pom.xml/requirements.txt
+#           exists and isn't gitignored
+
+# Error: "Authentication failed"
+# Solution: Verify API key hasn't expired, check organization assignment,
+#           ensure key has correct scope (org:read, project:write)
+
+# Error: "Scan timeout after 300 seconds"
+# Solution: For large monorepos, increase timeout with --timeout 600
+#           Or split into sub-project scans
+
+# Error: "Rate limit exceeded"
+# Solution: Add delay between scans in CI/CD, use scan scheduling,
+#           or contact Mend for enterprise rate limit increase</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Performance Optimization</h2>
+                <p>Large enterprise deployments may encounter performance challenges. Use these optimization strategies:</p>
+
+                <ul>
+                    <li><strong>Incremental Scanning</strong> &mdash; Only scan changed dependencies rather than full project on every commit</li>
+                    <li><strong>Parallel Scanning</strong> &mdash; Configure CI/CD to run Mend scans in parallel with other pipeline stages</li>
+                    <li><strong>Caching</strong> &mdash; Enable scan result caching to speed up repeated scans of unchanged dependencies</li>
+                    <li><strong>Selective Scanning</strong> &mdash; Use path filters to exclude test dependencies and non-production code from critical scans</li>
+                    <li><strong>Monorepo Optimization</strong> &mdash; Split large monorepos into logical scan units with shared caching</li>
+                </ul>
+            </section>
+
+            <section class="module-section">
+                <h2>Support Escalation Process</h2>
+                <p>When you can't resolve an issue in the field, follow the escalation process:</p>
+
+                <ol>
+                    <li><strong>Level 1: Self-Service</strong> &mdash; Check docs.mend.io, knowledge base, and community forums</li>
+                    <li><strong>Level 2: Partner Support</strong> &mdash; Contact partner support channel with diagnostic bundle attached</li>
+                    <li><strong>Level 3: Engineering Escalation</strong> &mdash; For product bugs or feature gaps, escalate through your channel manager</li>
+                    <li><strong>Level 4: Executive Escalation</strong> &mdash; For deal-blocking issues, engage your Mend partner executive sponsor</li>
+                </ol>
+
+                <h3>Creating an Effective Support Ticket</h3>
+                <ul>
+                    <li>Include the diagnostic bundle (<code>mend diagnostic</code>)</li>
+                    <li>Describe the expected vs. actual behavior</li>
+                    <li>Include the exact error message and stack trace</li>
+                    <li>Specify the environment (OS, CI/CD platform, SCM, language versions)</li>
+                    <li>Note the business impact and urgency</li>
+                </ul>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Support Tip</h4>
+                    <p>80% of support issues are resolved by checking three things: API key validity, network connectivity to Mend APIs, and correct manifest file paths. Always check these first before escalating.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 1:</strong> What is the first thing you should check when a scan returns "No supported manifest files found"?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Upgrade the Mend CLI to the latest version</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Verify manifest files (package.json, pom.xml, etc.) exist and aren't gitignored</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Reinstall the Mend CLI</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Contact Mend support immediately</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 2:</strong> What should you always include when creating a support ticket?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> A diagnostic bundle from mend diagnostic command</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Source code of the affected project</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Customer's API credentials</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> A video recording of the issue</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>200 XP earned for completing this module</span>
+                </div>
+                <button class="btn btn-primary mark-complete-btn" data-xp="200">Mark Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="04-advanced-integrations.html" class="btn btn-secondary">&#8592; Previous: Advanced Integrations</a>
+                    <span></span>
+                </div>
+            </div>

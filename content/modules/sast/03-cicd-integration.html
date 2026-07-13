@@ -1,0 +1,173 @@
+---
+title: CI/CD Pipeline Integration - Mend Learn
+---
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>SAST Product Track</span> &rsaquo; <span>CI/CD Integration</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>CI/CD Pipeline Integration</h1>
+                <div class="module-meta">
+                    <span>&#128338; 40 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 200 XP</span>
+                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>All Within Your Repo</li>
+                    <li>GitHub Actions Example</li>
+                    <li>Repository Integrations</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>All Within Your Repo</h2>
+                <p>Mend SAST integrates directly into your existing CI/CD pipelines, providing security feedback on every pull request without requiring developers to leave their workflow. All checks run within your repository infrastructure.</p>
+
+                <h3>Supported Platforms</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128171;</div>
+                        <h4>GitHub Actions</h4>
+                        <p>Native GitHub Action for SAST scanning on every PR. Results appear as check annotations directly on changed lines.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128171;</div>
+                        <h4>GitLab CI</h4>
+                        <p>GitLab CI/CD integration with SARIF report upload and merge request annotations for vulnerability findings.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128171;</div>
+                        <h4>Azure DevOps</h4>
+                        <p>Azure Pipelines task for SAST scanning with results integrated into Azure DevOps pull request experience.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128171;</div>
+                        <h4>Jenkins / Bitbucket</h4>
+                        <p>CLI-based integration for Jenkins pipelines and Bitbucket Pipelines using the Mend CLI tool.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>GitHub Actions Example</h2>
+                <p>Here&rsquo;s a typical GitHub Actions workflow that runs Mend SAST on every pull request:</p>
+
+                <pre><code>name: Mend SAST Scan
+on:
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  sast-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Mend SAST
+        uses: mend-toolkit/mend-sast-action@v1
+        with:
+          api-key: ${{ secrets.MEND_API_KEY }}
+          fail-on-severity: high
+          output-format: sarif
+
+      - name: Upload SARIF Results
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: mend-sast-results.sarif</code></pre>
+
+                <div class="key-concept">
+                    <h4>&#128161; Security Gates</h4>
+                    <p>The <code>fail-on-severity</code> parameter creates a security gate &mdash; if any finding at or above the specified severity is detected, the CI check fails and the PR cannot be merged. This prevents new vulnerabilities from entering the codebase while allowing teams to set the threshold appropriate for their risk tolerance.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Repository Integrations</h2>
+                <p>Beyond CI/CD pipelines, Mend offers native repository integrations that scan automatically on every commit and PR:</p>
+
+                <div class="vuln-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Integration</th>
+                                <th>Trigger</th>
+                                <th>Results Location</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Mend Repository Integration</strong></td>
+                                <td>Every commit and PR automatically</td>
+                                <td>PR comments, checks, Mend dashboard</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mend CLI in Pipeline</strong></td>
+                                <td>CI/CD workflow step</td>
+                                <td>CLI output, SARIF upload, dashboard</td>
+                            </tr>
+                            <tr>
+                                <td><strong>IDE Extensions</strong></td>
+                                <td>Real-time as you code</td>
+                                <td>Inline annotations in the editor</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Scheduled Scans</strong></td>
+                                <td>Cron schedule (daily/weekly)</td>
+                                <td>Mend dashboard, email notifications</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="Yw==">
+                        <p><strong>Question 1:</strong> What does the <code>fail-on-severity: high</code> parameter do in the CI pipeline?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Only reports High severity findings</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Automatically fixes High severity findings</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Fails the CI check if any High or Critical severity findings are detected</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Sends High severity alerts to Slack</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 2:</strong> What format does Mend SAST use to upload results to GitHub code scanning?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> SARIF (Static Analysis Results Interchange Format)</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> JSON</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> CSV</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> XML</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <button class="mark-complete-btn" data-xp="200">Mark as Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="02-ai-remediation.html" class="btn btn-secondary">&#8592; Previous</a>
+                    <a href="04-custom-rules.html" class="btn btn-primary">Next: Custom Rules &#8594;</a>
+                </div>
+            </div>

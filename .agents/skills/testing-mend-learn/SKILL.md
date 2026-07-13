@@ -33,6 +33,21 @@ fuser -k 8080/tcp 2>/dev/null; sleep 1
 
 ## Module Content Pages (js/module.js, css/module.css)
 
+### Editing / Regenerating Module Pages
+Module pages under `modules/` are **generated** from a shared boilerplate
+template. Do not hand-edit the `<head>`, scaffold, or `<script>` tags in a
+`modules/**/*.html` file — edit the single source instead:
+- Shared boilerplate: `templates/module.html`
+- Per-module content (title, meta description, `<main>` body): `content/modules/<track>/<name>.html`
+
+After editing either, regenerate and verify:
+```bash
+npm run build:modules   # content/ + template -> modules/*.html
+npm run check:modules   # fails if any modules/*.html is out of sync (also run in CI)
+```
+The generated `modules/*.html` are committed so the site remains a pure static
+deploy (no build step at serve time).
+
 ### Module Page Structure
 Module pages live in `/modules/{track}/` directories with two-column layout:
 - **Sidebar** (sticky left): Track title, progress bar, module list with status indicators
