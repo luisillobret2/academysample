@@ -10,7 +10,7 @@ Mend Learn is a static HTML/CSS/JS prototype (no backend, no build step). All pa
 
 ## Serving Locally
 ```bash
-cd ~/repos/MendLearn && python3 -m http.server 8080 &
+cd ~/repos/academysample && python3 -m http.server 8080 &
 ```
 Verify with: `curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/index.html` (expect 200).
 
@@ -32,6 +32,21 @@ fuser -k 8080/tcp 2>/dev/null; sleep 1
 | Profile | `/profile.html` | User stats, badges, skill points, certifications, activity feed |
 
 ## Module Content Pages (js/module.js, css/module.css)
+
+### Editing / Regenerating Module Pages
+Module pages under `modules/` are **generated** from a shared boilerplate
+template. Do not hand-edit the `<head>`, scaffold, or `<script>` tags in a
+`modules/**/*.html` file — edit the single source instead:
+- Shared boilerplate: `templates/module.html`
+- Per-module content (title, meta description, `<main>` body): `content/modules/<track>/<name>.html`
+
+After editing either, regenerate and verify:
+```bash
+npm run build:modules   # content/ + template -> modules/*.html
+npm run check:modules   # fails if any modules/*.html is out of sync (also run in CI)
+```
+The generated `modules/*.html` are committed so the site remains a pure static
+deploy (no build step at serve time).
 
 ### Module Page Structure
 Module pages live in `/modules/{track}/` directories with two-column layout:
@@ -80,17 +95,58 @@ Module pages live in `/modules/{track}/` directories with two-column layout:
 - "All" filter shows everything
 - Test by clicking a filter and counting visible cards
 
-### AI Chat Keywords
-The chat responds to these keywords with specific responses:
+### AI Chat Keywords (20+ keyword groups)
+The chat responds to keywords with context-aware responses that read from `MendStore.load()` (user progress, XP, level, certs, streak). Key groups:
 - `sca`, `composition`, `dependency` → SCA product info
 - `sast`, `static`, `code analysis` → SAST product info
-- `certification`, `cert`, `exam`, `certified` → Certification study plan
-- `compete`, `snyk`, `veracode`, `checkmarx` → Competitive positioning
+- `container`, `docker`, `kubernetes`, `registry` → Container Security features
+- `secret`, `credential`, `token`, `leak` → Secrets Detection info
+- `supply chain`, `sbom`, `software bill` → Supply Chain Security
+- `cicd`, `ci/cd`, `pipeline`, `jenkins`, `github actions` → CI/CD integration
+- `renovate`, `dependency update`, `auto-merge` → Renovate/dependency management
+- `api`, `rest`, `webhook`, `automation` → API & Automation
+- `license`, `compliance`, `gpl`, `copyleft` → License compliance
+- `certification`, `cert`, `exam`, `certified` → Context-aware cert recommendation (adapts based on user progress)
+- `snyk` → Snyk-specific competitive response
+- `veracode` → Veracode-specific competitive response
+- `checkmarx` → Checkmarx-specific competitive response
+- `objection`, `concern`, `pushback`, `too expensive` → Sales objection handling
 - `demo`, `poc`, `presentation` → Demo preparation
+- `progress`, `status`, `how am i doing`, `my level` → Real-time user progress from localStorage
 - `hello`, `hi`, `hey`, `help` → Greeting/help menu
 - Anything else → Default generic response
 
+Test the context-aware responses by checking that progress/cert queries return real localStorage values (not hardcoded). A fresh localStorage will show Level 1, 0 XP, 0/61 modules.
+
 Suggestion buttons in the chat also trigger messages when clicked.
+
+### Notification Center (layout.js)
+- Bell icon in nav header (`.nav-notifications`) between dark mode toggle and XP display
+- Red `.notif-badge` shows unread count
+- Click bell to toggle `.notif-dropdown` (320px wide, up to 400px tall)
+- Seeded with 5 notifications on first load (stored in `localStorage` key `mendlearn_notifications`)
+- Badge earn events auto-inject into the notification feed
+- "Mark all read" link clears unread count; badge hides
+- Clicking outside dropdown closes it
+- To reset notifications for testing: `localStorage.removeItem('mendlearn_notifications')`
+
+### Achievement Badges (MendBadges in app.js)
+- 16 badges total, dynamically awarded based on `MendStore` data
+- `MendBadges.checkAndAward()` runs on DOMContentLoaded
+- Awards based on: module count, XP thresholds (1000/5000/10000), streak (3/7 days), quiz best scores, track completion, certifications
+- "Early Adopter" badge is always awarded (unconditional)
+- New earns trigger `.achievement-toast` (fixed bottom-right, auto-dismisses ~3.5s)
+- Profile page renders badges in `.profile-badges-dynamic` container via `initAchievementBadges()`
+- Earned badges: `.badge-earned` (blue border, accent background)
+- Locked badges: `.badge-locked` (opacity 0.35, grayscale filter)
+- To test toast: `localStorage.removeItem('mendlearn_badges')` then reload
+- localStorage key: `mendlearn_badges` (JSON array of earned badge IDs)
+
+### Dark Mode Toggle
+- Moon/sun button in nav header (`.dark-mode-toggle`)
+- Toggles `dark-mode` class on `<html>` element
+- Persists to `localStorage` key `mendlearn_darkmode`
+- All CSS variables update (backgrounds, text, cards, borders)
 
 ### Course Start Buttons
 - Buttons with `data-action="start-course"` change text to "In Progress", swap to secondary style, become disabled, set progress bar to 15%, and show a toast notification
@@ -103,9 +159,18 @@ Suggestion buttons in the chat also trigger messages when clicked.
 
 ## Expected Mock Data
 The prototype uses a fixed persona: Jane Doe, Sales Engineer at Acme Security (VAR), Silver Partner.
-- Level 5, 2,450 XP, 14-day streak, 8 badges, 1 certification (Associate)
-- Professional certification: 68% in-progress
-- Rank #23 on leaderboard
+- Initial state (fresh localStorage): Level 1, 0 XP, 0-day streak, 0 modules, 0 certifications
+- Static HTML elements still show some hardcoded values (e.g. Rank #23, Certified Associate on profile)
+- Dynamic values (hero stats, AI Coach progress response, badge count) read from `MendStore.load()`
+
+## localStorage Keys
+| Key | Purpose |
+|-----|--------|
+| `mendlearn_data` | User progress (XP, modules, certs, streak, profile) |
+| `mendlearn_darkmode` | Dark mode state (boolean) |
+| `mendlearn_badges` | Earned badge IDs (JSON array) |
+| `mendlearn_notifications` | Notification feed (JSON array) |
+| `mendlearn_quizscores` | Quiz attempt history and best scores |
 
 ## Browser Setup Notes
 - Chrome is typically already running in the Devin environment

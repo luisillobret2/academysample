@@ -19,12 +19,156 @@ document.addEventListener('DOMContentLoaded', () => {
     initProfileEdit();
     initHomepageDynamic();
     initDynamicLeaderboard();
+    initAchievementBadges();
+    initCertRecommendations();
     initCertificationExams();
+    initSavedModules();
+    initTranscript();
 });
+
+/* --- Saved Modules (profile page) --- */
+function initSavedModules() {
+    const section = document.getElementById('saved-modules-section');
+    const list = document.getElementById('saved-modules-list');
+    if (!section || !list || typeof MendStore === 'undefined') return;
+
+    const catalog = (typeof MendSearch !== 'undefined' && MendSearch.catalog) ? MendSearch.catalog : [];
+    const byId = {};
+    catalog.forEach(item => {
+        const m = item.href.match(/modules\/(.+)\.html$/);
+        if (m) byId[m[1]] = item;
+    });
+
+    function render() {
+        const bookmarks = MendStore.getBookmarks();
+        if (!bookmarks.length) {
+            section.style.display = 'none';
+            return;
+        }
+        section.style.display = '';
+        list.innerHTML = '';
+
+        bookmarks.forEach(id => {
+            const item = byId[id];
+            const title = item ? item.title : id.split('/').pop().replace(/^\d+-/, '').replace(/-/g, ' ');
+            const category = item ? item.category : (id.split('/')[0] || 'Module');
+            const href = 'modules/' + id + '.html';
+            const completed = MendStore.isModuleCompleted(id);
+
+            const card = document.createElement('div');
+            card.className = 'card-flat';
+            card.style.cssText = 'display:flex; gap:16px; align-items:center; padding:16px;';
+            card.innerHTML =
+                '<span style="font-size:1.1rem; color:var(--color-accent);" aria-hidden="true">\u2605</span>' +
+                '<div style="flex:1;">' +
+                    '<a href="' + href + '" style="font-weight:600; color:var(--color-text-bright);">' + title + '</a>' +
+                    '<div class="text-xs text-muted">' + category + (completed ? ' \u00b7 Completed' : '') + '</div>' +
+                '</div>';
+
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'btn btn-secondary btn-sm';
+            removeBtn.type = 'button';
+            removeBtn.textContent = 'Remove';
+            removeBtn.setAttribute('aria-label', 'Remove ' + title + ' from saved modules');
+            removeBtn.addEventListener('click', () => {
+                MendStore.toggleBookmark(id);
+                render();
+                if (typeof showToast === 'function') showToast('Removed from saved');
+            });
+            card.appendChild(removeBtn);
+            list.appendChild(card);
+        });
+    }
+
+    render();
+}
+
+/* --- Progress Transcript (printable / downloadable) --- */
+function initTranscript() {
+    const btn = document.getElementById('profile-transcript-btn');
+    if (!btn || typeof MendStore === 'undefined') return;
+
+    btn.addEventListener('click', () => {
+        const data = MendStore.load();
+        const catalog = (typeof MendSearch !== 'undefined' && MendSearch.catalog) ? MendSearch.catalog : [];
+        const byId = {};
+        catalog.forEach(item => {
+            const m = item.href.match(/modules\/(.+)\.html$/);
+            if (m) byId[m[1]] = item;
+        });
+
+        const esc = (s) => String(s == null ? '' : s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+        const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+        const moduleRows = (data.completedModules || []).map(id => {
+            const item = byId[id];
+            const title = item ? item.title : id;
+            const category = item ? item.category : (id.split('/')[0] || '');
+            const quiz = MendStore.getQuizScore(id);
+            const score = quiz ? quiz.pct + '%' : '\u2014';
+            return '<tr><td>' + esc(title) + '</td><td>' + esc(category) + '</td><td style="text-align:right;">' + score + '</td></tr>';
+        }).join('');
+
+        const certRows = (data.certifications || []).map(c => {
+            const name = c.title || c.name || c.id || '';
+            const dateStr = c.date ? new Date(c.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+            const cred = c.credentialId ? ' \u00b7 ' + c.credentialId : '';
+            return '<li>' + esc(name) + (dateStr ? ' <span class="muted">(' + esc(dateStr) + esc(cred) + ')</span>' : '') + '</li>';
+        }).join('');
+
+        const win = window.open('', '_blank', 'width=800,height=900');
+        if (!win) {
+            if (typeof showToast === 'function') showToast('Please allow pop-ups to download your transcript');
+            return;
+        }
+        win.document.write(
+'<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Mend Learn Transcript</title>' +
+'<style>' +
+'*{box-sizing:border-box;margin:0;padding:0;}' +
+'body{font-family:Arial,Helvetica,sans-serif;color:#1a1a2e;padding:48px;max-width:800px;margin:0 auto;}' +
+'.head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #073C8C;padding-bottom:16px;margin-bottom:24px;}' +
+'.brand{font-size:1.4rem;font-weight:800;color:#073C8C;}.brand span{color:#55C6C2;}' +
+'h1{font-size:1.2rem;margin-bottom:4px;}h2{font-size:1rem;color:#073C8C;margin:24px 0 8px;border-bottom:1px solid #e0e6ed;padding-bottom:4px;}' +
+'.meta{color:#555;font-size:0.85rem;}' +
+'.stats{display:flex;gap:24px;flex-wrap:wrap;margin:12px 0;}' +
+'.stat{font-size:0.85rem;}.stat strong{display:block;font-size:1.3rem;color:#073C8C;}' +
+'table{width:100%;border-collapse:collapse;font-size:0.85rem;}' +
+'th,td{text-align:left;padding:6px 8px;border-bottom:1px solid #eee;}th{color:#666;font-size:0.75rem;text-transform:uppercase;}' +
+'ul{margin-left:20px;font-size:0.9rem;}.muted{color:#888;font-size:0.8rem;}' +
+'.empty{color:#888;font-size:0.85rem;font-style:italic;}' +
+'.foot{margin-top:32px;padding-top:12px;border-top:1px solid #e0e6ed;color:#999;font-size:0.75rem;text-align:center;}' +
+'@media print{body{padding:24px;}.noprint{display:none;}}' +
+'</style></head><body>' +
+'<div class="head"><div><div class="brand">Mend <span>Learn</span></div><div class="meta">Partner Learning Transcript</div></div>' +
+'<div class="meta">Issued ' + esc(today) + '</div></div>' +
+'<h1>' + esc(data.userName) + '</h1>' +
+'<div class="meta">' + esc(data.role) + ' \u00b7 ' + esc(data.company) + ' \u00b7 ' + esc(data.partnerTier || data.partnerType || '') + '</div>' +
+'<div class="stats">' +
+'<div class="stat"><strong>' + (data.xp || 0).toLocaleString() + '</strong>Total XP</div>' +
+'<div class="stat"><strong>' + MendStore.calcLevel(data.xp || 0) + '</strong>Level \u2014 ' + esc(MendStore.levelTitle(MendStore.calcLevel(data.xp || 0))) + '</div>' +
+'<div class="stat"><strong>' + (data.completedModules || []).length + '</strong>Modules</div>' +
+'<div class="stat"><strong>' + (data.completedLabs || []).length + '</strong>Labs</div>' +
+'<div class="stat"><strong>' + (data.certifications || []).length + '</strong>Certifications</div>' +
+'<div class="stat"><strong>' + (data.streak || 0) + '</strong>Day Streak</div>' +
+'</div>' +
+'<h2>Certifications</h2>' + (certRows ? '<ul>' + certRows + '</ul>' : '<p class="empty">No certifications earned yet.</p>') +
+'<h2>Completed Modules</h2>' +
+(moduleRows ? '<table><thead><tr><th>Module</th><th>Track</th><th style="text-align:right;">Quiz</th></tr></thead><tbody>' + moduleRows + '</tbody></table>' : '<p class="empty">No modules completed yet.</p>') +
+'<div class="foot">Generated by Mend Learn \u2014 Mend.io Partner Academy. This transcript reflects locally stored progress.</div>' +
+'</body></html>');
+        win.document.close();
+        win.focus();
+        setTimeout(() => win.print(), 400);
+    });
+}
 
 /* --- Coming Soon (placeholder actions) --- */
 function initComingSoon() {
     document.querySelectorAll('[data-action="coming-soon"]').forEach(el => {
+        el.setAttribute('aria-disabled', 'true');
+        el.setAttribute('title', 'Coming soon');
+        el.style.opacity = '0.6';
+        el.style.cursor = 'default';
         el.addEventListener('click', (e) => {
             e.preventDefault();
             showToast('This is a prototype \u2014 this feature will be available in the full platform.');
@@ -53,6 +197,7 @@ function initMobileMenu() {
                 <div class="mobile-search" style="position: relative;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="flex-shrink:0;color:var(--color-text-muted)"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
                     <input type="text" placeholder="Search courses, labs..." aria-label="Search">
+                    <button type="button" class="mobile-search-clear" aria-label="Clear search" hidden>&times;</button>
                 </div>`;
             nav.insertBefore(searchLi, nav.firstChild);
 
@@ -60,13 +205,23 @@ function initMobileMenu() {
             if (typeof MendSearch !== 'undefined') {
                 const mobileInput = searchLi.querySelector('input');
                 const mobileContainer = searchLi.querySelector('.mobile-search');
+                const clearBtn = searchLi.querySelector('.mobile-search-clear');
                 const dropdown = document.createElement('div');
                 dropdown.className = 'search-dropdown';
                 dropdown.setAttribute('role', 'listbox');
                 mobileContainer.appendChild(dropdown);
 
+                clearBtn.addEventListener('click', () => {
+                    mobileInput.value = '';
+                    dropdown.innerHTML = '';
+                    dropdown.classList.remove('open');
+                    clearBtn.hidden = true;
+                    mobileInput.focus();
+                });
+
                 let debounce;
                 mobileInput.addEventListener('input', () => {
+                    clearBtn.hidden = mobileInput.value.length === 0;
                     clearTimeout(debounce);
                     debounce = setTimeout(() => {
                         const q = mobileInput.value.trim();
@@ -96,18 +251,26 @@ function initMobileMenu() {
 /* --- Filter Buttons --- */
 function initFilters() {
     document.querySelectorAll('.filter-bar').forEach(bar => {
+        bar.setAttribute('role', 'toolbar');
+        bar.setAttribute('aria-label', 'Content filters');
         const buttons = bar.querySelectorAll('.filter-btn');
         const targetId = bar.dataset.target;
         const targetContainer = targetId ? document.getElementById(targetId) : null;
 
         buttons.forEach(btn => {
+            btn.setAttribute('role', 'button');
+            btn.setAttribute('aria-pressed', btn.classList.contains('active') ? 'true' : 'false');
             btn.addEventListener('click', () => {
                 const isMulti = bar.dataset.multi === 'true';
 
                 if (!isMulti) {
-                    buttons.forEach(b => b.classList.remove('active'));
+                    buttons.forEach(b => {
+                        b.classList.remove('active');
+                        b.setAttribute('aria-pressed', 'false');
+                    });
                 }
                 btn.classList.toggle('active');
+                btn.setAttribute('aria-pressed', btn.classList.contains('active') ? 'true' : 'false');
 
                 if (targetContainer) {
                     const filter = btn.dataset.filter;
@@ -138,20 +301,52 @@ function filterItems(container, bar, filter) {
 /* --- Tabs --- */
 function initTabs() {
     document.querySelectorAll('.tabs').forEach(tabGroup => {
+        tabGroup.setAttribute('role', 'tablist');
         const tabs = tabGroup.querySelectorAll('.tab');
 
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
+        tabs.forEach((tab, index) => {
+            tab.setAttribute('role', 'tab');
+            tab.setAttribute('aria-selected', tab.classList.contains('active') ? 'true' : 'false');
+            tab.setAttribute('tabindex', tab.classList.contains('active') ? '0' : '-1');
+            const targetId = tab.dataset.tab;
+            if (targetId) tab.setAttribute('aria-controls', targetId);
 
-                const targetId = tab.dataset.tab;
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => {
+                    t.classList.remove('active');
+                    t.setAttribute('aria-selected', 'false');
+                    t.setAttribute('tabindex', '-1');
+                });
+                tab.classList.add('active');
+                tab.setAttribute('aria-selected', 'true');
+                tab.setAttribute('tabindex', '0');
+
                 if (targetId) {
                     const parent = tabGroup.parentElement;
                     parent.querySelectorAll('.tab-content').forEach(content => {
                         content.style.display = content.id === targetId ? '' : 'none';
+                        content.setAttribute('role', 'tabpanel');
                     });
                 }
+            });
+
+            /* Arrow-key navigation between tabs */
+            tab.addEventListener('keydown', (e) => {
+                let newIndex = index;
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                    newIndex = (index + 1) % tabs.length;
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    newIndex = (index - 1 + tabs.length) % tabs.length;
+                } else if (e.key === 'Home') {
+                    newIndex = 0;
+                } else if (e.key === 'End') {
+                    newIndex = tabs.length - 1;
+                } else {
+                    return;
+                }
+                e.preventDefault();
+                tabs[newIndex].click();
+                tabs[newIndex].focus();
             });
         });
     });
@@ -177,83 +372,7 @@ function initProgressBars() {
     });
 }
 
-/* --- AI Chat --- */
-function initChat() {
-    const chatInput = document.querySelector('.ai-chat-input input');
-    const chatSend = document.querySelector('.ai-chat-input .btn');
-    const chatMessages = document.querySelector('.ai-chat-messages');
-
-    if (!chatInput || !chatSend || !chatMessages) return;
-
-    const responses = [
-        {
-            keywords: ['sca', 'composition', 'dependency'],
-            response: "Great question! Mend SCA (Software Composition Analysis) helps you find and fix vulnerabilities in open-source dependencies. I'd recommend starting with the <strong>SCA Deep Dive</strong> learning path. It covers vulnerability scanning, license compliance, and policy configuration. Would you like me to enroll you?"
-        },
-        {
-            keywords: ['sast', 'static', 'code analysis'],
-            response: "Mend SAST performs static analysis on your source code to find security vulnerabilities before they reach production. The <strong>SAST Product Track</strong> includes 5 modules covering code analysis, custom rules, and CI/CD integration. Ready to start?"
-        },
-        {
-            keywords: ['certification', 'cert', 'exam', 'certified'],
-            response: "Based on your learning progress, I'd recommend targeting the <strong>Professional Certification</strong> next. You've completed 70% of the prerequisites. Focus areas:\n\n- CI/CD Integration (not yet completed)\n- Policy Management (scored 65% on quiz)\n- Reporting (not started)\n\nEstimated study time: 8 hours over the next 2 weeks. Want me to create a study plan?"
-        },
-        {
-            keywords: ['compete', 'snyk', 'veracode', 'checkmarx'],
-            response: "I can help with competitive positioning! Key differentiators vs. Snyk:\n\n<strong>1. Reachability Analysis</strong> - Mend identifies if vulnerable code is actually called\n<strong>2. Broader Language Support</strong> - 200+ languages vs. Snyk's ~30\n<strong>3. Auto-Remediation</strong> - Automated PR generation for fixes\n\nWant to practice objection handling? Try the <strong>AI Sales Roleplay</strong>!"
-        },
-        {
-            keywords: ['demo', 'poc', 'presentation'],
-            response: "For demo preparation, I recommend the <strong>'The Perfect Demo'</strong> module (60 min). It includes:\n\n- Standard demo script for SCA and SAST\n- Demo environment setup guide\n- Do's and don'ts from top-performing SEs\n\nAfter completing it, you can record your own demo for the Technical Specialist certification."
-        },
-        {
-            keywords: ['hello', 'hi', 'hey', 'help'],
-            response: "Hello! I'm Mend Mentor, your AI learning coach. I can help you with:\n\n- Finding the right learning path for your role\n- Preparing for certifications\n- Answering product questions\n- Practicing sales pitches\n- Navigating labs and content\n\nWhat would you like to work on today?"
-        }
-    ];
-
-    const defaultResponse = "I'd be happy to help with that! Let me search our learning content for relevant resources. In the meantime, you might want to check out the <strong>Learning Paths</strong> page for a structured approach to this topic. Is there anything specific you'd like to focus on?";
-
-    function sendMessage(text) {
-        if (!text.trim()) return;
-
-        const userMsg = document.createElement('div');
-        userMsg.className = 'chat-message user';
-        userMsg.innerHTML = `
-            <div class="chat-bubble">${escapeHtml(text)}</div>
-        `;
-        chatMessages.appendChild(userMsg);
-        chatInput.value = '';
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-
-        setTimeout(() => {
-            const match = responses.find(r =>
-                r.keywords.some(k => text.toLowerCase().includes(k))
-            );
-
-            const aiMsg = document.createElement('div');
-            aiMsg.className = 'chat-message ai';
-            aiMsg.innerHTML = `
-                <div class="chat-bubble">${match ? match.response : defaultResponse}</div>
-            `;
-            chatMessages.appendChild(aiMsg);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }, 800);
-    }
-
-    chatSend.addEventListener('click', () => sendMessage(chatInput.value));
-    chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') sendMessage(chatInput.value);
-    });
-
-    document.querySelectorAll('.chat-suggestion').forEach(btn => {
-        btn.addEventListener('click', () => {
-            sendMessage(btn.textContent);
-        });
-    });
-}
-
-/* --- Search (delegates to MendSearch in search.js) --- */
+/* --- Search --- */
 function initSearch() {
     if (typeof MendSearch !== 'undefined') {
         MendSearch.init();
@@ -293,17 +412,6 @@ function initCourseActions() {
                 MendStore.applyToPage();
             }
             showToast(`Launching lab environment: ${title}`);
-        });
-    });
-}
-
-/* --- Leaderboard Toggle --- */
-function initLeaderboardToggle() {
-    const toggles = document.querySelectorAll('.leaderboard-toggle .tab');
-    toggles.forEach(toggle => {
-        toggle.addEventListener('click', () => {
-            toggles.forEach(t => t.classList.remove('active'));
-            toggle.classList.add('active');
         });
     });
 }
@@ -366,10 +474,34 @@ function initProfileEdit() {
         document.getElementById('edit-company').value = data.company || '';
         document.getElementById('edit-partner-type').value = data.partnerType || 'VAR';
         modal.style.display = '';
+        modal.setAttribute('role', 'dialog');
+        modal.setAttribute('aria-modal', 'true');
+        modal.setAttribute('aria-label', 'Edit profile');
+        /* Focus first input */
+        setTimeout(() => document.getElementById('edit-name').focus(), 50);
+        /* Trap focus inside modal */
+        modal.addEventListener('keydown', trapFocus);
     }
 
     function closeModal() {
         modal.style.display = 'none';
+        modal.removeEventListener('keydown', trapFocus);
+        editBtn.focus();
+    }
+
+    function trapFocus(e) {
+        if (e.key === 'Escape') { closeModal(); return; }
+        if (e.key !== 'Tab') return;
+        const focusable = modal.querySelectorAll('input, select, button, [tabindex]:not([tabindex="-1"])');
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+        }
     }
 
     function getInitials(name) {
@@ -477,401 +609,16 @@ function initProfileEdit() {
     }
 }
 
-/* --- Homepage Dynamic Stats --- */
-function initHomepageDynamic() {
-    if (typeof MendStore === 'undefined') return;
-    const data = MendStore.load();
-
-    /* Update hero welcome */
-    const heroH1 = document.querySelector('.hero h1');
-    if (heroH1) {
-        const firstName = data.userName.split(/\s+/)[0];
-        heroH1.innerHTML = `Welcome back, <span class="accent">${firstName}</span>`;
-    }
-
-    /* Update hero subtitle */
-    const heroP = document.querySelector('.hero .hero-content > p');
-    if (heroP) {
-        const totalModules = 61;
-        const completedCount = data.completedModules.length;
-        const overallPct = Math.round((completedCount / totalModules) * 100);
-        if (completedCount === 0) {
-            heroP.textContent = `Start your journey to becoming Mend.io certified. ${totalModules} modules across 12 tracks are waiting for you.`;
-        } else {
-            heroP.textContent = `You've completed ${completedCount} of ${totalModules} modules (${overallPct}%). Keep going to earn your next certification!`;
-        }
-    }
-
-    /* Update hero stats */
-    const heroStats = document.querySelectorAll('.hero-stats .hero-stat');
-    heroStats.forEach(stat => {
-        const valueEl = stat.querySelector('.value');
-        const labelEl = stat.querySelector('.label');
-        if (!valueEl || !labelEl) return;
-        const lt = labelEl.textContent.toLowerCase();
-        if (lt.includes('level') || lt.includes('specialist') || lt.includes('beginner') || lt.includes('learner') || lt.includes('explorer') || lt.includes('practitioner') || lt.includes('advanced') || lt.includes('expert') || lt.includes('master') || lt.includes('authority') || lt.includes('legend')) {
-            /* This is the level stat - label is the title */
-        } else if (lt.includes('xp') || lt.includes('total')) {
-            valueEl.textContent = data.xp.toLocaleString();
-        } else if (lt.includes('streak') || lt.includes('day')) {
-            valueEl.textContent = data.streak;
-        } else if (lt.includes('badge')) {
-            valueEl.textContent = Math.floor(data.completedModules.length / 3);
-        } else if (lt.includes('cert')) {
-            valueEl.textContent = data.certifications.length;
-        }
-    });
-
-    /* Update "Your Progress" stat cards */
-    const progressCards = document.querySelectorAll('.page-content .grid-4 .card-flat');
-    progressCards.forEach(card => {
-        const value = card.querySelector('.stat-value');
-        const label = card.querySelector('.stat-label');
-        const sub = card.querySelector('.text-xs');
-        const fill = card.querySelector('.progress-bar .fill');
-        if (!value || !label) return;
-        const lt = label.textContent.toLowerCase();
-        if (lt.includes('modules completed')) {
-            const total = 61;
-            const done = data.completedModules.length;
-            value.textContent = done;
-            if (sub) sub.textContent = `${done} of ${total} available`;
-            if (fill) fill.style.width = Math.round((done / total) * 100) + '%';
-        } else if (lt.includes('labs completed')) {
-            const done = data.completedLabs.length;
-            value.textContent = done;
-            if (sub) sub.textContent = `${done} of 10 available`;
-            if (fill) fill.style.width = Math.round((done / 10) * 100) + '%';
-        } else if (lt.includes('certifications')) {
-            const done = data.certifications.length;
-            value.textContent = done;
-            if (sub) sub.textContent = `${done} of 6 available`;
-            if (fill) fill.style.width = Math.round((done / 6) * 100) + '%';
-        }
-    });
-
-    /* Update streak badge */
-    const streakBadge = document.querySelector('.section-header .badge.badge-accent');
-    if (streakBadge && streakBadge.textContent.includes('Day')) {
-        streakBadge.textContent = data.streak + ' Days';
-    }
-
-    /* Update streak widget text */
-    const streakText = document.querySelector('.streak-widget .text-muted');
-    if (streakText) {
-        streakText.textContent = `Complete a module today to extend your streak to ${data.streak + 1} days`;
-    }
-
-    /* Update "Continue Learning" cards with dynamic progress */
-    document.querySelectorAll('.path-card').forEach(card => {
-        const link = card.querySelector('a[href*="modules/"]');
-        if (!link) return;
-        const href = link.getAttribute('href');
-        const track = MendStore.trackFromHref(href);
-        if (!track) return;
-
-        const trackModules = MendStore.getTrackModules(track);
-        const completed = trackModules.filter(m => data.completedModules.includes(m)).length;
-        const total = trackModules.length;
-        const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
-
-        const progressFill = card.querySelector('.progress-bar .fill');
-        if (progressFill) progressFill.style.width = pct + '%';
-
-        const pctText = card.querySelector('.path-card-footer .text-sm');
-        if (pctText) {
-            if (pct === 100) pctText.textContent = 'Completed!';
-            else if (pct > 0) pctText.textContent = pct + '% complete';
-            else pctText.textContent = 'Not started';
-        }
-
-        const statusBadge = card.querySelector('.path-card-header .badge');
-        if (statusBadge) {
-            if (pct === 100) {
-                statusBadge.textContent = 'Completed';
-                statusBadge.className = 'badge badge-green';
-            } else if (pct > 0) {
-                statusBadge.textContent = 'In Progress';
-                statusBadge.className = 'badge badge-blue';
-            } else {
-                statusBadge.textContent = 'Not Started';
-                statusBadge.className = 'badge badge-orange';
-            }
-        }
-
-        /* Update button text */
-        const actionBtn = card.querySelector('.path-card-footer .btn');
-        if (actionBtn) {
-            if (pct === 100) actionBtn.textContent = 'Review';
-            else if (pct > 0) actionBtn.textContent = 'Continue';
-            else actionBtn.textContent = 'Start';
-        }
-    });
-
-    /* Update certification progress cards */
-    const certCards = document.querySelectorAll('.card-flat.card-accent');
-    certCards.forEach(card => {
-        const h4 = card.querySelector('h4');
-        if (!h4) return;
-        const text = h4.textContent.toLowerCase();
-        if (text.includes('associate')) {
-            const earned = MendStore.hasCertification('associate');
-            const badge = card.querySelector('.badge');
-            const muted = card.querySelector('.text-muted');
-            if (earned && badge) {
-                badge.textContent = 'Certified';
-                badge.className = 'badge badge-green';
-                if (muted) {
-                    const cert = MendStore.getCertification('associate');
-                    muted.textContent = cert ? `Earned ${cert.date}` : 'Earned';
-                }
-            }
-        }
-    });
-
-    updateHomepageRecommendations(data);
-    updateHomepageNewContent(data);
-    updateHomepageReadiness(data);
-}
-
-function updateHomepageRecommendations(data) {
-    const cards = document.querySelectorAll('.section h2');
-    const recommendedSection = Array.from(cards).find(h => h.textContent.includes('Recommended For You'))?.closest('.section');
-    if (!recommendedSection) return;
-    const items = [
-        { title: 'Vulnerability Prioritization', meta: 'SCA Track - 30 min - 75 XP', href: 'modules/sca/04-prioritization.html', tags: ['sca', 'prioritization', 'vulnerability', 'risk'] },
-        { title: 'CI/CD Pipeline Fundamentals', meta: 'CI/CD Track - 60 min - 100 XP', href: 'modules/cicd/01-pipeline-fundamentals.html', tags: ['cicd', 'pipeline', 'integration'] },
-        { title: 'Competitive Positioning', meta: 'Sales Track - 40 min - 150 XP', href: 'modules/sales/02-competitive-positioning.html', tags: ['sales', 'competitive', 'snyk'] }
-    ];
-    const profile = (data.role || '').toLowerCase() + ' ' + (data.partnerType || '').toLowerCase();
-    const completed = new Set(data.completedModules || []);
-    const scored = items.map(item => {
-        let score = item.tags.some(t => profile.includes(t)) ? 2 : 0;
-        if (!completed.has(item.href.replace('modules/', '').replace('.html', ''))) score += 1;
-        return { ...item, score };
-    }).sort((a, b) => b.score - a.score);
-    const container = recommendedSection.querySelector('.flex.flex-col.gap-12');
-    if (!container) return;
-    container.innerHTML = scored.map(item => `
-        <div class="card-flat" style="display:flex;gap:16px;align-items:center;padding:16px;">
-            <div style="width:40px;height:40px;border-radius:var(--radius-sm);background:rgba(7,60,140,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;">★</div>
-            <div style="flex:1;">
-                <div style="font-weight:600;font-size:0.9rem;color:var(--color-text-bright);">${item.title}</div>
-                <div class="text-xs text-muted">${item.meta}</div>
-            </div>
-            <a href="${item.href}" class="btn btn-sm btn-secondary">Start</a>
-        </div>`).join('');
-}
-
-function updateHomepageNewContent(data) {
-    const section = Array.from(document.querySelectorAll('.section h2')).find(h => h.textContent.includes('New & Updated'))?.closest('.section');
-    if (!section) return;
-    const container = section.querySelector('.flex.flex-col.gap-12');
-    if (!container) return;
-    const recent = [
-        { title: 'Secrets Detection Lab', meta: 'New lab - 45 min - Added 2 days ago', badge: 'New' },
-        { title: 'Battlecard: Mend vs Snyk (v3)', meta: 'Updated - PDF - Last week', badge: 'Updated' },
-        { title: 'Professional Exam Prep', meta: `${(data.quizScores && Object.keys(data.quizScores).length) || 0} completed quizzes`, badge: 'New' }
-    ];
-    container.innerHTML = recent.map(item => `
-        <div class="card-flat" style="display:flex;gap:16px;align-items:center;padding:16px;">
-            <div style="width:40px;height:40px;border-radius:var(--radius-sm);background:rgba(46,204,113,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">•</div>
-            <div style="flex:1;">
-                <div style="font-weight:600;font-size:0.9rem;color:var(--color-text-bright);">${item.title}</div>
-                <div class="text-xs text-muted">${item.meta}</div>
-            </div>
-            <span class="badge badge-accent">${item.badge}</span>
-        </div>`).join('');
-}
-
-function updateHomepageReadiness(data) {
-    const section = Array.from(document.querySelectorAll('.section h2')).find(h => h.textContent.includes('Certification Progress'))?.closest('.section');
-    if (!section) return;
-    const professionalCard = Array.from(section.querySelectorAll('.card-flat')).find(card => (card.textContent || '').includes('Mend.io Certified Professional'));
-    if (!professionalCard) return;
-    const required = ['sca', 'sast', 'sales'];
-    const done = required.reduce((n, track) => n + (MendStore.getCourseProgress(track) >= 100 ? 1 : 0), 0);
-    const pct = Math.round((done / required.length) * 100);
-    const muted = professionalCard.querySelector('.text-muted');
-    const fill = professionalCard.querySelector('.progress-bar .fill');
-    if (muted) muted.textContent = `${pct}% of prerequisite tracks complete`;
-    if (fill) fill.style.width = `${pct}%`;
-}
-
-function initCertificationExams() {
-    const buttons = document.querySelectorAll('[data-cert-exam]');
-    if (!buttons.length) return;
-    buttons.forEach(btn => btn.addEventListener('click', () => openCertificationExam(btn.dataset.certExam)));
-}
-
-function openCertificationExam(certId) {
-    const questionsByCert = {
-        professional: [
-            { q: 'What is the main purpose of SCA?', a: ['Find vulnerable dependencies', 'Scan only source code', 'Generate invoices', 'Manage users'], c: 0 },
-            { q: 'What does a CI/CD integration do?', a: ['Adds security checks to pipelines', 'Creates certificates', 'Replaces source control', 'Disables tests'], c: 0 },
-            { q: 'What should you do with high-risk findings?', a: ['Prioritize and remediate', 'Ignore them', 'Delete the repo', 'Wait for next quarter'], c: 0 }
-        ],
-        'sales-specialist': [
-            { q: 'What is a key competitive differentiator?', a: ['Reachability analysis', 'More ads', 'No reporting', 'Fewer options'], c: 0 },
-            { q: 'What is the goal of objection handling?', a: ['Address concerns clearly', 'Avoid questions', 'End the deal', 'Change the topic'], c: 0 },
-            { q: 'What should a strong demo include?', a: ['Customer outcome and value', 'Random features', 'No storyline', 'Only pricing'], c: 0 }
-        ]
-    };
-    const cert = questionsByCert[certId];
-    if (!cert) return;
-    const overlay = document.createElement('div');
-    overlay.className = 'cert-modal-overlay';
-    overlay.innerHTML = `<div class="cert-modal" style="max-width:760px;"><div style="padding:24px;"><h3 style="margin-bottom:8px;">Practice Exam</h3><p class="text-muted" style="margin-bottom:16px;">Answer all questions to earn this certification.</p><div class="exam-questions"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:20px;"><button class="btn btn-secondary exam-cancel">Close</button><button class="btn btn-primary exam-submit">Submit</button></div></div></div>`;
-    document.body.appendChild(overlay);
-    const host = overlay.querySelector('.exam-questions');
-    host.innerHTML = cert.map((item, idx) => `<div style="margin-bottom:16px;"><div style="font-weight:600;margin-bottom:8px;">${idx + 1}. ${item.q}</div>${item.a.map((opt, i) => `<label class="quiz-option" style="display:block;margin:6px 0;"><input type="radio" name="exam-${idx}" value="${i}"> ${opt}</label>`).join('')}</div>`).join('');
-    overlay.querySelector('.exam-cancel').onclick = () => overlay.remove();
-    overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
-    overlay.querySelector('.exam-submit').onclick = () => {
-        let correct = 0;
-        cert.forEach((item, idx) => {
-            const sel = overlay.querySelector(`input[name="exam-${idx}"]:checked`);
-            if (sel && Number(sel.value) === item.c) correct++;
-        });
-        const pct = Math.round((correct / cert.length) * 100);
-        if (pct >= 70) {
-            if (typeof MendStore !== 'undefined') MendStore.earnCertification(certId);
-            showToast('Certification earned');
-            overlay.remove();
-            location.reload();
-        } else {
-            showToast('Not quite, try again');
-        }
-    };
-}
-
-/* --- Dynamic Leaderboard --- */
-function initDynamicLeaderboard() {
-    if (typeof MendStore === 'undefined') return;
-    const table = document.querySelector('.leaderboard-table');
-    if (!table) return;
-
-    const data = MendStore.load();
-    const userXP = data.xp;
-    const userName = data.userName || 'Jane Doe';
-    const userCompany = data.company || 'Acme Security';
-    const userLevel = data.level;
-    const userCerts = data.certifications ? data.certifications.length : 0;
-
-    function getInitials(name) {
-        if (!name) return 'JD';
-        const parts = name.trim().split(/\s+/);
-        if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
-        return parts[0].slice(0, 2).toUpperCase();
-    }
-
-    function levelBadge(lvl) {
-        if (lvl >= 7) return '<span class="badge badge-purple">Expert</span>';
-        if (lvl >= 4) return '<span class="badge badge-blue">Professional</span>';
-        return '<span class="badge badge-green">Associate</span>';
-    }
-
-    /* Base competitors with static XP */
-    const competitors = [
-        { name: 'Alex Kumar', company: 'SecureStack Partners', xp: 12300, level: 10, certs: 3, gradient: 'linear-gradient(135deg, #3498db, #2980b9)' },
-        { name: 'Maria Chen', company: 'CyberGuard Solutions', xp: 8750, level: 8, certs: 2, gradient: 'linear-gradient(135deg, #9b59b6, #8e44ad)' },
-        { name: 'Sarah Park', company: 'AppShield Inc.', xp: 7200, level: 7, certs: 2, gradient: 'linear-gradient(135deg, #e67e22, #d35400)' },
-        { name: 'Raj Mehta', company: 'CloudSec Global', xp: 6800, level: 7, certs: 2, gradient: 'linear-gradient(135deg, #1abc9c, #16a085)' },
-        { name: 'Lisa Wong', company: 'DevSecure Partners', xp: 5400, level: 6, certs: 1, gradient: 'linear-gradient(135deg, #2ecc71, #27ae60)' },
-        { name: 'Tom Jensen', company: 'NordSec AB', xp: 4100, level: 5, certs: 1, gradient: 'linear-gradient(135deg, #f39c12, #e67e22)' },
-        { name: 'Aisha Nakamura', company: 'SecureStack Partners', xp: 3600, level: 5, certs: 1, gradient: 'linear-gradient(135deg, #e74c3c, #c0392b)' },
-        { name: 'Pierre Gomez', company: 'AppShield Inc.', xp: 2900, level: 4, certs: 1, gradient: 'linear-gradient(135deg, #2ecc71, #27ae60)' },
-        { name: 'Yuki Tanaka', company: 'SecureOps Tokyo', xp: 2100, level: 4, certs: 0, gradient: 'linear-gradient(135deg, #8e44ad, #6c3483)' },
-        { name: 'Carlos Ruiz', company: 'CyberSur Consulting', xp: 1500, level: 3, certs: 0, gradient: 'linear-gradient(135deg, #16a085, #1abc9c)' },
-        { name: 'Emma Brown', company: 'ShieldWorks Ltd', xp: 900, level: 2, certs: 0, gradient: 'linear-gradient(135deg, #3498db, #2980b9)' },
-        { name: 'David Kim', company: 'CodeGuard Inc.', xp: 400, level: 1, certs: 0, gradient: 'linear-gradient(135deg, #e74c3c, #c0392b)' }
-    ];
-
-    /* Insert current user into the sorted list */
-    const userEntry = {
-        name: userName,
-        company: userCompany,
-        xp: userXP,
-        level: userLevel,
-        certs: userCerts,
-        gradient: 'linear-gradient(135deg, var(--color-accent), var(--color-secondary))',
-        isUser: true
-    };
-
-    const all = [...competitors, userEntry].sort((a, b) => b.xp - a.xp);
-
-    /* Assign ranks */
-    all.forEach((entry, i) => { entry.rank = i + 1; });
-
-    /* Rebuild podium */
-    const podiumGrid = document.querySelector('.section .grid-3');
-    if (podiumGrid) {
-        const top3 = all.slice(0, 3);
-        const podiumColors = [
-            { bg: 'linear-gradient(135deg, #f1c40f, #f39c12)', color: '#f1c40f', crown: true, size: '64px', fontSize: '2rem', mt: '0' },
-            { bg: 'linear-gradient(135deg, #bdc3c7, #95a5a6)', color: '#bdc3c7', crown: false, size: '56px', fontSize: '1.75rem', mt: '24px' },
-            { bg: 'linear-gradient(135deg, #e67e22, #d35400)', color: '#e67e22', crown: false, size: '52px', fontSize: '1.5rem', mt: '40px' }
-        ];
-        /* Podium order: 2nd, 1st, 3rd */
-        const order = [1, 0, 2];
-        const labels = ['1st', '2nd', '3rd'];
-        const podiumCards = podiumGrid.querySelectorAll('.card-flat');
-        order.forEach((posIdx, cardIdx) => {
-            const entry = top3[posIdx];
-            const p = podiumColors[posIdx];
-            const card = podiumCards[cardIdx];
-            if (!entry || !card) return;
-            const initials = getInitials(entry.name);
-            const certLevel = entry.level >= 7 ? 'Expert Certified' : entry.level >= 4 ? 'Professional Certified' : 'Associate';
-            const highlight = entry.isUser ? ' style="border: 2px solid var(--color-accent);"' : '';
-            const youTag = entry.isUser ? ' (You)' : '';
-            card.setAttribute('style', `text-align: center; margin-top: ${p.mt};${entry.isUser ? ' border: 2px solid var(--color-accent);' : ''}`);
-            card.innerHTML = `
-                ${p.crown ? '<div style="font-size: 1.5rem; margin-bottom: 8px;">&#128081;</div>' : ''}
-                <div style="width: ${p.size}; height: ${p.size}; border-radius: 50%; background: ${entry.isUser ? userEntry.gradient : p.bg}; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: ${posIdx === 0 ? '1.5rem' : posIdx === 1 ? '1.25rem' : '1.1rem'}; font-weight: 700; color: white;">${initials}</div>
-                <div style="font-size: ${p.fontSize}; font-weight: 700; color: ${p.color};">${labels[posIdx]}</div>
-                <h4>${entry.name}${youTag}</h4>
-                <div class="text-sm text-muted mb-8">${entry.company}</div>
-                <div style="font-size: ${posIdx === 0 ? '1.5rem' : posIdx === 1 ? '1.25rem' : '1.1rem'}; font-weight: 700; color: var(--color-accent);">${entry.xp.toLocaleString()} XP</div>
-                <div class="text-xs text-muted">${certLevel}</div>
-            `;
-        });
-    }
-
-    /* Rebuild table body */
-    const tbody = table.querySelector('tbody');
-    if (!tbody) return;
-    tbody.innerHTML = '';
-
-    const rankClasses = { 1: 'gold', 2: 'silver', 3: 'bronze' };
-    all.forEach(entry => {
-        const tr = document.createElement('tr');
-        if (entry.isUser) tr.className = 'leaderboard-highlight';
-        const rankClass = rankClasses[entry.rank] ? ` ${rankClasses[entry.rank]}` : '';
-        const initials = getInitials(entry.name);
-        const youTag = entry.isUser ? ' (You)' : '';
-        tr.innerHTML = `
-            <td class="leaderboard-rank${rankClass}">${entry.rank}</td>
-            <td><div class="leaderboard-user"><div class="leaderboard-avatar" style="background: ${entry.gradient};">${initials}</div><span class="leaderboard-name">${entry.name}${youTag}</span></div></td>
-            <td class="text-muted">${entry.company}</td>
-            <td>${levelBadge(entry.level)}</td>
-            <td>${entry.certs}</td>
-            <td class="leaderboard-xp" style="text-align: right;">${entry.xp.toLocaleString()}</td>
-        `;
-        tbody.appendChild(tr);
-    });
-}
-
 /* --- Animations --- */
-const styleSheet = document.createElement('style');
-styleSheet.textContent = `
-    @keyframes slideIn {
-        from { transform: translateX(100px); opacity: 0; }
-        to { transform: translateX(0); opacity: 1; }
-    }
-    @keyframes fadeOut {
-        from { opacity: 1; }
-        to { opacity: 0; }
-    }
-`;
+var styleSheet = document.createElement('style');
+styleSheet.textContent = '\
+    @keyframes slideIn {\
+        from { transform: translateX(100px); opacity: 0; }\
+        to { transform: translateX(0); opacity: 1; }\
+    }\
+    @keyframes fadeOut {\
+        from { opacity: 1; }\
+        to { opacity: 0; }\
+    }\
+';
 document.head.appendChild(styleSheet);

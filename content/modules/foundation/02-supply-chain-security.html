@@ -1,0 +1,198 @@
+---
+title: Software Supply Chain Security - Mend Learn
+---
+            <div class="module-breadcrumb">
+                <a href="../../learning-paths.html">Learning Paths</a> &rsaquo;
+                <a href="01-appsec-fundamentals.html">Foundation Track</a> &rsaquo;
+                <span>Software Supply Chain Security</span>
+            </div>
+
+            <div class="module-header">
+                <div class="module-badge completed-badge">&#10003; Completed</div>
+                <h1>Why Software Supply Chain Security Matters</h1>
+                <div class="module-meta">
+                    <span>&#128338; 40 min</span>
+                    <span>&#128218; 5 sections</span>
+                    <span>&#11088; 150 XP</span>
+                    <span class="level-badge beginner">Level 1 - Beginner</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>The Open-Source Dependency Landscape</li>
+                    <li>Real-World Supply Chain Attacks</li>
+                    <li>Attack Vectors in the Supply Chain</li>
+                    <li>SBOM: The Software Bill of Materials</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>The Open-Source Dependency Landscape</h2>
+                <p>Every modern application relies heavily on open-source software. When your developers add a single package from npm, PyPI, Maven, or NuGet, they often pull in dozens of <strong>transitive dependencies</strong> &mdash; libraries your code never directly references but still ships with.</p>
+
+                <div class="key-concept">
+                    <h4>&#128161; Direct vs. Transitive Dependencies</h4>
+                    <p>A <strong>direct dependency</strong> is a package your code explicitly imports. A <strong>transitive dependency</strong> is a package required by one of your direct dependencies. The Log4Shell vulnerability (CVE-2021-44228) was a transitive dependency for most affected organizations &mdash; they never imported Log4j directly, but it was bundled deep in their dependency tree.</p>
+                </div>
+
+                <p>Mend SCA tracks over <strong>200+ programming languages and package managers</strong>, giving organizations full visibility into both direct and transitive dependencies across their entire codebase.</p>
+            </section>
+
+            <section class="module-section">
+                <h2>Real-World Supply Chain Attacks</h2>
+                <p>Supply chain attacks have grown dramatically in frequency and sophistication. Here are the most impactful incidents that shaped the industry:</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128165;</div>
+                        <h4>SolarWinds (2020)</h4>
+                        <p>Attackers compromised the SolarWinds Orion build process, injecting a backdoor (SUNBURST) into software updates distributed to 18,000+ customers including US government agencies.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128293;</div>
+                        <h4>Log4Shell (2021)</h4>
+                        <p>CVE-2021-44228 in Apache Log4j affected millions of applications worldwide. A single JNDI lookup vulnerability in a ubiquitous logging library enabled remote code execution.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9888;&#65039;</div>
+                        <h4>XZ Utils (2024)</h4>
+                        <p>A sophisticated multi-year social engineering attack planted a backdoor in the XZ compression library, targeting SSH authentication on Linux systems. Caught just before widespread deployment.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128274;</div>
+                        <h4>Codecov (2021)</h4>
+                        <p>Attackers modified the Codecov Bash Uploader script to exfiltrate environment variables, credentials, and tokens from CI/CD pipelines of thousands of organizations.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Attack Vectors in the Supply Chain</h2>
+                <p>Understanding how attackers compromise the supply chain helps organizations build better defenses:</p>
+
+                <div class="vuln-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Attack Vector</th>
+                                <th>Description</th>
+                                <th>Mend Protection</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Typosquatting</strong></td>
+                                <td>Publishing malicious packages with names similar to popular ones (e.g., <code>lodas</code> instead of <code>lodash</code>)</td>
+                                <td>Mend SCA flags malicious packages in real-time</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Dependency Confusion</strong></td>
+                                <td>Exploiting package manager resolution to substitute internal packages with public malicious versions</td>
+                                <td>Policy controls and registry configuration</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Compromised Maintainers</strong></td>
+                                <td>Social engineering or account takeover of legitimate package maintainers</td>
+                                <td>Behavioral analysis of package updates</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Build System Tampering</strong></td>
+                                <td>Injecting malicious code into CI/CD pipelines or build processes</td>
+                                <td>SBOM verification and integrity checks</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Known CVEs</strong></td>
+                                <td>Using publicly disclosed vulnerabilities in unpatched dependencies</td>
+                                <td>Continuous scanning with reachability analysis</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>SBOM: The Software Bill of Materials</h2>
+                <p>An <strong>SBOM (Software Bill of Materials)</strong> is a comprehensive inventory of all components in a software product. It lists every library, framework, and dependency along with version numbers, licenses, and vulnerability status.</p>
+
+                <p>SBOMs are increasingly required by government regulations and enterprise procurement:</p>
+                <ul>
+                    <li><strong>US Executive Order 14028</strong> (2021) &mdash; Requires SBOMs from vendors selling to the federal government</li>
+                    <li><strong>EU Cyber Resilience Act</strong> &mdash; Mandates SBOMs for all digital products sold in the EU</li>
+                    <li><strong>NIST SP 800-218</strong> &mdash; Secure Software Development Framework includes SBOM requirements</li>
+                </ul>
+
+                <p>Mend SCA generates SBOMs in two industry-standard formats:</p>
+                <ul>
+                    <li><strong>SPDX 2.2</strong> &mdash; Linux Foundation standard (ISO/IEC 5962:2021)</li>
+                    <li><strong>CycloneDX 1.4</strong> &mdash; OWASP standard with rich vulnerability information</li>
+                </ul>
+
+                <div class="key-concept">
+                    <h4>&#128161; VEX: Vulnerability Exploitability eXchange</h4>
+                    <p>VEX documents communicate whether a product is affected by a specific vulnerability. Mend SCA leverages VEX data alongside reachability analysis to provide context on whether a CVE actually impacts your application, reducing false positive alert fatigue.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 1:</strong> What is a transitive dependency?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> A dependency you explicitly import in your code</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> A dependency required by one of your direct dependencies</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> A development-only dependency not shipped to production</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> A dependency that transitions between versions automatically</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-c="Yw==">
+                        <p><strong>Question 2:</strong> What does an SBOM provide?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> A security audit report of source code</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Runtime performance metrics for deployed software</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> A comprehensive inventory of all components in a software product</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> A build manifest for CI/CD pipelines</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 3:</strong> Which supply chain attack involved a backdoor in a compression library caught before widespread deployment?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q3" value="a"> XZ Utils (2024)</label>
+                            <label class="quiz-option"><input type="radio" name="q3" value="b"> Log4Shell (2021)</label>
+                            <label class="quiz-option"><input type="radio" name="q3" value="c"> SolarWinds (2020)</label>
+                            <label class="quiz-option"><input type="radio" name="q3" value="d"> Codecov (2021)</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>150 XP earned for completing this module</span>
+                </div>
+                <div class="module-nav-buttons">
+                    <a href="01-appsec-fundamentals.html" class="btn btn-secondary">&#8592; Previous</a>
+                    <a href="03-mend-platform-overview.html" class="btn btn-primary">Next: Mend Platform Overview &#8594;</a>
+                </div>
+            </div>

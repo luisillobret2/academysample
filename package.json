@@ -1,0 +1,21 @@
+{
+  "name": "mend-learn",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mend Learn - Mend.io partner learning platform (static HTML/CSS/JS prototype)",
+  "scripts": {
+    "lint": "eslint \"js/**/*.js\"",
+    "lint:fix": "eslint \"js/**/*.js\" --fix",
+    "test": "playwright test",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "build:modules": "python3 scripts/build-modules.py build",
+    "check:modules": "python3 scripts/build-modules.py check"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "@playwright/test": "^1.49.1",
+    "eslint": "^9.13.0",
+    "globals": "^15.11.0"
+  }
+}

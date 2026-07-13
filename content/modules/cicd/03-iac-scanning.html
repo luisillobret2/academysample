@@ -1,0 +1,113 @@
+---
+title: IaC Scanning - Mend Learn
+description: Scan Terraform, Kubernetes, and CloudFormation for misconfigurations before deployment.
+---
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>CI/CD &amp; DevOps</span> &rsaquo; <span>IaC Scanning</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>IaC Scanning</h1>
+                <div class="module-meta">
+                    <span>&#128338; 40 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 175 XP</span>
+                    <span class="level-badge expert">Level 3 - Expert</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <ul>
+                    <li>Explain why infrastructure as code needs security scanning</li>
+                    <li>Detect misconfigurations in Terraform, Kubernetes, and CloudFormation</li>
+                    <li>Enforce IaC policy in the pipeline before deployment</li>
+                    <li>Remediate common cloud misconfigurations</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>Why Scan IaC?</h2>
+                <p>Misconfigured infrastructure is a leading cause of cloud breaches. Scanning IaC catches issues like public buckets and open security groups before they are ever provisioned.</p>
+                <div class="vuln-table">
+                    <table>
+                        <thead>
+                            <tr><th>Misconfiguration</th><th>Risk</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Public S3 bucket</td><td>Data exposure</td></tr>
+                            <tr><td>0.0.0.0/0 security group</td><td>Open attack surface</td></tr>
+                            <tr><td>Unencrypted volumes</td><td>Data-at-rest exposure</td></tr>
+                            <tr><td>Privileged containers</td><td>Container escape</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Scan Before Deploy</h2>
+                <p>Run IaC scans in the pipeline so misconfigurations fail the build, not production.</p>
+                <pre><code># Scan IaC files in the pipeline
+mend iac scan --dir ./infra --fail-on high
+
+# Common targets
+#   Terraform (*.tf), Kubernetes manifests (*.yaml),
+#   CloudFormation (*.json / *.yaml), Helm charts</code></pre>
+                <div class="key-concept">
+                    <h4>&#128161; Shift Cloud Security Left</h4>
+                    <p>Fixing a public bucket in a Terraform PR takes seconds; fixing it after a breach takes far longer and carries real cost.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Remediate &amp; Enforce</h2>
+                <p>Pair detection with guardrails: policy blocks high-risk changes and suggested fixes speed remediation.</p>
+                <div class="warning-box">
+                    <h4>&#9888;&#65039; Watch Module Sources</h4>
+                    <p>Third-party Terraform and Helm modules can introduce insecure defaults. Scan them like any other dependency.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>IaC scanning lab<span class="resource-meta">Hands-on Lab</span></span></a>
+                    <a class="module-resource" href="../container/03-kubernetes-security.html"><span class="resource-icon">&#128230;</span><span>Kubernetes Security<span class="resource-meta">Module</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128221;</span><span>IaC hardening checklist<span class="resource-meta">Cheat Sheet</span></span></a>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="Yw==">
+                        <p><strong>Question 1:</strong> When is the best time to catch an IaC misconfiguration?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> After a breach</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> During the annual audit</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> In the pull request, before deployment</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Never, it is optional</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 2:</strong> A security group allowing 0.0.0.0/0 represents what risk?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Data-at-rest exposure</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> An open, internet-wide attack surface</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Slower builds</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> No risk</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <button class="mark-complete-btn" data-xp="175">Mark as Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="02-gitops-integration.html" class="btn btn-secondary">&#8592; Previous</a>
+                    <a href="04-workflow-automation.html" class="btn btn-primary">Next: Custom Workflow Automation &#8594;</a>
+                </div>
+            </div>

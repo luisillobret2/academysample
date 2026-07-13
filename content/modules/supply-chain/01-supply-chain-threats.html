@@ -1,0 +1,145 @@
+---
+title: Supply Chain Threats &amp; Attack Vectors - Mend Learn
+---
+            <div class="breadcrumb">
+                <a href="../../learning-paths.html">Learning Paths</a> &#8250; Supply Chain Security &#8250; Threats &amp; Attack Vectors
+            </div>
+
+            <h1>Supply Chain Threats &amp; Attack Vectors</h1>
+            <div class="module-meta">
+                <span>&#128336; 45 min</span>
+                <span>&#128218; 4 sections</span>
+                <span>&#11088; 200 XP</span>
+                <span class="module-level">Level 2 - Intermediate</span>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>The Software Supply Chain</li>
+                    <li>Real-World Supply Chain Attacks</li>
+                    <li>Dependency Risk Scoring</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>The Software Supply Chain</h2>
+                <p>Modern applications are built on a deep supply chain of open-source components. The average enterprise application contains over 80% open-source code, with hundreds of direct and transitive dependencies. This creates a massive attack surface that threat actors increasingly exploit.</p>
+
+                <div class="video-placeholder">
+                    <div class="play-btn">&#9654;</div>
+                    <p>Understanding Software Supply Chain Risk</p>
+                    <span>8:15</span>
+                </div>
+
+                <h3>Key Supply Chain Attack Vectors</h3>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#128230;</div>
+                        <h4>Dependency Confusion</h4>
+                        <p>Attackers publish malicious packages to public registries using internal package names, exploiting package manager resolution order.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#9000;&#65039;</div>
+                        <h4>Typosquatting</h4>
+                        <p>Malicious packages with names similar to popular libraries (e.g., <code>lod-ash</code> vs <code>lodash</code>) to trick developers.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128274;</div>
+                        <h4>Compromised Maintainers</h4>
+                        <p>Attackers gain control of legitimate maintainer accounts to inject malicious code into trusted packages.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#9888;&#65039;</div>
+                        <h4>Malicious Updates</h4>
+                        <p>A legitimate package is updated with malicious code — as seen in the event-stream and ua-parser-js incidents.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Real-World Supply Chain Attacks</h2>
+                <p>Understanding past attacks helps organizations build better defenses:</p>
+
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Attack</th><th>Vector</th><th>Impact</th><th>Year</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>SolarWinds</strong></td><td>Build system compromise</td><td>18,000+ organizations affected</td><td>2020</td></tr>
+                        <tr><td><strong>Log4Shell</strong></td><td>Known vulnerability (CVE-2021-44228)</td><td>Millions of applications worldwide</td><td>2021</td></tr>
+                        <tr><td><strong>Codecov</strong></td><td>CI/CD pipeline compromise</td><td>Hundreds of customers' secrets exposed</td><td>2021</td></tr>
+                        <tr><td><strong>ua-parser-js</strong></td><td>Maintainer account takeover</td><td>Cryptominer + credential stealer</td><td>2021</td></tr>
+                        <tr><td><strong>xz Utils</strong></td><td>Long-term social engineering</td><td>SSH backdoor in Linux distributions</td><td>2024</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; How Mend Helps</h4>
+                    <p>Mend's malicious package detection identifies dependency confusion, typosquatting, and known-malicious packages in real-time. The malicious package database is continuously updated with feeds from security researchers and automated analysis.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Dependency Risk Scoring</h2>
+                <p>Mend evaluates the risk of each dependency based on multiple factors beyond just known vulnerabilities:</p>
+                <ul>
+                    <li><strong>Vulnerability History</strong> — How many CVEs have been found in this package, and how quickly were they fixed?</li>
+                    <li><strong>Maintainer Health</strong> — Is the project actively maintained? How many contributors does it have?</li>
+                    <li><strong>License Risk</strong> — Does the license impose restrictions that conflict with your organization's policies?</li>
+                    <li><strong>Popularity &amp; Usage</strong> — Widely-used packages get more scrutiny, but abandoned popular packages are high risk</li>
+                    <li><strong>Provenance &amp; Integrity</strong> — Does the package have verifiable build provenance? Are releases signed?</li>
+                </ul>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 1:</strong> What is a dependency confusion attack?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Publishing malicious packages to public registries using internal package names</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Confusing developers with complex dependency trees</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Using deprecated packages that have known vulnerabilities</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Mixing production and development dependencies</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-c="Yw==">
+                        <p><strong>Question 2:</strong> Which supply chain attack involved long-term social engineering to insert a backdoor?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Log4Shell</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> SolarWinds</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> xz Utils</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Codecov</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>200 XP earned for completing this module</span>
+                </div>
+                <button class="btn btn-primary mark-complete-btn" data-xp="200">Mark Complete</button>
+                <div class="module-nav-buttons">
+                    <span></span>
+                    <a href="02-sbom-governance.html" class="btn btn-primary">Next: SBOM &amp; Governance &#8594;</a>
+                </div>
+            </div>

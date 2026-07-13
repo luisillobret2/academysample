@@ -3,10 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href="img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="img/mend-logo.png">
+    <link rel="apple-touch-icon" href="img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <!-- seo -->
+    <meta name="description" content="Mend Learn is the Mend.io partner learning platform: guided tracks, hands-on labs, certifications, and gamified progress for application security.">
+    <link rel="canonical" href="https://luisillobret2.github.io/academysample/index.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Mend Learn">
+    <meta property="og:title" content="Mend Learn - Partner Learning Platform">
+    <meta property="og:description" content="Mend Learn is the Mend.io partner learning platform: guided tracks, hands-on labs, certifications, and gamified progress for application security.">
+    <meta property="og:url" content="https://luisillobret2.github.io/academysample/index.html">
+    <meta property="og:image" content="https://luisillobret2.github.io/academysample/img/mend-logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Mend Learn - Partner Learning Platform">
+    <meta name="twitter:description" content="Mend Learn is the Mend.io partner learning platform: guided tracks, hands-on labs, certifications, and gamified progress for application security.">
+    <meta name="twitter:image" content="https://luisillobret2.github.io/academysample/img/mend-logo.png">
     <title>Mend Learn - Partner Learning Platform</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="css/styles.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "EducationalOrganization",
+        "name": "Mend Learn",
+        "description": "The Mend.io partner learning platform: guided tracks, hands-on labs, certifications, and gamified progress for application security.",
+        "url": "https://luisillobret2.github.io/academysample/",
+        "logo": "https://luisillobret2.github.io/academysample/img/mend-logo.png",
+        "sameAs": ["https://www.mend.io"]
+    }
+    </script>
 </head>
 <body>
     <!-- Header -->
@@ -48,7 +76,7 @@
         </div>
     </section>
 
-    <main class="page-content">
+    <main class="page-content" id="main-content">
         <div class="container">
 
             <!-- Learning Streak -->
@@ -206,7 +234,7 @@
                         <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(52, 152, 219, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0;">&#128218;</div>
                         <div style="flex: 1;">
                             <h4>Mend.io Certified Professional</h4>
-                            <div class="text-sm text-muted mb-8">68% prerequisites complete</div>
+                            <div class="text-sm text-muted mb-8">Next certification to earn</div>
                             <div class="progress-bar">
                                 <div class="fill" style="width: 68%;"></div>
                             </div>
@@ -282,20 +310,20 @@
                 </div>
             </div>
 
-            <!-- Quarterly Challenge -->
-            <div class="section">
+            <!-- Quarterly Challenge (dynamic) -->
+            <div class="section" id="quarterly-challenge">
                 <div class="section-header">
                     <h2>Quarterly Challenge</h2>
                 </div>
                 <div class="card-flat" style="background: linear-gradient(135deg, var(--color-card) 0%, rgba(108, 92, 231, 0.1) 100%); border-color: rgba(108, 92, 231, 0.3);">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
                         <div>
-                            <div class="badge badge-purple" style="margin-bottom: 12px;">Q3 2025</div>
+                            <div class="badge badge-purple" style="margin-bottom: 12px;" id="challenge-quarter"></div>
                             <h3>Certification Sprint</h3>
                             <p class="text-muted" style="margin-top: 8px; max-width: 500px;">Earn a new certification this quarter to win 2,000 bonus XP + exclusive badge + $50 gift card. Top 10 performers are recognized at Partner Summit.</p>
                         </div>
                         <div style="text-align: center;">
-                            <div style="font-size: 2rem; font-weight: 700; color: var(--color-secondary);">47</div>
+                            <div style="font-size: 2rem; font-weight: 700; color: var(--color-secondary);" id="challenge-days"></div>
                             <div class="text-sm text-muted">Days Remaining</div>
                             <a href="certifications.html" class="btn btn-outline btn-sm" style="margin-top: 12px; border-color: var(--color-secondary); color: var(--color-secondary);">Join Challenge</a>
                         </div>
@@ -312,6 +340,11 @@
     <script src="js/layout.js"></script>
     <script src="js/store.js"></script>
     <script src="js/search.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/homepage.js"></script>
+    <script src="js/leaderboard.js"></script>
+    <script src="js/cert-recommendations.js"></script>
+    <script src="js/badges.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

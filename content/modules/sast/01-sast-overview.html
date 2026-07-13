@@ -1,0 +1,237 @@
+---
+title: SAST Overview &amp; Code Analysis - Mend Learn
+---
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>SAST Product Track</span> &rsaquo; <span>SAST Overview</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>SAST Overview &amp; Code Analysis</h1>
+                <div class="module-meta">
+                    <span>&#128338; 45 min</span>
+                    <span>&#128218; 5 sections</span>
+                    <span>&#11088; 200 XP</span>
+                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>Proactively Remediate Critical Source Code Vulnerabilities</li>
+                    <li>Agentic SAST for AI Code Assistants</li>
+                    <li>Cut Noise, Focus on What Matters</li>
+                    <li>Common SAST Finding Types</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>Proactively Remediate Critical Source Code Vulnerabilities</h2>
+                <p>Mend SAST embeds code security directly into AI workflows, enabling <strong>proactive vulnerability remediation</strong>. Developers can resolve code flaws, whether human or AI generated, with near real-time feedback and AI-powered fixes, preventing issues from the start.</p>
+
+                <div class="video-placeholder">
+                    <div class="play-icon">&#9654;</div>
+                    <div class="video-title">Introduction to Mend SAST</div>
+                    <div class="video-duration">10:30</div>
+                </div>
+
+                <h3>How SAST Differs from SCA</h3>
+                <div class="vuln-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Aspect</th>
+                                <th>SAST</th>
+                                <th>SCA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>What it scans</strong></td>
+                                <td>Your custom source code (first-party)</td>
+                                <td>Open-source dependencies (third-party)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>What it finds</strong></td>
+                                <td>Code-level flaws: SQL injection, XSS, path traversal, hardcoded secrets</td>
+                                <td>Known CVEs, license violations, malicious packages</td>
+                            </tr>
+                            <tr>
+                                <td><strong>How it works</strong></td>
+                                <td>Data flow analysis, taint tracking, pattern matching on source code</td>
+                                <td>Dependency tree analysis, vulnerability database matching</td>
+                            </tr>
+                            <tr>
+                                <td><strong>When it runs</strong></td>
+                                <td>IDE (real-time), pre-commit, CI/CD pipeline</td>
+                                <td>Build time, CI/CD pipeline, scheduled scans</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Agentic SAST for AI Code Assistants</h2>
+                <p>Mend SAST provides <strong>agentic support for AI code assistants, pre-commit</strong>. It autonomously finds and fixes code flaws, whether human or AI generated, before committing to the repo.</p>
+
+                <div class="lifecycle-flow">
+                    <div class="lifecycle-step">
+                        <div class="step-icon">&#128187;</div>
+                        <h4>Scans AI-Generated Code</h4>
+                        <p>Analyzes code produced by AI assistants like Copilot, Claude, and custom models</p>
+                    </div>
+                    <div class="lifecycle-arrow">&#8594;</div>
+                    <div class="lifecycle-step">
+                        <div class="step-icon">&#128270;</div>
+                        <h4>Identifies Code Flaws</h4>
+                        <p>Data flow and taint analysis detects injection, XSS, path traversal, and more</p>
+                    </div>
+                    <div class="lifecycle-arrow">&#8594;</div>
+                    <div class="lifecycle-step">
+                        <div class="step-icon">&#129302;</div>
+                        <h4>Suggests AI Remediation</h4>
+                        <p>Context-aware fix suggestions with one-click application in the IDE</p>
+                    </div>
+                    <div class="lifecycle-arrow">&#8594;</div>
+                    <div class="lifecycle-step">
+                        <div class="step-icon">&#9989;</div>
+                        <h4>Rechecks for Assurance</h4>
+                        <p>Verifies the fix resolves the vulnerability without introducing new issues</p>
+                    </div>
+                </div>
+
+                <div class="key-concept">
+                    <h4>&#128161; Why This Matters for AI-Generated Code</h4>
+                    <p>AI coding assistants generate code at unprecedented speed, but studies show <strong>40% of AI-generated code contains security vulnerabilities</strong>. Mend SAST ensures that AI-assisted development doesn&rsquo;t introduce new security risks, feeding vulnerability information directly into AI code assistants to automatically remediate custom code flaws.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Cut Noise, Focus on What Matters</h2>
+                <p>Mend SAST is designed to minimize false positives through advanced analysis techniques:</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128269;</div>
+                        <h4>Data Flow Analysis</h4>
+                        <p>Tracks how untrusted data flows through your application from source to sink, identifying only vulnerabilities where tainted data reaches a dangerous function.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128736;</div>
+                        <h4>Taint Analysis</h4>
+                        <p>Marks user input and external data as "tainted" and tracks whether it passes through proper sanitization before reaching security-sensitive operations.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#127919;</div>
+                        <h4>Semantic Analysis</h4>
+                        <p>Understands the meaning and context of code, not just pattern matching. Distinguishes between genuine vulnerabilities and safe coding patterns.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128200;</div>
+                        <h4>Severity Classification</h4>
+                        <p>Findings are classified as Critical, High, Medium with recommended fix availability indicators, helping teams prioritize effectively.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Common SAST Finding Types</h2>
+                <div class="vuln-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Finding Type</th>
+                                <th>CWE</th>
+                                <th>Description</th>
+                                <th>Severity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>SQL Injection</strong></td>
+                                <td>CWE-89</td>
+                                <td>User input concatenated into SQL queries without parameterization</td>
+                                <td><span style="color: #e74c3c;">Critical</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Cross-Site Scripting</strong></td>
+                                <td>CWE-79</td>
+                                <td>Unsanitized user input rendered in HTML output</td>
+                                <td><span style="color: #e74c3c;">Critical</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Path Traversal</strong></td>
+                                <td>CWE-22</td>
+                                <td>User-controlled file paths accessing files outside intended directory</td>
+                                <td><span style="color: #f39c12;">High</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Command Injection</strong></td>
+                                <td>CWE-78</td>
+                                <td>User input passed to system command execution functions</td>
+                                <td><span style="color: #e74c3c;">Critical</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Insecure Deserialization</strong></td>
+                                <td>CWE-502</td>
+                                <td>Deserializing untrusted data without validation</td>
+                                <td><span style="color: #f39c12;">High</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Hardcoded Credentials</strong></td>
+                                <td>CWE-798</td>
+                                <td>Passwords, API keys, or tokens embedded directly in source code</td>
+                                <td><span style="color: #f39c12;">High</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 1:</strong> What does SAST scan for, compared to SCA?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Vulnerabilities in your custom source code (first-party)</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Known CVEs in open-source dependencies</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Runtime behavior of deployed applications</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Network traffic for intrusion attempts</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-c="Yw==">
+                        <p><strong>Question 2:</strong> What percentage of AI-generated code is estimated to contain security vulnerabilities?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> 10%</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> 25%</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> 40%</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> 60%</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <button class="mark-complete-btn" data-xp="200">Mark as Complete</button>
+                <div class="module-nav-buttons">
+                    <span></span>
+                    <a href="02-ai-remediation.html" class="btn btn-primary">Next: AI-Powered Remediation &#8594;</a>
+                </div>
+            </div>

@@ -1,0 +1,172 @@
+---
+title: Mend CLI &amp; Automation - Mend Learn
+---
+            <div class="breadcrumb">
+                <a href="../../learning-paths.html">Learning Paths</a> &#8250; Developer Track &#8250; CLI & Automation
+            </div>
+
+            <div class="completed-badge">&#10003; Not Started</div>
+            <h1>Mend CLI &amp; Automation</h1>
+            <div class="module-meta">
+                <span>&#128336; 35 min</span>
+                <span>&#128218; 4 sections</span>
+                <span>&#11088; 200 XP</span>
+                <span class="module-level">Level 2 - Intermediate</span>
+            </div>
+
+
+            <section class="module-section">
+                <h2>The Mend CLI</h2>
+                <p>The Mend CLI is a powerful command-line tool for running security scans, managing policies, and integrating Mend into any automation workflow. It supports SCA, SAST, secrets detection, and container scanning from a single binary.</p>
+
+                <h3>Installation</h3>
+                <pre><code># macOS / Linux
+curl -fsSL https://downloads.mend.io/cli/install.sh | sh
+
+# Or with Homebrew
+brew install mend-io/tap/mend-cli
+
+# Windows
+# Download from https://downloads.mend.io/cli/latest/mend-cli-win.exe
+
+# Verify installation
+mend version
+
+# Authenticate
+mend auth login --api-key YOUR_API_KEY</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Common CLI Commands</h2>
+
+                <h3>SCA Scanning</h3>
+                <pre><code># Scan current directory for open-source vulnerabilities
+mend sca scan
+
+# Scan with specific output format
+mend sca scan --format json --output results.json
+
+# Scan and fail on critical/high
+mend sca scan --fail-on high
+
+# Generate SBOM
+mend sca sbom --format cyclonedx --output sbom.json</code></pre>
+
+                <h3>SAST Scanning</h3>
+                <pre><code># Run static analysis
+mend sast scan --dir ./src
+
+# Scan specific languages
+mend sast scan --dir ./src --languages java,python
+
+# Generate SARIF report
+mend sast scan --dir ./src --format sarif --output sast-results.sarif</code></pre>
+
+                <h3>Container Scanning</h3>
+                <pre><code># Scan a local container image
+mend container scan myapp:latest
+
+# Scan from a registry
+mend container scan registry.example.com/myapp:v1.2.3
+
+# Scan a Dockerfile
+mend container scan --dockerfile ./Dockerfile</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>CI/CD Pipeline Integration</h2>
+                <p>The CLI integrates seamlessly into any CI/CD pipeline:</p>
+
+                <h3>GitHub Actions</h3>
+                <pre><code>name: Security Scan
+on: [push, pull_request]
+jobs:
+  mend-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Mend CLI
+        run: curl -fsSL https://downloads.mend.io/cli/install.sh | sh
+      - name: Run SCA Scan
+        run: mend sca scan --fail-on high
+        env:
+          MEND_API_KEY: ${{ secrets.MEND_API_KEY }}
+      - name: Run SAST Scan
+        run: mend sast scan --dir ./src --fail-on critical</code></pre>
+
+                <h3>GitLab CI</h3>
+                <pre><code>mend-security-scan:
+  stage: test
+  script:
+    - curl -fsSL https://downloads.mend.io/cli/install.sh | sh
+    - mend sca scan --format json --output gl-dependency-scanning-report.json
+    - mend sast scan --dir ./src --format json --output gl-sast-report.json
+  artifacts:
+    reports:
+      dependency_scanning: gl-dependency-scanning-report.json
+      sast: gl-sast-report.json</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Automation &amp; Scripting</h2>
+                <p>The CLI's JSON output mode enables powerful automation workflows:</p>
+
+                <pre><code># Custom alerting script
+#!/bin/bash
+RESULTS=$(mend sca scan --format json)
+CRITICAL_COUNT=$(echo "$RESULTS" | jq '[.vulnerabilities[] | select(.severity == "critical")] | length')
+
+if [ "$CRITICAL_COUNT" -gt 0 ]; then
+    echo "ALERT: $CRITICAL_COUNT critical vulnerabilities found!"
+    # Send to Slack
+    curl -X POST "$SLACK_WEBHOOK" \
+        -H 'Content-type: application/json' \
+        -d "{"text": "Security Alert: $CRITICAL_COUNT critical vulnerabilities found in $(basename $PWD)"}"
+fi</code></pre>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Automation Tip</h4>
+                    <p>Use the CLI's <code>--format json</code> output with tools like <code>jq</code> to build custom dashboards, alerts, and compliance reports tailored to your organization's needs.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 1:</strong> What is the CLI command to generate a CycloneDX SBOM?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> mend scan --sbom cyclonedx</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> mend sca sbom --format cyclonedx</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> mend generate-sbom --type cdx</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> mend sca scan --output sbom</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 2:</strong> What flag makes the Mend CLI exit with a non-zero code when high-severity vulnerabilities are found?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> --fail-on high</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> --strict-mode</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> --error-level high</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> --exit-code 1</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>200 XP earned for completing this module</span>
+                </div>
+                <button class="btn btn-primary mark-complete-btn" data-xp="200">Mark Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="02-ide-integration.html" class="btn btn-secondary">&#8592; Previous: IDE Integration</a>
+                    <a href="04-renovate-setup.html" class="btn btn-primary">Next: Renovate Setup &#8594;</a>
+                </div>
+            </div>

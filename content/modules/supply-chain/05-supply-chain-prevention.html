@@ -1,0 +1,146 @@
+---
+title: Supply Chain Attack Prevention - Mend Learn
+---
+            <div class="breadcrumb">
+                <a href="../../learning-paths.html">Learning Paths</a> &#8250; Supply Chain Security &#8250; Attack Prevention
+            </div>
+
+            <div class="completed-badge">&#10003; Not Started</div>
+            <h1>Supply Chain Attack Prevention</h1>
+            <div class="module-meta">
+                <span>&#128336; 35 min</span>
+                <span>&#128218; 4 sections</span>
+                <span>&#11088; 200 XP</span>
+                <span class="module-level">Level 3 - Advanced</span>
+            </div>
+
+
+            <section class="module-section">
+                <h2>Defense-in-Depth for Supply Chain</h2>
+                <p>No single control can fully protect against supply chain attacks. Organizations need a layered defense strategy that addresses threats at every stage of the software development lifecycle.</p>
+
+                <h3>The Four Pillars of Supply Chain Defense</h3>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#128737;</div>
+                        <h4>Prevention</h4>
+                        <p>Pre-commit hooks, lockfile enforcement, dependency allowlists, and private registry proxies prevent malicious code from entering.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128269;</div>
+                        <h4>Detection</h4>
+                        <p>Continuous scanning of dependencies, behavioral analysis of packages, and real-time threat intelligence feeds.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128680;</div>
+                        <h4>Response</h4>
+                        <p>Automated alerts, quarantine procedures, emergency update workflows, and incident response playbooks.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128200;</div>
+                        <h4>Recovery</h4>
+                        <p>SBOM-driven impact analysis, rollback procedures, and post-incident reviews to prevent recurrence.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Build Pipeline Security</h2>
+                <p>The build pipeline is a critical attack vector. Compromised build systems can inject malicious code even when source code is clean:</p>
+
+                <h3>Securing Your Build Pipeline</h3>
+                <pre><code># GitHub Actions - Pin actions to commit SHA, not tags
+steps:
+  # Bad: tags can be moved to point at malicious commits
+  - uses: actions/checkout@v4
+
+  # Good: pinned to specific commit SHA
+  - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+
+  # Verify dependency integrity
+  - run: npm ci --ignore-scripts  # Install without running scripts
+  - run: npm run build            # Build step separated from install
+
+  # Sign build artifacts
+  - uses: sigstore/cosign-installer@main
+  - run: cosign sign --yes myimage:${{ github.sha }}</code></pre>
+
+                <h3>SLSA Framework</h3>
+                <p>The Supply-chain Levels for Software Artifacts (SLSA) framework provides a maturity model for build security:</p>
+                <ul>
+                    <li><strong>SLSA Level 1</strong> &mdash; Build process is documented and produces provenance</li>
+                    <li><strong>SLSA Level 2</strong> &mdash; Build runs on a hosted service with signed provenance</li>
+                    <li><strong>SLSA Level 3</strong> &mdash; Build runs on a hardened, isolated service with non-falsifiable provenance</li>
+                </ul>
+            </section>
+
+            <section class="module-section">
+                <h2>Sigstore &amp; Software Signing</h2>
+                <p>Code signing provides cryptographic proof that software hasn't been tampered with. Sigstore provides free, open-source signing infrastructure:</p>
+
+                <ul>
+                    <li><strong>Cosign</strong> &mdash; Sign and verify container images and other OCI artifacts</li>
+                    <li><strong>Rekor</strong> &mdash; Tamper-resistant transparency log for signing events</li>
+                    <li><strong>Fulcio</strong> &mdash; Certificate authority that issues short-lived certificates tied to OIDC identities</li>
+                </ul>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Industry Trend</h4>
+                    <p>The CISA Secure Software Development Framework (SSDF) and EU Cyber Resilience Act both increasingly mandate software signing and provenance. Early adoption positions your organization ahead of regulatory requirements.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Incident Response for Supply Chain Attacks</h2>
+                <p>When a supply chain attack is detected, time is critical. Organizations need pre-defined playbooks:</p>
+
+                <ol>
+                    <li><strong>Identify</strong> &mdash; Use SBOM data to determine which applications and environments use the compromised dependency</li>
+                    <li><strong>Contain</strong> &mdash; Block the compromised package version from being installed in any pipeline</li>
+                    <li><strong>Assess</strong> &mdash; Determine if the vulnerable code path was reachable and if data was exfiltrated</li>
+                    <li><strong>Remediate</strong> &mdash; Roll back to the last known-good version or apply patches</li>
+                    <li><strong>Communicate</strong> &mdash; Notify affected customers if required; update internal stakeholders</li>
+                    <li><strong>Improve</strong> &mdash; Add detection rules, update policies, and conduct a post-mortem</li>
+                </ol>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 1:</strong> Why should GitHub Actions be pinned to commit SHAs rather than version tags?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Tags can be moved to point at malicious commits, while SHAs are immutable</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> SHAs are shorter and easier to read</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Tags are deprecated in GitHub Actions v4</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> SHAs make workflows run faster</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-c="Yw==">
+                        <p><strong>Question 2:</strong> What does SLSA Level 3 require for build provenance?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Build provenance is optional but recommended</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Build runs locally with manual signing</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Build runs on a hardened, isolated service with non-falsifiable provenance</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Build artifacts are stored in a public registry</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>200 XP earned for completing this module</span>
+                </div>
+                <button class="btn btn-primary mark-complete-btn" data-xp="200">Mark Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="04-package-security.html" class="btn btn-secondary">&#8592; Previous: Package Security</a>
+                    <span></span>
+                </div>
+            </div>

@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href="../../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
     <title>Custom Workflow Automation - Mend Learn</title>
     <meta name="description" content="Automate remediation and notifications with Mend.io webhooks, APIs, and Renovate.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/fonts.css">
     <link rel="stylesheet" href="../../css/styles.css">
     <link rel="stylesheet" href="../../css/module.css">
 </head>
@@ -14,22 +18,9 @@
     <header id="site-header" class="site-header"></header>
 
     <div class="module-layout">
-        <aside class="module-sidebar">
-            <div class="sidebar-header">
-                <a href="../../learning-paths.html" class="back-link">&#8592; Learning Paths</a>
-                <h3>CI/CD &amp; DevOps</h3>
-                <div class="sidebar-progress"><div class="progress-bar"><div class="fill" style="width: 0%"></div></div><span>0/5 Complete</span></div>
-            </div>
-            <nav class="module-nav">
-                <a href="01-pipeline-fundamentals.html" class="module-link"><span class="module-status">1</span><div><span class="module-title">Pipeline Security Fundamentals</span><span class="module-duration">45 min</span></div></a>
-                <a href="02-gitops-integration.html" class="module-link"><span class="module-status">2</span><div><span class="module-title">GitOps &amp; SCM Integration</span><span class="module-duration">40 min</span></div></a>
-                <a href="03-iac-scanning.html" class="module-link"><span class="module-status">3</span><div><span class="module-title">IaC Scanning</span><span class="module-duration">40 min</span></div></a>
-                <a href="04-workflow-automation.html" class="module-link active"><span class="module-status">4</span><div><span class="module-title">Custom Workflow Automation</span><span class="module-duration">40 min</span></div></a>
-                <a href="05-multi-tool-orchestration.html" class="module-link"><span class="module-status">5</span><div><span class="module-title">Multi-Tool Orchestration</span><span class="module-duration">45 min</span></div></a>
-            </nav>
-        </aside>
+        <aside class="module-sidebar"></aside>
 
-        <main class="module-content">
+        <main class="module-content" id="main-content">
             <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>CI/CD &amp; DevOps</span> &rsaquo; <span>Custom Workflow Automation</span></div>
 
             <div class="module-header">
@@ -136,7 +127,13 @@ curl -H "Authorization: Bearer $MEND_TOKEN" \
     <script src="../../js/layout.js"></script>
     <script src="../../js/store.js"></script>
     <script src="../../js/search.js"></script>
+    <script src="../../js/chat.js"></script>
+    <script src="../../js/homepage.js"></script>
+    <script src="../../js/leaderboard.js"></script>
+    <script src="../../js/cert-recommendations.js"></script>
+    <script src="../../js/badges.js"></script>
     <script src="../../js/app.js"></script>
+    <script src="../../js/tracks.js"></script>
     <script src="../../js/module.js"></script>
 </body>
 </html>

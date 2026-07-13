@@ -1,0 +1,149 @@
+---
+title: Reporting &amp; Security Analytics - Mend Learn
+---
+            <div class="breadcrumb">
+                <a href="../../learning-paths.html">Learning Paths</a> &#8250; Enterprise Architecture &#8250; Reporting
+            </div>
+
+            <div class="completed-badge">&#10003; Not Started</div>
+            <h1>Reporting &amp; Security Analytics</h1>
+            <div class="module-meta">
+                <span>&#128336; 35 min</span>
+                <span>&#128218; 4 sections</span>
+                <span>&#11088; 225 XP</span>
+                <span class="module-level">Level 3 - Expert</span>
+            </div>
+
+
+            <section class="module-section">
+                <h2>Enterprise Security Reporting</h2>
+                <p>Effective reporting transforms raw vulnerability data into actionable intelligence for different stakeholders: developers need specific fix guidance, managers need team performance metrics, and executives need risk posture summaries.</p>
+
+                <h3>Report Types</h3>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#128202;</div>
+                        <h4>Executive Summary</h4>
+                        <p>High-level risk posture, trend analysis, and compliance status for board and C-level audiences.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128200;</div>
+                        <h4>Operational Dashboard</h4>
+                        <p>Real-time vulnerability counts, SLA compliance, and team performance for security managers.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128209;</div>
+                        <h4>Compliance Reports</h4>
+                        <p>Framework-mapped evidence for SOC 2, ISO 27001, PCI DSS audits with control attestation.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128295;</div>
+                        <h4>Developer Reports</h4>
+                        <p>Per-repository findings with fix instructions, priority ranking, and estimated remediation effort.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Key Security Metrics</h2>
+                <p>Track these metrics to measure and improve your application security program:</p>
+
+                <h3>Vulnerability Metrics</h3>
+                <ul>
+                    <li><strong>Mean Time to Detect (MTTD)</strong> &mdash; Average time from vulnerability publication to discovery in your code</li>
+                    <li><strong>Mean Time to Remediate (MTTR)</strong> &mdash; Average time from detection to fix, by severity level</li>
+                    <li><strong>Vulnerability Density</strong> &mdash; Vulnerabilities per 1,000 lines of code or per repository</li>
+                    <li><strong>Fix Rate</strong> &mdash; Percentage of detected vulnerabilities that get fixed vs. accepted/ignored</li>
+                    <li><strong>Recurrence Rate</strong> &mdash; Percentage of fixed vulnerabilities that reappear (indicates systemic issues)</li>
+                </ul>
+
+                <h3>Program Metrics</h3>
+                <ul>
+                    <li><strong>Scan Coverage</strong> &mdash; Percentage of repositories with active scanning enabled</li>
+                    <li><strong>Policy Compliance</strong> &mdash; Percentage of projects in compliance with organizational security policies</li>
+                    <li><strong>Developer Adoption</strong> &mdash; Number of developers actively using IDE plugins and fixing vulnerabilities</li>
+                    <li><strong>SLA Adherence</strong> &mdash; Percentage of vulnerabilities remediated within defined SLAs by severity</li>
+                </ul>
+            </section>
+
+            <section class="module-section">
+                <h2>Building Custom Dashboards</h2>
+                <p>Mend's API enables building custom dashboards that integrate security data with your existing business intelligence tools:</p>
+
+                <pre><code># Fetch organization vulnerability summary via API
+curl -X GET "https://api.mend.io/v2/orgs/{orgId}/vulnerabilities/summary" \
+    -H "Authorization: Bearer $MEND_API_KEY" \
+    -H "Content-Type: application/json"
+
+# Response includes:
+# - Total vulnerabilities by severity
+# - Trend data (7d, 30d, 90d)
+# - Top affected repositories
+# - MTTR by severity
+# - SLA compliance percentage
+
+# Export to BI tools (Tableau, PowerBI, Grafana)
+mend report export \
+    --format csv \
+    --type vulnerability-summary \
+    --period "2025-Q1" \
+    --output quarterly-report.csv</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Automated Report Distribution</h2>
+                <p>Set up automated report delivery to ensure stakeholders receive regular security updates:</p>
+
+                <ul>
+                    <li><strong>Scheduled Email Reports</strong> &mdash; Weekly summaries for team leads, monthly executive briefs</li>
+                    <li><strong>Slack/Teams Integration</strong> &mdash; Real-time alerts for critical findings and daily digests</li>
+                    <li><strong>JIRA Integration</strong> &mdash; Automatically create tickets for new findings with SLA deadlines</li>
+                    <li><strong>Webhook Events</strong> &mdash; Push finding data to custom systems for advanced workflows</li>
+                </ul>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Reporting Tip</h4>
+                    <p>Don't just report numbers &mdash; tell a story. Show trends over time, highlight improvements, and connect security metrics to business outcomes (fewer incidents, faster releases, audit readiness).</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 1:</strong> What does MTTR measure in the context of vulnerability management?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Mean Time To Report &mdash; how long until a vulnerability is reported to management</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Mean Time To Remediate &mdash; average time from detection to fix</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Mean Time To Respond &mdash; how quickly the security team acknowledges a finding</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Mean Time To Reproduce &mdash; how long to recreate the vulnerability</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 2:</strong> What is "vulnerability density" and why is it useful?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Vulnerabilities per 1,000 lines of code; enables fair comparison across projects of different sizes</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> The total number of vulnerabilities in the organization</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> The severity distribution of vulnerabilities</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> The number of vulnerabilities per developer</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>225 XP earned for completing this module</span>
+                </div>
+                <button class="btn btn-primary mark-complete-btn" data-xp="225">Mark Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="04-sso-user-management.html" class="btn btn-secondary">&#8592; Previous: SSO & Users</a>
+                    <span></span>
+                </div>
+            </div>

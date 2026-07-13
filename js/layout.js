@@ -30,11 +30,12 @@
 
     const headerHTML = `
         <div class="container">
+            <a href="#main-content" class="skip-link">Skip to main content</a>
             <a href="${prefix}index.html" class="logo">
                 <img src="${prefix}img/mend-logo.svg" alt="Mend.io" class="logo-img">
                 Mend <span>Learn</span>
             </a>
-            <ul class="nav-main">${navLinks}</ul>
+            <nav aria-label="Main navigation"><ul class="nav-main" role="menubar">${navLinks}</ul></nav>
             <div class="nav-right">
                 <div class="nav-search">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -42,6 +43,11 @@
                     <input id="nav-search-input" type="text" placeholder="Search courses, labs...">
                 </div>
                 <button class="dark-mode-toggle" id="dark-mode-toggle" title="Toggle dark mode" aria-label="Toggle dark mode">&#9790;</button>
+                <div class="nav-notifications" id="nav-notifications" title="Notifications" role="region" aria-label="Notifications">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    <span class="notif-badge" id="notif-count" style="display:none;" aria-live="polite">0</span>
+                    <div class="notif-dropdown" id="notif-dropdown" role="menu" aria-label="Notifications list"></div>
+                </div>
                 <div class="nav-xp">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                     <span class="xp-display">2,450 XP</span>
@@ -92,7 +98,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <span>&copy; 2025 Mend.io. All rights reserved.</span>
+                <span>&copy; ${new Date().getFullYear()} Mend.io. All rights reserved.</span>
                 <span>
                     <a href="#" data-action="coming-soon">Privacy</a> &middot;
                     <a href="#" data-action="coming-soon">Terms</a> &middot;
@@ -110,9 +116,19 @@
 
     function inject() {
         const header = document.getElementById('site-header');
-        if (header) header.innerHTML = headerHTML;
+        if (header) {
+            header.innerHTML = headerHTML;
+            header.setAttribute('role', 'banner');
+        }
         const footer = document.getElementById('site-footer');
-        if (footer) footer.innerHTML = footerHTML;
+        if (footer) {
+            footer.innerHTML = footerHTML;
+            footer.setAttribute('role', 'contentinfo');
+        }
+
+        /* Add id="main-content" to the first <main> or .page-content for skip link */
+        const mainEl = document.querySelector('main') || document.querySelector('.page-content') || document.querySelector('.module-content');
+        if (mainEl && !mainEl.id) mainEl.id = 'main-content';
 
         /* Personalize header from localStorage if MendStore data exists */
         try {
@@ -150,10 +166,119 @@
         });
     }
 
+    function initNotifications() {
+        const bell = document.getElementById('nav-notifications');
+        const dropdown = document.getElementById('notif-dropdown');
+        const countEl = document.getElementById('notif-count');
+        if (!bell || !dropdown || !countEl) return;
+
+        /* Make bell keyboard-accessible */
+        bell.setAttribute('tabindex', '0');
+        bell.setAttribute('role', 'button');
+        bell.setAttribute('aria-haspopup', 'true');
+        bell.setAttribute('aria-expanded', 'false');
+        bell.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                bell.click();
+            }
+        });
+
+        /* Load notifications from localStorage */
+        let notifs = [];
+        try {
+            const raw = localStorage.getItem('mendlearn_notifications');
+            if (raw) notifs = JSON.parse(raw);
+        } catch (_) {}
+
+        /* Seed default notifications if empty */
+        if (!notifs.length) {
+            notifs = [
+                { icon: '\uD83C\uDF89', text: '<strong>New Track!</strong> Enterprise Architecture track is now available.', time: '1 hour ago', read: false },
+                { icon: '\uD83D\uDD25', text: '<strong>Streak alert!</strong> Log in tomorrow to keep your streak going.', time: '3 hours ago', read: false },
+                { icon: '\uD83C\uDF1F', text: '<strong>New Badge!</strong> You earned the "Early Adopter" badge.', time: '1 day ago', read: false },
+                { icon: '\uD83D\uDCDA', text: '<strong>Content Update:</strong> Container Security module has a new video.', time: '2 days ago', read: true },
+                { icon: '\uD83C\uDFC6', text: '<strong>Leaderboard:</strong> You moved up to #4 this week!', time: '3 days ago', read: true }
+            ];
+            try { localStorage.setItem('mendlearn_notifications', JSON.stringify(notifs)); } catch (_) {}
+        }
+
+        function render() {
+            const unread = notifs.filter(n => !n.read).length;
+            if (unread > 0) {
+                countEl.textContent = unread;
+                countEl.style.display = 'flex';
+            } else {
+                countEl.style.display = 'none';
+            }
+
+            if (!notifs.length) {
+                dropdown.innerHTML = '<div class="notif-header"><span>Notifications</span></div><div class="notif-empty">No notifications yet</div>';
+                return;
+            }
+
+            const items = notifs.map(n =>
+                `<div class="notif-item${n.read ? '' : ' unread'}">
+                    <span class="notif-icon">${n.icon}</span>
+                    <div class="notif-text">${n.text}<div class="notif-time">${n.time}</div></div>
+                </div>`
+            ).join('');
+
+            dropdown.innerHTML = `
+                <div class="notif-header">
+                    <span>Notifications</span>
+                    ${unread > 0 ? '<a href="#" id="notif-mark-read" style="font-size:0.75rem;color:var(--color-accent);text-decoration:none;">Mark all read</a>' : ''}
+                </div>
+                ${items}
+            `;
+
+            const markBtn = dropdown.querySelector('#notif-mark-read');
+            if (markBtn) {
+                markBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    notifs.forEach(n => n.read = true);
+                    try { localStorage.setItem('mendlearn_notifications', JSON.stringify(notifs)); } catch (_) {}
+                    render();
+                });
+            }
+        }
+
+        render();
+
+        bell.addEventListener('click', function (e) {
+            e.stopPropagation();
+            const isOpen = dropdown.classList.toggle('open');
+            bell.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        document.addEventListener('click', function () {
+            dropdown.classList.remove('open');
+            bell.setAttribute('aria-expanded', 'false');
+        });
+
+        dropdown.addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+    }
+
+    function registerServiceWorker() {
+        if (!('serviceWorker' in navigator)) return;
+        // file:// has no origin for SW; only register over http(s).
+        if (window.location.protocol === 'file:') return;
+        window.addEventListener('load', function () {
+            navigator.serviceWorker.register(prefix + 'sw.js').catch(function () {
+                /* offline support is progressive enhancement; ignore failures */
+            });
+        });
+    }
+
     function injectAndSetup() {
         inject();
         applyDarkMode();
         initDarkModeToggle();
+        initNotifications();
+        registerServiceWorker();
     }
 
     // Apply dark mode immediately (before paint) to avoid flash

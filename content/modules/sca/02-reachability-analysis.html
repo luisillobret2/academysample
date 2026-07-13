@@ -1,0 +1,151 @@
+---
+title: Reachability Analysis - Mend Learn
+---
+            <div class="module-breadcrumb">
+                <a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>SCA Deep Dive</span> &rsaquo; <span>Reachability Analysis</span>
+            </div>
+
+            <div class="module-header">
+                <div class="module-badge completed-badge">&#10003; Completed</div>
+                <h1>Reachability Analysis</h1>
+                <div class="module-meta">
+                    <span>&#128338; 40 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 200 XP</span>
+                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>Zero In on True Risks Without the Noise</li>
+                    <li>How Reachability Analysis Works</li>
+                    <li>Reachability in Practice</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>Zero In on True Risks Without the Noise</h2>
+                <p>Traditional SCA tools report every CVE found in your dependency tree, regardless of whether the vulnerability can actually be triggered. This creates massive alert fatigue &mdash; teams waste time investigating findings that pose no real threat.</p>
+
+                <p>Mend SCA&rsquo;s <strong>Reachability Analysis</strong> solves this by determining whether your code actually calls the vulnerable function in a dependency. It analyzes the call graph between your application code and the vulnerable functions in both <strong>direct and transitive dependencies</strong>.</p>
+
+                <div class="key-concept">
+                    <h4>&#128161; The Impact of Reachability</h4>
+                    <p>Studies show that <strong>only 10-20% of reported CVEs are actually reachable</strong> in any given application. By filtering out unreachable vulnerabilities, Mend helps teams focus remediation efforts on the vulnerabilities that can actually be exploited, reducing noise by up to <strong>80%</strong>.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>How Reachability Analysis Works</h2>
+                <p>Mend&rsquo;s reachability engine performs a multi-step analysis:</p>
+
+                <ol class="steps-list">
+                    <li><strong>Dependency Resolution</strong> &mdash; Builds the complete dependency tree from manifest and lockfiles, identifying all direct and transitive dependencies</li>
+                    <li><strong>Call Graph Construction</strong> &mdash; Maps all function calls from your application code into dependency code, following the execution path through multiple layers</li>
+                    <li><strong>Vulnerability Mapping</strong> &mdash; Cross-references the call graph with known vulnerable functions for each CVE in the dependency</li>
+                    <li><strong>Reachability Determination</strong> &mdash; Classifies each vulnerability as Reachable, Unreachable, or Potentially Reachable based on whether a call path exists</li>
+                </ol>
+
+                <h3>Reachability Statuses</h3>
+                <div class="vuln-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Meaning</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span style="color: #e74c3c; font-weight: 700;">Reachable</span></td>
+                                <td>Your code calls the vulnerable function &mdash; this vulnerability can be exploited</td>
+                                <td>Prioritize immediate remediation</td>
+                            </tr>
+                            <tr>
+                                <td><span style="color: #f39c12; font-weight: 700;">Potentially Reachable</span></td>
+                                <td>Analysis is inconclusive &mdash; the call path may exist under certain conditions</td>
+                                <td>Investigate and schedule remediation</td>
+                            </tr>
+                            <tr>
+                                <td><span style="color: #2ecc71; font-weight: 700;">Unreachable</span></td>
+                                <td>Your code does not call the vulnerable function &mdash; exploitation requires code changes</td>
+                                <td>Deprioritize; remediate in normal cycle</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Reachability in Practice</h2>
+                <p>Consider a real-world scenario: your application uses the <code>xstream</code> library for XML serialization. A Critical CVE (CVE-2020-1245) is published affecting xstream's deserialization handler.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #e74c3c;">&#9888;&#65039;</div>
+                        <h4>Without Reachability</h4>
+                        <p>Traditional SCA reports this as Critical. Your security team drops everything to investigate, pulling developers off feature work. After hours of analysis, they discover your code never uses xstream's deserialization &mdash; wasted effort.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #2ecc71;">&#10003;</div>
+                        <h4>With Mend Reachability</h4>
+                        <p>Mend instantly identifies the CVE as <strong>Unreachable</strong> &mdash; your code only uses xstream for serialization, never the vulnerable deserialization path. The team schedules the update for the next sprint instead of treating it as an emergency.</p>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>&#9888;&#65039; Important for Partners</h4>
+                    <p>Reachability analysis is one of Mend's strongest competitive differentiators. Few competitors offer this capability, and none match Mend's depth of analysis across both direct and transitive dependency call paths. Use this in every customer conversation about SCA alert fatigue.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="Yw==">
+                        <p><strong>Question 1:</strong> What percentage of reported CVEs are typically reachable in any given application?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> 50-60%</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> 30-40%</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> 10-20%</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> 80-90%</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 2:</strong> A Critical CVE in a dependency is classified as "Unreachable." What should the team do?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Deprioritize and remediate in the normal update cycle</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Immediately stop all work and patch the dependency</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Remove the dependency entirely from the project</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Ignore it permanently since it will never be a risk</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned"><span class="xp-icon">&#11088;</span><span>200 XP earned for completing this module</span></div>
+                <div class="module-nav-buttons">
+                    <a href="01-sca-overview.html" class="btn btn-secondary">&#8592; Previous</a>
+                    <a href="03-license-compliance.html" class="btn btn-primary">Next: License Compliance &#8594;</a>
+                </div>
+            </div>
