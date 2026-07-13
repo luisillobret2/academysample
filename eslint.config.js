@@ -9,6 +9,15 @@ const appGlobals = {
     MendBadges: 'readonly',
     Layout: 'readonly',
     showToast: 'readonly',
+    escapeHtml: 'readonly',
+    // Page initializers split out of app.js into focused files; invoked from
+    // the app.js DOMContentLoaded bootstrap.
+    initChat: 'readonly',
+    initHomepageDynamic: 'readonly',
+    initLeaderboardToggle: 'readonly',
+    initDynamicLeaderboard: 'readonly',
+    initCertRecommendations: 'readonly',
+    initAchievementBadges: 'readonly',
 };
 
 module.exports = [
