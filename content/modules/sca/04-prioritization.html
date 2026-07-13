@@ -1,0 +1,139 @@
+---
+title: Risk Prioritization &amp; EPSS - Mend Learn
+---
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>SCA Deep Dive</span> &rsaquo; <span>Risk Prioritization</span></div>
+
+            <div class="module-header">
+                <div class="module-badge completed-badge">&#10003; Completed</div>
+                <h1>Risk Prioritization &amp; EPSS Scoring</h1>
+                <div class="module-meta">
+                    <span>&#128338; 30 min</span>
+                    <span>&#128218; 3 sections</span>
+                    <span>&#11088; 175 XP</span>
+                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>Prioritize Threats Based on Severity</li>
+                    <li>Understanding EPSS</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>Prioritize Threats Based on Severity</h2>
+                <p>With thousands of CVEs published annually, knowing <em>what to fix first</em> is as important as finding vulnerabilities. Mend SCA leverages comprehensive vulnerability assessment to identify true risks affecting your application, including those powered by AI.</p>
+
+                <h3>Mend&rsquo;s Risk Prioritization Stack</h3>
+                <p>Mend combines four signals to create an effective prioritization:</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128200;</div>
+                        <h4>CVSS 4.0 Severity</h4>
+                        <p>The Common Vulnerability Scoring System measures the intrinsic qualities of a vulnerability. Mend uses the latest CVSS 4.0 standard for more accurate severity classification.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#127919;</div>
+                        <h4>EPSS Prediction</h4>
+                        <p>The Exploit Prediction Scoring System estimates the probability a CVE will be exploited in the wild within 30 days, ranging from 0% to 100%.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128279;</div>
+                        <h4>Reachability Status</h4>
+                        <p>Whether your application code actually calls the vulnerable function. Unreachable CVEs are deprioritized regardless of severity.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128295;</div>
+                        <h4>Fix Availability</h4>
+                        <p>Whether a patched version of the dependency exists. Vulnerabilities with available fixes are prioritized since remediation is actionable.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Understanding EPSS</h2>
+                <p>EPSS is a data-driven effort to estimate the likelihood that a software vulnerability will be exploited in the wild. It produces a score between 0 and 1 (0% to 100%).</p>
+
+                <div class="key-concept">
+                    <h4>&#128161; Why EPSS Matters More Than CVSS Alone</h4>
+                    <p>CVSS measures theoretical severity &mdash; how <em>bad</em> a vulnerability could be if exploited. EPSS measures practical likelihood &mdash; how <em>likely</em> it is to actually be exploited. A CVSS 9.8 Critical vulnerability with an EPSS of 0.01% is far less urgent than a CVSS 7.5 High vulnerability with an EPSS of 85%. Mend combines both to surface the most actionable risks.</p>
+                </div>
+
+                <h3>Mend Findings Dashboard</h3>
+                <p>The Mend SCA dashboard provides a funnel view of your findings, helping you focus on what matters:</p>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">120</div>
+                        <div class="stat-label">Total Findings</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">32</div>
+                        <div class="stat-label">Critical / High Severity</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">18</div>
+                        <div class="stat-label">Reachable</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">16</div>
+                        <div class="stat-label">Fix Available</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">10</div>
+                        <div class="stat-label">Exploitable (EPSS &gt; 10%)</div>
+                    </div>
+                </div>
+                <p>In this example, 120 raw findings funnel down to <strong>10 truly urgent items</strong> that need immediate attention &mdash; the ones that are Critical/High severity, reachable, have a fix available, and have a meaningful probability of exploitation.</p>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 1:</strong> What does EPSS measure?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> The severity of a vulnerability on a 0-10 scale</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> The probability that a CVE will be exploited in the wild within 30 days</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> The number of endpoints affected by a vulnerability</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> The time required to remediate a vulnerability</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-c="ZA==">
+                        <p><strong>Question 2:</strong> Which combination represents the highest-priority vulnerability?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> CVSS 9.8, EPSS 0.01%, Unreachable, No Fix</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> CVSS 4.0, EPSS 50%, Reachable, Fix Available</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> CVSS 7.5, EPSS 2%, Unreachable, Fix Available</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> CVSS 9.1, EPSS 85%, Reachable, Fix Available</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned"><span class="xp-icon">&#11088;</span><span>175 XP earned for completing this module</span></div>
+                <div class="module-nav-buttons">
+                    <a href="03-license-compliance.html" class="btn btn-secondary">&#8592; Previous</a>
+                    <a href="05-remediation.html" class="btn btn-primary">Next: Auto-Remediation &#8594;</a>
+                </div>
+            </div>

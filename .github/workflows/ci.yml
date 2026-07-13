@@ -15,8 +15,13 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
       - run: npm ci
       - run: npm run lint
+      - name: Module pages in sync with content partials
+        run: python3 scripts/build-modules.py check
 
   e2e:
     name: E2E Tests

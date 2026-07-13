@@ -1,0 +1,104 @@
+---
+title: Multi-Tool Orchestration - Mend Learn
+description: Orchestrate Mend.io alongside other DevSecOps tools with normalized findings and unified policy.
+---
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>CI/CD &amp; DevOps</span> &rsaquo; <span>Multi-Tool Orchestration</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>Multi-Tool Orchestration</h1>
+                <div class="module-meta">
+                    <span>&#128338; 45 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 200 XP</span>
+                    <span class="level-badge expert">Level 3 - Expert</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <ul>
+                    <li>Position Mend.io within a broader DevSecOps toolchain</li>
+                    <li>Normalize and de-duplicate findings across tools using SARIF</li>
+                    <li>Centralize policy and reporting across scanners</li>
+                    <li>Design an orchestration pattern that avoids gate conflicts</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>Mend in the Toolchain</h2>
+                <p>Enterprises rarely run one tool. Mend.io covers SCA, SAST, containers, secrets, and AI, and interoperates with DAST, cloud posture, and ticketing systems through standard formats and APIs.</p>
+                <div class="feature-grid">
+                    <div class="feature-card"><div class="feature-icon">&#128260;</div><h4>Normalize</h4><p>Emit SARIF so results share a common schema across tools.</p></div>
+                    <div class="feature-card"><div class="feature-icon">&#128203;</div><h4>De-duplicate</h4><p>Correlate findings so the same issue is not reported twice.</p></div>
+                    <div class="feature-card"><div class="feature-icon">&#128737;</div><h4>Centralize Policy</h4><p>One source of truth for gates across scanners.</p></div>
+                    <div class="feature-card"><div class="feature-icon">&#128202;</div><h4>Unify Reporting</h4><p>Aggregate risk into a single executive view.</p></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Normalize with SARIF</h2>
+                <p>SARIF is the lingua franca of code scanning. Convert every tool&rsquo;s output to SARIF and merge for a single, de-duplicated view.</p>
+                <pre><code># Merge SARIF from multiple tools
+mend sca scan --dir . --format sarif > mend.sarif
+# other-tool scan --format sarif > other.sarif
+sarif-merge mend.sarif other.sarif -o combined.sarif</code></pre>
+                <div class="key-concept">
+                    <h4>&#128161; One Gate, Many Tools</h4>
+                    <p>Aggregate results before gating so a single, consistent policy decides pass/fail, no conflicting gates.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Avoid Gate Conflicts</h2>
+                <p>When multiple scanners can fail a build, define precedence and ownership so pipelines stay predictable.</p>
+                <div class="warning-box">
+                    <h4>&#9888;&#65039; Don&rsquo;t Stack Redundant Gates</h4>
+                    <p>Overlapping tools each blocking independently creates confusing failures. Consolidate into one decision point.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Orchestration lab<span class="resource-meta">Hands-on Lab</span></span></a>
+                    <a class="module-resource" href="../enterprise/01-enterprise-deployment.html"><span class="resource-icon">&#127959;</span><span>Enterprise Deployment<span class="resource-meta">Module</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certified Expert<span class="resource-meta">Certification</span></span></a>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 1:</strong> Which format is the common standard for merging findings across scanners?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> XML sitemap</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> SARIF</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Markdown</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> YAML only</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question" data-c="Yw==">
+                        <p><strong>Question 2:</strong> Why consolidate multiple scanners into one gate?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> To run fewer scans</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> To disable reporting</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> To make pass/fail predictable and avoid conflicting gates</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> To hide findings from auditors</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <button class="mark-complete-btn" data-xp="200">Mark as Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="04-workflow-automation.html" class="btn btn-secondary">&#8592; Previous</a>
+                    <a href="../../certifications.html" class="btn btn-primary">Track Complete &middot; View Certifications &#8594;</a>
+                </div>
+            </div>

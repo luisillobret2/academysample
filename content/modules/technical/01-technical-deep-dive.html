@@ -1,0 +1,203 @@
+---
+title: Technical Deep Dive for SEs - Mend Learn
+---
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>Technical SE Track</span> &rsaquo; <span>Architecture</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>Architecture &amp; Deployment Deep Dive</h1>
+                <div class="module-meta">
+                    <span>&#128338; 50 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 250 XP</span>
+                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>Platform Architecture</li>
+                    <li>Deployment Options</li>
+                    <li>Supported Languages &amp; Package Managers</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>Platform Architecture</h2>
+                <p>Understanding the Mend platform architecture is essential for SEs conducting technical deep dives, POCs, and enterprise deployments. The platform consists of several key components:</p>
+
+                <div class="architecture-diagram">
+                    <h4 style="color: var(--color-text-bright); margin-bottom: 16px;">Mend Platform Architecture</h4>
+                    <div class="diagram-row">
+                        <div class="diagram-box neutral">Developer IDE</div>
+                        <div class="diagram-box neutral">CI/CD Pipeline</div>
+                        <div class="diagram-box neutral">Repository</div>
+                    </div>
+                    <div class="diagram-arrow">&#8595;</div>
+                    <div class="diagram-row">
+                        <div class="diagram-box secondary">Mend CLI / Unified Agent</div>
+                        <div class="diagram-box secondary">Repository Integration</div>
+                    </div>
+                    <div class="diagram-arrow">&#8595;</div>
+                    <div class="diagram-row">
+                        <div class="diagram-box primary">Mend AppSec Platform (Cloud)</div>
+                    </div>
+                    <div class="diagram-arrow">&#8595;</div>
+                    <div class="diagram-row">
+                        <div class="diagram-box neutral">SCA Engine</div>
+                        <div class="diagram-box neutral">SAST Engine</div>
+                        <div class="diagram-box neutral">Container Engine</div>
+                        <div class="diagram-box neutral">AI Engine</div>
+                    </div>
+                    <div class="diagram-arrow">&#8595;</div>
+                    <div class="diagram-row">
+                        <div class="diagram-box secondary">Dashboard &amp; API</div>
+                        <div class="diagram-box secondary">Jira / Slack / Webhooks</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Deployment Options</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9729;&#65039;</div>
+                        <h4>SaaS (Cloud)</h4>
+                        <p>Fully managed cloud deployment. No infrastructure to maintain. Scan data is processed in Mend's cloud and results are available via the dashboard and API. Ideal for most customers.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128274;</div>
+                        <h4>On-Premise</h4>
+                        <p>For customers with strict data residency requirements. The Mend server runs within the customer's infrastructure, and source code never leaves their network.</p>
+                    </div>
+                </div>
+
+                <h3>Integration Methods</h3>
+                <div class="vuln-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Best For</th>
+                                <th>Setup Complexity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Mend Repository Integration</strong></td>
+                                <td>GitHub, GitLab, Bitbucket, Azure DevOps &mdash; automatic scanning on every commit</td>
+                                <td>Low (5 min)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mend CLI (Pipeline)</strong></td>
+                                <td>Any CI/CD system &mdash; GitHub Actions, Jenkins, Azure Pipelines, GitLab CI</td>
+                                <td>Low (10 min)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Unified Agent (CLI)</strong></td>
+                                <td>Complex projects requiring advanced scanning configuration</td>
+                                <td>Medium (30 min)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mend API 3.0</strong></td>
+                                <td>Custom integrations, reporting dashboards, workflow automation</td>
+                                <td>Variable</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Supported Languages &amp; Package Managers</h2>
+                <p>Mend supports <strong>200+ programming languages and package managers</strong>, far exceeding competitor coverage. Key supported ecosystems include:</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>JavaScript / TypeScript</h4>
+                        <p>npm, Yarn, pnpm, Bower</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Java / Kotlin</h4>
+                        <p>Maven, Gradle, Ant+Ivy</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Python</h4>
+                        <p>pip, Poetry, Pipenv, Conda</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>.NET / C#</h4>
+                        <p>NuGet, .NET CLI, Paket</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Go</h4>
+                        <p>Go Modules, dep</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Ruby</h4>
+                        <p>Bundler, RubyGems</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>PHP</h4>
+                        <p>Composer</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Rust</h4>
+                        <p>Cargo</p>
+                    </div>
+                </div>
+
+                <div class="key-concept">
+                    <h4>&#128161; SE Demo Tip</h4>
+                    <p>During POCs, always scan the customer&rsquo;s actual codebase in their exact language/framework combination. Mend's broad language support means you'll rarely encounter unsupported tech stacks &mdash; a common issue with competitors that support only 20-50 languages. This is a strong differentiator in competitive evaluations.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="Yw==">
+                        <p><strong>Question 1:</strong> Which integration method provides the simplest setup for automatic scanning on every commit?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Unified Agent</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Mend API 3.0</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Mend Repository Integration</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Manual CLI scan</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 2:</strong> How many programming languages and package managers does Mend support?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> 50+</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> 200+</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> 30+</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> 100+</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <button class="mark-complete-btn" data-xp="250">Mark as Complete</button>
+                <div class="module-nav-buttons">
+                    <span></span>
+                    <a href="02-demo-mastery.html" class="btn btn-primary">Next: Demo Mastery &#8594;</a>
+                </div>
+            </div>

@@ -1,0 +1,159 @@
+---
+title: Registry Scanning &amp; Image Lifecycle - Mend Learn
+---
+            <div class="breadcrumb">
+                <a href="../../learning-paths.html">Learning Paths</a> &#8250; Container Security &#8250; Registry Scanning
+            </div>
+
+            <div class="completed-badge">&#10003; Not Started</div>
+            <h1>Registry Scanning &amp; Image Lifecycle</h1>
+            <div class="module-meta">
+                <span>&#128336; 35 min</span>
+                <span>&#128218; 4 sections</span>
+                <span>&#11088; 200 XP</span>
+                <span class="module-level">Level 2 - Intermediate</span>
+            </div>
+
+
+            <section class="module-section">
+                <h2>Container Registry Security</h2>
+                <p>Container registries are the distribution points for all container images in your organization. Securing registries is critical because a compromised registry can distribute malicious images across your entire infrastructure.</p>
+
+                <h3>Registry Types &amp; Security Features</h3>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#128230;</div>
+                        <h4>Docker Hub</h4>
+                        <p>Public registry with Docker Official Images, Verified Publishers, and automated vulnerability scanning for Pro/Team plans.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#9729;</div>
+                        <h4>Amazon ECR</h4>
+                        <p>AWS-native registry with IAM integration, image scanning on push, and cross-account sharing with fine-grained permissions.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128272;</div>
+                        <h4>Azure Container Registry</h4>
+                        <p>Geo-replicated registry with content trust, Microsoft Defender scanning, and Azure AD authentication.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128737;</div>
+                        <h4>Harbor</h4>
+                        <p>Open-source enterprise registry with built-in vulnerability scanning (Trivy), RBAC, and image signing.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Continuous Registry Scanning with Mend</h2>
+                <p>Mend integrates with container registries to provide continuous scanning of all stored images, not just at push time:</p>
+
+                <pre><code># Configure Mend registry integration
+mend container registry add \
+    --type ecr \
+    --region us-east-1 \
+    --scan-schedule "0 */6 * * *"  # Scan every 6 hours
+
+# Scan all images in a registry
+mend container registry scan --registry myregistry.azurecr.io
+
+# Set policies for registry images
+mend container policy set \
+    --max-critical 0 \
+    --max-high 5 \
+    --max-age-days 90 \
+    --registry myregistry.azurecr.io</code></pre>
+
+                <h3>Why Continuous Scanning Matters</h3>
+                <p>New vulnerabilities are discovered daily. An image that was clean at push time may have critical vulnerabilities days later. Continuous scanning ensures you're always aware of your current risk posture.</p>
+            </section>
+
+            <section class="module-section">
+                <h2>Image Lifecycle Management</h2>
+                <p>Unmanaged image sprawl is a major security risk. Old, unpatched images accumulate in registries and may be deployed accidentally:</p>
+
+                <ul>
+                    <li><strong>Retention Policies</strong> &mdash; Automatically delete images older than your retention period (e.g., 90 days for non-production)</li>
+                    <li><strong>Tag Immutability</strong> &mdash; Prevent tags from being overwritten to ensure reproducible deployments</li>
+                    <li><strong>Base Image Tracking</strong> &mdash; Track which production images are built on which base images for efficient patching</li>
+                    <li><strong>Vulnerability SLA</strong> &mdash; Define maximum acceptable time for an image to have critical/high vulnerabilities</li>
+                </ul>
+            </section>
+
+            <section class="module-section">
+                <h2>Image Signing &amp; Verification</h2>
+                <p>Image signing ensures that only trusted, verified images are deployed to your environments:</p>
+
+                <pre><code># Sign an image with Cosign
+cosign sign --key cosign.key myregistry.com/myapp:v1.0
+
+# Verify an image signature
+cosign verify --key cosign.pub myregistry.com/myapp:v1.0
+
+# Kubernetes admission policy (Kyverno)
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: verify-image-signature
+spec:
+  rules:
+    - name: verify-cosign-signature
+      match:
+        resources:
+          kinds: ["Pod"]
+      verifyImages:
+        - imageReferences: ["myregistry.com/*"]
+          attestors:
+            - entries:
+                - keys:
+                    publicKeys: |-
+                      -----BEGIN PUBLIC KEY-----
+                      ... your cosign public key ...
+                      -----END PUBLIC KEY-----</code></pre>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Best Practice</h4>
+                    <p>Combine Mend scanning with image signing: only sign images that pass your vulnerability threshold. Use admission controllers to enforce that only signed images can be deployed.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 1:</strong> Why is continuous registry scanning important even after images pass initial scan-on-push?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Push-time scanning is always incomplete</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> New vulnerabilities are discovered daily, and previously clean images may become vulnerable</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Registry scanning is faster than build-time scanning</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> It is required by Docker Hub terms of service</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 2:</strong> What is the purpose of tag immutability in container registries?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Prevent tags from being overwritten to ensure reproducible deployments</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Make tags easier to remember</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Reduce registry storage costs</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Speed up image pulls</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>200 XP earned for completing this module</span>
+                </div>
+                <button class="btn btn-primary mark-complete-btn" data-xp="200">Mark Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="03-kubernetes-security.html" class="btn btn-secondary">&#8592; Previous: Kubernetes Security</a>
+                    <a href="05-runtime-protection.html" class="btn btn-primary">Next: Runtime Protection &#8594;</a>
+                </div>
+            </div>

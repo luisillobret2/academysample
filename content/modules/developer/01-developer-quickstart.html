@@ -1,0 +1,181 @@
+---
+title: Developer Quickstart with Mend - Mend Learn
+---
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>Developer Track</span> &rsaquo; <span>Quickstart</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>Developer Quickstart with Mend</h1>
+                <div class="module-meta">
+                    <span>&#128338; 30 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 150 XP</span>
+                    <span class="level-badge beginner">Level 1 - Beginner</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>Getting Started in 5 Minutes</li>
+                    <li>Understanding Your Results</li>
+                    <li>Developer Integrations</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>Getting Started in 5 Minutes</h2>
+                <p>This quickstart guide gets developers scanning their first project with Mend in under 5 minutes. No security expertise required &mdash; Mend integrates directly into your existing development workflow.</p>
+
+                <h3>Step 1: Install the Mend CLI</h3>
+                <pre><code># Install via npm (Node.js)
+npm install -g @mend/cli
+
+# Or via Homebrew (macOS)
+brew install mend-io/tap/mend-cli
+
+# Verify installation
+mend --version</code></pre>
+
+                <h3>Step 2: Authenticate</h3>
+                <pre><code># Login with your Mend account
+mend auth login
+
+# Or set your API key as an environment variable
+export MEND_API_KEY="your-api-key-here"</code></pre>
+
+                <h3>Step 3: Scan Your Project</h3>
+                <pre><code># Run a full scan (SCA + SAST)
+mend scan --dir .
+
+# Run SCA only
+mend sca scan --dir .
+
+# Run SAST only
+mend sast scan --dir .</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Understanding Your Results</h2>
+                <p>After scanning, Mend categorizes findings to help you focus on what matters:</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #e74c3c;">&#128308;</div>
+                        <h4>Critical &amp; High</h4>
+                        <p>Vulnerabilities that are exploitable and have available fixes. Address these immediately &mdash; especially those marked as <strong>Reachable</strong>.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #f39c12;">&#128992;</div>
+                        <h4>Medium</h4>
+                        <p>Vulnerabilities with moderate risk. Schedule remediation in your next sprint, prioritizing those with high EPSS scores.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #2ecc71;">&#128994;</div>
+                        <h4>Low &amp; Info</h4>
+                        <p>Minor issues or informational findings. Address during regular dependency updates or as part of tech debt sprints.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #3498db;">&#128275;</div>
+                        <h4>License Issues</h4>
+                        <p>Dependencies with licenses that may conflict with your project&rsquo;s licensing requirements. Review with your legal team.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Developer Integrations</h2>
+                <p>Mend integrates where developers work, eliminating the need to switch contexts:</p>
+
+                <div class="vuln-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Integration</th>
+                                <th>What It Does</th>
+                                <th>Setup Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>VS Code Extension</strong></td>
+                                <td>Real-time SAST feedback as you code, inline vulnerability highlights, one-click fixes</td>
+                                <td>2 min</td>
+                            </tr>
+                            <tr>
+                                <td><strong>IntelliJ Plugin</strong></td>
+                                <td>Java/Kotlin SAST analysis with IDE-native fix suggestions</td>
+                                <td>2 min</td>
+                            </tr>
+                            <tr>
+                                <td><strong>GitHub App</strong></td>
+                                <td>Automatic PR comments with vulnerability findings and fix suggestions</td>
+                                <td>5 min</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mend CLI</strong></td>
+                                <td>Command-line scanning for any project, integrates into any CI/CD pipeline</td>
+                                <td>1 min</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mend Renovate</strong></td>
+                                <td>Automatic PRs to update outdated or vulnerable dependencies</td>
+                                <td>5 min</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="key-concept">
+                    <h4>&#128161; For Technical Partners</h4>
+                    <p>When demonstrating Mend to developer audiences, emphasize the <strong>developer experience</strong>: IDE integration, fast scan speeds (10x faster), AI-powered fix suggestions, and the fact that Mend Renovate handles dependency updates automatically. Developers hate context-switching &mdash; Mend lets them stay in their flow.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 1:</strong> Which command runs both SCA and SAST scans on your project?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> <code>mend scan --dir .</code></label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> <code>mend sca scan --dir .</code></label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> <code>mend audit --all</code></label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> <code>mend check --full</code></label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 2:</strong> Which findings should developers address first?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> All findings in alphabetical order</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Critical/High severity findings that are Reachable with available fixes</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Low severity findings since they are quickest to fix</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> License issues, regardless of severity</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <button class="mark-complete-btn" data-xp="150">Mark as Complete</button>
+                <div class="module-nav-buttons">
+                    <span></span>
+                    <a href="02-ide-integration.html" class="btn btn-primary">Next: IDE Integration &#8594;</a>
+                </div>
+            </div>

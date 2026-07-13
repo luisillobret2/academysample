@@ -1,0 +1,134 @@
+---
+title: POC &amp; Trial Management - Mend Learn
+---
+            <div class="breadcrumb">
+                <a href="../../learning-paths.html">Learning Paths</a> &#8250; Technical SE Track &#8250; POC Management
+            </div>
+
+            <div class="completed-badge">&#10003; Not Started</div>
+            <h1>POC &amp; Trial Management</h1>
+            <div class="module-meta">
+                <span>&#128336; 40 min</span>
+                <span>&#128218; 4 sections</span>
+                <span>&#11088; 225 XP</span>
+                <span class="module-level">Level 2 - Intermediate</span>
+            </div>
+
+
+            <section class="module-section">
+                <h2>Designing Successful POCs</h2>
+                <p>A Proof of Concept (POC) or technical trial is the most critical phase of an enterprise sales cycle. A well-designed POC validates Mend's value against the prospect's actual environment and pain points.</p>
+
+                <h3>POC vs. Free Trial vs. Pilot</h3>
+                <ul>
+                    <li><strong>POC (2-3 weeks)</strong> &mdash; Focused evaluation with defined success criteria. Best for enterprise deals where technical validation drives the decision.</li>
+                    <li><strong>Free Trial (14-30 days)</strong> &mdash; Self-service exploration. Best for developer-led adoption and SMB customers.</li>
+                    <li><strong>Pilot (1-3 months)</strong> &mdash; Extended production deployment with a subset of repositories. Best for large enterprises needing to prove organizational readiness.</li>
+                </ul>
+            </section>
+
+            <section class="module-section">
+                <h2>POC Planning &amp; Execution</h2>
+
+                <h3>Pre-POC Preparation</h3>
+                <pre><code>POC Planning Checklist:
+
+1. Success Criteria (agree BEFORE starting)
+   [ ] Define 3-5 measurable outcomes
+   [ ] Get written sign-off from economic buyer
+   [ ] Set clear timeline with milestones
+
+2. Technical Scope
+   [ ] Identify 3-5 representative repositories
+   [ ] Confirm tech stacks and languages
+   [ ] Understand current tooling and pain points
+   [ ] Map integration requirements (CI/CD, SCM, ticketing)
+
+3. Stakeholders
+   [ ] Security champion identified
+   [ ] Engineering lead assigned
+   [ ] 2-3 developers committed to participate
+   [ ] Executive sponsor confirmed
+
+4. Environment
+   [ ] Mend organization provisioned
+   [ ] SSO/SCIM configured (if required)
+   [ ] CI/CD integration prepared
+   [ ] IDE plugins ready for distribution</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Common POC Scenarios</h2>
+
+                <h3>Scenario 1: "We have too many alerts from our current tool"</h3>
+                <p>Setup: Scan the same repositories with both Mend and the current tool. Compare total findings vs. actionable findings.</p>
+                <p>Expected result: Mend's reachability analysis reduces actionable alerts by 60-80% while catching the same real vulnerabilities.</p>
+
+                <h3>Scenario 2: "Our developers won't adopt security tools"</h3>
+                <p>Setup: Install Mend IDE plugins for the developer participants. Track time-to-fix for Mend findings vs. their current workflow.</p>
+                <p>Expected result: Developers fix issues 5-10x faster with inline fix suggestions and one-click upgrades.</p>
+
+                <h3>Scenario 3: "We need compliance-ready reporting"</h3>
+                <p>Setup: Configure Mend to scan all POC repositories and generate SBOM + compliance reports.</p>
+                <p>Expected result: Automated report generation saves 100+ hours per audit cycle vs. manual evidence collection.</p>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; POC Success Rule</h4>
+                    <p>Never start a POC without agreed-upon success criteria signed by the economic buyer. Without this, a "successful" POC can still result in no deal because stakeholders disagree on what success means.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>POC Results Presentation</h2>
+                <p>The results presentation is where you convert technical success into a purchase decision:</p>
+
+                <ol>
+                    <li><strong>Recap Success Criteria</strong> &mdash; Show each criterion and whether it was met</li>
+                    <li><strong>Quantified Results</strong> &mdash; Use specific numbers: "Scanned 847 dependencies, found 23 critical reachable vulnerabilities, reduced noise by 78%"</li>
+                    <li><strong>Developer Feedback</strong> &mdash; Share quotes and satisfaction scores from participating developers</li>
+                    <li><strong>ROI Projection</strong> &mdash; Extrapolate POC results to the full organization</li>
+                    <li><strong>Deployment Plan</strong> &mdash; Present a phased rollout plan for full organization deployment</li>
+                    <li><strong>Commercial Proposal</strong> &mdash; If all criteria are met, present the commercial terms</li>
+                </ol>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 1:</strong> What must always be agreed upon before starting a POC?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> The final contract price</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Measurable success criteria signed by the economic buyer</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> The number of developers who will use the tool</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Which competitor to replace</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 2:</strong> What is the recommended duration for a focused enterprise POC?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> 2-3 weeks</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> 3-6 months</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> 1 week</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> 1 year</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>225 XP earned for completing this module</span>
+                </div>
+                <button class="btn btn-primary mark-complete-btn" data-xp="225">Mark Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="02-demo-mastery.html" class="btn btn-secondary">&#8592; Previous: Demo Mastery</a>
+                    <a href="04-advanced-integrations.html" class="btn btn-primary">Next: Advanced Integrations &#8594;</a>
+                </div>
+            </div>

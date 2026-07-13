@@ -1,0 +1,136 @@
+---
+title: Custom Rules &amp; Policies - Mend Learn
+---
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>SAST Product Track</span> &rsaquo; <span>Custom Rules</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>Custom Rules &amp; Security Policies</h1>
+                <div class="module-meta">
+                    <span>&#128338; 35 min</span>
+                    <span>&#128218; 3 sections</span>
+                    <span>&#11088; 175 XP</span>
+                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>Organization-Specific Security Standards</li>
+                    <li>Managing Access &amp; Organizational Structure</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>Organization-Specific Security Standards</h2>
+                <p>Every organization has unique security requirements beyond standard vulnerability detection. Mend SAST allows security teams to define custom rules and policies that enforce organization-specific coding standards, regulatory requirements, and security best practices.</p>
+
+                <h3>Automation Workflows in the Mend AppSec Platform</h3>
+                <p>The Mend AppSec Platform provides <strong>Automation Workflows</strong> that allow you to automatically enforce security rules and streamline processes across your organization:</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128736;</div>
+                        <h4>Severity Thresholds</h4>
+                        <p>Set minimum severity levels that trigger different actions &mdash; auto-create Jira tickets for Critical, send Slack alerts for High, log Medium for quarterly review.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128274;</div>
+                        <h4>Compliance Rules</h4>
+                        <p>Map SAST findings to compliance frameworks (OWASP Top 10, SANS Top 25, PCI DSS) and generate compliance-specific reports for auditors.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128101;</div>
+                        <h4>Team Routing</h4>
+                        <p>Automatically assign findings to the right team based on file path, severity, or finding type. Security-critical findings go to the security team; code quality issues go to developers.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128226;</div>
+                        <h4>Notification Channels</h4>
+                        <p>Configure alerts via email, Slack, Microsoft Teams, or webhooks. Set different notification rules for different severity levels and teams.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Managing Access &amp; Organizational Structure</h2>
+                <p>The Mend AppSec Platform uses a hierarchical structure to organize security management across large enterprises:</p>
+
+                <div class="architecture-diagram">
+                    <h4 style="color: var(--color-text-bright); margin-bottom: 16px;">Mend Account Structure</h4>
+                    <div class="diagram-row">
+                        <div class="diagram-box primary">Organization</div>
+                    </div>
+                    <div class="diagram-arrow">&#8595;</div>
+                    <div class="diagram-row">
+                        <div class="diagram-box secondary">Application A</div>
+                        <div class="diagram-box secondary">Application B</div>
+                        <div class="diagram-box secondary">Application C</div>
+                    </div>
+                    <div class="diagram-arrow">&#8595;</div>
+                    <div class="diagram-row">
+                        <div class="diagram-box neutral">Project 1</div>
+                        <div class="diagram-box neutral">Project 2</div>
+                        <div class="diagram-box neutral">Project 3</div>
+                        <div class="diagram-box neutral">Project 4</div>
+                    </div>
+                </div>
+
+                <ul>
+                    <li><strong>Organization</strong> &mdash; Top-level entity representing your company. Organization-wide policies apply to all applications and projects.</li>
+                    <li><strong>Applications</strong> &mdash; Logical groupings (e.g., by product, team, or business unit). Each application can have its own policies and access controls.</li>
+                    <li><strong>Projects</strong> &mdash; Individual repositories or codebases. Scan results and findings are tracked at the project level.</li>
+                </ul>
+
+                <h3>Access Levels</h3>
+                <p>Mend supports role-based access control with granular permissions at each level of the hierarchy, ensuring security teams have admin access while developers see only their relevant projects.</p>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 1:</strong> In Mend&rsquo;s organizational structure, what is the relationship between Applications and Projects?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Applications contain Organizations which contain Projects</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Organizations contain Applications which contain Projects</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Projects contain Applications which contain Organizations</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> They are all independent and flat</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-c="Yw==">
+                        <p><strong>Question 2:</strong> What can Automation Workflows in the Mend platform do?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Only send email notifications</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Only create Jira tickets</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Enforce security rules, route findings to teams, create tickets, and send alerts across multiple channels</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Only block deployments</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <button class="mark-complete-btn" data-xp="175">Mark as Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="03-cicd-integration.html" class="btn btn-secondary">&#8592; Previous</a>
+                    <a href="../../certifications.html" class="btn btn-primary">Take SAST Certification &#8594;</a>
+                </div>
+            </div>

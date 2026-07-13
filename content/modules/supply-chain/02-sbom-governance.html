@@ -1,0 +1,160 @@
+---
+title: SBOM, Governance &amp; Compliance - Mend Learn
+---
+            <div class="breadcrumb">
+                <a href="../../learning-paths.html">Learning Paths</a> &#8250; Supply Chain Security &#8250; SBOM &amp; Governance
+            </div>
+
+            <h1>SBOM, Governance &amp; Compliance</h1>
+            <div class="module-meta">
+                <span>&#128336; 40 min</span>
+                <span>&#128218; 4 sections</span>
+                <span>&#11088; 200 XP</span>
+                <span class="module-level">Level 2 - Intermediate</span>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>What is an SBOM?</li>
+                    <li>Generating SBOMs with Mend</li>
+                    <li>Governance &amp; Policy Enforcement</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>What is an SBOM?</h2>
+                <p>A Software Bill of Materials (SBOM) is a formal, machine-readable inventory of all components, libraries, and dependencies that make up a software application. Think of it as a "nutrition label" for software — it tells you exactly what ingredients went into building your application.</p>
+
+                <p>SBOMs have become a regulatory requirement following Executive Order 14028 (Improving the Nation's Cybersecurity), which mandates SBOMs for all software sold to the U.S. federal government. Similar regulations are emerging globally, including the EU Cyber Resilience Act.</p>
+
+                <div class="video-placeholder">
+                    <div class="play-btn">&#9654;</div>
+                    <p>SBOM Fundamentals and Regulatory Landscape</p>
+                    <span>7:45</span>
+                </div>
+
+                <h3>SBOM Formats</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Format</th><th>Maintained By</th><th>Best For</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>CycloneDX</strong></td><td>OWASP</td><td>Security-focused SBOMs with vulnerability correlation. Supports VEX (Vulnerability Exploitability eXchange)</td></tr>
+                        <tr><td><strong>SPDX</strong></td><td>Linux Foundation</td><td>License compliance and provenance tracking. ISO/IEC 5962:2021 international standard</td></tr>
+                        <tr><td><strong>SWID Tags</strong></td><td>ISO/NIST</td><td>Software identification and asset management. Common in enterprise IT environments</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="module-section">
+                <h2>Generating SBOMs with Mend</h2>
+                <p>Mend automatically generates comprehensive SBOMs for all scanned projects. SBOMs include direct and transitive dependencies, license information, and vulnerability status.</p>
+
+                <pre><code># Generate SBOM in CycloneDX format
+mend sbom generate --dir ./my-project --format cyclonedx --output sbom.json
+
+# Generate SBOM in SPDX format
+mend sbom generate --dir ./my-project --format spdx --output sbom.spdx.json
+
+# Generate SBOM with vulnerability data included
+mend sbom generate --dir ./my-project --format cyclonedx --include-vulns --output sbom-with-vulns.json
+
+# Export SBOM for a specific project from the dashboard
+mend sbom export --project "my-app" --format cyclonedx</code></pre>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; SBOM Best Practices</h4>
+                    <p>Generate SBOMs as part of your CI/CD pipeline on every release. Store them alongside your build artifacts. This creates an auditable trail of exactly what components were included in each version of your software.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Governance &amp; Policy Enforcement</h2>
+                <p>Mend provides policy enforcement capabilities that allow organizations to define and automate governance rules across all repositories:</p>
+
+                <ul>
+                    <li><strong>License Policies</strong> — Block or flag packages with copyleft licenses (GPL, AGPL) in proprietary products</li>
+                    <li><strong>Vulnerability Policies</strong> — Set severity thresholds that must be met before code can be merged or deployed</li>
+                    <li><strong>Age &amp; Maintenance Policies</strong> — Flag dependencies that haven't been updated in over 12 months</li>
+                    <li><strong>Provenance Policies</strong> — Require packages to have verified build provenance (SLSA attestations)</li>
+                    <li><strong>Approval Workflows</strong> — Require security team approval for new dependencies above a risk threshold</li>
+                </ul>
+
+                <h3>Compliance Frameworks</h3>
+                <p>Mend helps organizations meet requirements from multiple compliance frameworks:</p>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#127963;&#65039;</div>
+                        <h4>EO 14028</h4>
+                        <p>U.S. federal SBOM requirements for government software suppliers.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#127466;&#127482;</div>
+                        <h4>EU CRA</h4>
+                        <p>Cyber Resilience Act requiring vulnerability handling and SBOMs for products sold in the EU.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128203;</div>
+                        <h4>SOC 2 / ISO 27001</h4>
+                        <p>Demonstrate software inventory management and vulnerability management controls.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#127973;</div>
+                        <h4>PCI DSS / HIPAA</h4>
+                        <p>Maintain inventory of third-party components and track known vulnerabilities.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 1:</strong> Which SBOM format is an ISO international standard focused on license compliance?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> CycloneDX</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> SPDX</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> SWID Tags</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> STIX/TAXII</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 2:</strong> What U.S. executive order mandated SBOMs for government software?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Executive Order 14028</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Executive Order 13636</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> The SECURE Act</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> NIST CSF 2.0</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>200 XP earned for completing this module</span>
+                </div>
+                <button class="btn btn-primary mark-complete-btn" data-xp="200">Mark Complete</button>
+                <div class="module-nav-buttons">
+                    <a href="01-supply-chain-threats.html" class="btn btn-secondary">&#8592; Previous: Supply Chain Threats</a>
+                    <a href="../../learning-paths.html" class="btn btn-primary">Back to Learning Paths</a>
+                </div>
+            </div>
