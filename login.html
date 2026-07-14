@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <main class="page-content" style="padding-top: 40px;">
+        <div class="container" style="max-width: 480px;">
+            <div class="card-flat" style="padding: 32px;">
+                <h1 style="text-align: center; margin-bottom: 8px;">Welcome back</h1>
+                <p class="text-muted" style="text-align: center; margin-bottom: 24px;">Sign in to save your progress across devices.</p>
+
+                <form id="login-form">
+                    <div class="form-group" style="margin-bottom: 16px;">
+                        <label for="email" style="display: block; margin-bottom: 6px; font-weight: 500; color: var(--color-text-bright);">Email</label>
+                        <input type="email" id="email" name="email" required style="width: 100%; padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--color-border); background: var(--color-bg); color: var(--color-text);">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label for="password" style="display: block; margin-bottom: 6px; font-weight: 500; color: var(--color-text-bright);">Password</label>
+                        <input type="password" id="password" name="password" required style="width: 100%; padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--color-border); background: var(--color-bg); color: var(--color-text);">
+                    </div>
+                    <div id="login-error" style="color: var(--color-danger); margin-bottom: 12px; font-size: 0.85rem; min-height: 1.2em;"></div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Sign in</button>
+                </form>
+
+                <p style="text-align: center; margin-top: 20px; font-size: 0.9rem;">Don't have an account? <a href="register.html">Register</a></p>
+            </div>
+        </div>
+    </main>
+
+    <footer id="site-footer" class="site-footer"></footer>
+
+    <script src="js/layout.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>
