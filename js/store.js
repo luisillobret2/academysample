@@ -7,6 +7,7 @@ const MendStore = {
 
     defaults: {
         userName: 'Jane Doe',
+        email: '',
         role: 'Sales Engineer',
         company: 'Acme Security',
         partnerType: 'VAR',
@@ -85,6 +86,7 @@ const MendStore = {
     save(data) {
         try {
             localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
+            this.sync();
         } catch (e) {
             console.warn('MendStore: failed to save', e);
         }
@@ -557,3 +559,93 @@ const MendStore = {
         location.reload();
     }
 };
+
+/* ============================================
+   MEND LEARN - Backend API client
+   ============================================ */
+
+const MendAPI = (function () {
+    const baseURL = (typeof window !== 'undefined' && window.__MEND_API_URL__) || 'http://localhost:3000/api';
+
+    async function request(method, path, body) {
+        const url = baseURL + path;
+        const opts = {
+            method,
+            credentials: 'include',
+            headers: {}
+        };
+        if (body !== undefined) {
+            opts.headers['Content-Type'] = 'application/json';
+            opts.body = JSON.stringify(body);
+        }
+        const res = await fetch(url, opts);
+        if (res.status === 401) {
+            throw new Error('Unauthorized');
+        }
+        if (!res.ok) {
+            const text = await res.text().catch(() => '');
+            let message = text;
+            try {
+                const parsed = JSON.parse(text);
+                message = parsed.error || text;
+            } catch (_) {}
+            throw new Error(message || `HTTP ${res.status}`);
+        }
+        return res.json();
+    }
+
+    return {
+        getMe() {
+            return request('GET', '/me');
+        },
+        updateMe(data) {
+            return request('PUT', '/me', data);
+        },
+        updateProfile(data) {
+            return request('PUT', '/me/profile', data);
+        },
+        register(body) {
+            return request('POST', '/auth/register', body);
+        },
+        login(email, password) {
+            return request('POST', '/auth/login', { email, password });
+        },
+        logout() {
+            return request('POST', '/auth/logout');
+        }
+    };
+})();
+
+/* --- Server synchronization --- */
+MendStore.sync = async function () {
+    try {
+        const data = this.load();
+        await MendAPI.updateMe(data);
+    } catch (err) {
+        if (err.message !== 'Unauthorized') {
+            console.warn('MendStore sync failed:', err.message);
+        }
+    }
+};
+
+MendStore.loadFromServer = async function () {
+    if (this._serverLoadPromise) return this._serverLoadPromise;
+    this._serverLoadPromise = (async () => {
+        try {
+            const { user } = await MendAPI.getMe();
+            if (user && typeof user === 'object') {
+                this.save(user);
+                return user;
+            }
+        } catch (err) {
+            if (err.message !== 'Unauthorized') {
+                console.warn('MendStore load from server failed:', err.message);
+            }
+        } finally {
+            this._serverLoadPromise = null;
+        }
+        return this.load();
+    })();
+    return this._serverLoadPromise;
+};
+

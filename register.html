@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Mend Learn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <main class="page-content" style="padding-top: 40px;">
+        <div class="container" style="max-width: 520px;">
+            <div class="card-flat" style="padding: 32px;">
+                <h1 style="text-align: center; margin-bottom: 8px;">Create your account</h1>
+                <p class="text-muted" style="text-align: center; margin-bottom: 24px;">Register to track your learning progress and earn certifications.</p>
+
+                <form id="register-form">
+                    <div class="form-group" style="margin-bottom: 12px;">
+                        <label for="email" style="display: block; margin-bottom: 4px; font-weight: 500; color: var(--color-text-bright);">Email</label>
+                        <input type="email" id="email" name="email" required style="width: 100%; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--color-border); background: var(--color-bg); color: var(--color-text);">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 12px;">
+                        <label for="password" style="display: block; margin-bottom: 4px; font-weight: 500; color: var(--color-text-bright);">Password (min 6 chars)</label>
+                        <input type="password" id="password" name="password" required minlength="6" style="width: 100%; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--color-border); background: var(--color-bg); color: var(--color-text);">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 12px;">
+                        <label for="userName" style="display: block; margin-bottom: 4px; font-weight: 500; color: var(--color-text-bright);">Full name</label>
+                        <input type="text" id="userName" name="userName" required style="width: 100%; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--color-border); background: var(--color-bg); color: var(--color-text);">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 12px;">
+                        <label for="role" style="display: block; margin-bottom: 4px; font-weight: 500; color: var(--color-text-bright);">Role</label>
+                        <input type="text" id="role" name="role" value="Sales Engineer" style="width: 100%; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--color-border); background: var(--color-bg); color: var(--color-text);">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 12px;">
+                        <label for="company" style="display: block; margin-bottom: 4px; font-weight: 500; color: var(--color-text-bright);">Company</label>
+                        <input type="text" id="company" name="company" value="Acme Security" style="width: 100%; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--color-border); background: var(--color-bg); color: var(--color-text);">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 12px;">
+                        <label for="partnerType" style="display: block; margin-bottom: 4px; font-weight: 500; color: var(--color-text-bright);">Partner type</label>
+                        <input type="text" id="partnerType" name="partnerType" value="VAR" style="width: 100%; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--color-border); background: var(--color-bg); color: var(--color-text);">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label for="partnerTier" style="display: block; margin-bottom: 4px; font-weight: 500; color: var(--color-text-bright);">Partner tier</label>
+                        <input type="text" id="partnerTier" name="partnerTier" value="Silver Partner" style="width: 100%; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--color-border); background: var(--color-bg); color: var(--color-text);">
+                    </div>
+                    <div id="register-error" style="color: var(--color-danger); margin-bottom: 12px; font-size: 0.85rem; min-height: 1.2em;"></div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Create account</button>
+                </form>
+
+                <p style="text-align: center; margin-top: 20px; font-size: 0.9rem;">Already have an account? <a href="login.html">Login</a></p>
+            </div>
+        </div>
+    </main>
+
+    <footer id="site-footer" class="site-footer"></footer>
+
+    <script src="js/layout.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

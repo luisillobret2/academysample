@@ -53,6 +53,7 @@
                     <span class="xp-display">2,450 XP</span>
                 </div>
                 <a href="${prefix}profile.html" class="nav-avatar" title="Profile">JD</a>
+                <div class="nav-auth" style="display:flex; align-items:center; gap:8px; margin-left:8px;"></div>
             </div>
             <button class="mobile-menu-btn" aria-label="Menu" aria-expanded="false">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>

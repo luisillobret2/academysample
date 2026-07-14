@@ -2,9 +2,13 @@
    MODULE PAGE INTERACTIVITY
    ============================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     if (typeof MendStore !== 'undefined') {
+        await MendStore.loadFromServer();
         MendStore.applyToPage();
+    }
+    if (typeof MendAuth !== 'undefined') {
+        await MendAuth.init();
     }
     initQuiz();
     initMarkComplete();
