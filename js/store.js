@@ -527,6 +527,12 @@ const MendStore = {
                 'enterprise/03-compliance-governance',
                 'enterprise/04-sso-user-management',
                 'enterprise/05-reporting-analytics'
+            ],
+            'platform-unified': [
+                'platform-unified/01-platform-unified-overview'
+            ],
+            mssp: [
+                'mssp/01-mssp-operations-overview'
             ]
         };
         return trackMap[track] || [];
