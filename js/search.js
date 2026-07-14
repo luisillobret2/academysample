@@ -103,6 +103,12 @@ const MendSearch = {
         { title: 'SSO & User Management', href: 'modules/enterprise/04-sso-user-management.html', category: 'Enterprise', tags: 'sso saml scim user management' },
         { title: 'Reporting & Analytics', href: 'modules/enterprise/05-reporting-analytics.html', category: 'Enterprise', tags: 'reporting analytics dashboards metrics' },
 
+        /* --- Platform Unified Track --- */
+        { title: 'Platform Unified Overview', href: 'modules/platform-unified/01-platform-unified-overview.html', category: 'Platform', tags: 'platform unified overview cross-product' },
+
+        /* --- MSSP Operations Track --- */
+        { title: 'MSSP Operations Overview', href: 'modules/mssp/01-mssp-operations-overview.html', category: 'MSSP', tags: 'mssp operations multi-tenant service delivery' },
+
         /* --- Battlecards --- */
         { title: 'Battlecard: Mend vs Snyk', href: 'battlecard-snyk.html', category: 'Battlecard', tags: 'snyk competitive comparison' },
         { title: 'Battlecard: Mend vs Veracode', href: 'battlecard-veracode.html', category: 'Battlecard', tags: 'veracode competitive comparison' },
