@@ -1,0 +1,17 @@
+node_modules
+npm-debug.log
+.git
+.gitignore
+backend/data
+docs
+img
+fonts
+modules
+templates
+tests
+scripts
+*.md
+*.html
+*.css
+.env
+.DS_Store
