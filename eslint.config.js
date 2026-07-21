@@ -7,6 +7,8 @@ const appGlobals = {
     MendTracks: 'readonly',
     MendSearch: 'readonly',
     MendBadges: 'readonly',
+    MendAuth: 'readonly',
+    MendAPI: 'readonly',
     Layout: 'readonly',
     showToast: 'readonly',
     escapeHtml: 'readonly',
