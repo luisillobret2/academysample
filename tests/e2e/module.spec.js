@@ -43,7 +43,8 @@ test.describe('Module page: quiz, completion, certificate', () => {
                 completedModules: [
                     'sca/01-sca-overview', 'sca/02-reachability-analysis',
                     'sca/03-license-compliance', 'sca/04-prioritization',
-                    'sca/05-remediation',
+                    'sca/05-remediation', 'sca/07-policy-enforcement',
+                    'sca/08-enterprise-scaling',
                 ],
             };
             localStorage.setItem('mendlearn_data', JSON.stringify(data));
