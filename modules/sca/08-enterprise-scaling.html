@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href="../../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <title>Enterprise SCA at Scale - Mend Learn</title>
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar"></aside>
+
+        <main class="module-content" id="main-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>SCA Deep Dive</span> &rsaquo; <span>Enterprise SCA at Scale</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>Enterprise SCA at Scale</h1>
+                <div class="module-meta">
+                    <span>&#128338; 40 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 200 XP</span>
+                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>Design multi-organization and multi-team SCA deployments</li>
+                    <li>Optimize scanning performance across thousands of repositories</li>
+                    <li>Centralize policies and reporting using the Mend API and automation</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>Multi-Organization Management</h2>
+                <p>Large enterprises rarely operate as a single team. Mend SCA supports a hierarchical structure of organizations, applications, and projects that maps to business units, product lines, and repositories. This hierarchy lets security teams delegate ownership while maintaining centralized visibility and governance.</p>
+                <p>Each organization can inherit base policies from a parent entity or define its own. Application owners see only their own scan results, while CISO-level dashboards aggregate risk across every organization. Role-based access control ensures that developers, security engineers, and executives each see the data they need without exposing sensitive information from unrelated teams.</p>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#127970;</div>
+                        <h4>Organization</h4>
+                        <p>Top-level boundary for business units or subsidiaries. Contains applications, users, policies, and integrations.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128187;</div>
+                        <h4>Application</h4>
+                        <p>Logical grouping of related projects, such as a microservice product or a frontend/backend pair.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128218;</div>
+                        <h4>Project</h4>
+                        <p>Maps to a single repository or scan target. The level where most scan results are reported and remediated.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128272;</div>
+                        <h4>Role-Based Access</h4>
+                        <p>Roles such as Admin, Application Manager, and Contributor control who can view, modify, or approve findings.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Scanning Thousands of Repositories</h2>
+                <p>At enterprise scale, scanning every repository on every commit can overwhelm CI infrastructure and produce more data than teams can act on. A scalable SCA program uses a mix of strategies: selective scanning, incremental scanning, baseline scans, and parallel execution.</p>
+                <p>Selective scanning focuses on repositories that contain build files or dependency manifests. Incremental scanning compares the current commit to the previous baseline and only rescans changed dependencies. Baseline scans run nightly or weekly to catch newly disclosed vulnerabilities and license changes that do not trigger CI commits. Parallel execution distributes scans across build agents to reduce queue time.</p>
+
+                <div class="key-concept">
+                    <h4>Deduplication Strategy</h4>
+                    <p>Shared libraries and common dependencies appear in hundreds of repositories. Deduplication groups findings by component, CVE, and remediation path so teams see one actionable issue instead of hundreds of identical alerts. Mend's "effective vulnerability" view collapses duplicate instances across the enterprise.</p>
+                </div>
+
+                <h3>Scaling Scan Configuration</h3>
+                <pre><code># Mend CLI: scan only changed dependencies in a monorepo
+mend sca scan --diff-only --baseline baseline-report.json
+
+# Mend CLI: scan multiple repositories in parallel with a manifest file
+mend sca scan --batch repos.txt --workers 8 --output-format json
+
+# CI/CD: run nightly baseline for newly disclosed CVEs
+mend sca scan --baseline-only --schedule cron="0 2 * * *"</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Centralized Policy &amp; Reporting</h2>
+                <p>Centralized policy management ensures that every team follows the same minimum security bar without requiring manual configuration in every repository. Policies are defined once at the organization level and inherited by applications and projects. Teams can add stricter rules, but they cannot silently weaken enterprise requirements.</p>
+                <p>Cross-team reporting aggregates findings by severity, component, remediation status, and owner. Executive dashboards show enterprise-wide trends, while operational dashboards help AppSec teams track which repositories are lagging. The Mend API 3.0 makes it possible to pull these metrics into existing business intelligence tools, data lakes, or governance dashboards.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128736;</div>
+                        <h4>Policy Inheritance</h4>
+                        <p>Define policies at the enterprise level and let applications inherit them. Local overrides are visible and auditable.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128202;</div>
+                        <h4>Metrics APIs</h4>
+                        <p>Export vulnerability counts, MTTR, policy violations, and license findings to BI tools via the Mend API.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128260;</div>
+                        <h4>Automated Remediation</h4>
+                        <p>API-driven workflows can open pull requests, create tickets, and notify owners at scale without manual intervention.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128029;</div>
+                        <h4>Large Monorepos</h4>
+                        <p>Monorepo optimization scans only affected workspaces, caches dependency resolution, and distributes analysis across agents.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Performance Tuning for Large Monorepos</h2>
+                <p>Monorepos with millions of lines of code and thousands of dependencies pose unique performance challenges. The key tuning levers are scope control, dependency resolution caching, and scan frequency. Scope control limits analysis to the packages or services affected by a change. Dependency resolution caching reuses resolved graphs when lock files have not changed. Scan frequency optimization runs full scans less often and incremental scans more often.</p>
+                <p>Profile scan duration by stage to identify bottlenecks. If dependency resolution dominates, optimize caching and manifest parsing. If reporting dominates, reduce the number of exported formats or aggregate data server-side. Mend's CLI includes timing and profiling options to help teams find the right balance.</p>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Scale Tip</h4>
+                    <p>Start with a representative set of repositories and measure scan time, CI queue time, and findings volume before rolling out to the entire enterprise. Use these measurements to set realistic service-level objectives and to tune scan scope before broad deployment.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 1:</strong> Which scanning strategy compares the current commit to a previous baseline to avoid rescanning unchanged dependencies?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Parallel scanning</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Incremental scanning</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Baseline-only scanning</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Selective scanning</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 2:</strong> What is the primary purpose of centralized policy inheritance in enterprise SCA?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Ensure every team follows the same minimum security standard</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Allow every project to define completely independent rules</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Disable scanning for low-risk repositories</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Remove the need for audit trails</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>200 XP earned for completing this module</span>
+                </div>
+                <button class="btn btn-primary mark-complete-btn" data-xp="200">Mark Complete</button>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/layout.js"></script>
+    <script src="../../js/store.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/search.js"></script>
+    <script src="../../js/chat.js"></script>
+    <script src="../../js/homepage.js"></script>
+    <script src="../../js/leaderboard.js"></script>
+    <script src="../../js/cert-recommendations.js"></script>
+    <script src="../../js/badges.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/tracks.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

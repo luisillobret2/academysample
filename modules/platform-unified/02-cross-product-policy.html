@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href="../../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <title>Cross-Product Policy &amp; Governance - Mend Learn</title>
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar"></aside>
+
+        <main class="module-content" id="main-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>Platform Unified Track</span> &rsaquo; <span>Cross-Product Policy</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>Cross-Product Policy &amp; Governance</h1>
+                <div class="module-meta">
+                    <span>&#128338; 40 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 200 XP</span>
+                    <span class="level-badge advanced">Level 3 - Advanced</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>Design a unified policy framework spanning SCA, SAST, Container, and Secrets scanning</li>
+                    <li>Configure hierarchical policy inheritance from organization to project to repository</li>
+                    <li>Apply policy templates and enforce governance across all Mend products</li>
+                    <li>Map security policies to compliance frameworks and produce governance reporting</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>The Unified Policy Framework</h2>
+                <p>When an organization adopts multiple Mend products in isolation, each one ends up with its own policy settings, its own thresholds, and its own enforcement rules. Security teams then struggle to answer a simple question: "Are we consistently enforcing our risk appetite across the entire software factory?" The Mend unified platform solves this through a <strong>cross-product policy framework</strong> that lets you define, apply, and audit a single set of governance rules across Software Composition Analysis (SCA), Static Application Security Testing (SAST), Container security, and Secrets detection.</p>
+
+                <p>The framework rests on four pillars. First, a <strong>shared policy vocabulary</strong> uses common severity definitions, risk scoring, and action verbs (block, warn, ignore) so that a "Critical" finding means the same thing whether it comes from a vulnerable dependency or a hardcoded secret. Second, a <strong>centralized policy service</strong> stores every rule in one place, eliminating the drift that occurs when each product maintains its own configuration database. Third, an <strong>enforcement layer</strong> translates policies into pipeline gates, IDE warnings, and pull-request comments. Fourth, a <strong>governance reporting engine</strong> rolls policy outcomes up into compliance evidence and executive dashboards.</p>
+
+                <div class="key-concept">
+                    <h4>&#128161; Why Cross-Product Policy Matters</h4>
+                    <p>Organizations running point tools typically maintain 3 to 5 separate policy consoles. A single application may be governed by conflicting rules &mdash; SCA blocks Critical CVEs, but SAST only warns on Critical injection flaws. The unified framework eliminates this inconsistency by letting a security architect define one policy that applies to every product, then override it only where business context demands it.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Hierarchical Policy Inheritance</h2>
+                <p>Mend&rsquo;s policy model is hierarchical, mirroring how most enterprises structure their software portfolios. Policies flow downward through three levels: <strong>Organization</strong>, <strong>Project</strong>, and <strong>Repository</strong>. A rule defined at the organization level automatically applies to every project and repository beneath it, unless a lower level explicitly overrides it. This dramatically reduces configuration effort while preserving the flexibility to tighten or loosen controls for specific teams.</p>
+
+                <ol class="steps-list">
+                    <li><strong>Organization-level policies</strong> &mdash; Set the enterprise baseline: block Critical CVEs in production-bound builds, fail any build with a hardcoded secret, require SAST clean on merge to main. These are the non-negotiable guardrails.</li>
+                    <li><strong>Project-level policies</strong> &mdash; Tighten or relax rules for a group of related repositories. A payments project may block High-severity SAST findings where the org only blocks Critical. A legacy modernization project may temporarily allow warnings instead of blocks.</li>
+                    <li><strong>Repository-level policies</strong> &mdash; The finest granularity, used for exceptional cases such as a single repo that needs a one-off ignore rule or an experimental branch with reduced enforcement.</li>
+                </ol>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Override Discipline</h4>
+                    <p>Every override is logged with a reason, an owner, and an expiration date. This prevents "policy rot" where temporary exceptions become permanent. Review overrides quarterly and force owners to re-justify or let them expire.</p>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #073C8C;">&#128218;</div>
+                        <h4>Policy Templates</h4>
+                        <p>Mend ships out-of-the-box templates for common profiles: <em>Strict Production</em>, <em>Internal Tools</em>, <em>Open Source Contributions</em>, and <em>Regulated Workloads</em>. Templates give new teams a defensible starting point instead of building policy from scratch.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #2ecc71;">&#128737;</div>
+                        <h4>Enforcement Modes</h4>
+                        <p>Each rule can be set to <strong>Block</strong> (fail the build), <strong>Warn</strong> (alert but proceed), or <strong>Report Only</strong> (collect data without disrupting flow). Roll out new policies in Report Only mode, observe impact, then escalate to Block once teams are ready.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Compliance Mapping &amp; Governance Reporting</h2>
+                <p>Policy enforcement is only valuable if you can prove it to auditors and executives. Mend maps each policy rule to one or more controls in common compliance frameworks &mdash; OWASP ASVS, NIST SSDF, PCI DSS, ISO 27001, SOC 2, and the EU Cyber Resilience Act. When a build passes a policy gate, Mend records the corresponding control as satisfied for that artifact and produces evidence artifacts that can be handed directly to an auditor.</p>
+
+                <p>The governance reporting engine produces three classes of output. <strong>Policy compliance reports</strong> show, per project, what percentage of builds satisfied every applicable rule and which rules generated the most violations. <strong>Exception reports</strong> enumerate every active override, its owner, and its age, giving governance committees a clear view of where the organization has deviated from baseline. <strong>Trend reports</strong> track policy compliance over time, making it possible to demonstrate to leadership that security posture is improving rather than degrading.</p>
+
+                <div class="warning-box">
+                    <h4>&#9888;&#65039; Common Pitfall</h4>
+                    <p>Do not map every policy rule to every framework. Over-mapping dilutes the audit trail and makes evidence packages unwieldy. Map only the rules that genuinely satisfy a control, and document the rationale in the policy description field so auditors understand the linkage.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 1:</strong> In Mend&rsquo;s hierarchical policy model, what happens when a Critical-severity block rule is set at the organization level?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> It applies to every project and repository unless a lower level explicitly overrides it</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> It only applies to repositories tagged as production</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> It must be re-created in each project before it takes effect</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> It only affects SCA findings, not SAST or Container</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 2:</strong> What is the recommended approach when rolling out a new policy rule to production builds?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Immediately set it to Block across all projects</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Start in Report Only mode, observe impact, then escalate to Block</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Apply it only to repositories with no recent commits</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Disable enforcement until the next compliance audit</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>200 XP earned for completing this module</span>
+                </div>
+                <div class="module-nav-buttons">
+                    <a href="01-platform-unified-overview.html" class="btn btn-secondary">&#8592; Previous: Platform Unified Overview</a>
+                    <a href="03-unified-reporting.html" class="btn btn-primary">Next: Unified Reporting &amp; Dashboards &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/layout.js"></script>
+    <script src="../../js/store.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/search.js"></script>
+    <script src="../../js/chat.js"></script>
+    <script src="../../js/homepage.js"></script>
+    <script src="../../js/leaderboard.js"></script>
+    <script src="../../js/cert-recommendations.js"></script>
+    <script src="../../js/badges.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/tracks.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

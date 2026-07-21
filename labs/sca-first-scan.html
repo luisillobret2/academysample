@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <meta name="description" content="Interactive lab: Set up your first Mend.io SCA scan, review vulnerability results, and apply remediation.">
+    <title>Lab: Your First SCA Scan - Mend Learn</title>
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/lab.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="lab-layout">
+        <!-- Breadcrumb -->
+        <div class="lab-breadcrumb">
+            <a href="../labs.html">Labs</a> &rsaquo;
+            <span>Your First SCA Scan</span>
+        </div>
+
+        <!-- Header -->
+        <div class="lab-header">
+            <div class="lab-title-row">
+                <h1>Your First <span class="accent">SCA Scan</span></h1>
+                <span class="lab-type-badge guided">Guided</span>
+            </div>
+            <div class="lab-meta">
+                <span>&#128339; 45 min</span>
+                <span>&#127942; 100 XP</span>
+                <span>&#128260; SCA</span>
+                <span>&#128218; 6 steps</span>
+            </div>
+        </div>
+
+        <!-- Objectives -->
+        <div class="lab-objectives">
+            <h4>&#127919; Lab Objectives</h4>
+            <ul>
+                <li>Install and configure the Mend CLI</li>
+                <li>Create a project and connect a repository</li>
+                <li>Run your first SCA scan on a Java application</li>
+                <li>Interpret vulnerability results and severity ratings</li>
+                <li>Apply remediation recommendations</li>
+                <li>Generate an SBOM export</li>
+            </ul>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="lab-progress-bar">
+            <div class="lab-progress-bar-fill" id="lab-progress"></div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="lab-step" data-step="1">
+            <div class="lab-step-number">1</div>
+            <h3>Install the Mend CLI</h3>
+            <p>The Mend CLI is the primary tool for running scans locally and in CI/CD pipelines. Start by installing it on your machine.</p>
+            <div class="lab-code-block"><span class="comment"># Install Mend CLI via npm</span>
+npm install -g @mend/cli
+
+<span class="comment"># Verify installation</span>
+mend --version</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend --version
+<span class="term-success">Mend CLI v3.8.2</span>
+<span class="term-info">Copyright (c) Mend.io. All rights reserved.</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                If you get a permission error on macOS/Linux, try using <code>sudo npm install -g @mend/cli</code> or use a node version manager like nvm.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Mend CLI installed successfully</li>
+                <li><span class="check-icon">&#10003;</span> <code>mend --version</code> returns a version number</li>
+            </ul>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="lab-step" data-step="2">
+            <div class="lab-step-number">2</div>
+            <h3>Authenticate with Your Mend Account</h3>
+            <p>Before scanning, authenticate with your Mend platform credentials. This links your scans to your organization and projects.</p>
+            <div class="lab-code-block"><span class="comment"># Authenticate with Mend platform</span>
+mend auth --login
+
+<span class="comment"># Or use environment variables for CI/CD</span>
+export MEND_EMAIL="your@email.com"
+export MEND_KEY="your-api-key"
+export MEND_URL="https://app.mend.io"</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend auth --login
+<span class="term-info">Opening browser for authentication...</span>
+<span class="term-success">Authentication successful!</span>
+<span class="term-info">Organization: Mend Academy Demo</span>
+<span class="term-info">User: learner@mend.io</span></div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Authenticated with Mend platform</li>
+                <li><span class="check-icon">&#10003;</span> Organization name appears in output</li>
+            </ul>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="lab-step" data-step="3">
+            <div class="lab-step-number">3</div>
+            <h3>Create a Project and Run the Scan</h3>
+            <p>Navigate to the sample Java application and run your first SCA scan. The CLI will detect the <code>pom.xml</code> and scan all dependencies.</p>
+            <div class="lab-code-block"><span class="comment"># Navigate to the sample project</span>
+cd ~/labs/java-vulnerable-app
+
+<span class="comment"># Run SCA scan</span>
+mend scan --product "Lab: Java App" --type sca</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend scan --product "Lab: Java App" --type sca
+<span class="term-info">Scanning project: java-vulnerable-app</span>
+<span class="term-info">Detected: Maven (pom.xml)</span>
+<span class="term-info">Resolving dependencies...</span>
+<span class="term-info">Found 47 direct dependencies, 183 total</span>
+<span class="term-warn">Scan complete. Results:</span>
+  <span class="term-error">Critical: 3 vulnerabilities</span>
+  <span class="term-warn">High:     7 vulnerabilities</span>
+  <span class="term-info">Medium:   12 vulnerabilities</span>
+  <span class="term-success">Low:      5 vulnerabilities</span>
+  <span class="term-warn">Policy violations: 2</span>
+  <span class="term-info">License issues: 1</span>
+<span class="term-success">Results uploaded to Mend platform.</span>
+<span class="term-info">View at: https://app.mend.io/products/java-vulnerable-app</span></div>
+            <div class="lab-callout warning">
+                <strong>Notice</strong>
+                The scan found 3 critical vulnerabilities. In a real environment, these would need immediate attention. We'll address them in the next steps.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Scan completed without errors</li>
+                <li><span class="check-icon">&#10003;</span> Results uploaded to the Mend platform</li>
+                <li><span class="check-icon">&#10003;</span> Noted the vulnerability counts by severity</li>
+            </ul>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="lab-step" data-step="4">
+            <div class="lab-step-number">4</div>
+            <h3>Review Vulnerability Results</h3>
+            <p>Open the Mend platform dashboard to review the scan results. Click on each critical vulnerability to see details, CVSS score, and remediation guidance.</p>
+            <p>In the dashboard, you'll see:</p>
+            <ul>
+                <li><strong>Vulnerability list</strong> sorted by severity with CVSS scores</li>
+                <li><strong>Dependency tree</strong> showing which component introduces each vulnerability</li>
+                <li><strong>Remediation path</strong> with recommended fixed versions</li>
+                <li><strong>Policy violations</strong> for any violated security rules</li>
+            </ul>
+            <div class="lab-callout tip">
+                <strong>Key terms</strong>
+                <strong>CVSS Score</strong>: Common Vulnerability Scoring System (0-10). Critical = 9.0+, High = 7.0-8.9, Medium = 4.0-6.9, Low = 0.1-3.9.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Opened the vulnerability dashboard</li>
+                <li><span class="check-icon">&#10003;</span> Reviewed all 3 critical vulnerabilities</li>
+                <li><span class="check-icon">&#10003;</span> Identified the root dependency for each critical finding</li>
+            </ul>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="lab-step" data-step="5">
+            <div class="lab-step-number">5</div>
+            <h3>Apply Remediation</h3>
+            <p>Mend provides automated remediation recommendations. Let's apply the suggested fixes for the critical vulnerabilities.</p>
+            <div class="lab-code-block"><span class="comment"># View remediation suggestions</span>
+mend remediate --suggest --severity critical
+
+<span class="comment"># Apply remediation (updates pom.xml)</span>
+mend remediate --apply --severity critical</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend remediate --suggest --severity critical
+<span class="term-info">Critical vulnerability: CVE-2021-44228 (Log4Shell)</span>
+<span class="term-info">  Component: log4j-core 2.14.1</span>
+<span class="term-success">  Fix: Upgrade to log4j-core 2.17.1</span>
+<span class="term-info">Critical vulnerability: CVE-2022-23405</span>
+<span class="term-info">  Component: snakeyaml 1.29</span>
+<span class="term-success">  Fix: Upgrade to snakeyaml 1.32</span>
+<span class="term-info">Critical vulnerability: CVE-2021-37136</span>
+<span class="term-info">  Component: netty-codec-http 4.1.63.Final</span>
+<span class="term-success">  Fix: Upgrade to netty-codec-http 4.1.86.Final</span>
+
+<span class="term-prompt">$</span> mend remediate --apply --severity critical
+<span class="term-success">Updated pom.xml with 3 dependency upgrades.</span>
+<span class="term-info">Run 'mvn clean install' to verify the build.</span></div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Reviewed remediation suggestions</li>
+                <li><span class="check-icon">&#10003;</span> Applied all 3 critical fixes</li>
+                <li><span class="check-icon">&#10003;</span> Verified <code>pom.xml</code> was updated</li>
+            </ul>
+        </div>
+
+        <!-- Step 6 -->
+        <div class="lab-step" data-step="6">
+            <div class="lab-step-number">6</div>
+            <h3>Generate an SBOM Export</h3>
+            <p>Software Bills of Materials (SBOMs) are essential for compliance and transparency. Generate one from your scan results.</p>
+            <div class="lab-code-block"><span class="comment"># Generate SBOM in CycloneDX format</span>
+mend sbom export --format cyclonedx --output sbom.json
+
+<span class="comment"># Generate SBOM in SPDX format</span>
+mend sbom export --format spdx --output sbom.spdx</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend sbom export --format cyclonedx --output sbom.json
+<span class="term-info">Generating SBOM...</span>
+<span class="term-info">Format: CycloneDX 1.4</span>
+<span class="term-info">Components: 183</span>
+<span class="term-info">Vulnerabilities: 27</span>
+<span class="term-success">SBOM written to sbom.json (42.3 KB)</span></div>
+            <div class="lab-callout tip">
+                <strong>Why SBOMs matter</strong>
+                Many compliance frameworks (Executive Order 14028, EU CRA) require SBOMs. Mend supports both CycloneDX and SPDX formats.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Generated CycloneDX SBOM</li>
+                <li><span class="check-icon">&#10003;</span> Verified the SBOM contains all 183 components</li>
+            </ul>
+        </div>
+
+        <!-- Knowledge Check -->
+        <div class="lab-quiz" id="lab-quiz">
+            <h4>&#129504; Knowledge Check</h4>
+            <div class="lab-quiz-question">What CVSS score range corresponds to "Critical" severity?</div>
+            <ul class="lab-quiz-options">
+                <li class="lab-quiz-option" data-correct="false">7.0 - 8.9</li>
+                <li class="lab-quiz-option" data-correct="true">9.0 - 10.0</li>
+                <li class="lab-quiz-option" data-correct="false">4.0 - 6.9</li>
+                <li class="lab-quiz-option" data-correct="false">0.1 - 3.9</li>
+            </ul>
+            <div class="lab-quiz-question" style="margin-top: 20px;">Which command generates an SBOM in SPDX format?</div>
+            <ul class="lab-quiz-options">
+                <li class="lab-quiz-option" data-correct="false">mend scan --format spdx</li>
+                <li class="lab-quiz-option" data-correct="true">mend sbom export --format spdx --output sbom.spdx</li>
+                <li class="lab-quiz-option" data-correct="false">mend export --spdx</li>
+                <li class="lab-quiz-option" data-correct="false">mend report --format spdx</li>
+            </ul>
+        </div>
+
+        <!-- Completion Banner -->
+        <div class="lab-completion-banner" id="lab-complete">
+            <h2>&#127881; Lab Complete!</h2>
+            <p>You've successfully run your first SCA scan, reviewed vulnerabilities, applied remediation, and generated an SBOM.</p>
+            <div class="lab-completion-xp">+100 XP</div>
+            <div class="lab-actions" style="justify-content: center;">
+                <a href="../labs.html" class="btn btn-secondary">Back to Labs</a>
+                <a href="sca-policy-config.html" class="btn btn-primary">Next Lab: SCA Policy Configuration</a>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="lab-actions" id="lab-actions">
+            <button class="btn btn-primary" id="lab-complete-btn" disabled>Complete Lab</button>
+            <a href="../labs.html" class="btn btn-secondary">Back to Labs</a>
+        </div>
+    </div>
+
+    <footer id="site-footer" class="site-footer"></footer>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+    (function() {
+        var totalSteps = 6;
+        var stepChecklists = {};
+
+        // Track checklist completion per step
+        document.querySelectorAll('.lab-step').forEach(function(stepEl) {
+            var stepNum = stepEl.getAttribute('data-step');
+            var items = stepEl.querySelectorAll('.lab-checklist li');
+            stepChecklists[stepNum] = { total: items.length, checked: 0 };
+
+            items.forEach(function(item) {
+                item.addEventListener('click', function() {
+                    if (item.classList.contains('checked')) {
+                        item.classList.remove('checked');
+                        stepChecklists[stepNum].checked--;
+                    } else {
+                        item.classList.add('checked');
+                        stepChecklists[stepNum].checked++;
+                    }
+                    updateProgress();
+                });
+            });
+        });
+
+        function updateProgress() {
+            var totalItems = 0;
+            var checkedItems = 0;
+            var allStepsComplete = true;
+
+            for (var i = 1; i <= totalSteps; i++) {
+                if (!stepChecklists[i]) continue;
+                totalItems += stepChecklists[i].total;
+                checkedItems += stepChecklists[i].checked;
+                if (stepChecklists[i].checked < stepChecklists[i].total) {
+                    allStepsComplete = false;
+                }
+            }
+
+            var pct = totalItems > 0 ? (checkedItems / totalItems) * 100 : 0;
+            document.getElementById('lab-progress').style.width = pct + '%';
+
+            // Mark steps as completed
+            for (var j = 1; j <= totalSteps; j++) {
+                var stepEl = document.querySelector('.lab-step[data-step="' + j + '"]');
+                if (stepEl && stepChecklists[j] && stepChecklists[j].checked >= stepChecklists[j].total) {
+                    stepEl.classList.add('completed');
+                } else if (stepEl) {
+                    stepEl.classList.remove('completed');
+                }
+            }
+
+            // Enable complete button
+            var btn = document.getElementById('lab-complete-btn');
+            if (allStepsComplete) {
+                btn.disabled = false;
+                btn.classList.add('btn-primary');
+            } else {
+                btn.disabled = true;
+            }
+        }
+
+        // Complete lab button
+        document.getElementById('lab-complete-btn').addEventListener('click', function() {
+            if (this.disabled) return;
+
+            // Mark lab complete in store
+            if (typeof MendStore !== 'undefined') {
+                MendStore.completeLab('your-first-sca-scan', 100);
+            }
+
+            // Show completion banner
+            document.getElementById('lab-complete').classList.add('visible');
+            document.getElementById('lab-actions').style.display = 'none';
+
+            // Scroll to banner
+            document.getElementById('lab-complete').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+
+        // Quiz handling
+        document.querySelectorAll('.lab-quiz-option').forEach(function(opt) {
+            opt.addEventListener('click', function() {
+                var siblings = this.parentNode.querySelectorAll('.lab-quiz-option');
+                siblings.forEach(function(s) { s.classList.remove('correct', 'incorrect'); });
+                if (this.getAttribute('data-correct') === 'true') {
+                    this.classList.add('correct');
+                } else {
+                    this.classList.add('incorrect');
+                    // Show the correct one
+                    siblings.forEach(function(s) {
+                        if (s.getAttribute('data-correct') === 'true') s.classList.add('correct');
+                    });
+                }
+            });
+        });
+    })();
+    </script>
+</body>
+</html>

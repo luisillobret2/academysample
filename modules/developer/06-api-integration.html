@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href="../../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <title>API Integration &amp; Webhooks - Mend Learn</title>
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar"></aside>
+
+        <main class="module-content" id="main-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>Developer Track</span> &rsaquo; <span>API Integration &amp; Webhooks</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>API Integration &amp; Webhooks</h1>
+                <div class="module-meta">
+                    <span>&#128338; 40 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 200 XP</span>
+                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>How to authenticate against the Mend REST API and call its core endpoints</li>
+                    <li>The key resources &mdash; projects, scans, findings, and reports &mdash; and how to page through them</li>
+                    <li>How to configure webhooks and react to event types in real time</li>
+                    <li>How to integrate Mend with Jira, Slack, and Teams and build custom dashboards</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>The Mend REST API and Authentication</h2>
+                <p>The Mend REST API exposes the same data and controls available in the web UI, so anything you can see in the platform you can automate: pulling scan results, triggering reports, managing projects, and syncing findings into your own tools. Requests are made over HTTPS to your organization's API base URL, return JSON, and follow standard REST conventions with resource-oriented paths and HTTP verbs.</p>
+                <p>Authentication uses a short-lived bearer token. You exchange a long-lived organization or user API key for an access token, then send that token in the <code>Authorization</code> header on every subsequent request. Tokens expire, so a robust integration refreshes them automatically rather than hard-coding a single token. Never embed API keys in source code &mdash; load them from environment variables or a secrets manager.</p>
+                <p>The typical flow is: request a token, then use it until it expires, then request a new one. Here is a minimal example of logging in to obtain an access token and calling an authenticated endpoint:</p>
+
+                <pre><code># 1. Exchange your API key for a short-lived access token
+curl -X POST "https://api.mend.io/api/v2.0/login" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "email": "svc-account@company.com",
+        "orgToken": "$MEND_ORG_TOKEN",
+        "userKey": "$MEND_USER_KEY"
+      }'
+
+# Response: { "retVal": { "jwtToken": "eyJhbGciOi..." } }
+
+# 2. Call an authenticated endpoint with the token
+curl "https://api.mend.io/api/v2.0/orgs/$ORG_UUID/projects" \
+  -H "Authorization: Bearer eyJhbGciOi..." \
+  -H "Content-Type: application/json"</code></pre>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Security Tip</h4>
+                    <p>Create a dedicated service account with least-privilege scope for automation rather than using a human user's key. If a token leaks, you can revoke the service account without disrupting a person's access, and the audit trail clearly attributes automated actions.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Core Endpoints: Projects, Scans, Findings, and Reports</h2>
+                <p>The API is organized around a small set of core resources. <strong>Projects</strong> represent the applications or repositories you scan and are the container for everything else. <strong>Scans</strong> are individual analysis runs against a project. <strong>Findings</strong> are the vulnerabilities, license issues, and policy violations a scan produces. <strong>Reports</strong> generate exportable artifacts such as SBOMs and compliance summaries.</p>
+                <p>A common automation walks from projects to findings: list the projects in an organization, then for each project retrieve its open findings and act on them. Findings support filtering by severity, status, and type so you can pull just the critical, unresolved items rather than the entire history. Reports are usually requested asynchronously &mdash; you request generation, then poll for completion and download the result.</p>
+
+                <pre><code># List open critical/high findings for a specific project
+curl "https://api.mend.io/api/v2.0/projects/$PROJECT_UUID/findings?\
+severity=critical,high&status=open&pageSize=100" \
+  -H "Authorization: Bearer $TOKEN"
+
+# Sample response (truncated)
+{
+  "retVal": [
+    {
+      "id": "f-90a1",
+      "name": "CVE-2024-1234",
+      "severity": "critical",
+      "component": "log4j-core@2.14.1",
+      "status": "open",
+      "fixAvailable": true,
+      "suggestedFix": "2.17.1"
+    }
+  ],
+  "additionalData": { "totalItems": 342, "pageSize": 100 }
+}</code></pre>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#128193;</div>
+                        <h4>Projects</h4>
+                        <p>The application/repository container. Start most workflows by listing projects in the org.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128269;</div>
+                        <h4>Scans</h4>
+                        <p>Individual analysis runs. Query scan status and history for a project.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128027;</div>
+                        <h4>Findings</h4>
+                        <p>Vulnerabilities, license, and policy issues. Filter by severity, status, and type.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128202;</div>
+                        <h4>Reports</h4>
+                        <p>SBOMs and compliance exports. Request generation, then poll and download.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Pagination and Rate Limits</h2>
+                <p>List endpoints return results in pages so a single request never has to serialize thousands of findings. You control paging with <code>page</code> and <code>pageSize</code> parameters, and the response reports the total item count so you can compute how many pages remain. Always page through to completion rather than assuming the first page contains everything &mdash; a large project can have hundreds of findings.</p>
+                <p>The API enforces <strong>rate limits</strong> to protect the platform. If you exceed the allowed request rate you will receive an HTTP <code>429 Too Many Requests</code> response, often with a <code>Retry-After</code> header telling you how long to wait. Well-behaved integrations respect these limits by adding delays between requests and implementing exponential backoff on 429 responses instead of retrying immediately in a tight loop.</p>
+
+                <pre><code>import os, time, requests
+
+BASE = "https://api.mend.io/api/v2.0"
+HEADERS = {"Authorization": f"Bearer {os.environ['MEND_TOKEN']}"}
+
+def get_all_findings(project_uuid):
+    findings, page, page_size = [], 0, 100
+    while True:
+        resp = requests.get(
+            f"{BASE}/projects/{project_uuid}/findings",
+            headers=HEADERS,
+            params={"page": page, "pageSize": page_size, "status": "open"},
+        )
+        if resp.status_code == 429:                 # rate limited
+            wait = int(resp.headers.get("Retry-After", 5))
+            time.sleep(wait)                         # back off, then retry
+            continue
+        resp.raise_for_status()
+        body = resp.json()
+        findings.extend(body["retVal"])
+        total = body["additionalData"]["totalItems"]
+        page += 1
+        if page * page_size >= total:               # last page reached
+            break
+    return findings</code></pre>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Reliability Tip</h4>
+                    <p>Treat a 429 as normal, not exceptional. Build backoff into your client from day one &mdash; an integration that hammers the API and gets throttled mid-run is far harder to debug than one that paces itself and completes reliably.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Webhooks and Downstream Integrations</h2>
+                <p>Polling the API on a schedule works, but <strong>webhooks</strong> let Mend push events to you the moment they happen, which is the right pattern for real-time reactions. You register an HTTPS endpoint and subscribe to event types; when a matching event occurs, Mend sends an HTTP POST with a JSON payload describing what changed. Common event types include scan completion, a new critical vulnerability discovered, and a policy violation raised.</p>
+                <p>Your webhook receiver should validate the payload signature to confirm it genuinely came from Mend, respond quickly with a 2xx status, and hand off any heavy work to a background queue so you never block the sender. From there you can fan out to downstream tools: open a Jira ticket for each new critical finding, post an alert to a Slack or Microsoft Teams channel, or update a custom dashboard.</p>
+
+                <pre><code>from flask import Flask, request, abort
+import hmac, hashlib, os, requests
+
+app = Flask(__name__)
+SECRET = os.environ["MEND_WEBHOOK_SECRET"].encode()
+
+@app.post("/mend/webhook")
+def mend_webhook():
+    signature = request.headers.get("X-Mend-Signature", "")
+    expected = hmac.new(SECRET, request.data, hashlib.sha256).hexdigest()
+    if not hmac.compare_digest(signature, expected):
+        abort(401)                                  # reject spoofed calls
+
+    event = request.get_json()
+    if event["type"] == "finding.new" and event["severity"] == "critical":
+        create_jira_issue(event)                    # fan out to Jira
+        notify_slack(event)                         # and to Slack
+    return "", 204
+
+def create_jira_issue(event):
+    requests.post(
+        "https://your-org.atlassian.net/rest/api/3/issue",
+        auth=(os.environ["JIRA_USER"], os.environ["JIRA_TOKEN"]),
+        json={"fields": {
+            "project": {"key": "SEC"},
+            "issuetype": {"name": "Bug"},
+            "summary": f"[Mend] {event['name']} in {event['component']}",
+        }},
+    )
+
+def notify_slack(event):
+    requests.post(os.environ["SLACK_WEBHOOK_URL"], json={
+        "text": f":rotating_light: New critical: {event['name']} "
+                f"({event['component']}) fix: {event.get('suggestedFix','n/a')}"
+    })</code></pre>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#127903;</div>
+                        <h4>Jira</h4>
+                        <p>Auto-create and update issues so findings land in the developer's normal backlog.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128172;</div>
+                        <h4>Slack / Teams</h4>
+                        <p>Push real-time alerts to the channel that owns the affected service.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128200;</div>
+                        <h4>Custom Dashboards</h4>
+                        <p>Feed findings into your own BI or Grafana view for trend and SLA tracking.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128273;</div>
+                        <h4>Signed Payloads</h4>
+                        <p>Verify the HMAC signature on every webhook to reject spoofed requests.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 1:</strong> How does the Mend REST API authenticate requests?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> By passing the raw API key as a URL query parameter on every call</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> By exchanging an API key for a short-lived bearer token sent in the Authorization header</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> By using the developer's IDE session cookie</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> No authentication is required for read endpoints</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-c="Yw==">
+                        <p><strong>Question 2:</strong> When the API returns an HTTP 429 response, what should a well-behaved integration do?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Immediately retry the request in a tight loop until it succeeds</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Abort the entire integration and raise a fatal error</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Respect the Retry-After header and back off before retrying</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Switch to a different, undocumented endpoint</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>200 XP earned for completing this module</span>
+                </div>
+                <div class="module-nav-buttons">
+                    <a href="05-custom-policies.html" class="btn btn-secondary">&#8592; Previous: Custom Security Policies</a>
+                    <a href="07-devsecops-culture.html" class="btn btn-primary">Next: DevSecOps Culture &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/layout.js"></script>
+    <script src="../../js/store.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/search.js"></script>
+    <script src="../../js/chat.js"></script>
+    <script src="../../js/homepage.js"></script>
+    <script src="../../js/leaderboard.js"></script>
+    <script src="../../js/cert-recommendations.js"></script>
+    <script src="../../js/badges.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/tracks.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

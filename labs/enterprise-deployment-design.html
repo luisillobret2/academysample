@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <meta name="description" content="Interactive lab: Design an enterprise Mend deployment for 500 developers across 50 repos with SSO, compliance, and CI/CD at scale.">
+    <title>Lab: Enterprise Deployment Design - Mend Learn</title>
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/lab.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="lab-layout">
+        <!-- Breadcrumb -->
+        <div class="lab-breadcrumb">
+            <a href="../labs.html">Labs</a> &rsaquo;
+            <span>Enterprise Deployment Design</span>
+        </div>
+
+        <!-- Header -->
+        <div class="lab-header">
+            <div class="lab-title-row">
+                <h1>Enterprise <span class="accent">Deployment Design</span></h1>
+                <span class="lab-type-badge challenge">Challenge</span>
+            </div>
+            <div class="lab-meta">
+                <span>&#128339; 120 min</span>
+                <span>&#127942; 300 XP</span>
+                <span>&#128260; Administration</span>
+                <span>&#128218; 5 steps</span>
+            </div>
+        </div>
+
+        <!-- Objectives -->
+        <div class="lab-objectives">
+            <h4>&#127919; Lab Objectives</h4>
+            <ul>
+                <li>Analyze enterprise requirements from a customer scenario</li>
+                <li>Design a multi-org hierarchy with business unit separation</li>
+                <li>Configure organization-level and project-level security policies</li>
+                <li>Implement a templated CI/CD approach for 50 repositories</li>
+                <li>Document a phased deployment plan with metrics and risk mitigation</li>
+            </ul>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="lab-progress-bar">
+            <div class="lab-progress-bar-fill" id="lab-progress"></div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="lab-step" data-step="1">
+            <div class="lab-step-number">1</div>
+            <h3>Analyze Enterprise Requirements</h3>
+            <p>Review the customer scenario before designing the deployment. Understanding the scale, organizational structure, and compliance obligations drives every downstream architecture decision.</p>
+            <div class="lab-code-block"><span class="comment"># Open the customer scenario brief</span>
+cat ~/labs/enterprise-scenario.md
+
+<span class="comment"># Summarize key requirements</span>
+mend academy scenario --summarize --file enterprise-scenario.md</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend academy scenario --summarize --file enterprise-scenario.md
+<span class="term-info">Customer: Global Financial Services Corp</span>
+<span class="term-warn">Key Requirements:</span>
+  <span class="term-info">  Developers:        500 across 3 business units</span>
+  <span class="term-info">  Repositories:      50 (Java, Python, Go, Node.js)</span>
+  <span class="term-info">  Business units:    Retail Banking, Investment, Corporate IT</span>
+  <span class="term-info">  SSO:               Required (Okta SAML)</span>
+  <span class="term-info">  Compliance:        SOC 2 Type II, PCI-DSS</span>
+  <span class="term-info">  CI/CD:             GitHub Actions + Jenkins</span>
+  <span class="term-info">  Priorities:        Reachability analysis, AI remediation</span>
+  <span class="term-warn">Constraints:</span>
+  <span class="term-info">  No secrets in shared repos across BUs</span>
+  <span class="term-info">  PCI-DSS scope isolation for cardholder data repos</span>
+  <span class="term-info">  Audit reporting per business unit quarterly</span></div>
+            <div class="lab-callout warning">
+                <strong>Notice</strong>
+                The PCI-DSS requirement for cardholder data isolation is a hard constraint. Repos handling cardholder data must be in a separate organization with strict policy enforcement and quarterly audit reporting.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Reviewed the customer scenario and summarized all key requirements</li>
+                <li><span class="check-icon">&#10003;</span> Identified PCI-DSS scope isolation as a hard architectural constraint</li>
+                <li><span class="check-icon">&#10003;</span> Mapped the 50 repositories to their respective business units</li>
+            </ul>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="lab-step" data-step="2">
+            <div class="lab-step-number">2</div>
+            <h3>Design the Org Structure</h3>
+            <p>Create a multi-org hierarchy that separates business units and isolates PCI-DSS scope. Map teams to organizations and assign roles following least-privilege principles.</p>
+            <div class="lab-code-block"><span class="comment"># Create the top-level enterprise organizations</span>
+mend org create --name "GFSC Retail Banking" --parent "Global Financial Services Corp"
+mend org create --name "GFSC Investment" --parent "Global Financial Services Corp"
+mend org create --name "GFSC Corporate IT" --parent "Global Financial Services Corp"
+mend org create --name "GFSC PCI-Scope" --parent "Global Financial Services Corp" --isolated
+
+<span class="comment"># Assign teams and roles</span>
+mend team create --org "GFSC Retail Banking" --name "retail-apps" --repos 18
+mend team create --org "GFSC Investment" --name "trading-platforms" --repos 15
+mend team create --org "GFSC Corporate IT" --name "internal-tools" --repos 12
+mend team create --org "GFSC PCI-Scope" --name "cardholder-data" --repos 5</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend org create --name "GFSC PCI-Scope" --parent "Global Financial Services Corp" --isolated
+<span class="term-success">Organization created: GFSC PCI-Scope</span>
+<span class="term-info">Isolation: enabled (no cross-org data sharing)</span>
+<span class="term-info">Audit reporting: quarterly (PCI-DSS requirement)</span>
+
+<span class="term-prompt">$</span> mend team create --org "GFSC PCI-Scope" --name "cardholder-data" --repos 5
+<span class="term-success">Team created: cardholder-data (5 repos)</span>
+<span class="term-info">Default role: Developer (least privilege)</span>
+
+Org Structure:
+  Global Financial Services Corp
+  &#9500;&#9472; GFSC Retail Banking    [18 repos, 180 dev]
+  &#9500;&#9472; GFSC Investment        [15 repos, 150 dev]
+  &#9500;&#9472; GFSC Corporate IT      [12 repos, 120 dev]
+  &#9492;&#9472; GFSC PCI-Scope (ISO)   [ 5 repos,  50 dev]</div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                Use role-based access control with least privilege. Only the security team gets Admin roles; developers get Developer roles with scan access but no policy modification rights. Assign Auditors read-only access to compliance reports.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Created 4 organizations with PCI-Scope isolated</li>
+                <li><span class="check-icon">&#10003;</span> Mapped all 50 repositories across the 4 organizations</li>
+                <li><span class="check-icon">&#10003;</span> Assigned teams and roles following least-privilege principles</li>
+            </ul>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="lab-step" data-step="3">
+            <div class="lab-step-number">3</div>
+            <h3>Configure Security Policies</h3>
+            <p>Set up organization-level policies with project-level overrides where needed. Apply compliance frameworks so scan results map directly to SOC 2 and PCI-DSS control requirements.</p>
+            <div class="lab-code-block"><span class="comment"># Set the enterprise-wide baseline policy</span>
+mend policy create --org "Global Financial Services Corp" --name "Enterprise Baseline" \
+  --block-critical true --block-high true --fail-on-license-violation true
+
+<span class="comment"># Apply compliance frameworks</span>
+mend policy framework add --org "GFSC PCI-Scope" --framework pci-dss
+mend policy framework add --org "GFSC Retail Banking" --framework soc2
+
+<span class="comment"># Create a project-level override for a legacy system</span>
+mend policy override --org "GFSC Corporate IT" --project "legacy-billing" \
+  --block-critical false --expires "2026-12-31" --reason "Legacy system, remediation in Q4"</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend policy create --org "Global Financial Services Corp" --name "Enterprise Baseline" \
+  --block-critical true --block-high true --fail-on-license-violation true
+<span class="term-success">Policy created: Enterprise Baseline</span>
+<span class="term-info">Scope: all child organizations</span>
+<span class="term-info">Block on critical: yes</span>
+<span class="term-info">Block on high: yes</span>
+<span class="term-info">Fail on license violation: yes</span>
+
+<span class="term-prompt">$</span> mend policy framework add --org "GFSC PCI-Scope" --framework pci-dss
+<span class="term-success">PCI-DSS framework applied to GFSC PCI-Scope.</span>
+<span class="term-info">Mapped controls: 24</span>
+<span class="term-info">Quarterly audit report: enabled</span>
+
+<span class="term-prompt">$</span> mend policy override --org "GFSC Corporate IT" --project "legacy-billing" \
+  --block-critical false --expires "2026-12-31" --reason "Legacy system, remediation in Q4"
+<span class="term-warn">Override created with expiration date.</span>
+<span class="term-info">Project: legacy-billing</span>
+<span class="term-info">Expires: 2026-12-31 (will auto-revert)</span></div>
+            <div class="lab-callout warning">
+                <strong>Notice</strong>
+                Policy overrides must always have an expiration date and a documented reason. The PCI-Scope organization should have zero overrides - compliance requirements do not allow exceptions for cardholder data systems.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Created the enterprise baseline policy blocking critical and high vulnerabilities</li>
+                <li><span class="check-icon">&#10003;</span> Applied PCI-DSS and SOC 2 frameworks to the appropriate organizations</li>
+                <li><span class="check-icon">&#10003;</span> Created a time-boxed project override with expiration and reason</li>
+            </ul>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="lab-step" data-step="4">
+            <div class="lab-step-number">4</div>
+            <h3>Implement CI/CD at Scale</h3>
+            <p>Design a templated CI/CD approach so all 50 repositories scan consistently without per-repo customization. Create a reusable GitHub Actions workflow and a Jenkins shared library.</p>
+            <div class="lab-code-block"><span class="comment"># .github/workflows/mend-scan.yml (reusable workflow)</span>
+name: Mend Security Scan
+on: [pull_request, push]
+jobs:
+  mend-scan:
+    uses: mend-io/mend-templates/.github/workflows/mend-scan.yml@v2
+    with:
+      scan-type: sca+sast
+      fail-on: critical,high
+    secrets:
+      MEND_API_KEY: ${{ secrets.MEND_API_KEY }}
+
+<span class="comment"># Jenkins shared library: vars/mendScan.groovy</span>
+def call(Map config = [:]) {
+    mendScan(
+        scanType: config.scanType ?: 'sca+sast',
+        failOn: config.failOn ?: 'critical,high',
+        orgToken: env.MEND_ORG_TOKEN
+    )
+}</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend ci template validate --file .github/workflows/mend-scan.yml
+<span class="term-success">Template valid. Reusable across 50 repos.</span>
+<span class="term-info">Scan type: sca+sast</span>
+<span class="term-info">Fail threshold: critical, high</span>
+<span class="term-info">Secrets required: MEND_API_KEY</span>
+
+<span class="term-prompt">$</span> mend ci apply --template mend-scan.yml --repos 50
+<span class="term-info">Applying template to 50 repositories...</span>
+  <span class="term-success">GitHub Actions: 35 repos configured</span>
+  <span class="term-success">Jenkins shared lib: 15 repos configured</span>
+<span class="term-success">All 50 repositories configured with Mend scanning.</span>
+<span class="term-info">Estimated scan time per repo: 2-4 minutes</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                Centralize the workflow in a templates repository and reference it with <code>uses:</code> so updates propagate to all repos automatically. Never copy-paste scan configs into individual repos - that creates maintenance debt at scale.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Created a reusable GitHub Actions workflow in a templates repository</li>
+                <li><span class="check-icon">&#10003;</span> Created a Jenkins shared library for the Jenkins-based repos</li>
+                <li><span class="check-icon">&#10003;</span> Applied the template to all 50 repositories successfully</li>
+            </ul>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="lab-step" data-step="5">
+            <div class="lab-step-number">5</div>
+            <h3>Create the Deployment Plan</h3>
+            <p>Document a phased rollout plan with timelines, success metrics, and risk mitigation. A three-phase approach (pilot, expand, full deployment) limits blast radius and builds organizational confidence.</p>
+            <div class="lab-code-block"><span class="comment"># Generate the deployment plan document</span>
+mend academy plan generate --scenario enterprise-scenario.md --output deployment-plan.md
+
+<span class="comment"># Review the phased rollout timeline</span>
+cat deployment-plan.md</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> cat deployment-plan.md
+<span class="term-info">Enterprise Deployment Plan - Global Financial Services Corp</span>
+
+<span class="term-warn">Phase 1: Pilot (Weeks 1-3)</span>
+  <span class="term-info">  Scope:      1 BU (Corporate IT), 12 repos, 120 dev</span>
+  <span class="term-info">  Goals:      Validate scanning, tune policies, train champions</span>
+  <span class="term-success">  Success:    90% repos scanning, &lt;5% false positive rate</span>
+  <span class="term-info">  Risk:       Policy too strict blocks CI - mitigation: advisory mode week 1</span>
+
+<span class="term-warn">Phase 2: Expand (Weeks 4-8)</span>
+  <span class="term-info">  Scope:      +2 BUs (Retail Banking, Investment), +33 repos, +330 dev</span>
+  <span class="term-info">  Goals:      Enforce blocking policies, AI remediation adoption</span>
+  <span class="term-success">  Success:    95% repos scanning, 50% critical fixes via AI remediation</span>
+  <span class="term-info">  Risk:       Developer friction - mitigation: office hours, runbooks</span>
+
+<span class="term-warn">Phase 3: Full Deployment (Weeks 9-12)</span>
+  <span class="term-info">  Scope:      +PCI-Scope org, +5 repos, +50 dev, SSO + compliance live</span>
+  <span class="term-info">  Goals:      PCI-DSS audit reporting, SOC 2 evidence collection</span>
+  <span class="term-success">  Success:    100% repos scanning, quarterly audit report generated</span>
+  <span class="term-info">  Risk:       PCI audit findings - mitigation: pre-audit scan, remediation sprint</span></div>
+            <div class="lab-callout warning">
+                <strong>Notice</strong>
+                Start Phase 1 in advisory mode (report-only, no CI blocking) for the first week. This lets developers see findings without build failures, reducing friction before enforcing blocking policies.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Documented a 3-phase rollout with clear timelines (12 weeks total)</li>
+                <li><span class="check-icon">&#10003;</span> Defined measurable success metrics for each phase</li>
+                <li><span class="check-icon">&#10003;</span> Identified key risks and documented mitigation strategies per phase</li>
+            </ul>
+        </div>
+
+        <!-- Knowledge Check -->
+        <div class="lab-quiz" id="lab-quiz">
+            <h4>&#129504; Knowledge Check</h4>
+            <div class="lab-quiz-question">Why should the PCI-Scope organization be isolated from the other business unit organizations?</div>
+            <ul class="lab-quiz-options">
+                <li class="lab-quiz-option" data-correct="false">To reduce the number of repositories the security team must review</li>
+                <li class="lab-quiz-option" data-correct="true">To enforce PCI-DSS scope isolation for cardholder data with no cross-org data sharing</li>
+                <li class="lab-quiz-option" data-correct="false">To simplify the CI/CD pipeline configuration for that org</li>
+                <li class="lab-quiz-option" data-correct="false">To reduce the licensing cost per developer</li>
+            </ul>
+            <div class="lab-quiz-question" style="margin-top: 20px;">What is the recommended approach for managing CI/CD scan configs across 50 repositories?</div>
+            <ul class="lab-quiz-options">
+                <li class="lab-quiz-option" data-correct="false">Copy-paste the scan config into each repository individually</li>
+                <li class="lab-quiz-option" data-correct="false">Run all scans manually from a central server on a schedule</li>
+                <li class="lab-quiz-option" data-correct="true">Centralize a reusable workflow in a templates repo and reference it with <code>uses:</code></li>
+                <li class="lab-quiz-option" data-correct="false">Disable CI scanning and rely on scheduled platform scans only</li>
+            </ul>
+        </div>
+
+        <!-- Completion Banner -->
+        <div class="lab-completion-banner" id="lab-complete">
+            <h2>&#127881; Lab Complete!</h2>
+            <p>You've designed a complete enterprise Mend deployment: analyzed requirements, built the org structure, configured policies, implemented CI/CD at scale, and documented a phased rollout plan.</p>
+            <div class="lab-completion-xp">+300 XP</div>
+            <div class="lab-actions" style="justify-content: center;">
+                <a href="../labs.html" class="btn btn-secondary">Back to Labs</a>
+                <a href="../labs.html" class="btn btn-primary">Back to All Labs</a>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="lab-actions" id="lab-actions">
+            <button class="btn btn-primary" id="lab-complete-btn" disabled>Complete Lab</button>
+            <a href="../labs.html" class="btn btn-secondary">Back to Labs</a>
+        </div>
+    </div>
+
+    <footer id="site-footer" class="site-footer"></footer>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+    (function() {
+        var totalSteps = 5;
+        var stepChecklists = {};
+
+        document.querySelectorAll('.lab-step').forEach(function(stepEl) {
+            var stepNum = stepEl.getAttribute('data-step');
+            var items = stepEl.querySelectorAll('.lab-checklist li');
+            stepChecklists[stepNum] = { total: items.length, checked: 0 };
+
+            items.forEach(function(item) {
+                item.addEventListener('click', function() {
+                    if (item.classList.contains('checked')) {
+                        item.classList.remove('checked');
+                        stepChecklists[stepNum].checked--;
+                    } else {
+                        item.classList.add('checked');
+                        stepChecklists[stepNum].checked++;
+                    }
+                    updateProgress();
+                });
+            });
+        });
+
+        function updateProgress() {
+            var totalItems = 0;
+            var checkedItems = 0;
+            var allStepsComplete = true;
+
+            for (var i = 1; i <= totalSteps; i++) {
+                if (!stepChecklists[i]) continue;
+                totalItems += stepChecklists[i].total;
+                checkedItems += stepChecklists[i].checked;
+                if (stepChecklists[i].checked < stepChecklists[i].total) {
+                    allStepsComplete = false;
+                }
+            }
+
+            var pct = totalItems > 0 ? (checkedItems / totalItems) * 100 : 0;
+            document.getElementById('lab-progress').style.width = pct + '%';
+
+            for (var j = 1; j <= totalSteps; j++) {
+                var stepEl = document.querySelector('.lab-step[data-step="' + j + '"]');
+                if (stepEl && stepChecklists[j] && stepChecklists[j].checked >= stepChecklists[j].total) {
+                    stepEl.classList.add('completed');
+                } else if (stepEl) {
+                    stepEl.classList.remove('completed');
+                }
+            }
+
+            var btn = document.getElementById('lab-complete-btn');
+            if (allStepsComplete) {
+                btn.disabled = false;
+                btn.classList.add('btn-primary');
+            } else {
+                btn.disabled = true;
+            }
+        }
+
+        document.getElementById('lab-complete-btn').addEventListener('click', function() {
+            if (this.disabled) return;
+
+            if (typeof MendStore !== 'undefined') {
+                MendStore.completeLab('enterprise-deployment-design', 300);
+            }
+
+            document.getElementById('lab-complete').classList.add('visible');
+            document.getElementById('lab-actions').style.display = 'none';
+
+            document.getElementById('lab-complete').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+
+        document.querySelectorAll('.lab-quiz-option').forEach(function(opt) {
+            opt.addEventListener('click', function() {
+                var siblings = this.parentNode.querySelectorAll('.lab-quiz-option');
+                siblings.forEach(function(s) { s.classList.remove('correct', 'incorrect'); });
+                if (this.getAttribute('data-correct') === 'true') {
+                    this.classList.add('correct');
+                } else {
+                    this.classList.add('incorrect');
+                    siblings.forEach(function(s) {
+                        if (s.getAttribute('data-correct') === 'true') s.classList.add('correct');
+                    });
+                }
+            });
+        });
+    })();
+    </script>
+</body>
+</html>

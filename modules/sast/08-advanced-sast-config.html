@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href="../../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <title>Advanced SAST Configuration - Mend Learn</title>
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar"></aside>
+
+        <main class="module-content" id="main-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>SAST Product Track</span> &rsaquo; <span>Advanced SAST Configuration</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>Advanced SAST Configuration</h1>
+                <div class="module-meta">
+                    <span>&#128338; 40 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 200 XP</span>
+                    <span class="level-badge advanced">Level 3 - Advanced</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>Author custom rules and configure taint analysis for your codebase</li>
+                    <li>Optimize scan scope, exclusions, and incremental scanning</li>
+                    <li>Profile performance and apply language-specific advanced settings</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>Custom Rule Authoring</h2>
+                <p>Custom rules let security teams encode organization-specific threats that are not covered by the default rule set. For example, a company might have a custom authentication wrapper, an internal cryptography library, or a banned API that default rules do not know about. Custom rules can detect these patterns and enforce internal standards consistently.</p>
+                <p>When writing a custom rule, define the source, the sink, and any sanitizers or validators in between. A source is where untrusted data enters the application, such as an HTTP request parameter or a database field. A sink is where the data becomes dangerous, such as an HTML renderer or a command executor. Sanitizers are functions that neutralize the data. A well-written rule models the real data flow rather than just matching a string pattern.</p>
+
+                <div class="key-concept">
+                    <h4>Rule Anatomy</h4>
+                    <p>Every custom rule needs a unique ID, a clear description, a severity, a set of patterns, and a remediation message. Good rules are specific enough to avoid false positives and general enough to catch the variants that developers will create. Test custom rules against a corpus of real code before deploying them to production scans.</p>
+                </div>
+
+                <h3>Example Custom Rule Pattern</h3>
+                <pre><code>rule: internal_banned_crypto
+id: CSP-1001
+severity: high
+message: Use of deprecated internal crypto helper detected
+sources:
+  - any
+sinks:
+  - pattern: "LegacyCrypto.encrypt(*)"
+  - pattern: "LegacyCrypto.decrypt(*)"
+sanitizers: []
+remediation: Replace with company.crypto.SecureCipher from the approved library.</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Taint Analysis Configuration</h2>
+                <p>Taint analysis traces untrusted data from sources to sinks. Mend SAST models common sources, sinks, and sanitizers for each supported language, but every application has unique boundaries. Advanced configuration lets you extend the taint model with custom sources, sinks, and sanitizers so the engine understands your frameworks and libraries.</p>
+                <p>Data flow tuning controls how the engine follows data through the program. You can increase precision for security-critical code paths, reduce analysis depth for generated code, or mark certain methods as opaque barriers that taint cannot pass through. These settings trade off between scan time, memory usage, and result accuracy.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128397;</div>
+                        <h4>Custom Sources</h4>
+                        <p>Mark internal APIs, message queues, or configuration stores as taint sources when they receive untrusted data.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128371;</div>
+                        <h4>Custom Sinks</h4>
+                        <p>Define organization-specific dangerous operations such as custom loggers, RPC clients, or legacy database access.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128274;</div>
+                        <h4>Sanitizers</h4>
+                        <p>Teach the engine that an internal validation function neutralizes input for a particular vulnerability class.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128300;</div>
+                        <h4>Flow Sensitivity</h4>
+                        <p>Adjust how deeply the engine tracks data flow across functions, conditionals, and object fields.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Exclusions &amp; Scan Scope Optimization</h2>
+                <p>Not every file needs to be scanned. Generated code, third-party dependencies, test data, and build artifacts can be excluded from analysis to reduce scan time and false positives. Exclusions should be specific: exclude a directory or a glob pattern rather than entire modules without justification. Document why each exclusion exists and review it periodically.</p>
+                <p>Scan scope optimization also includes choosing which rules to run. A full rule set is appropriate for a security audit, but a CI scan for fast feedback may use only high-confidence rules for critical and high severity issues. Mend SAST lets you define multiple profiles for different contexts, such as "PR fast scan", "nightly deep scan", and "release audit".</p>
+
+                <h3>Exclusion Configuration</h3>
+                <pre><code>exclude:
+  - "**/node_modules/**"
+  - "**/dist/**"
+  - "**/generated/**"
+  - "**/tests/fixtures/**"
+  - "*.min.js"
+  - "*.designer.cs"
+
+rules_profile:
+  name: pr-fast-scan
+  severities: [critical, high]
+  confidence: high
+  include_rules: []
+  exclude_rules: ["style", "informational"]</code></pre>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Scope Tip</h4>
+                    <p>Audit your exclusions every quarter. Code that was generated or third-party when excluded may become first-party code later. Stale exclusions are a common cause of missed vulnerabilities and unexpected false positives.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Incremental Scanning &amp; Performance Profiling</h2>
+                <p>Incremental scanning analyzes only the parts of the codebase that changed since the last baseline. This is essential for monorepos and large codebases where full scans can take tens of minutes. Mend SAST incremental mode compares the current commit to the previous analysis result, reuses cached summaries, and re-scans only modified functions and their dependencies.</p>
+                <p>Performance profiling identifies the slowest stages of a scan. Common bottlenecks include parsing large generated files, deep interprocedural analysis across many layers, and scanning dependencies that should be excluded. Use the CLI's profiling flags to produce a timing breakdown by stage. Use that data to tune exclusions, reduce analysis depth, or split the scan into smaller profiles.</p>
+
+                <h3>Language-Specific Advanced Settings</h3>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#9749;</div>
+                        <h4>Java / Kotlin</h4>
+                        <p>Configure classpath resolution, include annotation processors, and tune Spring/JPA framework models.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128013;</div>
+                        <h4>Python</h4>
+                        <p>Specify virtual environment paths, exclude compiled bytecode, and configure import resolution for custom packages.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128218;</div>
+                        <h4>JavaScript / TypeScript</h4>
+                        <p>Provide tsconfig paths, resolve aliases, and exclude transpiled bundles or Storybook files.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128295;</div>
+                        <h4>C# / .NET</h4>
+                        <p>Supply solution files, MSBuild properties, and NuGet restore settings for accurate dependency resolution.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 1:</strong> What is the primary purpose of taint analysis in SAST?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Measure the performance of the scan engine</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Trace untrusted data from sources to dangerous sinks</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Identify code that violates style guidelines</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Generate software bills of materials</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 2:</strong> Which technique is most effective for reducing SAST scan time in large monorepos?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Incremental scanning of only changed functions and dependencies</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Running every rule at maximum sensitivity</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Including all generated files and build artifacts</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Disabling all sanitization models</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>200 XP earned for completing this module</span>
+                </div>
+                <button class="btn btn-primary mark-complete-btn" data-xp="200">Mark Complete</button>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/layout.js"></script>
+    <script src="../../js/store.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/search.js"></script>
+    <script src="../../js/chat.js"></script>
+    <script src="../../js/homepage.js"></script>
+    <script src="../../js/leaderboard.js"></script>
+    <script src="../../js/cert-recommendations.js"></script>
+    <script src="../../js/badges.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/tracks.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

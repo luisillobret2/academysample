@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <meta name="description" content="Interactive lab: Learn how to run Mend SAST scans, review code findings, configure custom rules, manage false positives, and apply AI remediation.">
+    <title>Lab: SAST Code Analysis - Mend Learn</title>
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/lab.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="lab-layout">
+        <div class="lab-breadcrumb">
+            <a href="../labs.html">Labs</a> &rsaquo;
+            <span>SAST Code Analysis</span>
+        </div>
+
+        <div class="lab-header">
+            <div class="lab-title-row">
+                <h1>SAST <span class="accent">Code Analysis</span></h1>
+                <span class="lab-type-badge guided">Guided</span>
+            </div>
+            <div class="lab-meta">
+                <span>&#128339; 60 min</span>
+                <span>&#127942; 100 XP</span>
+                <span>&#128260; SAST</span>
+                <span>&#128218; 6 steps</span>
+            </div>
+        </div>
+
+        <div class="lab-objectives">
+            <h4>&#127919; Lab Objectives</h4>
+            <ul>
+                <li>Understand how Mend SAST analyzes source code without execution</li>
+                <li>Run your first SAST scan on a Python Flask application</li>
+                <li>Review code findings and severity levels</li>
+                <li>Configure a custom SAST rule for a specific pattern</li>
+                <li>Manage false positives and create a baseline</li>
+                <li>Apply AI remediation suggestions</li>
+            </ul>
+        </div>
+
+        <div class="lab-progress-bar">
+            <div class="lab-progress-bar-fill" id="lab-progress"></div>
+        </div>
+
+        <div class="lab-step" data-step="1">
+            <div class="lab-step-number">1</div>
+            <h3>Understanding SAST Scanning</h3>
+            <p>Static Application Security Testing (SAST) analyzes source code without executing it. Mend SAST inspects the code base, tracks how untrusted data flows through the application, and identifies security flaws such as injection weaknesses, hardcoded secrets, and unsafe API usage.</p>
+            <p>Key concepts include:</p>
+            <ul>
+                <li><strong>Taint analysis</strong> marks untrusted input sources and tracks them to dangerous sinks</li>
+                <li><strong>Data flow analysis</strong> follows values from entry points through functions and variables</li>
+                <li><strong>Control flow analysis</strong> examines branch conditions and execution paths</li>
+            </ul>
+            <div class="lab-code-block"><span class="comment"># Start a SAST scan with a descriptive product name</span>
+mend scan --type sast --product "Lab: Python App"</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend scan --type sast --product "Lab: Python App"
+<span class="term-info">Initializing SAST engine...</span>
+<span class="term-info">Language: python</span>
+<span class="term-info">Files analyzed: 42</span>
+<span class="term-info">Taint sources identified: 8</span>
+<span class="term-info">Data-flow sinks identified: 15</span>
+<span class="term-success">SAST analysis complete.</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                SAST runs entirely on source code, so it can find issues early in the development cycle before code is deployed or executed.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Understand the difference between static and dynamic analysis</li>
+                <li><span class="check-icon">&#10003;</span> Can explain taint analysis and data flow in your own words</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="2">
+            <div class="lab-step-number">2</div>
+            <h3>Run Your First SAST Scan</h3>
+            <p>Scan the provided Python Flask application. The scan will examine the project source files and report the vulnerabilities it finds.</p>
+            <div class="lab-code-block"><span class="comment"># Navigate to the sample Flask application</span>
+cd ~/labs/python-flask-app
+
+<span class="comment"># Run a SAST scan</span>
+mend scan --type sast --product "Lab: Python App"</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend scan --type sast --product "Lab: Python App"
+<span class="term-info">Scanning project: python-flask-app</span>
+<span class="term-info">Detected: Python (requirements.txt, *.py)</span>
+<span class="term-info">Analyzing code flows...</span>
+<span class="term-warn">Scan complete. Results:</span>
+  <span class="term-error">Critical: 1 vulnerability</span>
+  <span class="term-warn">High:     2 vulnerabilities</span>
+  <span class="term-info">Medium:   3 vulnerabilities</span>
+  <span class="term-success">Low:      1 vulnerability</span>
+<span class="term-info">Findings:</span>
+  <span class="term-error">[Critical] SQL injection in routes.py:42</span>
+  <span class="term-warn">[High]     Reflected XSS in views.py:18</span>
+  <span class="term-warn">[High]     Hardcoded secret in config.py:7</span>
+<span class="term-success">Results uploaded to Mend platform.</span></div>
+            <div class="lab-callout warning">
+                <strong>Notice</strong>
+                The scan reports a critical SQL injection issue. Reflected XSS and hardcoded secrets are also present. These will be reviewed in the next step.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> SAST scan completed successfully</li>
+                <li><span class="check-icon">&#10003;</span> Identified the critical, high, medium, and low findings</li>
+                <li><span class="check-icon">&#10003;</span> Noted the file paths and line numbers for the top findings</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="3">
+            <div class="lab-step-number">3</div>
+            <h3>Review Code Findings</h3>
+            <p>Open the Mend platform findings dashboard to inspect the code-level details. Each finding shows the affected file, line number, severity, and the vulnerable code snippet. Use the taint flow visualization to see how untrusted data reaches the vulnerable sink.</p>
+            <p>In the dashboard, you'll see:</p>
+            <ul>
+                <li><strong>Severity levels</strong> ranked Critical, High, Medium, and Low</li>
+                <li><strong>Code snippets</strong> with the vulnerable line highlighted</li>
+                <li><strong>Taint flow</strong> from source to sink across multiple functions</li>
+                <li><strong>Remediation guidance</strong> with recommended secure patterns</li>
+            </ul>
+            <div class="lab-code-block"><span class="comment"># Example vulnerable code pattern flagged by SAST</span>
+@app.route("/search")
+<span class="keyword">def</span> search():
+    query = request.args.get("q")
+    cursor.execute(<span class="string">"SELECT * FROM products WHERE name = '"</span> + query + <span class="string">"'"</span>)
+    <span class="keyword">return</span> cursor.fetchall()</div>
+            <div class="lab-callout tip">
+                <strong>Key terms</strong>
+                <strong>Source</strong> is where untrusted data enters the application. <strong>Sink</strong> is the dangerous operation that consumes it. The path between them is the <strong>data flow</strong>.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Opened the code findings dashboard</li>
+                <li><span class="check-icon">&#10003;</span> Traced the taint flow for the SQL injection finding</li>
+                <li><span class="check-icon">&#10003;</span> Identified the source and sink for the XSS finding</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="4">
+            <div class="lab-step-number">4</div>
+            <h3>Configure Custom Rules</h3>
+            <p>Extend Mend SAST with a custom rule to detect a specific pattern in your code base. Custom rules help enforce team-specific coding standards or catch risky APIs that default rules may not cover.</p>
+            <div class="lab-code-block"><span class="comment"># Create a custom SAST rule to forbid eval() in Python</span>
+mend sast rules create --name "No eval()" --pattern "eval\\(" --language python --severity high</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend sast rules create --name "No eval()" --pattern "eval\\(" --language python --severity high
+<span class="term-info">Creating custom rule...</span>
+<span class="term-info">Name: No eval()</span>
+<span class="term-info">Pattern: eval\(</span>
+<span class="term-info">Language: python</span>
+<span class="term-info">Severity: high</span>
+<span class="term-success">Custom rule created successfully.</span>
+<span class="term-info">Rule ID: RULE-9876</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                Keep custom rules focused and well-documented. Overly broad patterns can produce noise and false positives, which reduce trust in scan results.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Created the custom "No eval()" rule</li>
+                <li><span class="check-icon">&#10003;</span> Verified the rule appears in the custom rules list</li>
+                <li><span class="check-icon">&#10003;</span> Re-ran the scan to confirm the rule is applied</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="5">
+            <div class="lab-step-number">5</div>
+            <h3>Manage False Positives</h3>
+            <p>Not every finding is exploitable. Triage findings to reduce noise, mark false positives with a reason, and establish a baseline so future scans only report new issues.</p>
+            <div class="lab-code-block"><span class="comment"># Mark a specific finding as a false positive</span>
+mend sast triage --finding F-1234 --status false-positive --reason "Sanitized input"
+
+<span class="comment"># Create a baseline from the current scan</span>
+mend sast baseline --create --output baseline.json</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend sast triage --finding F-1234 --status false-positive --reason "Sanitized input"
+<span class="term-info">Triaging finding F-1234...</span>
+<span class="term-info">Status: false-positive</span>
+<span class="term-info">Reason: Sanitized input</span>
+<span class="term-success">Finding F-1234 triaged successfully.</span>
+
+<span class="term-prompt">$</span> mend sast baseline --create --output baseline.json
+<span class="term-info">Creating baseline...</span>
+<span class="term-info">Total findings: 7</span>
+<span class="term-info">Triaged findings: 1</span>
+<span class="term-success">Baseline written to baseline.json</span></div>
+            <div class="lab-callout warning">
+                <strong>Warning</strong>
+                Only mark findings as false positives when you are confident the data is sanitized or the sink is unreachable. Document the reason so the decision can be audited later.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Triaged finding F-1234 with a clear reason</li>
+                <li><span class="check-icon">&#10003;</span> Created a baseline file</li>
+                <li><span class="check-icon">&#10003;</span> Confirmed the false positive is excluded from the active count</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="6">
+            <div class="lab-step-number">6</div>
+            <h3>Apply AI Remediation</h3>
+            <p>Mend AI can suggest secure replacements for vulnerable code. Review the proposed fix, validate it in context, and apply it to the source file.</p>
+            <div class="lab-code-block"><span class="comment"># Request AI remediation for a specific finding</span>
+mend sast remediate --finding F-5678 --apply</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend sast remediate --finding F-5678 --apply
+<span class="term-info">Generating AI remediation for finding F-5678...</span>
+<span class="term-info">Vulnerability: SQL injection in routes.py:42</span>
+<span class="term-info">Suggested fix:</span>
+  <span class="term-success">cursor.execute("SELECT * FROM products WHERE name = ?", (query,))</span>
+<span class="term-info">Applying fix...</span>
+<span class="term-success">Updated routes.py</span>
+<span class="term-info">Re-run the scan to verify the finding is resolved.</span></div>
+            <div class="lab-callout tip">
+                <strong>Before you apply</strong>
+                Always review AI suggestions in the context of your application. Test the fix locally and confirm that behavior remains correct before committing the change.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Reviewed the AI-suggested remediation</li>
+                <li><span class="check-icon">&#10003;</span> Applied the fix to the source file</li>
+                <li><span class="check-icon">&#10003;</span> Re-ran the SAST scan to confirm the finding is resolved</li>
+            </ul>
+        </div>
+
+        <div class="lab-quiz" id="lab-quiz">
+            <h4>&#129504; Knowledge Check</h4>
+            <div class="lab-quiz-question">Which of the following best describes SAST?</div>
+            <ul class="lab-quiz-options">
+                <li class="lab-quiz-option" data-correct="true">Analyzing source code without executing it</li>
+                <li class="lab-quiz-option" data-correct="false">Testing a running application with simulated attacks</li>
+                <li class="lab-quiz-option" data-correct="false">Scanning open-source dependencies for known vulnerabilities</li>
+                <li class="lab-quiz-option" data-correct="false">Monitoring production traffic for malicious behavior</li>
+            </ul>
+            <div class="lab-quiz-question" style="margin-top: 20px;">Which command creates a custom SAST rule for Python?</div>
+            <ul class="lab-quiz-options">
+                <li class="lab-quiz-option" data-correct="false">mend scan --custom-rule "No eval()"</li>
+                <li class="lab-quiz-option" data-correct="true">mend sast rules create --name "No eval()" --pattern "eval\\(" --language python --severity high</li>
+                <li class="lab-quiz-option" data-correct="false">mend sast rule --add "No eval()"</li>
+                <li class="lab-quiz-option" data-correct="false">mend rules create --type sast --pattern "eval()"</li>
+            </ul>
+        </div>
+
+        <div class="lab-completion-banner" id="lab-complete">
+            <h2>&#127881; Lab Complete!</h2>
+            <p>You've learned how SAST works, run your first scan, reviewed code findings, configured a custom rule, managed false positives, and applied AI remediation.</p>
+            <div class="lab-completion-xp">+100 XP</div>
+            <div class="lab-actions" style="justify-content: center;">
+                <a href="../labs.html" class="btn btn-secondary">Back to Labs</a>
+                <a href="github-actions-integration.html" class="btn btn-primary">Next Lab: GitHub Actions Integration</a>
+            </div>
+        </div>
+
+        <div class="lab-actions" id="lab-actions">
+            <button class="btn btn-primary" id="lab-complete-btn" disabled>Complete Lab</button>
+            <a href="../labs.html" class="btn btn-secondary">Back to Labs</a>
+        </div>
+    </div>
+
+    <footer id="site-footer" class="site-footer"></footer>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+    (function() {
+        var totalSteps = 6;
+        var stepChecklists = {};
+
+        document.querySelectorAll('.lab-step').forEach(function(stepEl) {
+            var stepNum = stepEl.getAttribute('data-step');
+            var items = stepEl.querySelectorAll('.lab-checklist li');
+            stepChecklists[stepNum] = { total: items.length, checked: 0 };
+
+            items.forEach(function(item) {
+                item.addEventListener('click', function() {
+                    if (item.classList.contains('checked')) {
+                        item.classList.remove('checked');
+                        stepChecklists[stepNum].checked--;
+                    } else {
+                        item.classList.add('checked');
+                        stepChecklists[stepNum].checked++;
+                    }
+                    updateProgress();
+                });
+            });
+        });
+
+        function updateProgress() {
+            var totalItems = 0;
+            var checkedItems = 0;
+            var allStepsComplete = true;
+
+            for (var i = 1; i <= totalSteps; i++) {
+                if (!stepChecklists[i]) continue;
+                totalItems += stepChecklists[i].total;
+                checkedItems += stepChecklists[i].checked;
+                if (stepChecklists[i].checked < stepChecklists[i].total) {
+                    allStepsComplete = false;
+                }
+            }
+
+            var pct = totalItems > 0 ? (checkedItems / totalItems) * 100 : 0;
+            document.getElementById('lab-progress').style.width = pct + '%';
+
+            for (var j = 1; j <= totalSteps; j++) {
+                var stepEl = document.querySelector('.lab-step[data-step="' + j + '"]');
+                if (stepEl && stepChecklists[j] && stepChecklists[j].checked >= stepChecklists[j].total) {
+                    stepEl.classList.add('completed');
+                } else if (stepEl) {
+                    stepEl.classList.remove('completed');
+                }
+            }
+
+            var btn = document.getElementById('lab-complete-btn');
+            if (allStepsComplete) {
+                btn.disabled = false;
+                btn.classList.add('btn-primary');
+            } else {
+                btn.disabled = true;
+            }
+        }
+
+        document.getElementById('lab-complete-btn').addEventListener('click', function() {
+            if (this.disabled) return;
+
+            if (typeof MendStore !== 'undefined') {
+                MendStore.completeLab('sast-code-analysis', 100);
+            }
+
+            document.getElementById('lab-complete').classList.add('visible');
+            document.getElementById('lab-actions').style.display = 'none';
+            document.getElementById('lab-complete').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+
+        document.querySelectorAll('.lab-quiz-option').forEach(function(opt) {
+            opt.addEventListener('click', function() {
+                var siblings = this.parentNode.querySelectorAll('.lab-quiz-option');
+                siblings.forEach(function(s) { s.classList.remove('correct', 'incorrect'); });
+                if (this.getAttribute('data-correct') === 'true') {
+                    this.classList.add('correct');
+                } else {
+                    this.classList.add('incorrect');
+                    siblings.forEach(function(s) {
+                        if (s.getAttribute('data-correct') === 'true') s.classList.add('correct');
+                    });
+                }
+            });
+        });
+    })();
+    </script>
+</body>
+</html>

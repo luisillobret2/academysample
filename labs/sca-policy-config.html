@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <meta name="description" content="Interactive lab: Configure Mend.io SCA security and license policies, apply them to a project, and test enforcement.">
+    <title>Lab: SCA Policy Configuration - Mend Learn</title>
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/lab.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="lab-layout">
+        <div class="lab-breadcrumb">
+            <a href="../labs.html">Labs</a> &rsaquo;
+            <span>SCA Policy Configuration</span>
+        </div>
+
+        <div class="lab-header">
+            <div class="lab-title-row">
+                <h1>SCA <span class="accent">Policy Configuration</span></h1>
+                <span class="lab-type-badge guided">Guided</span>
+            </div>
+            <div class="lab-meta">
+                <span>&#128339; 45 min</span>
+                <span>&#127942; 100 XP</span>
+                <span>&#128260; SCA</span>
+                <span>&#128218; 5 steps</span>
+            </div>
+        </div>
+
+        <div class="lab-objectives">
+            <h4>&#127919; Lab Objectives</h4>
+            <ul>
+                <li>Explore the Mend policy engine and policy types</li>
+                <li>Create a security policy that blocks critical vulnerabilities</li>
+                <li>Create a license policy that flags copyleft licenses</li>
+                <li>Assign policies to a project</li>
+                <li>Test policy enforcement through a live scan</li>
+            </ul>
+        </div>
+
+        <div class="lab-progress-bar">
+            <div class="lab-progress-bar-fill" id="lab-progress"></div>
+        </div>
+
+        <div class="lab-step" data-step="1">
+            <div class="lab-step-number">1</div>
+            <h3>Explore the Policy Engine</h3>
+            <p>Open the Mend platform and navigate to the <strong>Policy</strong> tab. Here you can define rules that govern what is acceptable in your projects. Mend distinguishes between two policy families:</p>
+            <ul>
+                <li><strong>Security policies</strong> act on vulnerability severity, CVSS score, or exploit maturity.</li>
+                <li><strong>License policies</strong> act on dependency licenses, such as copyleft or proprietary restrictions.</li>
+            </ul>
+            <p>To see the policies already available in your organization, use the Mend CLI:</p>
+            <div class="lab-code-block"><span class="comment"># List all policies in the organization</span>
+mend policy list</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend policy list
+<span class="term-info">Organization: Mend Academy Demo</span>
+<span class="term-info">Total policies: 4</span>
+
+<span class="term-info">ID      Name                  Type      Scope      Action</span>
+<span class="term-info">--      ----                  ----      -----      ------</span>
+<span class="term-info">pol-1   Default Security      security  org        warn</span>
+<span class="term-info">pol-2   Default License       license   org        warn</span>
+<span class="term-info">pol-3   Block Critical        security  project    block</span>
+<span class="term-info">pol-4   Flag Copyleft         license   project    warn</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                Policies can be scoped to an organization or to specific projects. Start with project-scoped policies to test changes before rolling them out across the organization.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Navigated to the Policy tab in the Mend platform</li>
+                <li><span class="check-icon">&#10003;</span> Listed existing policies with <code>mend policy list</code></li>
+                <li><span class="check-icon">&#10003;</span> Identified the difference between security and license policies</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="2">
+            <div class="lab-step-number">2</div>
+            <h3>Create a Security Policy</h3>
+            <p>Create a security policy that blocks any dependency with a critical vulnerability. This prevents vulnerable code from merging into protected branches.</p>
+            <div class="lab-code-block"><span class="comment"># Create a security policy that blocks critical findings</span>
+mend policy create --name "Block Critical" --type security --severity critical --action block</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend policy create --name "Block Critical" --type security --severity critical --action block
+<span class="term-info">Creating policy...</span>
+<span class="term-success">Policy created successfully.</span>
+<span class="term-info">ID: pol-5</span>
+<span class="term-info">Name: Block Critical</span>
+<span class="term-info">Type: security</span>
+<span class="term-info">Severity threshold: critical</span>
+<span class="term-info">Action: block</span></div>
+            <div class="lab-callout warning">
+                <strong>Important</strong>
+                The <code>block</code> action fails the build and prevents merging in most CI/CD integrations. Make sure the policy scope is limited to the target project until the team is ready to enforce it more broadly.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Created the "Block Critical" security policy</li>
+                <li><span class="check-icon">&#10003;</span> Set the action to <code>block</code> and severity to <code>critical</code></li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="3">
+            <div class="lab-step-number">3</div>
+            <h3>Create a License Policy</h3>
+            <p>License policies help legal and compliance teams identify dependencies that may introduce intellectual-property risks. Create a policy that flags the GPL and LGPL copyleft licenses.</p>
+            <div class="lab-code-block"><span class="comment"># Create a license policy that flags copyleft licenses</span>
+mend policy create --name "Flag Copyleft" --type license --licenses GPL,LGPL --action warn</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend policy create --name "Flag Copyleft" --type license --licenses GPL,LGPL --action warn
+<span class="term-info">Creating policy...</span>
+<span class="term-success">Policy created successfully.</span>
+<span class="term-info">ID: pol-6</span>
+<span class="term-info">Name: Flag Copyleft</span>
+<span class="term-info">Type: license</span>
+<span class="term-info">Licenses: GPL, LGPL</span>
+<span class="term-info">Action: warn</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                The <code>warn</code> action alerts the team but does not block the build. Use it for license compliance while stakeholders review and approve exceptions.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Created the "Flag Copyleft" license policy</li>
+                <li><span class="check-icon">&#10003;</span> Added GPL and LGPL to the license list</li>
+                <li><span class="check-icon">&#10003;</span> Chose the <code>warn</code> action</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="4">
+            <div class="lab-step-number">4</div>
+            <h3>Apply Policies to a Project</h3>
+            <p>Policies only take effect when they are assigned to a project. Assign the two policies you created to the sample Java application project.</p>
+            <div class="lab-code-block"><span class="comment"># Assign policies to the sample project</span>
+mend policy assign --project "Lab: Java App" --policies "Block Critical,Flag Copyleft"</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend policy assign --project "Lab: Java App" --policies "Block Critical,Flag Copyleft"
+<span class="term-info">Resolving project: Lab: Java App</span>
+<span class="term-info">Policies to assign: Block Critical, Flag Copyleft</span>
+<span class="term-success">2 policies assigned successfully.</span>
+<span class="term-info">Project scope updated.</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                You can view the policies assigned to a project from the project settings page or by running <code>mend policy list --project "Lab: Java App"</code>.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Assigned both policies to the "Lab: Java App" project</li>
+                <li><span class="check-icon">&#10003;</span> Verified the assignment in the project settings</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="5">
+            <div class="lab-step-number">5</div>
+            <h3>Test Policy Enforcement</h3>
+            <p>Run a fresh SCA scan on the project. The new policies will evaluate the scan results, and any violation will be shown in the terminal and the platform dashboard.</p>
+            <div class="lab-code-block"><span class="comment"># Run an SCA scan to evaluate policy enforcement</span>
+mend scan --project "Lab: Java App" --type sca</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend scan --project "Lab: Java App" --type sca
+<span class="term-info">Scanning project: Lab: Java App</span>
+<span class="term-info">Detected: Maven (pom.xml)</span>
+<span class="term-info">Resolving dependencies...</span>
+<span class="term-info">Found 47 direct dependencies, 183 total</span>
+<span class="term-warn">Policy evaluation:</span>
+  <span class="term-error">[Block Critical] log4j-core 2.14.1: critical CVE-2021-44228</span>
+  <span class="term-error">[Block Critical] snakeyaml 1.29: critical CVE-2022-25857</span>
+  <span class="term-warn">[Flag Copyleft] org.apache.commons:commons-lang3: LGPL</span>
+<span class="term-error">Policy violations: 3</span>
+<span class="term-error">Build action: block</span>
+<span class="term-info">Results uploaded to Mend platform.</span>
+<span class="term-info">View at: https://app.mend.io/projects/lab-java-app</span></div>
+            <div class="lab-callout warning">
+                <strong>Notice</strong>
+                The two critical vulnerabilities triggered the <code>Block Critical</code> policy, causing the build to be blocked. The license policy triggered a warning for the LGPL dependency. Review these findings in the dashboard before fixing the policy or the dependency.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Ran the SCA scan on the project</li>
+                <li><span class="check-icon">&#10003;</span> Observed the security policy violations</li>
+                <li><span class="check-icon">&#10003;</span> Observed the license policy warning</li>
+            </ul>
+        </div>
+
+        <div class="lab-quiz" id="lab-quiz">
+            <h4>&#129504; Knowledge Check</h4>
+            <div class="lab-quiz-question">Which action prevents a build from passing when a policy is violated?</div>
+            <ul class="lab-quiz-options">
+                <li class="lab-quiz-option" data-correct="false">warn</li>
+                <li class="lab-quiz-option" data-correct="true">block</li>
+                <li class="lab-quiz-option" data-correct="false">ignore</li>
+                <li class="lab-quiz-option" data-correct="false">log</li>
+            </ul>
+            <div class="lab-quiz-question" style="margin-top: 20px;">Which command assigns existing policies to a Mend project?</div>
+            <ul class="lab-quiz-options">
+                <li class="lab-quiz-option" data-correct="false">mend policy apply</li>
+                <li class="lab-quiz-option" data-correct="true">mend policy assign</li>
+                <li class="lab-quiz-option" data-correct="false">mend project assign</li>
+                <li class="lab-quiz-option" data-correct="false">mend scan --policy</li>
+            </ul>
+        </div>
+
+        <div class="lab-completion-banner" id="lab-complete">
+            <h2>&#127881; Lab Complete!</h2>
+            <p>You've configured SCA security and license policies, assigned them to a project, and verified enforcement through a live scan.</p>
+            <div class="lab-completion-xp">+100 XP</div>
+            <div class="lab-actions" style="justify-content: center;">
+                <a href="../labs.html" class="btn btn-secondary">Back to Labs</a>
+                <a href="sast-code-analysis.html" class="btn btn-primary">Next Lab: SAST Code Analysis</a>
+            </div>
+        </div>
+
+        <div class="lab-actions" id="lab-actions">
+            <button class="btn btn-primary" id="lab-complete-btn" disabled>Complete Lab</button>
+            <a href="../labs.html" class="btn btn-secondary">Back to Labs</a>
+        </div>
+    </div>
+
+    <footer id="site-footer" class="site-footer"></footer>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+    (function() {
+        var totalSteps = 5;
+        var stepChecklists = {};
+
+        document.querySelectorAll('.lab-step').forEach(function(stepEl) {
+            var stepNum = stepEl.getAttribute('data-step');
+            var items = stepEl.querySelectorAll('.lab-checklist li');
+            stepChecklists[stepNum] = { total: items.length, checked: 0 };
+
+            items.forEach(function(item) {
+                item.addEventListener('click', function() {
+                    if (item.classList.contains('checked')) {
+                        item.classList.remove('checked');
+                        stepChecklists[stepNum].checked--;
+                    } else {
+                        item.classList.add('checked');
+                        stepChecklists[stepNum].checked++;
+                    }
+                    updateProgress();
+                });
+            });
+        });
+
+        function updateProgress() {
+            var totalItems = 0;
+            var checkedItems = 0;
+            var allStepsComplete = true;
+
+            for (var i = 1; i <= totalSteps; i++) {
+                if (!stepChecklists[i]) continue;
+                totalItems += stepChecklists[i].total;
+                checkedItems += stepChecklists[i].checked;
+                if (stepChecklists[i].checked < stepChecklists[i].total) {
+                    allStepsComplete = false;
+                }
+            }
+
+            var pct = totalItems > 0 ? (checkedItems / totalItems) * 100 : 0;
+            document.getElementById('lab-progress').style.width = pct + '%';
+
+            for (var j = 1; j <= totalSteps; j++) {
+                var stepEl = document.querySelector('.lab-step[data-step="' + j + '"]');
+                if (stepEl && stepChecklists[j] && stepChecklists[j].checked >= stepChecklists[j].total) {
+                    stepEl.classList.add('completed');
+                } else if (stepEl) {
+                    stepEl.classList.remove('completed');
+                }
+            }
+
+            var btn = document.getElementById('lab-complete-btn');
+            if (allStepsComplete) {
+                btn.disabled = false;
+                btn.classList.add('btn-primary');
+            } else {
+                btn.disabled = true;
+            }
+        }
+
+        document.getElementById('lab-complete-btn').addEventListener('click', function() {
+            if (this.disabled) return;
+
+            if (typeof MendStore !== 'undefined') {
+                MendStore.completeLab('sca-policy-configuration', 100);
+            }
+
+            document.getElementById('lab-complete').classList.add('visible');
+            document.getElementById('lab-actions').style.display = 'none';
+
+            document.getElementById('lab-complete').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+
+        document.querySelectorAll('.lab-quiz-option').forEach(function(opt) {
+            opt.addEventListener('click', function() {
+                var siblings = this.parentNode.querySelectorAll('.lab-quiz-option');
+                siblings.forEach(function(s) { s.classList.remove('correct', 'incorrect'); });
+                if (this.getAttribute('data-correct') === 'true') {
+                    this.classList.add('correct');
+                } else {
+                    this.classList.add('incorrect');
+                    siblings.forEach(function(s) {
+                        if (s.getAttribute('data-correct') === 'true') s.classList.add('correct');
+                    });
+                }
+            });
+        });
+    })();
+    </script>
+</body>
+</html>

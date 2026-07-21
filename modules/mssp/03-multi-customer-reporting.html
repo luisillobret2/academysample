@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href="../../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <title>Multi-Customer Reporting &amp; SLAs - Mend Learn</title>
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar"></aside>
+
+        <main class="module-content" id="main-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>MSSP Operations Track</span> &rsaquo; <span>Multi-Customer Reporting</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>Multi-Customer Reporting &amp; SLAs</h1>
+                <div class="module-meta">
+                    <span>&#128338; 35 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 175 XP</span>
+                    <span class="level-badge advanced">Level 3 - Advanced</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>Produce cross-tenant reports that aggregate metrics across all customers while preserving tenant isolation</li>
+                    <li>Define customer-specific SLAs and monitor them on dedicated dashboards</li>
+                    <li>Configure automated SLA breach alerts and generate monthly customer reports</li>
+                    <li>Benchmark performance across customers to drive continuous improvement</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>Cross-Tenant Reporting</h2>
+                <p>An MSSP&rsquo;s operations team needs a view that spans every customer &mdash; to spot struggling accounts, to balance workload, and to report up to the MSSP&rsquo;s own leadership. At the same time, each customer must receive reports that contain only their own data. Mend reconciles these two needs through <strong>cross-tenant reporting</strong> for internal operations and <strong>tenant-scoped reporting</strong> for customer delivery, both powered by the same underlying data but filtered by the viewer&rsquo;s access scope.</p>
+
+                <p>The MSSP internal dashboard aggregates metrics across all tenants: total open findings by severity, mean time to remediate by customer, SLA compliance rates, and scan coverage. This view is available only to MSSP platform-level roles; a tenant administrator logging in sees only their own tenant&rsquo;s data. Cross-tenant reports can be scheduled to the MSSP&rsquo;s operations leadership on a daily or weekly cadence, giving the service-delivery team a single screen to manage the whole portfolio.</p>
+
+                <div class="key-concept">
+                    <h4>&#128161; Two Views, One Data Model</h4>
+                    <p>The same finding record powers both the cross-tenant operational view and the tenant-scoped customer report. There is no separate data warehouse to reconcile and no risk of the two views disagreeing. The access filter applied at query time is the only difference between what an MSSP engineer sees and what a customer sees.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Customer-Specific SLA Definitions &amp; Monitoring</h2>
+                <p>Service Level Agreements are the contractual backbone of an MSSP engagement. Mend lets each tenant carry its own <strong>SLA definitions</strong>: target remediation times by severity, scan frequency, and coverage thresholds. A Critical finding for a regulated financial customer may carry a 48-hour remediation SLA, while the same severity for a less-regulated customer may allow five business days. SLA definitions are versioned and auditable so the MSSP and the customer can always agree on which terms applied at any point in time.</p>
+
+                <p>SLA monitoring dashboards track every finding against its SLA clock in real time. Each finding shows the time remaining before breach, color-coded from green to amber to red. The dashboard rolls up to a per-customer SLA compliance percentage &mdash; the headline metric in most MSSP contracts. When a finding is at risk of breaching, the dashboard flags it for the operations team to prioritize before the clock runs out, rather than reporting the breach after the fact.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #e74c3c;">&#9888;&#65039;</div>
+                        <h4>Automated Breach Alerts</h4>
+                        <p>When a finding&rsquo;s SLA clock is within a configurable threshold of breach (e.g., 4 hours remaining), Mend fires an alert to the assigned remediation owner and the MSSP operations lead. Alerts route through Slack, Teams, or email, and an escalation chain can notify a manager if the first alert goes unacknowledged.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #073C8C;">&#128197;</div>
+                        <h4>Monthly Customer Reports</h4>
+                        <p>A scheduled monthly report delivers each customer a tenant-scoped summary: SLA compliance percentage, open findings by severity, remediation trends, and an executive narrative. The report is branded for the customer and lands in their administrator&rsquo;s inbox without manual preparation.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Executive Summaries &amp; Cross-Customer Benchmarking</h2>
+                <p>Beyond the per-customer monthly report, MSSP leadership benefits from <strong>executive summaries</strong> that compare performance across the portfolio. Which customers have the best SLA compliance? Which are lagging and may need a service-delivery intervention? Which product lines (SCA, SAST, Container, Secrets) are driving the most findings across the portfolio? These questions shape staffing, proactive outreach, and upsell conversations.</p>
+
+                <p><strong>Benchmarking across customers</strong> must be handled with care. Customers rightly object to their data being shown to other customers. Mend&rsquo;s benchmarking reports present anonymized, aggregated statistics &mdash; for example, "your mean time to remediate Critical findings is 36 hours, compared to a portfolio median of 52 hours" &mdash; without revealing which other customers occupy the distribution. This gives each customer a meaningful comparison while preserving every tenant&rsquo;s confidentiality. Benchmarks can also be segmented by industry so a customer is compared to peers rather than to the whole portfolio.</p>
+
+                <ol class="steps-list">
+                    <li><strong>Define SLAs per tenant</strong> &mdash; Negotiate and configure remediation times, scan cadence, and coverage targets as part of onboarding; version every change.</li>
+                    <li><strong>Stand up monitoring dashboards</strong> &mdash; Give the operations team a real-time view of SLA clocks across the portfolio, with breach-risk flags.</li>
+                    <li><strong>Configure breach alerts and escalations</strong> &mdash; Route at-risk findings to the right owner before breach; escalate unacknowledged alerts to a manager.</li>
+                    <li><strong>Schedule monthly customer reports</strong> &mdash; Automate tenant-scoped executive summaries so customer delivery is consistent and effort-free.</li>
+                    <li><strong>Review portfolio benchmarks monthly</strong> &mdash; Use anonymized cross-customer comparisons to guide staffing, outreach, and upsell.</li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>&#9888;&#65039; Anonymization Discipline</h4>
+                    <p>When presenting benchmarks to a customer, ensure the aggregation threshold is high enough that no individual customer can be inferred. A benchmark based on two other customers is not anonymous; one based on fifteen is. Set a minimum cohort size below which the benchmark is suppressed rather than shown.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 1:</strong> How does Mend provide both cross-tenant operational reporting and tenant-scoped customer reporting without the two views disagreeing?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Both views are powered by the same underlying data, with an access filter applied at query time determining what each viewer sees</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> A separate data warehouse is rebuilt nightly for customer reports</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Cross-tenant reports are manually assembled by the operations team</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Customer reports are exported from a different product than the operational view</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 2:</strong> When presenting cross-customer benchmark statistics to a customer, what safeguard must be in place?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Reveal the names of the other customers so the recipient can verify the comparison</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Use anonymized, aggregated statistics with a minimum cohort size high enough that no individual customer can be inferred</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Show only the customer&rsquo;s own data with no comparison at all</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Publish the full portfolio breakdown publicly for transparency</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>175 XP earned for completing this module</span>
+                </div>
+                <div class="module-nav-buttons">
+                    <a href="02-tenant-onboarding.html" class="btn btn-secondary">&#8592; Previous: Tenant Onboarding &amp; Segmentation</a>
+                    <a href="04-service-delivery.html" class="btn btn-primary">Next: Service Delivery &amp; Operational Excellence &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/layout.js"></script>
+    <script src="../../js/store.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/search.js"></script>
+    <script src="../../js/chat.js"></script>
+    <script src="../../js/homepage.js"></script>
+    <script src="../../js/leaderboard.js"></script>
+    <script src="../../js/cert-recommendations.js"></script>
+    <script src="../../js/badges.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/tracks.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

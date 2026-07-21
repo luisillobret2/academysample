@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href="../../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <title>Unified Reporting &amp; Dashboards - Mend Learn</title>
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar"></aside>
+
+        <main class="module-content" id="main-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>Platform Unified Track</span> &rsaquo; <span>Unified Reporting</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>Unified Reporting &amp; Dashboards</h1>
+                <div class="module-meta">
+                    <span>&#128338; 35 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 175 XP</span>
+                    <span class="level-badge advanced">Level 3 - Advanced</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>Build cross-product dashboards that aggregate SCA, SAST, Container, and Secrets metrics</li>
+                    <li>Produce executive reporting and security posture metrics for leadership</li>
+                    <li>Use the custom report builder and schedule recurring stakeholder-specific reports</li>
+                    <li>Export and share reports with auditors, executives, and engineering leaders</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>Cross-Product Dashboards</h2>
+                <p>The hallmark of a unified platform is a single pane of glass where every security finding &mdash; regardless of which product discovered it &mdash; appears in one coherent view. Mend&rsquo;s cross-product dashboards pull data from SCA, SAST, Container security, and Secrets scanning into shared widgets that can be arranged, filtered, and saved as personal or shared views. Instead of logging into four consoles to understand the risk profile of a single application, a security analyst opens one dashboard and sees the full picture.</p>
+
+                <p>Every dashboard is built from a common data model. Findings from all products share attributes such as <strong>severity</strong>, <strong>status</strong>, <strong>project</strong>, <strong>repository</strong>, <strong>discovery time</strong>, and <strong>remediation owner</strong>. This shared schema is what makes cross-product aggregation possible: you can build a widget that counts all open Critical findings across every product, or a chart that shows mean time to remediate broken down by finding source. Dashboards refresh on a configurable cadence and can be pinned to wall displays in a security operations center.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #073C8C;">&#128202;</div>
+                        <h4>Security Posture Score</h4>
+                        <p>A single normalized score (0-100) rolls up every product&rsquo;s findings into one number leadership can track over time. The score weights Critical findings heavily and rewards remediation velocity, giving executives a tangible measure of whether the organization is getting safer.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #2ecc71;">&#128197;</div>
+                        <h4>Trend Analysis</h4>
+                        <p>Time-series widgets plot finding counts, remediation times, and policy compliance across weeks, months, or quarters &mdash; segmented by product, team, or application. Trends answer the question "are we improving?" far more convincingly than point-in-time snapshots.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Executive Reporting &amp; Stakeholder Views</h2>
+                <p>Different audiences need different reports. A CISO wants a one-page posture summary with trend arrows and a top-five risk list. A VP of Engineering wants mean-time-to-remediate by team and a burndown of the backlog. A compliance officer wants control-by-control evidence tied to a specific framework. Mend addresses this through <strong>stakeholder-specific report templates</strong> that pre-filter and format the same underlying data for each audience.</p>
+
+                <p>Executive reports are designed to be skimmed in under two minutes. They lead with the security posture score and its delta since the last period, followed by a short list of the most significant risks and the actions being taken. Technical detail is relegated to appendices so the narrative stays crisp. Reports can be branded with the organization&rsquo;s logo and color scheme, and scheduled to land in a stakeholder&rsquo;s inbox on a daily, weekly, or monthly cadence.</p>
+
+                <div class="key-concept">
+                    <h4>&#128161; The "One Number" Principle</h4>
+                    <p>Executives rarely engage with a wall of metrics. Lead every executive report with a single posture score and its trend. Once leadership trusts that number, the supporting detail becomes reference material rather than the main message.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Custom Report Builder &amp; Scheduled Delivery</h2>
+                <p>When the built-in templates do not fit a specific need, the <strong>custom report builder</strong> lets you assemble a report from widgets, tables, and narrative blocks. You pick a scope (organization, project, or repository), a time window, and the products to include, then drag widgets onto a canvas. Saved reports can be cloned and adjusted, building a library that matures with the organization&rsquo;s reporting needs.</p>
+
+                <ol class="steps-list">
+                    <li><strong>Define scope</strong> &mdash; Choose the projects, repositories, or business units the report covers. Scopes can be static lists or dynamic filters (for example, "all repositories tagged production").</li>
+                    <li><strong>Select widgets</strong> &mdash; Add posture scores, finding tables, trend charts, top-risk lists, and remediation burndowns. Configure each widget&rsquo;s filters and grouping.</li>
+                    <li><strong>Schedule delivery</strong> &mdash; Set a cadence (daily, weekly, monthly), a format (PDF, HTML, CSV), and recipients. Reports can also be triggered by webhooks for event-driven delivery.</li>
+                    <li><strong>Export and share</strong> &mdash; Generate one-off exports for audits, board meetings, or customer due-diligence requests. Exports retain the access controls of the original report so sensitive data is not leaked.</li>
+                </ol>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Access-Aware Sharing</h4>
+                    <p>When you share a dashboard or report with a colleague, Mend applies that person&rsquo;s role-based access to the underlying data. A manager who can see three projects will receive a report covering only those three, even if the report author can see ten. This prevents accidental data overexposure when reports circulate widely.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 1:</strong> What enables Mend&rsquo;s cross-product dashboards to aggregate findings from SCA, SAST, Container, and Secrets into shared widgets?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> A common data model where findings from all products share attributes like severity, status, and project</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Manual data export from each product into a spreadsheet</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> A third-party SIEM connector that normalizes the data externally</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> A scheduled batch job that copies findings into a single database table</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 2:</strong> When sharing a report with a colleague who has narrower access than the report author, what does Mend do?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Sends the full report and relies on the colleague to ignore data they should not see</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Applies the colleague&rsquo;s role-based access to the underlying data so they only see what they are permitted to see</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Blocks sharing entirely unless the colleague has organization-wide access</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Strips all access controls so the report is identical for every recipient</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>175 XP earned for completing this module</span>
+                </div>
+                <div class="module-nav-buttons">
+                    <a href="02-cross-product-policy.html" class="btn btn-secondary">&#8592; Previous: Cross-Product Policy &amp; Governance</a>
+                    <a href="04-integrated-workflows.html" class="btn btn-primary">Next: Integrated Security Workflows &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/layout.js"></script>
+    <script src="../../js/store.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/search.js"></script>
+    <script src="../../js/chat.js"></script>
+    <script src="../../js/homepage.js"></script>
+    <script src="../../js/leaderboard.js"></script>
+    <script src="../../js/cert-recommendations.js"></script>
+    <script src="../../js/badges.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/tracks.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

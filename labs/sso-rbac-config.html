@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <meta name="description" content="Interactive lab: Configure SSO and RBAC for the Mend.io platform.">
+    <title>Lab: SSO &amp; RBAC Configuration - Mend Learn</title>
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/lab.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="lab-layout">
+        <div class="lab-breadcrumb">
+            <a href="../labs.html">Labs</a> &rsaquo;
+            <span>SSO &amp; RBAC Configuration</span>
+        </div>
+
+        <div class="lab-header">
+            <div class="lab-title-row">
+                <h1>SSO &amp; <span class="accent">RBAC Configuration</span></h1>
+                <span class="lab-type-badge guided">Guided</span>
+            </div>
+            <div class="lab-meta">
+                <span>&#128339; 60 min</span>
+                <span>&#127942; 100 XP</span>
+                <span>&#128260; Administration</span>
+                <span>&#128218; 5 steps</span>
+            </div>
+        </div>
+
+        <div class="lab-objectives">
+            <h4>&#127919; Lab Objectives</h4>
+            <ul>
+                <li>Configure SAML 2.0 single sign-on for Mend</li>
+                <li>Map identity provider attributes to Mend user fields</li>
+                <li>Create a custom role hierarchy aligned with your teams</li>
+                <li>Assign roles to teams based on SSO group membership</li>
+                <li>Verify SSO login flows and role-based access restrictions</li>
+            </ul>
+        </div>
+
+        <div class="lab-progress-bar">
+            <div class="lab-progress-bar-fill" id="lab-progress"></div>
+        </div>
+
+        <div class="lab-step" data-step="1">
+            <div class="lab-step-number">1</div>
+            <h3>Configure SAML SSO</h3>
+            <p>Set up a SAML 2.0 identity provider such as Okta or Azure AD, then configure Mend as the service provider. Download your IdP metadata XML and upload it to Mend.</p>
+            <div class="lab-code-block"><span class="comment"># Configure Mend SSO using IdP metadata</span>
+mend sso configure --idp-metadata metadata.xml --entity-id mend-academy</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend sso configure --idp-metadata metadata.xml --entity-id mend-academy
+<span class="term-info">Reading IdP metadata from metadata.xml...</span>
+<span class="term-info">Entity ID: mend-academy</span>
+<span class="term-info">SSO URL: https://idp.example.com/saml/sso</span>
+<span class="term-success">SAML SSO configuration saved successfully.</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                Keep a copy of the Mend service provider metadata to upload into your IdP. This ensures the audience and assertion consumer URLs match.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Uploaded IdP metadata XML to Mend</li>
+                <li><span class="check-icon">&#10003;</span> Configured entity ID and SSO URL</li>
+                <li><span class="check-icon">&#10003;</span> Saved Mend SP metadata in the IdP</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="2">
+            <div class="lab-step-number">2</div>
+            <h3>Map User Attributes</h3>
+            <p>Map SAML attributes from your identity provider to Mend user fields. This ensures users are created with the correct email, display name, and group membership.</p>
+            <div class="lab-code-block"><span class="comment"># Attribute mapping configuration</span>
+Email: user.email
+Name: user.name
+Groups: user.groups</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend sso attributes map --email user.email --name user.name --groups user.groups
+<span class="term-info">Mapping SAML attributes to Mend user fields...</span>
+<span class="term-success">Email attribute mapped to user.email</span>
+<span class="term-success">Name attribute mapped to user.name</span>
+<span class="term-success">Groups attribute mapped to user.groups</span>
+<span class="term-success">Attribute mapping saved.</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                Use the same attribute names configured in your IdP. Group values are used to determine role assignments in the next step.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Mapped email, name, and group attributes</li>
+                <li><span class="check-icon">&#10003;</span> Verified attribute names in the IdP</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="3">
+            <div class="lab-step-number">3</div>
+            <h3>Create Role Hierarchy</h3>
+            <p>Define custom roles that match your organization's responsibilities. Start with an Admin role, then add Security Lead, Developer, and Viewer roles with scoped permissions.</p>
+            <div class="lab-code-block"><span class="comment"># Create custom roles</span>
+mend roles create --name "Admin" --permissions "all"
+mend roles create --name "Security Lead" --permissions "view,triage,policy"
+mend roles create --name "Developer" --permissions "view,triage"
+mend roles create --name "Viewer" --permissions "view"</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend roles create --name "Security Lead" --permissions "view,triage,policy"
+<span class="term-info">Creating role Security Lead...</span>
+<span class="term-success">Role Security Lead created with permissions: view, triage, policy</span>
+<span class="term-info">Role ID: role-sec-lead-001</span></div>
+            <div class="lab-callout warning">
+                <strong>Notice</strong>
+                Grant the minimum permissions needed for each role. Admin can manage users and policies, while Viewer is read-only.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Created Admin, Security Lead, Developer, and Viewer roles</li>
+                <li><span class="check-icon">&#10003;</span> Verified each role has the correct permissions</li>
+                <li><span class="check-icon">&#10003;</span> Documented role responsibilities</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="4">
+            <div class="lab-step-number">4</div>
+            <h3>Assign Roles to Teams</h3>
+            <p>Map SSO groups to Mend roles so users inherit the correct access automatically. Assign the security-team group to the Security Lead role and development-team to the Developer role.</p>
+            <div class="lab-code-block"><span class="comment"># Assign SSO groups to roles</span>
+mend teams assign --group "security-team" --role "Security Lead"
+mend teams assign --group "development-team" --role "Developer"
+mend teams assign --group "executives" --role "Viewer"</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend teams assign --group "security-team" --role "Security Lead"
+<span class="term-info">Assigning group security-team to role Security Lead...</span>
+<span class="term-success">Team assignment created.</span>
+<span class="term-info">Users in security-team will inherit the Security Lead role on next login.</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                Review assignments before enabling SSO enforcement. Users without a mapped group may be denied access or assigned a default role.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Mapped each SSO group to a Mend role</li>
+                <li><span class="check-icon">&#10003;</span> Confirmed team assignments are active</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="5">
+            <div class="lab-step-number">5</div>
+            <h3>Test SSO Login &amp; Access</h3>
+            <p>Verify the SSO login flow and confirm that role-based access restrictions are enforced. A user in the Developer role should not be able to edit policies.</p>
+            <div class="lab-code-block"><span class="comment"># Test SSO login for a developer</span>
+mend sso test --user developer@example.com --role Developer</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend sso test --user developer@example.com --role Developer
+<span class="term-info">Initiating SSO login for developer@example.com...</span>
+<span class="term-success">SSO login successful</span>
+<span class="term-info">Role assigned: Developer</span>
+<span class="term-info">Testing policy edit permission...</span>
+<span class="term-error">Access denied: Developer role cannot edit policies.</span>
+<span class="term-success">Role-based access restriction verified.</span></div>
+            <div class="lab-callout tip">
+                <strong>Key concept</strong>
+                RBAC relies on least privilege. Test both positive and negative cases to ensure users can perform allowed actions and are blocked from restricted ones.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Successfully logged in via SSO</li>
+                <li><span class="check-icon">&#10003;</span> Verified role assignment on login</li>
+                <li><span class="check-icon">&#10003;</span> Confirmed Developer cannot edit policies</li>
+            </ul>
+        </div>
+
+        <div class="lab-quiz" id="lab-quiz">
+            <h4>&#129504; Knowledge Check</h4>
+            <div class="lab-quiz-question">Which SAML attribute is typically used to map users to Mend roles?</div>
+            <ul class="lab-quiz-options">
+                <li class="lab-quiz-option" data-correct="false">user.sessionId</li>
+                <li class="lab-quiz-option" data-correct="true">user.groups</li>
+                <li class="lab-quiz-option" data-correct="false">user.password</li>
+                <li class="lab-quiz-option" data-correct="false">user.token</li>
+            </ul>
+            <div class="lab-quiz-question" style="margin-top: 20px;">What should happen when a Developer user attempts to edit a policy?</div>
+            <ul class="lab-quiz-options">
+                <li class="lab-quiz-option" data-correct="false">The change is allowed because Developer has triage permission</li>
+                <li class="lab-quiz-option" data-correct="true">The change is denied because the Developer role lacks policy permission</li>
+                <li class="lab-quiz-option" data-correct="false">The change is logged but always allowed</li>
+                <li class="lab-quiz-option" data-correct="false">The user is promoted to Security Lead automatically</li>
+            </ul>
+        </div>
+
+        <div class="lab-completion-banner" id="lab-complete">
+            <h2>&#127881; Lab Complete!</h2>
+            <p>You have configured SAML SSO, mapped user attributes, created a role hierarchy, assigned teams, and verified role-based access.</p>
+            <div class="lab-completion-xp">+100 XP</div>
+            <div class="lab-actions" style="justify-content: center;">
+                <a href="../labs.html" class="btn btn-secondary">Back to Labs</a>
+                <a href="api-custom-reporting.html" class="btn btn-primary">Next Lab: API Custom Reporting</a>
+            </div>
+        </div>
+
+        <div class="lab-actions" id="lab-actions">
+            <button class="btn btn-primary" id="lab-complete-btn" disabled>Complete Lab</button>
+            <a href="../labs.html" class="btn btn-secondary">Back to Labs</a>
+        </div>
+    </div>
+
+    <footer id="site-footer" class="site-footer"></footer>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+    (function() {
+        var totalSteps = 5;
+        var stepChecklists = {};
+
+        document.querySelectorAll('.lab-step').forEach(function(stepEl) {
+            var stepNum = stepEl.getAttribute('data-step');
+            var items = stepEl.querySelectorAll('.lab-checklist li');
+            stepChecklists[stepNum] = { total: items.length, checked: 0 };
+
+            items.forEach(function(item) {
+                item.addEventListener('click', function() {
+                    if (item.classList.contains('checked')) {
+                        item.classList.remove('checked');
+                        stepChecklists[stepNum].checked--;
+                    } else {
+                        item.classList.add('checked');
+                        stepChecklists[stepNum].checked++;
+                    }
+                    updateProgress();
+                });
+            });
+        });
+
+        function updateProgress() {
+            var totalItems = 0;
+            var checkedItems = 0;
+            var allStepsComplete = true;
+
+            for (var i = 1; i <= totalSteps; i++) {
+                if (!stepChecklists[i]) continue;
+                totalItems += stepChecklists[i].total;
+                checkedItems += stepChecklists[i].checked;
+                if (stepChecklists[i].checked < stepChecklists[i].total) {
+                    allStepsComplete = false;
+                }
+            }
+
+            var pct = totalItems > 0 ? (checkedItems / totalItems) * 100 : 0;
+            document.getElementById('lab-progress').style.width = pct + '%';
+
+            for (var j = 1; j <= totalSteps; j++) {
+                var stepEl = document.querySelector('.lab-step[data-step="' + j + '"]');
+                if (stepEl && stepChecklists[j] && stepChecklists[j].checked >= stepChecklists[j].total) {
+                    stepEl.classList.add('completed');
+                } else if (stepEl) {
+                    stepEl.classList.remove('completed');
+                }
+            }
+
+            var btn = document.getElementById('lab-complete-btn');
+            if (allStepsComplete) {
+                btn.disabled = false;
+                btn.classList.add('btn-primary');
+            } else {
+                btn.disabled = true;
+            }
+        }
+
+        document.getElementById('lab-complete-btn').addEventListener('click', function() {
+            if (this.disabled) return;
+
+            if (typeof MendStore !== 'undefined') {
+                MendStore.completeLab('sso-rbac-configuration', 100);
+            }
+
+            document.getElementById('lab-complete').classList.add('visible');
+            document.getElementById('lab-actions').style.display = 'none';
+            document.getElementById('lab-complete').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+
+        document.querySelectorAll('.lab-quiz-option').forEach(function(opt) {
+            opt.addEventListener('click', function() {
+                var siblings = this.parentNode.querySelectorAll('.lab-quiz-option');
+                siblings.forEach(function(s) { s.classList.remove('correct', 'incorrect'); });
+                if (this.getAttribute('data-correct') === 'true') {
+                    this.classList.add('correct');
+                } else {
+                    this.classList.add('incorrect');
+                    siblings.forEach(function(s) {
+                        if (s.getAttribute('data-correct') === 'true') s.classList.add('correct');
+                    });
+                }
+            });
+        });
+    })();
+    </script>
+</body>
+</html>

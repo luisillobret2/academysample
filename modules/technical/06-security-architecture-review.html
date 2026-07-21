@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href="../../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <title>Security Architecture Review - Mend Learn</title>
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar"></aside>
+
+        <main class="module-content" id="main-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>Technical SE Track</span> &rsaquo; <span>Security Architecture Review</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>Security Architecture Review</h1>
+                <div class="module-meta">
+                    <span>&#128338; 40 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 200 XP</span>
+                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>How to conduct a structured customer security architecture review and assess current AppSec posture</li>
+                    <li>How to map Mend SCA, SAST, Container, and Secrets capabilities to customer needs and gaps</li>
+                    <li>How to produce a clear architecture review report with data flows, integration points, and remediation recommendations</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>The Architecture Review Process</h2>
+                <p>A Security Architecture Review helps prospects and customers understand how Mend fits into their existing application security ecosystem. As a Technical SE, you act as a trusted advisor who translates customer requirements into a concrete Mend deployment design.</p>
+                <p>The review is not a sales pitch; it is a structured gap analysis. Your goal is to document the customer's current state, identify control gaps, and propose a future-state architecture that improves security coverage while minimizing disruption.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128203;</div>
+                        <h4>Discover</h4>
+                        <p>Inventory current AppSec tools, languages, CI/CD platforms, SCMs, and compliance drivers.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128269;</div>
+                        <h4>Assess</h4>
+                        <p>Evaluate coverage, workflow friction, false-positive rates, and integration maturity.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128161;</div>
+                        <h4>Design</h4>
+                        <p>Map Mend capabilities to gaps and propose a phased deployment architecture.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128221;</div>
+                        <h4>Report</h4>
+                        <p>Document findings, diagrams, recommendations, and a roadmap for stakeholders.</p>
+                    </div>
+                </div>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; SE Tip</h4>
+                    <p>Always send a pre-work questionnaire before the review. Ask for the current tool list, tech stack, CI/CD pipeline overview, and top three AppSec pain points. This keeps the workshop focused and demonstrates professionalism.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Mapping Customer Needs to Mend Capabilities</h2>
+                <p>Customers often express problems in business terms, such as "we have too many false positives" or "we need to secure our supply chain." Your job is to map these pain points to Mend's technical capabilities and show concrete value.</p>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#128230;</div>
+                        <h4>Software Composition Analysis (SCA)</h4>
+                        <p><strong>Need:</strong> Open-source risk, license compliance, SBOM generation.<br><strong>Mend fit:</strong> Scan manifest files in repos and CI/CD; identify vulnerabilities, malicious packages, and license conflicts.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128187;</div>
+                        <h4>Static Application Security Testing (SAST)</h4>
+                        <p><strong>Need:</strong> Find custom-code vulnerabilities early.<br><strong>Mend fit:</strong> IDE plugins and CI pipelines scan source code without requiring builds or test cases.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128011;</div>
+                        <h4>Container Security</h4>
+                        <p><strong>Need:</strong> Secure images, registries, and Kubernetes deployments.<br><strong>Mend fit:</strong> Scan container images and Dockerfiles for OS and application-layer vulnerabilities.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128273;</div>
+                        <h4>Secrets Detection</h4>
+                        <p><strong>Need:</strong> Prevent leaked credentials in code and history.<br><strong>Mend fit:</strong> Detect secrets in commits, pull requests, and repositories with remediation guidance.</p>
+                    </div>
+                </div>
+
+                <p>When mapping capabilities, use a simple matrix: list each customer requirement, rate the current-state coverage, and show how Mend improves the rating. This format is easy for security and engineering stakeholders to understand.</p>
+            </section>
+
+            <section class="module-section">
+                <h2>Architecture Diagrams and Data Flow</h2>
+                <p>Visual architecture diagrams help stakeholders see exactly how Mend integrates into their environment. A good diagram covers data sources, scan execution points, result flows, and control boundaries.</p>
+
+                <div class="architecture-diagram">
+                    <div class="diagram-row">
+                        <div class="diagram-box">Developer Workstation<br><small>IDE Plugin</small></div>
+                        <div class="diagram-arrow">&rarr;</div>
+                        <div class="diagram-box">Source Control<br><small>GitHub/GitLab/ADO</small></div>
+                        <div class="diagram-arrow">&rarr;</div>
+                        <div class="diagram-box">CI/CD Pipeline<br><small>Mend CLI / Scanner</small></div>
+                    </div>
+                    <div class="diagram-row">
+                        <div class="diagram-box">Mend Platform<br><small>Policies, Reporting, Dashboards</small></div>
+                        <div class="diagram-arrow">&harr;</div>
+                        <div class="diagram-box">Issue Tracking<br><small>Jira, ServiceNow</small></div>
+                        <div class="diagram-arrow">&harr;</div>
+                        <div class="diagram-box">SIEM / SOAR<br><small>Splunk, Sentinel</small></div>
+                    </div>
+                </div>
+
+                <h3>Network and Security Considerations</h3>
+                <p>Enterprise customers will ask about network paths, data residency, and encryption. Be prepared to answer:</p>
+                <ul>
+                    <li><strong>Outbound traffic:</strong> Mend scanners typically need HTTPS (443) access to Mend APIs and, optionally, the Mend vulnerability database.</li>
+                    <li><strong>Proxy support:</strong> The Mend CLI and scanners support HTTP/HTTPS proxies with authentication for air-gapped or restricted environments.</li>
+                    <li><strong>Data sent to Mend:</strong> Generally includes dependency manifests, source code fingerprints for SAST, and container image layer metadata. No compiled artifacts or secrets are transmitted by default.</li>
+                    <li><strong>Self-hosted options:</strong> For highly regulated environments, discuss Mend self-hosted or on-premise scanning agents.</li>
+                </ul>
+
+                <div class="key-concept">
+                    <h4>Key Concept: Data Flow Analysis</h4>
+                    <p>Data flow analysis documents where sensitive code, dependency metadata, and scan results move. Always trace the path from the developer's machine to the Mend platform, then to downstream systems like Jira or SIEM. Highlight encryption in transit, access controls, and retention policies.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Producing the Architecture Review Report</h2>
+                <p>The final report turns the workshop into an actionable deliverable. It should be concise enough for executives but detailed enough for architects and security engineers.</p>
+
+                <div class="steps-list">
+                    <ol>
+                        <li><strong>Executive Summary</strong> &mdash; One-page overview of current state, top gaps, and proposed Mend solution.</li>
+                        <li><strong>Current-State Assessment</strong> &mdash; Tools, coverage, workflows, and pain points identified during discovery.</li>
+                        <li><strong>Gap Analysis</strong> &mdash; Requirements mapped to current coverage and Mend capabilities.</li>
+                        <li><strong>Future-State Architecture</strong> &mdash; Diagrams, integration points, network flows, and deployment phases.</li>
+                        <li><strong>Roadmap and Next Steps</strong> &mdash; Pilot scope, success criteria, timeline, and owners.</li>
+                    </ol>
+                </div>
+
+                <p>Use the report to drive consensus among stakeholders. Share it before the next meeting so security, engineering, and DevOps leaders can align on scope and expectations. A well-written report often becomes the basis for the customer's internal business case.</p>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 1:</strong> Which Mend capability is most directly used to address open-source license compliance and supply-chain risk?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Software Composition Analysis (SCA)</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Static Application Security Testing (SAST)</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Secrets Detection</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Container Security</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 2:</strong> What is the primary purpose of the architecture review report's future-state section?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> List every vulnerability found in the customer's code</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Show diagrams, integration points, and deployment phases for the proposed Mend architecture</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Document the customer's entire budget history</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Replace the need for a proof of concept</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>200 XP earned for completing this module</span>
+                </div>
+                <div class="module-nav-buttons">
+                    <a href="05-troubleshooting.html" class="btn btn-secondary">&#8592; Previous: Troubleshooting &amp; Support</a>
+                    <a href="07-customer-workshops.html" class="btn btn-primary">Next: Customer Workshop Facilitation &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/layout.js"></script>
+    <script src="../../js/store.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/search.js"></script>
+    <script src="../../js/chat.js"></script>
+    <script src="../../js/homepage.js"></script>
+    <script src="../../js/leaderboard.js"></script>
+    <script src="../../js/cert-recommendations.js"></script>
+    <script src="../../js/badges.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/tracks.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <meta name="description" content="Interactive lab: Integrate Mend.io security scans into your GitHub Actions CI/CD pipeline with auto PR comments and quality gates.">
+    <title>Lab: GitHub Actions Integration - Mend Learn</title>
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/lab.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="lab-layout">
+        <div class="lab-breadcrumb">
+            <a href="../labs.html">Labs</a> &rsaquo;
+            <span>GitHub Actions Integration</span>
+        </div>
+
+        <div class="lab-header">
+            <div class="lab-title-row">
+                <h1>GitHub Actions <span class="accent">Integration</span></h1>
+                <span class="lab-type-badge guided">Guided</span>
+            </div>
+            <div class="lab-meta">
+                <span>&#128339; 60 min</span>
+                <span>&#127942; 100 XP</span>
+                <span>&#128260; Integration</span>
+                <span>&#128218; 6 steps</span>
+            </div>
+        </div>
+
+        <div class="lab-objectives">
+            <h4>&#127919; Lab Objectives</h4>
+            <ul>
+                <li>Fork a sample repository and configure Mend API secrets in GitHub</li>
+                <li>Create a GitHub Actions workflow that runs the Mend scan action</li>
+                <li>Configure SCA + SAST scan parameters and severity-based failure conditions</li>
+                <li>Enable automated pull request comments with scan results</li>
+                <li>Trigger the pipeline and verify scan results as PR feedback</li>
+                <li>Set up branch protection rules and policy-based quality gates</li>
+            </ul>
+        </div>
+
+        <div class="lab-progress-bar">
+            <div class="lab-progress-bar-fill" id="lab-progress"></div>
+        </div>
+
+        <div class="lab-step" data-step="1">
+            <div class="lab-step-number">1</div>
+            <h3>Prerequisites &amp; Repository Setup</h3>
+            <p>Start by forking the sample repository and storing your Mend API credentials as encrypted GitHub Actions secrets. These secrets are injected into the workflow at runtime and never exposed in logs.</p>
+            <div class="lab-code-block"><span class="comment"># Fork the sample repository</span>
+gh repo fork mend-academy/sample-node-app --clone
+
+<span class="comment"># Navigate into the cloned repo</span>
+cd sample-node-app</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> gh repo fork mend-academy/sample-node-app --clone
+<span class="term-info">Cloning into 'sample-node-app'...</span>
+<span class="term-success">Forked to: your-org/sample-node-app</span>
+
+<span class="term-prompt">$</span> cd sample-node-app</div>
+            <p>Open your forked repository on GitHub, then navigate to <strong>Settings &rarr; Secrets and variables &rarr; Actions</strong> and add the following secrets:</p>
+            <ul>
+                <li><code>MEND_EMAIL</code> &mdash; Your Mend account email</li>
+                <li><code>MEND_KEY</code> &mdash; Your Mend API key from <code>app.mend.io/settings/api-keys</code></li>
+                <li><code>MEND_URL</code> &mdash; Your Mend tenant URL (e.g. <code>https://app.mend.io</code>)</li>
+            </ul>
+            <div class="lab-callout warning">
+                <strong>Important</strong>
+                Never commit your API key to the repository. Secrets stored in GitHub Actions are encrypted at rest and only exposed to workflows that explicitly reference them.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Forked the sample repository to your account</li>
+                <li><span class="check-icon">&#10003;</span> Added <code>MEND_EMAIL</code>, <code>MEND_KEY</code>, and <code>MEND_URL</code> as repository secrets</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="2">
+            <div class="lab-step-number">2</div>
+            <h3>Create the GitHub Actions Workflow</h3>
+            <p>Create a new workflow file at <code>.github/workflows/mend-scan.yml</code>. This workflow will trigger on every push and pull request, run the official <code>mend-action/scan</code> action, and upload results back to the Mend platform.</p>
+            <div class="lab-code-block"><span class="comment"># Create the workflows directory if it does not exist</span>
+mkdir -p .github/workflows
+
+<span class="comment"># Create the mend-scan.yml file</span>
+touch .github/workflows/mend-scan.yml</div>
+            <p>Add the following YAML content to <code>.github/workflows/mend-scan.yml</code>:</p>
+            <div class="lab-code-block"><span class="comment"># .github/workflows/mend-scan.yml</span>
+<span class="keyword">name:</span> Mend Security Scan
+
+<span class="keyword">on:</span>
+  <span class="keyword">push:</span>
+    <span class="keyword">branches:</span> [main, develop]
+  <span class="keyword">pull_request:</span>
+    <span class="keyword">branches:</span> [main]
+
+<span class="keyword">jobs:</span>
+  <span class="keyword">mend-scan:</span>
+    <span class="keyword">runs-on:</span> ubuntu-latest
+    <span class="keyword">steps:</span>
+      - <span class="keyword">name:</span> Checkout code
+        <span class="keyword">uses:</span> actions/checkout@v4
+
+      - <span class="keyword">name:</span> Run Mend Scan
+        <span class="keyword">uses:</span> mend-action/scan@v1
+        <span class="keyword">with:</span>
+          <span class="keyword">mend-email:</span> ${{ secrets.MEND_EMAIL }}
+          <span class="keyword">mend-key:</span> ${{ secrets.MEND_KEY }}
+          <span class="keyword">mend-url:</span> ${{ secrets.MEND_URL }}
+          <span class="keyword">type:</span> <span class="string">"sca,sast"</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                The <code>${{ secrets.X }}</code> syntax references the repository secrets you created in Step 1. GitHub automatically masks these values in the workflow logs.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Created <code>.github/workflows/mend-scan.yml</code></li>
+                <li><span class="check-icon">&#10003;</span> Workflow triggers on push to <code>main</code>/<code>develop</code> and on pull requests</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="3">
+            <div class="lab-step-number">3</div>
+            <h3>Configure Scan Parameters</h3>
+            <p>Customize the workflow to run both SCA and SAST scans, and configure a failures policy that breaks the build when critical-severity findings are detected. This prevents vulnerable code from being merged.</p>
+            <div class="lab-code-block"><span class="comment"># Updated .github/workflows/mend-scan.yml</span>
+<span class="keyword">name:</span> Mend Security Scan
+
+<span class="keyword">on:</span>
+  <span class="keyword">push:</span>
+    <span class="keyword">branches:</span> [main, develop]
+  <span class="keyword">pull_request:</span>
+    <span class="keyword">branches:</span> [main]
+
+<span class="keyword">jobs:</span>
+  <span class="keyword">mend-scan:</span>
+    <span class="keyword">runs-on:</span> ubuntu-latest
+    <span class="keyword">permissions:</span>
+      <span class="keyword">contents:</span> read
+      <span class="keyword">pull-requests:</span> write
+    <span class="keyword">steps:</span>
+      - <span class="keyword">name:</span> Checkout code
+        <span class="keyword">uses:</span> actions/checkout@v4
+
+      - <span class="keyword">name:</span> Run Mend SCA and SAST Scan
+        <span class="keyword">uses:</span> mend-action/scan@v1
+        <span class="keyword">with:</span>
+          <span class="keyword">mend-email:</span> ${{ secrets.MEND_EMAIL }}
+          <span class="keyword">mend-key:</span> ${{ secrets.MEND_KEY }}
+          <span class="keyword">mend-url:</span> ${{ secrets.MEND_URL }}
+          <span class="keyword">type:</span> <span class="string">"sca,sast"</span>
+          <span class="keyword">fail-on:</span> <span class="string">"critical"</span>
+          <span class="keyword">create-pr-comment:</span> <span class="string">"true"</span></div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> git add .github/workflows/mend-scan.yml
+<span class="term-prompt">$</span> git commit -m "ci: add Mend security scan workflow"
+<span class="term-info">[main abc1234] ci: add Mend security scan workflow</span>
+<span class="term-success">1 file changed, 28 insertions(+)</span></div>
+            <div class="lab-callout tip">
+                <strong>Available scan types</strong>
+                Pass a comma-separated list to <code>type</code>: <code>sca</code> (open-source), <code>sast</code> (source code), <code>container</code>, or <code>iac</code>. The <code>fail-on</code> field accepts <code>critical</code>, <code>high</code>, <code>medium</code>, or <code>low</code>.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Set <code>type: "sca,sast"</code> to run both scanners</li>
+                <li><span class="check-icon">&#10003;</span> Set <code>fail-on: "critical"</code> to break the build on critical findings</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="4">
+            <div class="lab-step-number">4</div>
+            <h3>Add PR Comment Integration</h3>
+            <p>Configure Mend to automatically post scan results as a comment on every pull request. Reviewers can see new vulnerabilities, severity counts, and remediation links without leaving GitHub.</p>
+            <div class="lab-code-block"><span class="comment"># Add the Mend comment-bot step to your workflow</span>
+- <span class="keyword">name:</span> Mend PR Comment
+  <span class="keyword">if:</span> github.event_name == 'pull_request'
+  <span class="keyword">uses:</span> mend-bot/comment@v1
+  <span class="keyword">with:</span>
+    <span class="keyword">mend-email:</span> ${{ secrets.MEND_EMAIL }}
+    <span class="keyword">mend-key:</span> ${{ secrets.MEND_KEY }}
+    <span class="keyword">mend-url:</span> ${{ secrets.MEND_URL }}
+    <span class="keyword">github-token:</span> ${{ secrets.GITHUB_TOKEN }}
+    <span class="keyword">show-severity:</span> <span class="string">"critical,high,medium"</span>
+    <span class="keyword">show-fixable-only:</span> <span class="string">"false"</span></div>
+            <div class="lab-callout tip">
+                <strong>Permissions required</strong>
+                The <code>permissions.pull-requests: write</code> block from Step 3 grants the workflow the rights needed to post comments. If you omit it, the comment step will fail silently.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Added the <code>mend-bot/comment</code> step to the workflow</li>
+                <li><span class="check-icon">&#10003;</span> Verified the workflow has <code>pull-requests: write</code> permission</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="5">
+            <div class="lab-step-number">5</div>
+            <h3>Run the Pipeline</h3>
+            <p>Trigger the workflow by pushing a commit and opening a pull request. Watch GitHub Actions execute the Mend scan, then review the automated PR comment with the security summary.</p>
+            <div class="lab-code-block"><span class="comment"># Create a feature branch and push a small change</span>
+git checkout -b feature/add-config
+echo "LOG_LEVEL=info" &gt;&gt; .env.example
+git add .env.example
+git commit -m "feat: add log level config"
+git push origin feature/add-config
+
+<span class="comment"># Open the pull request from the CLI</span>
+gh pr create --title "Add log level config" --body "Triggers Mend scan"</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> gh pr create --title "Add log level config" --body "Triggers Mend scan"
+<span class="term-info">Creating pull request...</span>
+<span class="term-success">https://github.com/your-org/sample-node-app/pull/42</span>
+
+<span class="term-prompt">$</span> gh run watch
+<span class="term-info">Job: mend-scan</span>
+<span class="term-info">&#9655; Checkout code ............... done</span>
+<span class="term-info">&#9655; Run Mend SCA and SAST Scan ... done</span>
+<span class="term-info">&#9655; Mend PR Comment ............. done</span>
+<span class="term-success">Run succeeded in 1m 47s</span>
+
+<span class="term-warn">Scan results:</span>
+  <span class="term-error">Critical: 1 vulnerability</span>
+  <span class="term-warn">High:     4 vulnerabilities</span>
+  <span class="term-info">Medium:   8 vulnerabilities</span>
+<span class="term-success">PR comment posted with full report.</span></div>
+            <div class="lab-callout tip">
+                <strong>What to expect</strong>
+                A new bot comment will appear on the PR titled "Mend Security Scan Results" with a table of findings, severity badges, and links to remediation guidance in the Mend platform.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Pushed a commit that triggered the workflow</li>
+                <li><span class="check-icon">&#10003;</span> Saw the Mend scan run successfully in the Actions tab</li>
+                <li><span class="check-icon">&#10003;</span> Verified the PR comment was posted automatically</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="6">
+            <div class="lab-step-number">6</div>
+            <h3>Configure Quality Gates</h3>
+            <p>Enforce the scan as a merge requirement. Configure branch protection so that PRs cannot be merged until the Mend scan passes, and optionally add a policy-based gate tied directly to your Mend security policy.</p>
+            <ul>
+                <li>Go to <strong>Settings &rarr; Branches &rarr; Add rule</strong> for the <code>main</code> branch</li>
+                <li>Enable <strong>Require status checks to pass before merging</strong></li>
+                <li>Search for and select <code>mend-scan</code> as a required check</li>
+                <li>Enable <strong>Require branches to be up to date before merging</strong></li>
+            </ul>
+            <div class="lab-code-block"><span class="comment"># Optional: define a Mend policy gate that maps severity levels to pass/fail</span>
+<span class="keyword">policy:</span>
+  <span class="keyword">gates:</span>
+    - <span class="keyword">name:</span> critical-blocker
+      <span class="keyword">severity:</span> critical
+      <span class="keyword">action:</span> block
+    - <span class="keyword">name:</span> high-warn
+      <span class="keyword">severity:</span> high
+      <span class="keyword">action:</span> warn
+    - <span class="keyword">name:</span> new-findings
+      <span class="keyword">scope:</span> introduced
+      <span class="keyword">severity:</span> critical,high
+      <span class="keyword">action:</span> block</div>
+            <div class="lab-callout warning">
+                <strong>Heads up</strong>
+                Once the branch protection rule is live, any new PR that introduces a critical vulnerability will be blocked from merging until the issue is remediated. Communicate this to your team before enabling it on a busy branch.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Added a branch protection rule on <code>main</code></li>
+                <li><span class="check-icon">&#10003;</span> Marked <code>mend-scan</code> as a required status check</li>
+                <li><span class="check-icon">&#10003;</span> Confirmed a test PR cannot merge with a failing scan</li>
+            </ul>
+        </div>
+
+        <div class="lab-quiz" id="lab-quiz">
+            <h4>&#129504; Knowledge Check</h4>
+            <div class="lab-quiz-question">Which <code>on:</code> trigger runs a workflow on both code pushes and pull requests to <code>main</code>?</div>
+            <ul class="lab-quiz-options">
+                <li class="lab-quiz-option" data-correct="false"><code>on: push</code></li>
+                <li class="lab-quiz-option" data-correct="true"><code>on: [push, pull_request]</code> with <code>branches: [main]</code></li>
+                <li class="lab-quiz-option" data-correct="false"><code>on: workflow_dispatch</code></li>
+                <li class="lab-quiz-option" data-correct="false"><code>on: schedule</code></li>
+            </ul>
+            <div class="lab-quiz-question" style="margin-top: 20px;">What does configuring <code>fail-on: "critical"</code> in the Mend action accomplish?</div>
+            <ul class="lab-quiz-options">
+                <li class="lab-quiz-option" data-correct="false">Sends an email alert when critical vulnerabilities are found</li>
+                <li class="lab-quiz-option" data-correct="true">Fails the GitHub Actions workflow (blocking merge) if critical vulnerabilities are detected</li>
+                <li class="lab-quiz-option" data-correct="false">Marks all vulnerabilities as critical in the exported report</li>
+                <li class="lab-quiz-option" data-correct="false">Skips the scan when critical findings are present</li>
+            </ul>
+        </div>
+
+        <div class="lab-completion-banner" id="lab-complete">
+            <h2>&#127881; Lab Complete!</h2>
+            <p>You've integrated Mend into your GitHub Actions pipeline, automated PR feedback, and enforced security quality gates on your protected branches.</p>
+            <div class="lab-completion-xp">+100 XP</div>
+            <div class="lab-actions" style="justify-content: center;">
+                <a href="../labs.html" class="btn btn-secondary">Back to Labs</a>
+                <a href="jenkins-pipeline-integration.html" class="btn btn-primary">Next Lab: Jenkins Pipeline Integration</a>
+            </div>
+        </div>
+
+        <div class="lab-actions" id="lab-actions">
+            <button class="btn btn-primary" id="lab-complete-btn" disabled>Complete Lab</button>
+            <a href="../labs.html" class="btn btn-secondary">Back to Labs</a>
+        </div>
+    </div>
+
+    <footer id="site-footer" class="site-footer"></footer>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+    (function() {
+        var totalSteps = 6;
+        var stepChecklists = {};
+
+        document.querySelectorAll('.lab-step').forEach(function(stepEl) {
+            var stepNum = stepEl.getAttribute('data-step');
+            var items = stepEl.querySelectorAll('.lab-checklist li');
+            stepChecklists[stepNum] = { total: items.length, checked: 0 };
+
+            items.forEach(function(item) {
+                item.addEventListener('click', function() {
+                    if (item.classList.contains('checked')) {
+                        item.classList.remove('checked');
+                        stepChecklists[stepNum].checked--;
+                    } else {
+                        item.classList.add('checked');
+                        stepChecklists[stepNum].checked++;
+                    }
+                    updateProgress();
+                });
+            });
+        });
+
+        function updateProgress() {
+            var totalItems = 0;
+            var checkedItems = 0;
+            var allStepsComplete = true;
+
+            for (var i = 1; i <= totalSteps; i++) {
+                if (!stepChecklists[i]) continue;
+                totalItems += stepChecklists[i].total;
+                checkedItems += stepChecklists[i].checked;
+                if (stepChecklists[i].checked < stepChecklists[i].total) {
+                    allStepsComplete = false;
+                }
+            }
+
+            var pct = totalItems > 0 ? (checkedItems / totalItems) * 100 : 0;
+            document.getElementById('lab-progress').style.width = pct + '%';
+
+            for (var j = 1; j <= totalSteps; j++) {
+                var stepEl = document.querySelector('.lab-step[data-step="' + j + '"]');
+                if (stepEl && stepChecklists[j] && stepChecklists[j].checked >= stepChecklists[j].total) {
+                    stepEl.classList.add('completed');
+                } else if (stepEl) {
+                    stepEl.classList.remove('completed');
+                }
+            }
+
+            var btn = document.getElementById('lab-complete-btn');
+            if (allStepsComplete) {
+                btn.disabled = false;
+                btn.classList.add('btn-primary');
+            } else {
+                btn.disabled = true;
+            }
+        }
+
+        document.getElementById('lab-complete-btn').addEventListener('click', function() {
+            if (this.disabled) return;
+
+            if (typeof MendStore !== 'undefined') {
+                MendStore.completeLab('github-actions-integration', 100);
+            }
+
+            document.getElementById('lab-complete').classList.add('visible');
+            document.getElementById('lab-actions').style.display = 'none';
+
+            document.getElementById('lab-complete').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+
+        document.querySelectorAll('.lab-quiz-option').forEach(function(opt) {
+            opt.addEventListener('click', function() {
+                var siblings = this.parentNode.querySelectorAll('.lab-quiz-option');
+                siblings.forEach(function(s) { s.classList.remove('correct', 'incorrect'); });
+                if (this.getAttribute('data-correct') === 'true') {
+                    this.classList.add('correct');
+                } else {
+                    this.classList.add('incorrect');
+                    siblings.forEach(function(s) {
+                        if (s.getAttribute('data-correct') === 'true') s.classList.add('correct');
+                    });
+                }
+            });
+        });
+    })();
+    </script>
+</body>
+</html>

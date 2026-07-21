@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href="../../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <title>Migration &amp; Consolidation Strategies - Mend Learn</title>
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar"></aside>
+
+        <main class="module-content" id="main-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>Technical SE Track</span> &rsaquo; <span>Migration &amp; Consolidation Strategies</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>Migration &amp; Consolidation Strategies</h1>
+                <div class="module-meta">
+                    <span>&#128338; 40 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 200 XP</span>
+                    <span class="level-badge advanced">Level 3 - Advanced</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>How to plan and execute migrations from competing tools such as Snyk, Veracode, Checkmarx, and Black Duck to Mend</li>
+                    <li>How to handle data migration, parallel-running, cutover planning, and consolidation of multiple tools into Mend</li>
+                    <li>How to retrain teams, manage historical findings, and measure migration success with clear KPIs</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>Migration Planning Framework</h2>
+                <p>Moving from one or more AppSec tools to Mend is a change-management project as much as a technical one. A successful migration protects the customer's existing security posture while delivering the benefits of consolidation and modernization.</p>
+                <p>Begin by understanding why the customer is considering migration. Common drivers include license consolidation, reducing tool sprawl, improving developer experience, lowering false positives, and unifying reporting across the enterprise.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128203;</div>
+                        <h4>Inventory</h4>
+                        <p>List all existing tools, projects, scan configurations, and integrations.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128200;</div>
+                        <h4>Baseline</h4>
+                        <p>Capture current metrics: scan coverage, MTTR, false-positive rate, and backlog size.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#127919;</div>
+                        <h4>Define Success</h4>
+                        <p>Agree on KPIs and acceptance criteria before starting the migration.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128736;</div>
+                        <h4>Plan the Cutover</h4>
+                        <p>Choose parallel-run, phased, or big-bang cutover based on risk and scale.</p>
+                    </div>
+                </div>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Migration Tip</h4>
+                    <p>Never decommission an existing tool until the new Mend workflow has been validated in production for at least one full sprint. Parallel running reduces rollback risk and gives teams confidence.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Competitor Migration Considerations</h2>
+                <p>Each incumbent tool has different strengths, data formats, and integration patterns. Understanding these differences helps you anticipate migration challenges and position Mend effectively.</p>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#128230;</div>
+                        <h4>From Snyk</h4>
+                        <p>SCA and container scanning overlap is high. Map Snyk projects to Mend projects, reconcile .snyk ignore files with Mend policy rules, and align IDE and CI integrations.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128187;</div>
+                        <h4>From Veracode</h4>
+                        <p>SAST and DAST overlap. Expect different scan models; Mend SAST does not require compiled artifacts. Plan to retrain teams on pipeline-based scanning.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128011;</div>
+                        <h4>From Checkmarx</h4>
+                        <p>SAST and code repositories. Reconcile scan presets and query packs with Mend's default and custom rule sets. Align issue severities to avoid noise.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128273;</div>
+                        <h4>From Black Duck</h4>
+                        <p>Strong SCA and license overlap. Plan for BOM format conversion, project hierarchy mapping, and license policy reconciliation.</p>
+                    </div>
+                </div>
+
+                <h3>Data Migration Considerations</h3>
+                <p>Historical scan data and findings rarely migrate one-to-one. Instead of trying to replicate every record, focus on what matters:</p>
+                <ul>
+                    <li><strong>Project inventory:</strong> Map existing projects to Mend projects and repositories.</li>
+                    <li><strong>Policy rules:</strong> Translate existing ignore rules, severity thresholds, and compliance requirements into Mend policies.</li>
+                    <li><strong>User access:</strong> Provision users and roles in Mend, ideally synced with the customer's identity provider.</li>
+                    <li><strong>Integrations:</strong> Recreate Jira, Slack, CI/CD, and SIEM connections in the Mend platform.</li>
+                    <li><strong>Historical findings:</strong> Decide whether to import open findings or accept a fresh baseline. Import is complex; fresh baseline is usually cleaner.</li>
+                </ul>
+            </section>
+
+            <section class="module-section">
+                <h2>Parallel Running and Cutover Planning</h2>
+                <p>The most common migration pattern is parallel running: both the legacy tool and Mend scan the same repositories for a defined period while teams compare results and tune policies.</p>
+
+                <div class="architecture-diagram">
+                    <div class="diagram-row">
+                        <div class="diagram-box">Legacy Tool<br><small>Baseline Scanning</small></div>
+                        <div class="diagram-arrow">&amp;</div>
+                        <div class="diagram-box">Mend<br><small>Parallel Scanning</small></div>
+                        <div class="diagram-arrow">&rarr;</div>
+                        <div class="diagram-box">Comparison<br><small>Metrics &amp; Tuning</small></div>
+                    </div>
+                    <div class="diagram-row">
+                        <div class="diagram-box">Policy Alignment<br><small>Severities, Ignore Rules</small></div>
+                        <div class="diagram-arrow">&rarr;</div>
+                        <div class="diagram-box">Phased Cutover<br><small>Pilot Team First</small></div>
+                        <div class="diagram-arrow">&rarr;</div>
+                        <div class="diagram-box">Legacy Decommission<br><small>After Validation</small></div>
+                    </div>
+                </div>
+
+                <h3>Cutover Strategies</h3>
+                <ul>
+                    <li><strong>Big-bang cutover:</strong> Switch all teams at once. Fastest but riskiest; suitable for small, homogeneous environments.</li>
+                    <li><strong>Phased cutover:</strong> Migrate by business unit, application tier, or technology stack. Reduces risk and allows lessons learned to be applied.</li>
+                    <li><strong>Shadow mode:</strong> Mend runs in parallel without blocking builds. Teams review results before Mend policies become enforced.</li>
+                    <li><strong>Gated cutover:</strong> Mend policies become enforcement gates only after a team has tuned thresholds and verified results.</li>
+                </ul>
+
+                <div class="key-concept">
+                    <h4>Key Concept: Rollback Plan</h4>
+                    <p>Every migration needs a rollback plan. Document how to re-enable the legacy tool, which CI steps to revert, and who is authorized to make the decision. A clear rollback plan reduces stakeholder anxiety and protects the customer if issues arise.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Team Retraining and Measuring Success</h2>
+                <p>Tool migration fails when teams do not know how to use the new workflow. Retraining should be role-specific and timed to the cutover schedule.</p>
+
+                <div class="steps-list">
+                    <ol>
+                        <li><strong>Executive Briefing</strong> &mdash; Explain why the migration is happening and the expected business outcomes.</li>
+                        <li><strong>Security Analyst Training</strong> &mdash; Deep dive into Mend dashboards, policies, reporting, and vulnerability triage.</li>
+                        <li><strong>Developer Training</strong> &mdash; IDE plugins, PR workflows, remediation guidance, and how to handle policy violations.</li>
+                        <li><strong>DevOps Training</strong> &mdash; CI/CD integration, scanner configuration, and pipeline troubleshooting.</li>
+                        <li><strong>Office Hours</strong> &mdash; Schedule recurring open sessions during the first month after cutover.</li>
+                    </ol>
+                </div>
+
+                <h3>Migration Success Metrics</h3>
+                <p>Define metrics before the migration starts and report them at regular checkpoints. Typical KPIs include:</p>
+                <ul>
+                    <li><strong>Coverage:</strong> Percentage of repositories and pipelines scanned by Mend.</li>
+                    <li><strong>Scan success rate:</strong> Percentage of scans completing without errors.</li>
+                    <li><strong>MTTR:</strong> Mean time to remediate high-severity findings compared to the legacy tool.</li>
+                    <li><strong>False-positive rate:</strong> Noise reduction in developer-facing results.</li>
+                    <li><strong>Tool consolidation:</strong> Number of legacy tools retired and licenses not renewed.</li>
+                    <li><strong>Adoption:</strong> Active users, IDE plugin installs, and PR comments generated.</li>
+                </ul>
+
+                <p>At the end of the migration, produce a retrospective report. Include what worked, what was adjusted, final KPIs, and recommendations for ongoing optimization. This document helps secure renewal and expansion conversations.</p>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 1:</strong> What is the recommended approach for running Mend alongside a legacy tool during a migration?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Parallel running to compare results and tune policies before cutover</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Immediately decommission the legacy tool before any Mend scan</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Wait until the legacy contract expires and then run a single Mend scan</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Only migrate data, never run scanners side by side</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 2:</strong> Which migration KPI directly measures how quickly high-severity issues are being resolved?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Tool consolidation percentage</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Mean time to remediate (MTTR)</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Scan success rate</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> License renewal count</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>200 XP earned for completing this module</span>
+                </div>
+                <div class="module-nav-buttons">
+                    <a href="07-customer-workshops.html" class="btn btn-secondary">&#8592; Previous: Customer Workshop Facilitation</a>
+                    <button class="btn btn-primary mark-complete-btn" data-xp="200">Mark Complete</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/layout.js"></script>
+    <script src="../../js/store.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/search.js"></script>
+    <script src="../../js/chat.js"></script>
+    <script src="../../js/homepage.js"></script>
+    <script src="../../js/leaderboard.js"></script>
+    <script src="../../js/cert-recommendations.js"></script>
+    <script src="../../js/badges.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/tracks.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

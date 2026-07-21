@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <meta name="description" content="Interactive lab: Practice the standard Mend demo flow including SCA, SAST, AI remediation, and customer Q&A.">
+    <title>Lab: Demo Practice Environment - Mend Learn</title>
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/lab.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="lab-layout">
+        <!-- Breadcrumb -->
+        <div class="lab-breadcrumb">
+            <a href="../labs.html">Labs</a> &rsaquo;
+            <span>Demo Practice Environment</span>
+        </div>
+
+        <!-- Header -->
+        <div class="lab-header">
+            <div class="lab-title-row">
+                <h1>Demo <span class="accent">Practice Environment</span></h1>
+                <span class="lab-type-badge demo">Demo</span>
+            </div>
+            <div class="lab-meta">
+                <span>&#128339; 90 min</span>
+                <span>&#127942; 150 XP</span>
+                <span>&#128260; SCA + SAST</span>
+                <span>&#128218; 6 steps</span>
+            </div>
+        </div>
+
+        <!-- Objectives -->
+        <div class="lab-objectives">
+            <h4>&#127919; Lab Objectives</h4>
+            <ul>
+                <li>Study the standard Mend demo script and flow</li>
+                <li>Set up a clean demo workspace with sample projects</li>
+                <li>Practice the SCA demo flow end-to-end</li>
+                <li>Practice the SAST demo flow end-to-end</li>
+                <li>Prepare answers for common customer questions</li>
+                <li>Record and submit a 15-minute demo for SE certification</li>
+            </ul>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="lab-progress-bar">
+            <div class="lab-progress-bar-fill" id="lab-progress"></div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="lab-step" data-step="1">
+            <div class="lab-step-number">1</div>
+            <h3>Review the Demo Script</h3>
+            <p>Study the standard Mend demo flow before practicing. A structured demo moves through introduction, SCA scan, vulnerability review, AI remediation, SAST scan, and policy configuration in a predictable, repeatable sequence.</p>
+            <div class="lab-code-block"><span class="comment"># Clone the demo materials repository</span>
+git clone https://github.com/mend-io/demo-kit.git ~/demo-kit
+cd ~/demo-kit
+
+<span class="comment"># Open the standard demo script</span>
+cat docs/demo-script.md
+
+<span class="comment"># Review the demo flow outline</span>
+cat docs/demo-flow.md</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> cat docs/demo-flow.md
+<span class="term-info">Mend Standard Demo Flow</span>
+  <span class="term-success">1. Introduction & value proposition (2 min)</span>
+  <span class="term-success">2. SCA scan on sample project (3 min)</span>
+  <span class="term-success">3. Vulnerability review & prioritization (3 min)</span>
+  <span class="term-success">4. AI remediation demonstration (3 min)</span>
+  <span class="term-success">5. SAST scan & taint analysis (2 min)</span>
+  <span class="term-success">6. Policy configuration (2 min)</span>
+<span class="term-info">Total target time: 15 minutes</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                Memorize the six-phase flow and target timings. A polished demo stays within 15 minutes and smoothly transitions between phases without fumbling for the next screen.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Cloned the demo-kit repository and reviewed the demo script</li>
+                <li><span class="check-icon">&#10003;</span> Memorized the six-phase demo flow and target timings</li>
+                <li><span class="check-icon">&#10003;</span> Identified the key value proposition talking points for each phase</li>
+            </ul>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="lab-step" data-step="2">
+            <div class="lab-step-number">2</div>
+            <h3>Set Up the Demo Environment</h3>
+            <p>Prepare a clean demo workspace with the sample projects and demo-specific settings. A dedicated environment ensures no leftover scan data confuses your demonstration.</p>
+            <div class="lab-code-block"><span class="comment"># Create a fresh demo workspace</span>
+mkdir -p ~/demo-workspace && cd ~/demo-workspace
+
+<span class="comment"># Copy the sample projects from the demo kit</span>
+cp -r ~/demo-kit/projects/* .
+
+<span class="comment"># Configure demo-specific Mend settings</span>
+mend config set org "Mend Demo Org"
+mend config set project-prefix "Demo"
+mend config set ai-remediation enabled
+
+<span class="comment"># Authenticate with the demo organization</span>
+mend auth --login --org "Mend Demo Org"</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend config set org "Mend Demo Org"
+<span class="term-success">Organization set: Mend Demo Org</span>
+
+<span class="term-prompt">$</span> cp -r ~/demo-kit/projects/* .
+<span class="term-info">Copied 3 sample projects:</span>
+  <span class="term-info">  java-vulnerable-app (SCA demo)</span>
+  <span class="term-info">  python-web-app (SAST demo)</span>
+  <span class="term-info">  monorepo-example (policy demo)</span>
+
+<span class="term-prompt">$</span> mend auth --login --org "Mend Demo Org"
+<span class="term-success">Authenticated to Mend Demo Org.</span>
+<span class="term-info">AI remediation: enabled</span></div>
+            <div class="lab-callout warning">
+                <strong>Notice</strong>
+                Always use a dedicated demo organization so customer data and real findings never appear in your demo. Reset the workspace before each practice run for consistent results.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Created a clean demo workspace with all 3 sample projects</li>
+                <li><span class="check-icon">&#10003;</span> Configured demo-specific Mend settings and AI remediation</li>
+                <li><span class="check-icon">&#10003;</span> Authenticated to the dedicated demo organization</li>
+            </ul>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="lab-step" data-step="3">
+            <div class="lab-step-number">3</div>
+            <h3>Practice the SCA Demo Flow</h3>
+            <p>Run through the SCA portion of the demo: scan the Java application, review vulnerabilities, show AI remediation, and generate an SBOM. Time yourself to stay within the 8-minute SCA budget.</p>
+            <div class="lab-code-block"><span class="comment"># Start the SCA demo timer</span>
+time mend scan --product "Demo: Java App" --type sca
+
+<span class="comment"># Show the vulnerability dashboard (open in browser)</span>
+mend dashboard --product "Demo: Java App"
+
+<span class="comment"># Demonstrate AI remediation on a critical vulnerability</span>
+mend remediate --suggest --severity critical --ai
+
+<span class="comment"># Generate SBOM for the demo</span>
+mend sbom export --format cyclonedx --output demo-sbom.json</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> time mend scan --product "Demo: Java App" --type sca
+<span class="term-info">Scanning: java-vulnerable-app</span>
+<span class="term-info">Found 47 direct dependencies, 183 total</span>
+  <span class="term-error">Critical: 3   High: 7   Medium: 12   Low: 5</span>
+<span class="term-success">Scan uploaded. Dashboard ready.</span>
+<span class="term-info">real    1m12s</span>
+
+<span class="term-prompt">$</span> mend remediate --suggest --severity critical --ai
+<span class="term-info">CVE-2021-44228 (Log4Shell) - log4j-core 2.14.1</span>
+<span class="term-success">AI Fix: Upgrade to log4j-core 2.17.1</span>
+<span class="term-info">Confidence: 98% | Auto-applicable: yes</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                Narrate each action as you perform it. Customers want to see the workflow, not just the result. Highlight the AI remediation confidence score and the one-click apply capability as a key differentiator.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Completed the SCA scan within the 8-minute budget</li>
+                <li><span class="check-icon">&#10003;</span> Demonstrated AI remediation with a critical vulnerability</li>
+                <li><span class="check-icon">&#10003;</span> Generated and showed the SBOM export</li>
+            </ul>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="lab-step" data-step="4">
+            <div class="lab-step-number">4</div>
+            <h3>Practice the SAST Demo Flow</h3>
+            <p>Run through the SAST portion: scan the Python web application, review findings, show taint analysis tracing untrusted input to a dangerous sink, and apply an AI-suggested fix. Time yourself to stay within the 4-minute SAST budget.</p>
+            <div class="lab-code-block"><span class="comment"># Run the SAST scan on the Python web app</span>
+time mend scan --product "Demo: Python Web App" --type sast
+
+<span class="comment"># Open the SAST findings dashboard</span>
+mend dashboard --product "Demo: Python Web App" --view sast
+
+<span class="comment"># Show taint analysis for a SQL injection finding</span>
+mend sast trace --finding SQLI-001
+
+<span class="comment"># Apply the AI-suggested fix</span>
+mend remediate --apply --finding SQLI-001 --ai</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> time mend scan --product "Demo: Python Web App" --type sast
+<span class="term-info">Scanning: python-web-app (42 files)</span>
+<span class="term-warn">SAST findings:</span>
+  <span class="term-error">Critical: 2 (SQL Injection, Command Injection)</span>
+  <span class="term-warn">High:     4</span>
+  <span class="term-info">Medium:   8</span>
+<span class="term-success">Scan complete.</span>
+<span class="term-info">real    0m48s</span>
+
+<span class="term-prompt">$</span> mend sast trace --finding SQLI-001
+<span class="term-info">Taint trace: SQL Injection (SQLI-001)</span>
+  <span class="term-warn">Source: request.args["id"] (app.py:34)</span>
+  <span class="term-info">  -> passes through validate_input() (app.py:40)</span>
+  <span class="term-error">Sink: cursor.execute(f"SELECT * FROM users WHERE id={id}") (app.py:52)</span>
+<span class="term-success">AI Fix: Use parameterized query</span>
+  <span class="term-info">cursor.execute("SELECT * FROM users WHERE id=?", (id,))</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                Taint analysis is a strong selling point. Walk the customer through the source-to-sink trace visually, then show the AI fix replacing the vulnerable code with a parameterized query in one click.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Completed the SAST scan within the 4-minute budget</li>
+                <li><span class="check-icon">&#10003;</span> Demonstrated taint analysis tracing source to sink</li>
+                <li><span class="check-icon">&#10003;</span> Applied the AI-suggested fix for the SQL injection finding</li>
+            </ul>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="lab-step" data-step="5">
+            <div class="lab-step-number">5</div>
+            <h3>Handle Common Demo Questions</h3>
+            <p>Review the list of common customer questions and prepare concise, confident answers. Customers frequently ask about pricing, integration effort, and competitive positioning against other AppSec tools.</p>
+            <div class="lab-code-block"><span class="comment"># Open the common questions reference</span>
+cat ~/demo-kit/docs/common-questions.md
+
+<span class="comment"># Practice answering the top 5 questions</span>
+<span class="comment"># 1. How is Mend priced?</span>
+<span class="comment"># 2. How long does integration take?</span>
+<span class="comment"># 3. How does Mend compare to Snyk / Veracode / Checkmarx?</span>
+<span class="comment"># 4. Does Mend support my CI/CD and build tools?</span>
+<span class="comment"># 5. How accurate is the AI remediation?</span></div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> cat ~/demo-kit/docs/common-questions.md
+<span class="term-info">Top Customer Questions & Approved Answers</span>
+
+<span class="term-warn">Q: How is Mend priced?</span>
+<span class="term-success">A: Per-developer pricing with unlimited scans and repos.</span>
+  <span class="term-info">Enterprise tiers include SSO, RBAC, and priority support.</span>
+
+<span class="term-warn">Q: How does Mend compare to Snyk?</span>
+<span class="term-success">A: Mend offers unified SCA + SAST + secrets in one platform,</span>
+  <span class="term-info">AI remediation with higher confidence scores, and reachability</span>
+  <span class="term-info">analysis that reduces false-positive noise by up to 70%.</span>
+
+<span class="term-warn">Q: How accurate is AI remediation?</span>
+<span class="term-success">A: 95%+ confidence on average for direct dependency upgrades.</span>
+  <span class="term-info">Every suggestion includes a confidence score and rationale.</span></div>
+            <div class="lab-callout warning">
+                <strong>Notice</strong>
+                Never speculate on pricing details. Direct specific deal questions to the account executive. Focus your answers on technical differentiation and value, which is the SE's role.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Reviewed the approved answers for the top 5 customer questions</li>
+                <li><span class="check-icon">&#10003;</span> Practiced delivering each answer in under 30 seconds</li>
+            </ul>
+        </div>
+
+        <!-- Step 6 -->
+        <div class="lab-step" data-step="6">
+            <div class="lab-step-number">6</div>
+            <h3>Record Your Demo</h3>
+            <p>Record a 15-minute demo presentation and submit it for SE certification review. Use the self-assessment checklist below to evaluate your recording before submission.</p>
+            <div class="lab-code-block"><span class="comment"># Record your screen with audio narration (macOS example)</span>
+<span class="comment"># Use QuickTime: File > New Screen Recording > Microphone: Internal</span>
+
+<span class="comment"># After recording, run the self-assessment checklist</span>
+cat ~/demo-kit/docs/self-assessment.md
+
+<span class="comment"># Submit the recording for SE certification review</span>
+mend academy submit --demo-recording demo-video.mp4 --certification se</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> cat ~/demo-kit/docs/self-assessment.md
+<span class="term-info">Demo Self-Assessment Checklist</span>
+  <span class="term-warn">[ ] Total time between 13-17 minutes</span>
+  <span class="term-warn">[ ] Covered all 6 phases of the demo flow</span>
+  <span class="term-warn">[ ] Narrated each action clearly</span>
+  <span class="term-warn">[ ] Showed AI remediation for both SCA and SAST</span>
+  <span class="term-warn">[ ] Demonstrated taint analysis</span>
+  <span class="term-warn">[ ] No errors or fumbling during transitions</span>
+  <span class="term-warn">[ ] Answered at least 2 sample questions</span>
+
+<span class="term-prompt">$</span> mend academy submit --demo-recording demo-video.mp4 --certification se
+<span class="term-info">Uploading demo-video.mp4 (187.4 MB)...</span>
+<span class="term-success">Submission received.</span>
+<span class="term-info">Review status: pending</span>
+<span class="term-info">You will be notified within 5 business days.</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                Record yourself 2-3 times and review each take critically. The first take is rarely polished. Submit the best recording after completing the self-assessment checklist honestly.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Recorded a demo between 13 and 17 minutes covering all 6 phases</li>
+                <li><span class="check-icon">&#10003;</span> Completed the self-assessment checklist honestly</li>
+                <li><span class="check-icon">&#10003;</span> Submitted the recording for SE certification review</li>
+            </ul>
+        </div>
+
+        <!-- Knowledge Check -->
+        <div class="lab-quiz" id="lab-quiz">
+            <h4>&#129504; Knowledge Check</h4>
+            <div class="lab-quiz-question">What is the target total time for the standard Mend demo?</div>
+            <ul class="lab-quiz-options">
+                <li class="lab-quiz-option" data-correct="false">10 minutes</li>
+                <li class="lab-quiz-option" data-correct="true">15 minutes</li>
+                <li class="lab-quiz-option" data-correct="false">25 minutes</li>
+                <li class="lab-quiz-option" data-correct="false">45 minutes</li>
+            </ul>
+            <div class="lab-quiz-question" style="margin-top: 20px;">Which feature should you highlight as a key differentiator during the SAST demo?</div>
+            <ul class="lab-quiz-options">
+                <li class="lab-quiz-option" data-correct="false">The dependency tree view</li>
+                <li class="lab-quiz-option" data-correct="false">The SBOM export in SPDX format</li>
+                <li class="lab-quiz-option" data-correct="true">Taint analysis tracing source to sink with an AI fix</li>
+                <li class="lab-quiz-option" data-correct="false">The license compliance report</li>
+            </ul>
+        </div>
+
+        <!-- Completion Banner -->
+        <div class="lab-completion-banner" id="lab-complete">
+            <h2>&#127881; Lab Complete!</h2>
+            <p>You've practiced the full Mend demo flow, prepared answers for common customer questions, and submitted a demo recording for SE certification.</p>
+            <div class="lab-completion-xp">+150 XP</div>
+            <div class="lab-actions" style="justify-content: center;">
+                <a href="../labs.html" class="btn btn-secondary">Back to Labs</a>
+                <a href="enterprise-deployment-design.html" class="btn btn-primary">Next Lab: Enterprise Deployment Design</a>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="lab-actions" id="lab-actions">
+            <button class="btn btn-primary" id="lab-complete-btn" disabled>Complete Lab</button>
+            <a href="../labs.html" class="btn btn-secondary">Back to Labs</a>
+        </div>
+    </div>
+
+    <footer id="site-footer" class="site-footer"></footer>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+    (function() {
+        var totalSteps = 6;
+        var stepChecklists = {};
+
+        document.querySelectorAll('.lab-step').forEach(function(stepEl) {
+            var stepNum = stepEl.getAttribute('data-step');
+            var items = stepEl.querySelectorAll('.lab-checklist li');
+            stepChecklists[stepNum] = { total: items.length, checked: 0 };
+
+            items.forEach(function(item) {
+                item.addEventListener('click', function() {
+                    if (item.classList.contains('checked')) {
+                        item.classList.remove('checked');
+                        stepChecklists[stepNum].checked--;
+                    } else {
+                        item.classList.add('checked');
+                        stepChecklists[stepNum].checked++;
+                    }
+                    updateProgress();
+                });
+            });
+        });
+
+        function updateProgress() {
+            var totalItems = 0;
+            var checkedItems = 0;
+            var allStepsComplete = true;
+
+            for (var i = 1; i <= totalSteps; i++) {
+                if (!stepChecklists[i]) continue;
+                totalItems += stepChecklists[i].total;
+                checkedItems += stepChecklists[i].checked;
+                if (stepChecklists[i].checked < stepChecklists[i].total) {
+                    allStepsComplete = false;
+                }
+            }
+
+            var pct = totalItems > 0 ? (checkedItems / totalItems) * 100 : 0;
+            document.getElementById('lab-progress').style.width = pct + '%';
+
+            for (var j = 1; j <= totalSteps; j++) {
+                var stepEl = document.querySelector('.lab-step[data-step="' + j + '"]');
+                if (stepEl && stepChecklists[j] && stepChecklists[j].checked >= stepChecklists[j].total) {
+                    stepEl.classList.add('completed');
+                } else if (stepEl) {
+                    stepEl.classList.remove('completed');
+                }
+            }
+
+            var btn = document.getElementById('lab-complete-btn');
+            if (allStepsComplete) {
+                btn.disabled = false;
+                btn.classList.add('btn-primary');
+            } else {
+                btn.disabled = true;
+            }
+        }
+
+        document.getElementById('lab-complete-btn').addEventListener('click', function() {
+            if (this.disabled) return;
+
+            if (typeof MendStore !== 'undefined') {
+                MendStore.completeLab('demo-practice-environment', 150);
+            }
+
+            document.getElementById('lab-complete').classList.add('visible');
+            document.getElementById('lab-actions').style.display = 'none';
+
+            document.getElementById('lab-complete').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+
+        document.querySelectorAll('.lab-quiz-option').forEach(function(opt) {
+            opt.addEventListener('click', function() {
+                var siblings = this.parentNode.querySelectorAll('.lab-quiz-option');
+                siblings.forEach(function(s) { s.classList.remove('correct', 'incorrect'); });
+                if (this.getAttribute('data-correct') === 'true') {
+                    this.classList.add('correct');
+                } else {
+                    this.classList.add('incorrect');
+                    siblings.forEach(function(s) {
+                        if (s.getAttribute('data-correct') === 'true') s.classList.add('correct');
+                    });
+                }
+            });
+        });
+    })();
+    </script>
+</body>
+</html>
