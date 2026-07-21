@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <meta name="description" content="Challenge lab: Perform a full-stack security audit using combined SCA and SAST scans and present an executive report.">
+    <title>Lab: Full Stack Security Audit - Mend Learn</title>
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/lab.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="lab-layout">
+        <div class="lab-breadcrumb">
+            <a href="../labs.html">Labs</a> &rsaquo;
+            <span>Full Stack Security Audit</span>
+        </div>
+
+        <div class="lab-header">
+            <div class="lab-title-row">
+                <h1>Full Stack <span class="accent">Security Audit</span></h1>
+                <span class="lab-type-badge challenge">Challenge</span>
+            </div>
+            <div class="lab-meta">
+                <span>&#128339; 90 min</span>
+                <span>&#127942; 200 XP</span>
+                <span>&#128260; SCA + SAST</span>
+                <span>&#128218; 5 steps</span>
+            </div>
+        </div>
+
+        <div class="lab-objectives">
+            <h4>&#127919; Lab Objectives</h4>
+            <ul>
+                <li>Assess a full-stack application and identify its attack surface</li>
+                <li>Run combined SCA and SAST scans across all components</li>
+                <li>Correlate SCA and SAST findings to uncover compound risks</li>
+                <li>Prioritize remediation by risk score, effort, and business impact</li>
+                <li>Present an executive audit report with metrics and recommendations</li>
+            </ul>
+        </div>
+
+        <div class="lab-progress-bar">
+            <div class="lab-progress-bar-fill" id="lab-progress"></div>
+        </div>
+
+        <div class="lab-step" data-step="1">
+            <div class="lab-step-number">1</div>
+            <h3>Assess the Application</h3>
+            <p>Review the target full-stack application. It consists of a Node.js backend API, a React frontend, and a Python microservice. Identify languages, dependency managers, and the attack surface.</p>
+            <div class="lab-code-block"><span class="comment"># Application structure</span>
+fullstack-app/
+  backend/          # Node.js + Express, package.json
+  frontend/         # React, package.json
+  microservice/     # Python + Flask, requirements.txt</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> find . -name "package.json" -o -name "requirements.txt" -o -name "*.js" | head -n 20
+<span class="term-info">./backend/package.json</span>
+<span class="term-info">./frontend/package.json</span>
+<span class="term-info">./microservice/requirements.txt</span>
+<span class="term-info">./backend/src/routes/auth.js</span>
+<span class="term-info">./frontend/src/components/Login.jsx</span>
+<span class="term-info">./microservice/app.py</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                Map each component to its language, framework, and dependency file before selecting scan types. This ensures every entry point is covered.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Mapped all three application components</li>
+                <li><span class="check-icon">&#10003;</span> Identified dependency files for each component</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="2">
+            <div class="lab-step-number">2</div>
+            <h3>Run Combined SCA + SAST Scans</h3>
+            <p>Run both SCA and SAST scans across the backend, frontend, and microservice. Use the Mend CLI in each component directory.</p>
+            <div class="lab-code-block"><span class="comment"># Backend scan</span>
+cd backend
+mend scan --product "Full Stack Audit" --type sca,sast --name "backend-node"
+
+<span class="comment"># Frontend scan</span>
+cd ../frontend
+mend scan --product "Full Stack Audit" --type sca,sast --name "frontend-react"
+
+<span class="comment"># Microservice scan</span>
+cd ../microservice
+mend scan --product "Full Stack Audit" --type sca,sast --name "microservice-python"</div>
+            <div class="lab-terminal"><span class="term-info">Scanning backend-node</span>
+<span class="term-info">Detected: npm (package.json)</span>
+<span class="term-warn">Critical: 2 vulnerabilities</span>
+<span class="term-info">SAST findings: 4 high, 6 medium</span>
+<span class="term-info">Scanning frontend-react</span>
+<span class="term-warn">High: 3 vulnerabilities</span>
+<span class="term-info">SAST findings: 2 high, 8 medium</span>
+<span class="term-info">Scanning microservice-python</span>
+<span class="term-warn">Critical: 1 vulnerability</span>
+<span class="term-info">SAST findings: 1 high, 3 medium</span></div>
+            <div class="lab-callout warning">
+                <strong>Notice</strong>
+                Running both SCA and SAST together reveals two different risk classes: vulnerable dependencies and risky code patterns. Both are needed for a complete audit.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> SCA and SAST scans completed for all three components</li>
+                <li><span class="check-icon">&#10003;</span> All scan results uploaded to the Mend platform under the same product</li>
+                <li><span class="check-icon">&#10003;</span> Recorded vulnerability and SAST finding counts by component</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="3">
+            <div class="lab-step-number">3</div>
+            <h3>Correlate Findings</h3>
+            <p>Cross-reference SCA and SAST findings to identify compound risks. A vulnerable dependency combined with code that uses it unsafely is much more dangerous than either finding alone.</p>
+            <div class="lab-code-block"><span class="comment"># Correlation table</span>
+| Component | SCA Finding | SAST Finding | Compound Risk |
+|-----------|-------------|--------------|---------------|
+| Backend   | CVE-2023-45857 (axios) | SSRF in request helper | Attacker can pivot SSRF through vulnerable axios version |
+| Frontend  | CVE-2023-2249 (React)  | XSS in user input rendering | XSS payload may bypass patched React if input is unsanitized |
+| Microservice | CVE-2023-20871 (Flask) | Unsafe deserialization | Remote code execution via vulnerable Flask + pickle usage |</div>
+            <div class="lab-terminal"><span class="term-info">Compound risks identified: 3</span>
+<span class="term-warn">Backend: CVE-2023-45857 + SSRF = High risk</span>
+<span class="term-warn">Frontend: CVE-2023-2249 + XSS = High risk</span>
+<span class="term-error">Microservice: CVE-2023-20871 + pickle = Critical risk</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                When SCA shows a vulnerable library and SAST shows the same library being used in a dangerous way, prioritize remediation immediately.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Created a correlation table for all components</li>
+                <li><span class="check-icon">&#10003;</span> Identified at least one compound risk per component</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="4">
+            <div class="lab-step-number">4</div>
+            <h3>Prioritize and Plan Remediation</h3>
+            <p>Build a remediation matrix that sorts findings by risk score, remediation effort, and business impact. Start with the highest-risk, lowest-effort items.</p>
+            <div class="lab-code-block"><span class="comment"># Remediation matrix</span>
+| Finding | Severity | Effort | Business Impact | Risk Score | Priority |
+|---------|----------|--------|-----------------|------------|----------|
+| Microservice RCE | Critical | Low | High | 10 | P1 |
+| Backend SSRF | High | Medium | High | 8 | P2 |
+| Frontend XSS | High | Low | Medium | 7 | P3 |
+| Backend dep upgrade | Medium | Low | Low | 4 | P4 |</div>
+            <div class="lab-terminal"><span class="term-info">P1: Patch Flask and remove unsafe pickle in microservice</span>
+<span class="term-info">P2: Upgrade axios and sanitize SSRF-prone URL builder in backend</span>
+<span class="term-info">P3: Upgrade React and sanitize user input in frontend</span>
+<span class="term-info">P4: Remaining dependency upgrades and SAST clean-up</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                Use a risk score that combines severity, exploitability, and business impact. This prevents teams from being overwhelmed by low-value findings.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Remediation matrix created with priorities</li>
+                <li><span class="check-icon">&#10003;</span> P1 items are compound risks with low effort and high impact</li>
+                <li><span class="check-icon">&#10003;</span> Remediation plan reviewed with a teammate or stakeholder</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="5">
+            <div class="lab-step-number">5</div>
+            <h3>Present the Audit Report</h3>
+            <p>Create an executive summary that communicates the audit scope, key metrics, risk heatmap, and prioritized recommendations.</p>
+            <div class="lab-code-block"><span class="comment"># Executive summary structure</span>
+# Full Stack Security Audit Report
+- Scope: Node.js backend, React frontend, Python microservice
+- Scan types: SCA + SAST across all components
+- Key metrics:
+  - Critical findings: 3
+  - High findings: 7
+  - Compound risks: 3
+  - Remediation rate target: 80% within 30 days
+- Risk heatmap: Microservice (Critical), Backend (High), Frontend (High)
+- Recommendations: Patch P1 items immediately, schedule P2 within 2 weeks, track progress weekly</div>
+            <div class="lab-terminal"><span class="term-info">Executive Summary generated</span>
+<span class="term-info">Audience: CTO, Engineering Leads, Security Team</span>
+<span class="term-success">Report exported to fullstack_audit_report.pdf</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                Executive reports should lead with business impact and end with clear actions. Avoid jargon; translate risk into potential operational and financial impact.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Executive summary includes scope, metrics, and recommendations</li>
+                <li><span class="check-icon">&#10003;</span> Risk heatmap clearly highlights the most critical component</li>
+                <li><span class="check-icon">&#10003;</span> Report is ready to share with leadership</li>
+            </ul>
+        </div>
+
+        <div class="lab-quiz" id="lab-quiz">
+            <h4>&#129504; Knowledge Check</h4>
+            <div class="lab-quiz-question">What makes a compound risk especially dangerous?</div>
+            <ul class="lab-quiz-options">
+                <li class="lab-quiz-option" data-correct="false">It is only detected by SCA</li>
+                <li class="lab-quiz-option" data-correct="true">A vulnerable dependency is combined with unsafe code that uses it</li>
+                <li class="lab-quiz-option" data-correct="false">It has no CVSS score</li>
+                <li class="lab-quiz-option" data-correct="false">It only affects frontend applications</li>
+            </ul>
+            <div class="lab-quiz-question" style="margin-top: 20px;">Which factor should most influence remediation priority?</div>
+            <ul class="lab-quiz-options">
+                <li class="lab-quiz-option" data-correct="false">Number of lines of code changed</li>
+                <li class="lab-quiz-option" data-correct="true">Risk score combining severity, exploitability, and business impact</li>
+                <li class="lab-quiz-option" data-correct="false">The date the vulnerability was published</li>
+                <li class="lab-quiz-option" data-correct="false">The programming language of the finding</li>
+            </ul>
+        </div>
+
+        <div class="lab-completion-banner" id="lab-complete">
+            <h2>&#127881; Lab Complete!</h2>
+            <p>You have completed a full-stack security audit, correlated SCA and SAST findings, and presented an executive remediation report.</p>
+            <div class="lab-completion-xp">+200 XP</div>
+            <div class="lab-actions" style="justify-content: center;">
+                <a href="../labs.html" class="btn btn-secondary">Back to Labs</a>
+                <a href="enterprise-deployment-design.html" class="btn btn-primary">Next Lab: Enterprise Deployment Design</a>
+            </div>
+        </div>
+
+        <div class="lab-actions" id="lab-actions">
+            <button class="btn btn-primary" id="lab-complete-btn" disabled>Complete Lab</button>
+            <a href="../labs.html" class="btn btn-secondary">Back to Labs</a>
+        </div>
+    </div>
+
+    <footer id="site-footer" class="site-footer"></footer>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+    (function() {
+        var totalSteps = 5;
+        var stepChecklists = {};
+
+        document.querySelectorAll('.lab-step').forEach(function(stepEl) {
+            var stepNum = stepEl.getAttribute('data-step');
+            var items = stepEl.querySelectorAll('.lab-checklist li');
+            stepChecklists[stepNum] = { total: items.length, checked: 0 };
+
+            items.forEach(function(item) {
+                item.addEventListener('click', function() {
+                    if (item.classList.contains('checked')) {
+                        item.classList.remove('checked');
+                        stepChecklists[stepNum].checked--;
+                    } else {
+                        item.classList.add('checked');
+                        stepChecklists[stepNum].checked++;
+                    }
+                    updateProgress();
+                });
+            });
+        });
+
+        function updateProgress() {
+            var totalItems = 0;
+            var checkedItems = 0;
+            var allStepsComplete = true;
+
+            for (var i = 1; i <= totalSteps; i++) {
+                if (!stepChecklists[i]) continue;
+                totalItems += stepChecklists[i].total;
+                checkedItems += stepChecklists[i].checked;
+                if (stepChecklists[i].checked < stepChecklists[i].total) {
+                    allStepsComplete = false;
+                }
+            }
+
+            var pct = totalItems > 0 ? (checkedItems / totalItems) * 100 : 0;
+            document.getElementById('lab-progress').style.width = pct + '%';
+
+            for (var j = 1; j <= totalSteps; j++) {
+                var stepEl = document.querySelector('.lab-step[data-step="' + j + '"]');
+                if (stepEl && stepChecklists[j] && stepChecklists[j].checked >= stepChecklists[j].total) {
+                    stepEl.classList.add('completed');
+                } else if (stepEl) {
+                    stepEl.classList.remove('completed');
+                }
+            }
+
+            var btn = document.getElementById('lab-complete-btn');
+            if (allStepsComplete) {
+                btn.disabled = false;
+                btn.classList.add('btn-primary');
+            } else {
+                btn.disabled = true;
+            }
+        }
+
+        document.getElementById('lab-complete-btn').addEventListener('click', function() {
+            if (this.disabled) return;
+
+            if (typeof MendStore !== 'undefined') {
+                MendStore.completeLab('full-stack-security-audit', 200);
+            }
+
+            document.getElementById('lab-complete').classList.add('visible');
+            document.getElementById('lab-actions').style.display = 'none';
+            document.getElementById('lab-complete').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+
+        document.querySelectorAll('.lab-quiz-option').forEach(function(opt) {
+            opt.addEventListener('click', function() {
+                var siblings = this.parentNode.querySelectorAll('.lab-quiz-option');
+                siblings.forEach(function(s) { s.classList.remove('correct', 'incorrect'); });
+                if (this.getAttribute('data-correct') === 'true') {
+                    this.classList.add('correct');
+                } else {
+                    this.classList.add('incorrect');
+                    siblings.forEach(function(s) {
+                        if (s.getAttribute('data-correct') === 'true') s.classList.add('correct');
+                    });
+                }
+            });
+        });
+    })();
+    </script>
+</body>
+</html>

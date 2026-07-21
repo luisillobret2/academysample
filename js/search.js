@@ -32,6 +32,8 @@ const MendSearch = {
         { title: 'Vulnerability Prioritization', href: 'modules/sca/04-prioritization.html', category: 'SCA', tags: 'prioritization risk scoring cvss' },
         { title: 'Remediation & Auto-Fix', href: 'modules/sca/05-remediation.html', category: 'SCA', tags: 'remediation auto fix pull request renovate' },
         { title: 'SBOM & Reporting', href: 'modules/sca/06-sbom-reporting.html', category: 'SCA', tags: 'sbom reporting spdx cyclonedx' },
+        { title: 'Policy Enforcement & Governance', href: 'modules/sca/07-policy-enforcement.html', category: 'SCA', tags: 'policy enforcement governance thresholds license compliance' },
+        { title: 'Enterprise SCA at Scale', href: 'modules/sca/08-enterprise-scaling.html', category: 'SCA', tags: 'enterprise scaling multi-org parallel scanning deduplication' },
 
         /* --- SAST Track --- */
         { title: 'SAST Overview', href: 'modules/sast/01-sast-overview.html', category: 'SAST', tags: 'static analysis code scanning' },
@@ -39,6 +41,9 @@ const MendSearch = {
         { title: 'CI/CD Integration', href: 'modules/sast/03-cicd-integration.html', category: 'SAST', tags: 'cicd pipeline github gitlab jenkins' },
         { title: 'Custom Rules', href: 'modules/sast/04-custom-rules.html', category: 'SAST', tags: 'custom rules policies code quality' },
         { title: 'Language Analysis', href: 'modules/sast/05-language-analysis.html', category: 'SAST', tags: 'language java python javascript typescript' },
+        { title: 'False Positive Management', href: 'modules/sast/06-false-positive-management.html', category: 'SAST', tags: 'false positive triage suppress baseline noise' },
+        { title: 'Security Review Workflows', href: 'modules/sast/07-security-review-workflows.html', category: 'SAST', tags: 'security review code review pull request gating' },
+        { title: 'Advanced SAST Configuration', href: 'modules/sast/08-advanced-sast-config.html', category: 'SAST', tags: 'advanced configuration tuningscan scope exclusions performance' },
 
         /* --- Sales Track --- */
         { title: 'Selling Mend.io', href: 'modules/sales/01-selling-mend.html', category: 'Sales', tags: 'pitch value proposition selling' },
@@ -46,6 +51,10 @@ const MendSearch = {
         { title: 'Objection Handling', href: 'modules/sales/03-objection-handling.html', category: 'Sales', tags: 'objections responses pricing' },
         { title: 'Demo & POV', href: 'modules/sales/04-demo-pov.html', category: 'Sales', tags: 'demo proof of value presentation' },
         { title: 'Deal Registration', href: 'modules/sales/05-deal-registration.html', category: 'Sales', tags: 'deal registration pipeline allbound' },
+        { title: 'Pricing & Licensing', href: 'modules/sales/06-pricing-licensing.html', category: 'Sales', tags: 'pricing licensing subscription tiers packaging' },
+        { title: 'Partner Program & Tiers', href: 'modules/sales/07-partner-program.html', category: 'Sales', tags: 'partner program tiers certification requirements' },
+        { title: 'Vertical Selling Strategies', href: 'modules/sales/08-vertical-selling.html', category: 'Sales', tags: 'vertical finance healthcare government retail selling' },
+        { title: 'Customer Success Stories', href: 'modules/sales/09-customer-success-stories.html', category: 'Sales', tags: 'customer success stories case study testimonials roi' },
 
         /* --- Developer Track --- */
         { title: 'Developer Quickstart', href: 'modules/developer/01-developer-quickstart.html', category: 'Developer', tags: 'quickstart setup getting started' },
@@ -53,6 +62,8 @@ const MendSearch = {
         { title: 'CLI & Automation', href: 'modules/developer/03-cli-automation.html', category: 'Developer', tags: 'cli command line automation scripts' },
         { title: 'Renovate Setup', href: 'modules/developer/04-renovate-setup.html', category: 'Developer', tags: 'renovate dependency updates automated pr' },
         { title: 'Custom Policies', href: 'modules/developer/05-custom-policies.html', category: 'Developer', tags: 'policies rules enforcement developer' },
+        { title: 'API Integration & Automation', href: 'modules/developer/06-api-integration.html', category: 'Developer', tags: 'api integration automation rest graphql webhooks' },
+        { title: 'DevSecOps Culture & Practices', href: 'modules/developer/07-devsecops-culture.html', category: 'Developer', tags: 'devsecops culture shift left security champions training' },
 
         /* --- Container Track --- */
         { title: 'Container Security', href: 'modules/container/01-container-security.html', category: 'Container', tags: 'container docker security scanning' },
@@ -88,6 +99,9 @@ const MendSearch = {
         { title: 'POC Management', href: 'modules/technical/03-poc-management.html', category: 'Technical', tags: 'poc proof of concept trial evaluation' },
         { title: 'Advanced Integrations', href: 'modules/technical/04-advanced-integrations.html', category: 'Technical', tags: 'api integrations webhooks automation' },
         { title: 'Troubleshooting', href: 'modules/technical/05-troubleshooting.html', category: 'Technical', tags: 'troubleshooting debugging issues support' },
+        { title: 'Security Architecture Review', href: 'modules/technical/06-security-architecture-review.html', category: 'Technical', tags: 'architecture review security design threat modeling' },
+        { title: 'Customer Workshops & Enablement', href: 'modules/technical/07-customer-workshops.html', category: 'Technical', tags: 'workshops enablement training facilitation customer' },
+        { title: 'Migration Strategies', href: 'modules/technical/08-migration-strategies.html', category: 'Technical', tags: 'migration strategy transition legacy platform switch' },
 
         /* --- Executive Track --- */
         { title: 'Security Strategy', href: 'modules/executive/01-security-strategy.html', category: 'Executive', tags: 'strategy executive ciso business case' },
@@ -105,9 +119,18 @@ const MendSearch = {
 
         /* --- Platform Unified Track --- */
         { title: 'Platform Unified Overview', href: 'modules/platform-unified/01-platform-unified-overview.html', category: 'Platform', tags: 'platform unified overview cross-product' },
+        { title: 'Cross-Product Policy & Governance', href: 'modules/platform-unified/02-cross-product-policy.html', category: 'Platform', tags: 'policy governance cross-product unified framework' },
+        { title: 'Unified Reporting & Dashboards', href: 'modules/platform-unified/03-unified-reporting.html', category: 'Platform', tags: 'reporting dashboards unified cross-product metrics' },
+        { title: 'Integrated Security Workflows', href: 'modules/platform-unified/04-integrated-workflows.html', category: 'Platform', tags: 'workflows integration jira slack teams security gates' },
+        { title: 'Platform Deployment Strategy', href: 'modules/platform-unified/05-deployment-strategy.html', category: 'Platform', tags: 'deployment strategy rollout phased migration' },
+        { title: 'Platform ROI & Business Value', href: 'modules/platform-unified/06-platform-roi.html', category: 'Platform', tags: 'roi business value tco consolidation platform' },
 
         /* --- MSSP Operations Track --- */
         { title: 'MSSP Operations Overview', href: 'modules/mssp/01-mssp-operations-overview.html', category: 'MSSP', tags: 'mssp operations multi-tenant service delivery' },
+        { title: 'Tenant Onboarding & Segmentation', href: 'modules/mssp/02-tenant-onboarding.html', category: 'MSSP', tags: 'tenant onboarding segmentation isolation multi-tenant' },
+        { title: 'Multi-Customer Reporting & SLAs', href: 'modules/mssp/03-multi-customer-reporting.html', category: 'MSSP', tags: 'reporting sla multi-customer monitoring benchmarking' },
+        { title: 'Service Delivery & Operational Excellence', href: 'modules/mssp/04-service-delivery.html', category: 'MSSP', tags: 'service delivery soc operations incident response staffing' },
+        { title: 'MSSP Growth & Portfolio Expansion', href: 'modules/mssp/05-mssp-growth.html', category: 'MSSP', tags: 'mssp growth portfolio expansion upsell packaging' },
 
         /* --- Battlecards --- */
         { title: 'Battlecard: Mend vs Snyk', href: 'battlecard-snyk.html', category: 'Battlecard', tags: 'snyk competitive comparison' },

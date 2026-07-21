@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href="../../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <title>Integrated Security Workflows - Mend Learn</title>
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar"></aside>
+
+        <main class="module-content" id="main-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>Platform Unified Track</span> &rsaquo; <span>Integrated Workflows</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>Integrated Security Workflows</h1>
+                <div class="module-meta">
+                    <span>&#128338; 40 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 200 XP</span>
+                    <span class="level-badge advanced">Level 3 - Advanced</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>Design end-to-end security workflows that span SCA, SAST, Container, and Secrets products</li>
+                    <li>Apply finding deduplication to eliminate redundant alerts across products</li>
+                    <li>Integrate unified remediation workflows with Jira, Slack, and Microsoft Teams</li>
+                    <li>Configure security gates across pipeline stages with approval workflows</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>End-to-End Security Workflows</h2>
+                <p>A single vulnerability often surfaces through multiple lenses. A vulnerable logging dependency (SCA) may also contain an insecure code pattern (SAST), ship in a container image (Container), and leak a hardcoded token used to fetch it (Secrets). With point tools, each product files its own ticket, its own Slack alert, and its own pull-request comment, forcing developers to reconcile four separate threads about one underlying problem. Mend&rsquo;s integrated workflows collapse these into a single, coherent remediation story.</p>
+
+                <p>An integrated workflow begins when any product raises a finding. Mend correlates it with related findings from other products using shared signals: the same repository, the same commit, overlapping code locations, and matching dependency identifiers. Correlated findings are grouped into a <strong>unified remediation item</strong> that carries a single severity (the highest among its members), a single owner, and a single ticket. The developer who fixes the item sees every contributing finding in one view and can address them together &mdash; updating the dependency, patching the code, rebuilding the image, and rotating the secret in one pass.</p>
+
+                <div class="key-concept">
+                    <h4>&#128161; Finding Deduplication Across Products</h4>
+                    <p>Deduplication is not just about tidiness. Studies of multi-tool environments show that 20-35% of findings are duplicates or near-duplicates across tools. By collapsing them, Mend reduces developer toil, shortens remediation cycles, and prevents the "whack-a-mole" effect where fixing one tool&rsquo;s finding reopens another&rsquo;s.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Unified Remediation &amp; Ticketing Integration</h2>
+                <p>Once a unified remediation item exists, Mend routes it to the systems developers already use. Native integrations with <strong>Jira</strong>, <strong>Slack</strong>, and <strong>Microsoft Teams</strong> ensure that findings appear where work actually happens rather than in a siloed security console. The Jira integration creates tickets with structured fields (severity, product source, remediation guidance, reachability status), links them back to the Mend finding, and updates ticket status automatically as the finding is resolved or regresses.</p>
+
+                <p>The Slack and Teams integrations deliver targeted notifications to the channel responsible for a given repository. A Critical finding posts to the team&rsquo;s security channel with remediation steps and a deep link; a resolved finding posts a confirmation so the team sees closure in real time. Notifications are throttled and batched to avoid alert fatigue &mdash; a single digest message can summarize dozens of lower-severity findings rather than flooding a channel.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #073C8C;">&#9989;</div>
+                        <h4>Approval Workflows</h4>
+                        <p>High-severity remediation items can require a security lead&rsquo;s approval before a fix is merged, or before an exception is granted. Approval routing uses the same hierarchical policy model, so the right approver is determined by project and severity automatically.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #2ecc71;">&#128260;</div>
+                        <h4>Bi-Directional Sync</h4>
+                        <p>When a developer closes a Jira ticket, Mend marks the finding remediated. When Mend re-detects the finding in a later scan, it reopens the ticket. This closed loop ensures the source of truth is never ambiguous between the security tool and the issue tracker.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Security Gates Across Pipeline Stages</h2>
+                <p>Integrated workflows extend into the CI/CD pipeline through configurable <strong>security gates</strong>. A gate is a checkpoint at a specific pipeline stage that evaluates findings against policy and either passes, warns, or fails the build. Mend lets you place different gates at different stages so enforcement tightens as code moves toward production.</p>
+
+                <ol class="steps-list">
+                    <li><strong>IDE / Pre-commit</strong> &mdash; Lightweight SAST and Secrets checks surface issues in the developer&rsquo;s editor before a commit is ever made. Failures here are advisory; the goal is fast feedback, not blocking.</li>
+                    <li><strong>Pull Request</strong> &mdash; Full SCA and SAST scans run on the PR branch. Gate policy can block merge on Critical findings, post review comments, and require a security approver for high-risk changes.</li>
+                    <li><strong>Build / Container Build</strong> &mdash; Container scanning and SCA reachability analysis run on the built artifact. Gates here catch issues that only appear after compilation or image assembly.</li>
+                    <li><strong>Deploy to Production</strong> &mdash; The strictest gate. All products&rsquo; Critical and High findings must be remediated or have a documented, approved exception. Secrets scanning confirms no credentials are embedded in the deployable artifact.</li>
+                </ol>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Progressive Enforcement</h4>
+                    <p>Resist the temptation to block at every stage. Over-blocking early in the pipeline frustrates developers and leads to policy bypasses. Use Report Only at the IDE, Warn at PR, and reserve Block for the build and deploy stages where remediation is cheapest downstream of a failure.</p>
+                </div>
+
+                <div class="warning-box">
+                    <h4>&#9888;&#65039; Watch for Gate Bypass</h4>
+                    <p>Any emergency deploy path that skips gates must itself be logged and reviewed. A "break-glass" deployment capability is healthy; an unmonitored one quietly erodes the entire workflow. Require a post-hoc review of every bypass within one business day.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 1:</strong> What is the primary benefit of Mend&rsquo;s finding deduplication across SCA, SAST, Container, and Secrets?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> It groups related findings from multiple products into a single unified remediation item, reducing developer toil</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> It deletes lower-severity findings to keep the database small</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> It disables SAST scanning when SCA already found a vulnerability</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> It hides findings from developers so only security teams see them</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 2:</strong> Which pipeline stage should generally use the strictest "Block" enforcement in a progressive gate design?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> IDE / pre-commit</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Deploy to production</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Every stage equally</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Only the initial commit</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>200 XP earned for completing this module</span>
+                </div>
+                <div class="module-nav-buttons">
+                    <a href="03-unified-reporting.html" class="btn btn-secondary">&#8592; Previous: Unified Reporting &amp; Dashboards</a>
+                    <a href="05-deployment-strategy.html" class="btn btn-primary">Next: Platform Deployment Strategy &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/layout.js"></script>
+    <script src="../../js/store.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/search.js"></script>
+    <script src="../../js/chat.js"></script>
+    <script src="../../js/homepage.js"></script>
+    <script src="../../js/leaderboard.js"></script>
+    <script src="../../js/cert-recommendations.js"></script>
+    <script src="../../js/badges.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/tracks.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

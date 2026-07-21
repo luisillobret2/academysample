@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href="../../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <title>False Positive Management - Mend Learn</title>
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar"></aside>
+
+        <main class="module-content" id="main-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>SAST Product Track</span> &rsaquo; <span>False Positive Management</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>False Positive Management</h1>
+                <div class="module-meta">
+                    <span>&#128338; 30 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 150 XP</span>
+                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>Identify and classify false positives in SAST results</li>
+                    <li>Apply suppression and auto-suppression workflows in Mend SAST</li>
+                    <li>Tune rules and improve the signal-to-noise ratio of SAST findings</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>Identifying False Positives</h2>
+                <p>A false positive is a SAST finding that reports a vulnerability where none actually exists. Common causes include over-generalized rules, missing context about sanitization, framework-specific controls that the engine does not understand, and dead code that is never executed. False positives waste time, reduce trust in security tools, and contribute to alert fatigue.</p>
+                <p>Recognizing a false positive requires both security knowledge and code context. Ask whether the reported source is actually attacker-controlled, whether the sink is actually dangerous, and whether a sanitizer or validation step exists between them. A SQL query that concatenates a constant string is not injection, and user input passed through a prepared statement is not vulnerable even if the syntax looks similar to an unsafe pattern.</p>
+
+                <div class="key-concept">
+                    <h4>False Positive vs. Low Risk</h4>
+                    <p>A false positive is factually incorrect. A low-risk finding is real but not worth fixing immediately. It is important to distinguish the two. Suppressing a low-risk finding because it is inconvenient hides real risk, while suppressing a true false positive reduces noise. Document the rationale for every suppression.</p>
+                </div>
+
+                <h3>Common False Positive Patterns</h3>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#128269;</div>
+                        <h4>Hardcoded Constants</h4>
+                        <p>String concatenation that uses hardcoded values or constants is often flagged as injection but is not exploitable.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128275;</div>
+                        <h4>Built-in Sanitizers</h4>
+                        <p>Frameworks such as Razor, React, and Django auto-escape output. SAST may not always recognize these built-in controls.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128128;</div>
+                        <h4>Dead Code</h4>
+                        <p>Code that is unreachable in production, such as test utilities or commented-out debug paths, can trigger false findings.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128220;</div>
+                        <h4>Custom Validators</h4>
+                        <p>Custom input validation or allowlists may not be modeled by default rules and can be misclassified as missing.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Suppression Workflows</h2>
+                <p>Mend SAST provides several ways to suppress findings that are confirmed as false positives. Inline suppression comments are placed directly in source code and are visible to developers reviewing the file. Suppression from the platform UI lets security teams triage findings without modifying code. The choice depends on who owns the decision and whether the suppression needs to be version-controlled.</p>
+                <p>Every suppression should include a rationale and an expiration date if possible. A suppression without context is a future mystery. When the underlying rule improves or the code changes, a dated suppression forces re-evaluation. Mend captures suppression metadata in the platform so auditors can review why a finding was dismissed.</p>
+
+                <h3>Inline Suppression Examples</h3>
+                <pre><code>// Java: suppress a false positive SQL injection finding where the input is hardcoded
+// mend-sast-suppress SQLInjection reason="Query uses hardcoded status values only" until="2026-12-31"
+String query = "SELECT * FROM orders WHERE status = '" + status + "'"; // status is from enum
+
+// Python: suppress a false positive path traversal when a fixed base path is enforced
+# mend-sast-suppress PathTraversal reason="Base path is restricted to /app/data via os.path.join validation" until="2026-12-31"
+with open(os.path.join(BASE_DIR, filename)) as f:
+    data = f.read()
+
+// JavaScript: suppress a false positive XSS when output is rendered through a trusted framework
+// mend-sast-suppress XSS reason="Output is rendered by a framework that auto-escapes HTML" until="2026-12-31"
+return &lt;div&gt;{userBio}&lt;/div&gt;;</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Auto-Suppression Rules</h2>
+                <p>Auto-suppression rules reduce repetitive triage by suppressing a class of findings that match a known safe pattern. For example, if every route in an API uses a specific authentication middleware that SAST does not model, an auto-suppression rule can dismiss the corresponding missing-auth findings. Rules can match by file path, rule ID, function name, or code pattern.</p>
+                <p>Auto-suppression must be governed carefully. A rule that is too broad can hide real vulnerabilities. Review auto-suppression rules quarterly, limit them to specific repositories or applications, and require security approval for new rules. Good rules are narrow, well-documented, and tied to a specific control that compensates for the reported issue.</p>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Triage Best Practice</h4>
+                    <p>Never auto-suppress a finding based only on a file path. Combine path, rule ID, and a code pattern or control evidence so that the suppression only applies when the compensating control is present. This prevents real vulnerabilities from being dismissed when the file changes.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Tuning Rules &amp; Feedback Loops</h2>
+                <p>Rule tuning is the long-term solution to false positives. If a rule repeatedly reports safe patterns, adjust its sensitivity, add sanitization sinks, or scope it to files where the issue is actually relevant. Mend SAST lets teams customize rule sets, disable noisy rules, and calibrate taint analysis for their specific codebases.</p>
+                <p>Feedback loops between security teams and the Mend team improve the product for everyone. When a false positive is caused by a gap in the engine, report it with the rule ID, a minimal code sample, and the expected behavior. Mend can then update the rule or the taint model so the next scan is more accurate. Regularly review the top noisy rules and prioritize tuning the ones with the highest false positive rates.</p>
+
+                <h3>Signal-to-Noise Improvement Plan</h3>
+                <div class="steps-list">
+                    <ol>
+                        <li>Measure the false positive rate by rule and by application over the last 30 days.</li>
+                        <li>Suppress individual confirmed false positives with documented rationale.</li>
+                        <li>Create narrow auto-suppression rules for recurring safe patterns.</li>
+                        <li>Disable or tune rules that consistently produce more noise than value.</li>
+                        <li>Report engine-level false positives to Mend for rule improvement.</li>
+                        <li>Re-measure monthly and iterate.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 1:</strong> What is the most important metadata to include when suppressing a SAST finding?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> A documented rationale and an expiration date</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> The developer's full name and team</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> The exact line count of the affected file</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> The CVSS score of the finding</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question" data-c="Yw==">
+                        <p><strong>Question 2:</strong> Which approach is the safest way to create an auto-suppression rule?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Suppress by file path only</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Suppress all findings of a given severity</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Match path, rule ID, and a specific safe pattern or control</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Allow any developer to create auto-suppression rules</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>150 XP earned for completing this module</span>
+                </div>
+                <div class="module-nav-buttons">
+                    <a href="05-language-analysis.html" class="btn btn-secondary">&#8592; Previous: Language-Specific Analysis</a>
+                    <a href="07-security-review-workflows.html" class="btn btn-primary">Next: Security Review Workflows &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/layout.js"></script>
+    <script src="../../js/store.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/search.js"></script>
+    <script src="../../js/chat.js"></script>
+    <script src="../../js/homepage.js"></script>
+    <script src="../../js/leaderboard.js"></script>
+    <script src="../../js/cert-recommendations.js"></script>
+    <script src="../../js/badges.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/tracks.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

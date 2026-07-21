@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href="../../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <title>Service Delivery &amp; Operational Excellence - Mend Learn</title>
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar"></aside>
+
+        <main class="module-content" id="main-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>MSSP Operations Track</span> &rsaquo; <span>Service Delivery</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>Service Delivery &amp; Operational Excellence</h1>
+                <div class="module-meta">
+                    <span>&#128338; 40 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 200 XP</span>
+                    <span class="level-badge advanced">Level 3 - Advanced</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>Integrate Mend operations with a SOC and define incident response and escalation workflows</li>
+                    <li>Establish QA processes and a service catalog that defines what the MSSP delivers</li>
+                    <li>Design staffing models that support 24/7 coverage sustainably</li>
+                    <li>Apply a continuous improvement framework to mature service delivery over time</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>SOC Operations Integration &amp; Incident Response</h2>
+                <p>For many MSSP customers, Mend findings are one input into a broader Security Operations Center (SOC) workflow. The MSSP&rsquo;s service-delivery team must integrate Mend&rsquo;s alerts with the SOC&rsquo;s case management and SIEM systems so that a Critical finding triggers the same incident response process as a network intrusion alert. Mend supports this through webhook and API integrations that push finding events to the SOC&rsquo;s tooling in real time, complete with severity, reachability status, and remediation context.</p>
+
+                <p>Incident response workflows define what happens when a finding escalates beyond routine remediation. A Critical, reachable vulnerability in a production-bound artifact may warrant a <strong>sev-1 incident</strong>: immediate notification of the customer&rsquo;s security lead, a war-room remediation call, and a post-incident review. Mend&rsquo;s audit trail captures the timeline &mdash; when the finding was discovered, when it was escalated, when remediation began and ended &mdash; providing the evidence the post-incident review needs. Clear <strong>escalation procedures</strong> define who is paged at each severity and at each hour, so a 2 a.m. Critical does not wait for a 9 a.m. handoff.</p>
+
+                <div class="key-concept">
+                    <h4>&#128161; The Escalation Ladder</h4>
+                    <p>Define a tiered escalation ladder: Tier 1 (operations analyst) handles routine findings and SLA monitoring; Tier 2 (senior analyst) handles High-severity findings and customer-facing communications; Tier 3 (security engineer) handles Critical incidents and war-room coordination. Each tier has a defined response-time target and a defined handoff criterion for escalating to the next tier.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Service Catalog, QA &amp; Staffing Models</h2>
+                <p>A <strong>service catalog</strong> defines exactly what the MSSP delivers for each customer, removing ambiguity that leads to dissatisfaction. A typical catalog entry specifies the product covered (e.g., SCA), the scope (which repositories), the scan cadence, the SLA for each severity, the reporting deliverables, and the escalation path. When every customer engagement is described by a set of catalog entries, the operations team can staff, measure, and price consistently rather than treating each customer as a one-off.</p>
+
+                <p><strong>QA processes</strong> ensure the service delivered matches the catalog promise. A QA reviewer samples a percentage of closed findings each month, verifying that remediation was genuine (not just a ticket closure), that SLA clocks were accurate, and that customer communication met the agreed cadence. QA findings feed back into coaching and into process improvements, closing the loop between delivery and quality.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #073C8C;">&#128200;</div>
+                        <h4>Staffing Models</h4>
+                        <p>Staff to the portfolio&rsquo;s finding volume, not to a headcount guess. Use Mend&rsquo;s cross-tenant metrics to calculate findings per analyst per week, then size the team to the expected volume with a buffer for peak periods. Cross-train analysts across products so a SAST surge does not stall SCA remediation.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #2ecc71;">&#127745;</div>
+                        <h4>24/7 Coverage</h4>
+                        <p>True 24/7 coverage requires follow-the-sun staffing across at least two regions, with clear handoff protocols at shift boundaries. For MSSPs that cannot justify full 24/7 staffing, define an on-call rotation for Critical-severity findings outside business hours and set customer expectations accordingly in the SLA.</p>
+                    </div>
+                </div>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; The Follow-the-Sun Handoff</h4>
+                    <p>A weak shift handoff is the most common source of 24/7 delivery failures. Require a written handoff note for every open incident at shift change, and use Mend&rsquo;s audit trail as the shared source of truth so the incoming analyst does not rely on the outgoing analyst&rsquo;s memory.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Continuous Improvement Framework</h2>
+                <p>Operational excellence is not a state; it is a direction. A continuous improvement framework keeps service delivery getting better quarter over quarter rather than plateauing after the initial onboarding energy fades. Mend recommends a monthly <strong>service review</strong> with each customer and a quarterly <strong>internal retrospective</strong> across the portfolio.</p>
+
+                <p>The monthly service review walks the customer through their SLA compliance, open findings, remediation trends, and any incidents from the period. It is also the forum for the customer to raise friction &mdash; a policy that is too noisy, an integration that is flaky, a report that does not quite fit their board&rsquo;s expectations. Capturing this feedback systematically turns customer complaints into a backlog of improvements rather than a series of one-off firefights.</p>
+
+                <p>The quarterly internal retrospective looks across all customers at the MSSP&rsquo;s own performance: which accounts are trending well, which need intervention, which QA findings recurred, and which process changes moved the needle. The retrospective produces a small set of improvement actions with owners and due dates, preventing the meeting from becoming a status report with no forward motion.</p>
+
+                <ol class="steps-list">
+                    <li><strong>Define the service catalog</strong> &mdash; Specify products, scope, cadence, SLAs, deliverables, and escalation paths for every customer engagement.</li>
+                    <li><strong>Establish QA sampling</strong> &mdash; Review a monthly sample of closed findings for remediation genuineness, SLA accuracy, and communication quality.</li>
+                    <li><strong>Run monthly customer service reviews</strong> &mdash; Walk SLA compliance and trends; capture friction as an improvement backlog.</li>
+                    <li><strong>Hold quarterly internal retrospectives</strong> &mdash; Compare portfolio performance, identify recurring QA issues, and assign improvement actions with owners.</li>
+                    <li><strong>Measure and re-baseline</strong> &mdash; Track the improvement actions&rsquo; impact on SLA compliance and customer satisfaction; re-baseline targets annually.</li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>&#9888;&#65039; Retrospectives Without Action Decay Fast</h4>
+                    <p>A retrospective that produces a list of actions but no follow-through erodes faith in the process faster than having no retrospective at all. Assign every action an owner and a due date, and review the previous quarter&rsquo;s actions at the start of each new retrospective. Actions that never close should be explicitly killed or re-scoped, not silently carried forward.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 1:</strong> What is the purpose of a service catalog in an MSSP engagement?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> To define exactly what the MSSP delivers for each customer &mdash; products, scope, cadence, SLAs, deliverables, and escalation paths &mdash; removing ambiguity</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> To list the MSSP&rsquo;s marketing collateral for sales pitches</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> To catalog all CVEs in the Mend vulnerability database</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> To replace the need for SLA definitions</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 2:</strong> What is the most common source of failure in 24/7 follow-the-sun delivery, and how is it mitigated?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Tool outages; mitigated by buying more tools</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Weak shift handoffs; mitigated by requiring a written handoff note for every open incident and using Mend&rsquo;s audit trail as the shared source of truth</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Too many analysts on shift; mitigated by reducing headcount</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Customer timezone differences; mitigated by refusing 24/7 contracts</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>200 XP earned for completing this module</span>
+                </div>
+                <div class="module-nav-buttons">
+                    <a href="03-multi-customer-reporting.html" class="btn btn-secondary">&#8592; Previous: Multi-Customer Reporting &amp; SLAs</a>
+                    <a href="05-mssp-growth.html" class="btn btn-primary">Next: MSSP Growth &amp; Portfolio Expansion &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/layout.js"></script>
+    <script src="../../js/store.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/search.js"></script>
+    <script src="../../js/chat.js"></script>
+    <script src="../../js/homepage.js"></script>
+    <script src="../../js/leaderboard.js"></script>
+    <script src="../../js/cert-recommendations.js"></script>
+    <script src="../../js/badges.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/tracks.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <meta name="description" content="Interactive lab: Use the Mend REST API to build custom reports, dashboards, and scheduled reporting workflows.">
+    <title>Lab: API &amp; Custom Reporting - Mend Learn</title>
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/lab.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="lab-layout">
+        <div class="lab-breadcrumb">
+            <a href="../labs.html">Labs</a> &rsaquo;
+            <span>API &amp; Custom Reporting</span>
+        </div>
+
+        <div class="lab-header">
+            <div class="lab-title-row">
+                <h1>API &amp; Custom <span class="accent">Reporting</span></h1>
+                <span class="lab-type-badge guided">Guided</span>
+            </div>
+            <div class="lab-meta">
+                <span>&#128339; 90 min</span>
+                <span>&#127942; 100 XP</span>
+                <span>&#128260; Administration</span>
+                <span>&#128218; 6 steps</span>
+            </div>
+        </div>
+
+        <div class="lab-objectives">
+            <h4>&#127919; Lab Objectives</h4>
+            <ul>
+                <li>Generate and authenticate with a Mend API key</li>
+                <li>Explore the Mend REST API for projects and vulnerabilities</li>
+                <li>Write a Python script that exports vulnerability data to CSV</li>
+                <li>Build an executive dashboard query with metrics</li>
+                <li>Automate weekly reports with a cron job</li>
+                <li>Export data for BI tools such as Tableau and Power BI</li>
+            </ul>
+        </div>
+
+        <div class="lab-progress-bar">
+            <div class="lab-progress-bar-fill" id="lab-progress"></div>
+        </div>
+
+        <div class="lab-step" data-step="1">
+            <div class="lab-step-number">1</div>
+            <h3>Get Your API Credentials</h3>
+            <p>Generate an API key in the Mend platform and authenticate REST API requests using a Bearer token in the Authorization header.</p>
+            <div class="lab-code-block"><span class="comment"># Mend platform &gt; Settings &gt; API Keys &gt; Generate Key</span>
+<span class="comment"># Copy the user key and export it as an environment variable</span>
+export MEND_API_KEY="your-api-key"
+export MEND_URL="https://app.mend.io"</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> curl -H "Authorization: Bearer ${MEND_API_KEY}" \
+       "https://app.mend.io/api/v3/projects"
+<span class="term-info">HTTP/1.1 200 OK</span>
+<span class="term-info">Content-Type: application/json</span>
+<span class="term-success">{ "total": 12, "projects": [...] }</span></div>
+            <div class="lab-callout warning">
+                <strong>Security note</strong>
+                Treat API keys as secrets. Never commit them to source control; store them in environment variables or a secrets manager.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Mend API key generated and copied</li>
+                <li><span class="check-icon">&#10003;</span> Authenticated API request returned HTTP 200</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="2">
+            <div class="lab-step-number">2</div>
+            <h3>Explore the Mend REST API</h3>
+            <p>Use curl to list projects, retrieve scan results, and fetch vulnerability details. Study the JSON response structure before writing scripts.</p>
+            <div class="lab-code-block"><span class="comment"># List projects</span>
+curl -H "Authorization: Bearer ${MEND_API_KEY}" \
+     "https://app.mend.io/api/v3/projects"
+
+<span class="comment"># Get vulnerabilities for a specific project</span>
+curl -H "Authorization: Bearer ${MEND_API_KEY}" \
+     "https://app.mend.io/api/v3/projects/{projectId}/vulnerabilities"
+
+<span class="comment"># Get a specific vulnerability detail</span>
+curl -H "Authorization: Bearer ${MEND_API_KEY}" \
+     "https://app.mend.io/api/v3/vulnerabilities/{vulnId}"</div>
+            <div class="lab-terminal"><span class="term-info">{
+  "projects": [
+    {
+      "id": "proj-123",
+      "name": "java-vulnerable-app",
+      "product": "Lab: Java App",
+      "lastScan": "2025-06-15T10:00:00Z"
+    }
+  ]
+}</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                Use tools like <code>jq</code> or Postman to format JSON responses and explore the schema interactively.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Listed projects through the API</li>
+                <li><span class="check-icon">&#10003;</span> Retrieved vulnerability data for a project</li>
+                <li><span class="check-icon">&#10003;</span> Identified the JSON fields needed for reporting</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="3">
+            <div class="lab-step-number">3</div>
+            <h3>Write a Custom Report Script</h3>
+            <p>Create a Python script that pulls vulnerability data from the Mend API and writes it to a CSV file for stakeholders.</p>
+            <div class="lab-code-block">import csv
+import os
+import requests
+
+MEND_URL = os.environ.get('MEND_URL', 'https://app.mend.io')
+API_KEY = os.environ['MEND_API_KEY']
+HEADERS = {'Authorization': f'Bearer {API_KEY}'}
+
+def get_vulnerabilities(project_id):
+    url = f'{MEND_URL}/api/v3/projects/{project_id}/vulnerabilities'
+    resp = requests.get(url, headers=HEADERS)
+    resp.raise_for_status()
+    return resp.json()
+
+def export_csv(project_id, filename):
+    vulns = get_vulnerabilities(project_id)
+    with open(filename, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(['CVE', 'Severity', 'Component', 'Fixed Version'])
+        for v in vulns:
+            writer.writerow([
+                v.get('cveId'),
+                v.get('severity'),
+                v.get('componentName'),
+                v.get('fixVersion')
+            ])
+
+export_csv('proj-123', 'vulnerabilities.csv')</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> python export_vulnerabilities.py
+<span class="term-info">Fetched 42 vulnerabilities.</span>
+<span class="term-success">Saved report to vulnerabilities.csv</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                Add error handling, pagination, and retries for production scripts. Use environment variables for all secrets.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Python script created and executable</li>
+                <li><span class="check-icon">&#10003;</span> CSV report generated from API data</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="4">
+            <div class="lab-step-number">4</div>
+            <h3>Build a Dashboard Query</h3>
+            <p>Aggregate vulnerability metrics across projects to create an executive summary dashboard. Use matplotlib or a charting library to visualize the data.</p>
+            <div class="lab-code-block">import requests
+import os
+import matplotlib.pyplot as plt
+
+MEND_URL = os.environ.get('MEND_URL', 'https://app.mend.io')
+API_KEY = os.environ['MEND_API_KEY']
+HEADERS = {'Authorization': f'Bearer {API_KEY}'}
+
+def get_projects():
+    resp = requests.get(f'{MEND_URL}/api/v3/projects', headers=HEADERS)
+    resp.raise_for_status()
+    return resp.json()['projects']
+
+def summarize():
+    total = critical = fixed = 0
+    for project in get_projects():
+        vulns = requests.get(
+            f"{MEND_URL}/api/v3/projects/{project['id']}/vulnerabilities",
+            headers=HEADERS
+        ).json()
+        total += len(vulns)
+        critical += sum(1 for v in vulns if v['severity'] == 'critical')
+        fixed += sum(1 for v in vulns if v['status'] == 'resolved')
+    remediation_rate = (fixed / total * 100) if total else 0
+    print(f'Total: {total}, Critical: {critical}, Remediation Rate: {remediation_rate:.1f}%')
+    return total, critical, remediation_rate
+
+summary = summarize()
+plt.bar(['Total', 'Critical', 'Remediation Rate'], summary)
+plt.savefig('executive_dashboard.png')</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> python dashboard.py
+<span class="term-info">Total: 142, Critical: 5, Remediation Rate: 67.6%</span>
+<span class="term-success">Dashboard saved to executive_dashboard.png</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                Executive dashboards are most effective when they track a small set of meaningful KPIs: critical count, remediation rate, and mean time to remediate.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Aggregated metrics across all projects</li>
+                <li><span class="check-icon">&#10003;</span> Visualized total vulnerabilities, critical count, and remediation rate</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="5">
+            <div class="lab-step-number">5</div>
+            <h3>Automate Weekly Reports</h3>
+            <p>Schedule the report script to run weekly and email the results. Use cron on Linux/macOS or Task Scheduler on Windows.</p>
+            <div class="lab-code-block"><span class="comment"># weekly_report.sh</span>
+#!/bin/bash
+export MEND_API_KEY="$MEND_API_KEY"
+python3 /opt/mend-reports/dashboard.py &gt; /opt/mend-reports/weekly.log
+mail -s "Weekly Mend Security Report" -A /opt/mend-reports/executive_dashboard.png \
+     security-team@company.com &lt; /opt/mend-reports/weekly.log</div>
+            <div class="lab-terminal"><span class="comment"># Crontab entry: every Monday at 09:00</span>
+0 9 * * 1 /opt/mend-reports/weekly_report.sh</div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                Store the email configuration in an environment file or a secrets manager. Verify the script runs manually before enabling the schedule.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Shell wrapper created to run the report and send email</li>
+                <li><span class="check-icon">&#10003;</span> Cron job scheduled for weekly execution</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="6">
+            <div class="lab-step-number">6</div>
+            <h3>Export to BI Tools</h3>
+            <p>Export data in JSON or CSV format so BI tools such as Tableau, Power BI, or Looker can consume it for further analysis.</p>
+            <div class="lab-code-block"><span class="comment"># Export projects summary as JSON</span>
+curl -H "Authorization: Bearer ${MEND_API_KEY}" \
+     "https://app.mend.io/api/v3/projects" \
+     -o projects.json
+
+<span class="comment"># Export vulnerabilities as CSV using the Python script</span>
+python3 export_vulnerabilities.py</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> python export_vulnerabilities.py
+<span class="term-info">Exporting vulnerabilities.csv</span>
+<span class="term-success">42 rows written.</span>
+<span class="term-prompt">$</span> curl -H "Authorization: Bearer ${MEND_API_KEY}" \
+       "https://app.mend.io/api/v3/projects" -o projects.json
+<span class="term-success">Projects exported to projects.json</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                BI tools can connect directly to CSV or JSON files, or to a database that you populate with a scheduled ETL job. Pick the option that fits your analytics stack.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Exported JSON and CSV files</li>
+                <li><span class="check-icon">&#10003;</span> Verified the exported files are importable into BI tools</li>
+            </ul>
+        </div>
+
+        <div class="lab-quiz" id="lab-quiz">
+            <h4>&#129504; Knowledge Check</h4>
+            <div class="lab-quiz-question">How should you authenticate requests to the Mend REST API?</div>
+            <ul class="lab-quiz-options">
+                <li class="lab-quiz-option" data-correct="false">Append the API key as a query parameter</li>
+                <li class="lab-quiz-option" data-correct="true">Include the API key in the Authorization Bearer header</li>
+                <li class="lab-quiz-option" data-correct="false">Send the API key in the request body</li>
+                <li class="lab-quiz-option" data-correct="false">Use basic authentication with username and password</li>
+            </ul>
+            <div class="lab-quiz-question" style="margin-top: 20px;">Which tool is best suited for scheduling a weekly report script on Linux?</div>
+            <ul class="lab-quiz-options">
+                <li class="lab-quiz-option" data-correct="false">Jenkins</li>
+                <li class="lab-quiz-option" data-correct="true">cron</li>
+                <li class="lab-quiz-option" data-correct="false">Postman</li>
+                <li class="lab-quiz-option" data-correct="false">npm</li>
+            </ul>
+        </div>
+
+        <div class="lab-completion-banner" id="lab-complete">
+            <h2>&#127881; Lab Complete!</h2>
+            <p>You have used the Mend API to build custom reports, dashboards, and automated weekly reporting workflows.</p>
+            <div class="lab-completion-xp">+100 XP</div>
+            <div class="lab-actions" style="justify-content: center;">
+                <a href="../labs.html" class="btn btn-secondary">Back to Labs</a>
+                <a href="full-stack-security-audit.html" class="btn btn-primary">Next Lab: Full Stack Security Audit</a>
+            </div>
+        </div>
+
+        <div class="lab-actions" id="lab-actions">
+            <button class="btn btn-primary" id="lab-complete-btn" disabled>Complete Lab</button>
+            <a href="../labs.html" class="btn btn-secondary">Back to Labs</a>
+        </div>
+    </div>
+
+    <footer id="site-footer" class="site-footer"></footer>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+    (function() {
+        var totalSteps = 6;
+        var stepChecklists = {};
+
+        document.querySelectorAll('.lab-step').forEach(function(stepEl) {
+            var stepNum = stepEl.getAttribute('data-step');
+            var items = stepEl.querySelectorAll('.lab-checklist li');
+            stepChecklists[stepNum] = { total: items.length, checked: 0 };
+
+            items.forEach(function(item) {
+                item.addEventListener('click', function() {
+                    if (item.classList.contains('checked')) {
+                        item.classList.remove('checked');
+                        stepChecklists[stepNum].checked--;
+                    } else {
+                        item.classList.add('checked');
+                        stepChecklists[stepNum].checked++;
+                    }
+                    updateProgress();
+                });
+            });
+        });
+
+        function updateProgress() {
+            var totalItems = 0;
+            var checkedItems = 0;
+            var allStepsComplete = true;
+
+            for (var i = 1; i <= totalSteps; i++) {
+                if (!stepChecklists[i]) continue;
+                totalItems += stepChecklists[i].total;
+                checkedItems += stepChecklists[i].checked;
+                if (stepChecklists[i].checked < stepChecklists[i].total) {
+                    allStepsComplete = false;
+                }
+            }
+
+            var pct = totalItems > 0 ? (checkedItems / totalItems) * 100 : 0;
+            document.getElementById('lab-progress').style.width = pct + '%';
+
+            for (var j = 1; j <= totalSteps; j++) {
+                var stepEl = document.querySelector('.lab-step[data-step="' + j + '"]');
+                if (stepEl && stepChecklists[j] && stepChecklists[j].checked >= stepChecklists[j].total) {
+                    stepEl.classList.add('completed');
+                } else if (stepEl) {
+                    stepEl.classList.remove('completed');
+                }
+            }
+
+            var btn = document.getElementById('lab-complete-btn');
+            if (allStepsComplete) {
+                btn.disabled = false;
+                btn.classList.add('btn-primary');
+            } else {
+                btn.disabled = true;
+            }
+        }
+
+        document.getElementById('lab-complete-btn').addEventListener('click', function() {
+            if (this.disabled) return;
+
+            if (typeof MendStore !== 'undefined') {
+                MendStore.completeLab('api-custom-reporting', 100);
+            }
+
+            document.getElementById('lab-complete').classList.add('visible');
+            document.getElementById('lab-actions').style.display = 'none';
+            document.getElementById('lab-complete').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+
+        document.querySelectorAll('.lab-quiz-option').forEach(function(opt) {
+            opt.addEventListener('click', function() {
+                var siblings = this.parentNode.querySelectorAll('.lab-quiz-option');
+                siblings.forEach(function(s) { s.classList.remove('correct', 'incorrect'); });
+                if (this.getAttribute('data-correct') === 'true') {
+                    this.classList.add('correct');
+                } else {
+                    this.classList.add('incorrect');
+                    siblings.forEach(function(s) {
+                        if (s.getAttribute('data-correct') === 'true') s.classList.add('correct');
+                    });
+                }
+            });
+        });
+    })();
+    </script>
+</body>
+</html>

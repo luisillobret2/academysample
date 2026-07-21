@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href="../../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <title>Platform Deployment Strategy - Mend Learn</title>
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar"></aside>
+
+        <main class="module-content" id="main-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>Platform Unified Track</span> &rsaquo; <span>Deployment Strategy</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>Platform Deployment Strategy</h1>
+                <div class="module-meta">
+                    <span>&#128338; 40 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 200 XP</span>
+                    <span class="level-badge advanced">Level 3 - Advanced</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>Execute a phased rollout that introduces SCA, SAST, Container, and Secrets in the right order</li>
+                    <li>Apply organizational change management and team enablement practices</li>
+                    <li>Scale from a pilot team to full production across many teams</li>
+                    <li>Migrate from point tools to the unified Mend platform without disruption</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>The Phased Rollout Approach</h2>
+                <p>Adopting four security products at once is a recipe for change-management overload. The proven Mend deployment strategy introduces products sequentially, each phase building on the muscle memory and goodwill established by the previous one. The recommended order is <strong>SCA first, then SAST, then Container, then Secrets</strong> &mdash; chosen because each step delivers visible value quickly while progressively tightening the security net.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #2ecc71;">&#9312;</div>
+                        <h4>Phase 1: SCA</h4>
+                        <p>Software Composition Analysis is the fastest to value. Most teams have never seen their full dependency tree, so the first scan is an eye-opener. Reachability analysis immediately quiets the noise and builds credibility. Target: 2-4 weeks to first dashboard.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #3498db;">&#9313;</div>
+                        <h4>Phase 2: SAST</h4>
+                        <p>With SCA trusted, add SAST on a single pilot repository. Expect a larger finding volume; use the deduplication and remediation workflows from the integrated platform to keep developer burden manageable. Target: 4-6 weeks to expand across a team.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #f39c12;">&#9314;</div>
+                        <h4>Phase 3: Container</h4>
+                        <p>Container scanning extends coverage to the deployable artifact. It often uncovers base-image vulnerabilities and misconfigurations the team did not know existed. Target: 3-5 weeks, often faster because the pipeline integration pattern is already established.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #e74c3c;">&#9315;</div>
+                        <h4>Phase 4: Secrets</h4>
+                        <p>Secrets detection is last because it is the most sensitive &mdash; findings may require immediate credential rotation. By this point the team trusts the platform and has mature remediation workflows. Target: 2-3 weeks to steady state.</p>
+                    </div>
+                </div>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Let Value Drive Velocity</h4>
+                    <p>Do not fix the phase timeline in stone. If SCA adoption stalls because a team is digesting a large backlog, pause before introducing SAST. The goal of a phased rollout is earned trust, not calendar compliance.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Organizational Change Management &amp; Team Enablement</h2>
+                <p>Technology rollouts fail far more often from people problems than from technical ones. A successful Mend deployment treats enablement as a first-class workstream alongside configuration. Three practices consistently determine outcomes: <strong>executive sponsorship</strong>, <strong>champion networks</strong>, and <strong>developer-friendly onboarding</strong>.</p>
+
+                <p>Executive sponsorship gives the program authority and air cover. A visible executive &mdash; typically a CISO or VP of Engineering &mdash; communicates why the platform matters, protects the program when teams push back, and celebrates wins publicly. Without this, security tooling is easily deprioritized against feature deadlines.</p>
+
+                <p>A <strong>champion network</strong> seeds each engineering team with one developer who is trained deeply on Mend and serves as the first point of contact for colleagues. Champions catch frustration early, translate security jargon into engineering terms, and feed real-world friction back to the platform team. Invest in champions with dedicated training time and recognition; they multiply the reach of a small security team many times over.</p>
+
+                <div class="key-concept">
+                    <h4>&#128161; The 90-Day Onboarding Curve</h4>
+                    <p>Expect roughly 90 days from a team&rsquo;s first scan to genuine adoption &mdash; the point where developers proactively consult Mend findings before merge. Shorten the curve with office hours, a dedicated Slack channel, and a "first fix" celebration that makes the initial remediation experience positive rather than punitive.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Pilot-to-Production Scaling &amp; Point-Tool Migration</h2>
+                <p>Scaling from one pilot team to the whole organization requires repeatable patterns rather than heroics. Mend recommends a <strong>landing zone</strong> approach: a small set of reference projects, fully configured with policies, integrations, and dashboards, that serve as templates every new team can clone. The landing zone codifies best practices so each onboarding does not reinvent them.</p>
+
+                <p>For organizations migrating from existing point tools, a <strong>parallel-run</strong> period reduces risk. Run Mend alongside the legacy tool for 30-60 days, comparing findings and tuning policies until parity is demonstrated. Then retire the legacy tool with a clear cutover date. Parallel running also surfaces finding gaps &mdash; vulnerabilities the old tool missed that Mend catches &mdash; which becomes powerful evidence for the migration business case.</p>
+
+                <ol class="steps-list">
+                    <li><strong>Inventory existing tools</strong> &mdash; Document every point tool in use, its owner, its cost, and the coverage gaps it leaves. This becomes the migration backlog and the baseline for ROI measurement.</li>
+                    <li><strong>Build the landing zone</strong> &mdash; Configure reference projects with policies, gates, integrations, and dashboards. Validate the configuration with a friendly pilot team.</li>
+                    <li><strong>Migrate team by team</strong> &mdash; Onboard teams in waves of 3-5, using the landing zone as a template. Provide each wave with a champion, office hours, and a 30-day check-in.</li>
+                    <li><strong>Retire legacy tools</strong> &mdash; Once a team has run Mend in parallel and confirmed parity, cut over and decommission the legacy tool. Capture the cost savings for the ROI story.</li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>&#9888;&#65039; Avoid Big-Bang Cutover</h4>
+                    <p>Migrating every team on a single weekend maximizes risk and minimizes learning. Wave-based migration lets each wave benefit from the previous wave&rsquo;s lessons and keeps the support load manageable for the security team running the program.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 1:</strong> What is the recommended order for introducing Mend products in a phased rollout?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> SCA first, then SAST, then Container, then Secrets</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Secrets first because it is the highest risk</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> All four products simultaneously to minimize total time</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Container first because it covers the deployable artifact</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 2:</strong> When migrating from existing point tools to Mend, which approach minimizes risk?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> A single big-bang cutover across all teams in one weekend</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Running Mend in parallel with legacy tools for 30-60 days, then retiring legacy after parity is demonstrated</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Decommissioning legacy tools before installing Mend</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Migrating only the lowest-risk teams and abandoning the rest</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>200 XP earned for completing this module</span>
+                </div>
+                <div class="module-nav-buttons">
+                    <a href="04-integrated-workflows.html" class="btn btn-secondary">&#8592; Previous: Integrated Security Workflows</a>
+                    <a href="06-platform-roi.html" class="btn btn-primary">Next: Platform ROI &amp; Business Value &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/layout.js"></script>
+    <script src="../../js/store.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/search.js"></script>
+    <script src="../../js/chat.js"></script>
+    <script src="../../js/homepage.js"></script>
+    <script src="../../js/leaderboard.js"></script>
+    <script src="../../js/cert-recommendations.js"></script>
+    <script src="../../js/badges.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/tracks.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

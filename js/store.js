@@ -458,28 +458,39 @@ const MendStore = {
                 'sca/03-license-compliance',
                 'sca/04-prioritization',
                 'sca/05-remediation',
-                'sca/06-sbom-reporting'
+                'sca/06-sbom-reporting',
+                'sca/07-policy-enforcement',
+                'sca/08-enterprise-scaling'
             ],
             sast: [
                 'sast/01-sast-overview',
                 'sast/02-ai-remediation',
                 'sast/03-cicd-integration',
                 'sast/04-custom-rules',
-                'sast/05-language-analysis'
+                'sast/05-language-analysis',
+                'sast/06-false-positive-management',
+                'sast/07-security-review-workflows',
+                'sast/08-advanced-sast-config'
             ],
             sales: [
                 'sales/01-selling-mend',
                 'sales/02-competitive-positioning',
                 'sales/03-objection-handling',
                 'sales/04-demo-pov',
-                'sales/05-deal-registration'
+                'sales/05-deal-registration',
+                'sales/06-pricing-licensing',
+                'sales/07-partner-program',
+                'sales/08-vertical-selling',
+                'sales/09-customer-success-stories'
             ],
             developer: [
                 'developer/01-developer-quickstart',
                 'developer/02-ide-integration',
                 'developer/03-cli-automation',
                 'developer/04-renovate-setup',
-                'developer/05-custom-policies'
+                'developer/05-custom-policies',
+                'developer/06-api-integration',
+                'developer/07-devsecops-culture'
             ],
             container: [
                 'container/01-container-security',
@@ -493,7 +504,10 @@ const MendStore = {
                 'technical/02-demo-mastery',
                 'technical/03-poc-management',
                 'technical/04-advanced-integrations',
-                'technical/05-troubleshooting'
+                'technical/05-troubleshooting',
+                'technical/06-security-architecture-review',
+                'technical/07-customer-workshops',
+                'technical/08-migration-strategies'
             ],
             cicd: [
                 'cicd/01-pipeline-fundamentals',
@@ -531,10 +545,19 @@ const MendStore = {
                 'enterprise/05-reporting-analytics'
             ],
             'platform-unified': [
-                'platform-unified/01-platform-unified-overview'
+                'platform-unified/01-platform-unified-overview',
+                'platform-unified/02-cross-product-policy',
+                'platform-unified/03-unified-reporting',
+                'platform-unified/04-integrated-workflows',
+                'platform-unified/05-deployment-strategy',
+                'platform-unified/06-platform-roi'
             ],
             mssp: [
-                'mssp/01-mssp-operations-overview'
+                'mssp/01-mssp-operations-overview',
+                'mssp/02-tenant-onboarding',
+                'mssp/03-multi-customer-reporting',
+                'mssp/04-service-delivery',
+                'mssp/05-mssp-growth'
             ]
         };
         return trackMap[track] || [];

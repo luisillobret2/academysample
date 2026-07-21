@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <meta name="description" content="Interactive lab: Generate, enrich, and manage SBOMs with the Mend.io platform.">
+    <title>Lab: SBOM Generation &amp; Management - Mend Learn</title>
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/lab.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="lab-layout">
+        <div class="lab-breadcrumb">
+            <a href="../labs.html">Labs</a> &rsaquo;
+            <span>SBOM Generation &amp; Management</span>
+        </div>
+
+        <div class="lab-header">
+            <div class="lab-title-row">
+                <h1>SBOM <span class="accent">Generation &amp; Management</span></h1>
+                <span class="lab-type-badge guided">Guided</span>
+            </div>
+            <div class="lab-meta">
+                <span>&#128339; 45 min</span>
+                <span>&#127942; 100 XP</span>
+                <span>&#128260; SCA</span>
+                <span>&#128218; 5 steps</span>
+            </div>
+        </div>
+
+        <div class="lab-objectives">
+            <h4>&#127919; Lab Objectives</h4>
+            <ul>
+                <li>Compare CycloneDX and SPDX SBOM formats and their use cases</li>
+                <li>Generate an SBOM from a Mend SCA scan</li>
+                <li>Enrich an SBOM with VEX vulnerability data</li>
+                <li>Automate SBOM generation in a CI/CD pipeline</li>
+                <li>Validate and distribute SBOMs to stakeholders</li>
+            </ul>
+        </div>
+
+        <div class="lab-progress-bar">
+            <div class="lab-progress-bar-fill" id="lab-progress"></div>
+        </div>
+
+        <div class="lab-step" data-step="1">
+            <div class="lab-step-number">1</div>
+            <h3>Understanding SBOM Formats</h3>
+            <p>Software Bills of Materials describe the components, licenses, and dependencies in an application. The two most common formats are CycloneDX and SPDX.</p>
+            <div class="lab-code-block"><span class="comment"># SBOM format comparison</span>
+CycloneDX: Lightweight, security-focused, easy to integrate
+SPDX: ISO standard, comprehensive license and provenance data</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend sbom formats list
+<span class="term-info">Supported formats:</span>
+  <span class="term-info">- CycloneDX 1.4</span>
+  <span class="term-info">- CycloneDX 1.5</span>
+  <span class="term-info">- SPDX 2.3</span>
+  <span class="term-info">- SPDX 2.2</span></div>
+            <div class="lab-callout tip">
+                <strong>Compliance context</strong>
+                Executive Order 14028 and the EU Cyber Resilience Act require organizations to produce and share SBOMs for software components.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Compared CycloneDX and SPDX</li>
+                <li><span class="check-icon">&#10003;</span> Identified compliance requirements for your SBOM</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="2">
+            <div class="lab-step-number">2</div>
+            <h3>Generate SBOM from a Scan</h3>
+            <p>Use the Mend CLI to export an SBOM directly from your SCA scan results. CycloneDX is the default format and is widely supported by security tools.</p>
+            <div class="lab-code-block"><span class="comment"># Generate CycloneDX SBOM</span>
+mend sbom export --format cyclonedx --output sbom.json</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend sbom export --format cyclonedx --output sbom.json
+<span class="term-info">Generating SBOM...</span>
+<span class="term-info">Format: CycloneDX 1.5</span>
+<span class="term-info">Components: 183</span>
+<span class="term-info">Dependencies: 47</span>
+<span class="term-success">SBOM written to sbom.json (42.3 KB)</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                Run the SBOM export after every successful scan so the exported file reflects the current dependency tree.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Generated SBOM from the scan results</li>
+                <li><span class="check-icon">&#10003;</span> Verified the component count</li>
+                <li><span class="check-icon">&#10003;</span> Inspected the sbom.json file</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="3">
+            <div class="lab-step-number">3</div>
+            <h3>Enrich SBOM with Vulnerability Data</h3>
+            <p>Add VEX (Vulnerability Exploitability eXchange) data to the SBOM to communicate whether known vulnerabilities are exploitable and how they are being handled.</p>
+            <div class="lab-code-block"><span class="comment"># Generate SBOM with VEX data</span>
+mend sbom export --format cyclonedx --include-vex --output sbom-vex.json</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend sbom export --format cyclonedx --include-vex --output sbom-vex.json
+<span class="term-info">Generating SBOM with VEX annotations...</span>
+<span class="term-info">Format: CycloneDX 1.5</span>
+<span class="term-info">Components: 183</span>
+<span class="term-info">VEX statements: 27</span>
+  <span class="term-info">Not affected: 15</span>
+  <span class="term-info">Affected: 8</span>
+  <span class="term-info">Fixed: 4</span>
+<span class="term-success">SBOM written to sbom-vex.json (48.7 KB)</span></div>
+            <div class="lab-callout tip">
+                <strong>Key concept</strong>
+                VEX helps reduce noise by documenting why a vulnerable component is not exploitable or how it has been remediated.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Generated SBOM with VEX data</li>
+                <li><span class="check-icon">&#10003;</span> Reviewed VEX statements for accuracy</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="4">
+            <div class="lab-step-number">4</div>
+            <h3>Automate SBOM Generation in CI/CD</h3>
+            <p>Create a GitHub Actions workflow that generates and attaches an SBOM to every release. This ensures SBOMs are always available for compliance and distribution.</p>
+            <div class="lab-code-block"><span class="comment"># GitHub Actions: generate SBOM on release</span>
+name: Generate SBOM
+on:
+  release:
+    types: [published]
+jobs:
+  sbom:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate SBOM
+        run: mend sbom export --format cyclonedx --output sbom.json
+      - name: Upload SBOM to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: sbom.json</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend ci sbom --pipeline github
+<span class="term-info">Detected GitHub Actions workflow</span>
+<span class="term-info">Adding SBOM generation step to release workflow</span>
+<span class="term-success">CI/CD integration configured.</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                Store SBOMs as release artifacts and version them alongside your application so consumers can retrieve the SBOM for any deployed version.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Added SBOM generation step to release workflow</li>
+                <li><span class="check-icon">&#10003;</span> Configured SBOM upload as a release artifact</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="5">
+            <div class="lab-step-number">5</div>
+            <h3>Validate and Distribute SBOM</h3>
+            <p>Validate the SBOM structure before sharing it with stakeholders. Then distribute the SBOM to compliance tools, customers, and internal teams.</p>
+            <div class="lab-code-block"><span class="comment"># Validate SBOM structure</span>
+mend sbom validate --file sbom.json
+
+<span class="comment"># Distribute SBOM to stakeholders</span>
+mend sbom share --file sbom.json --recipients "security@example.com,compliance@example.com"</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> mend sbom validate --file sbom.json
+<span class="term-info">Validating SBOM structure...</span>
+<span class="term-info">Format: CycloneDX 1.5</span>
+<span class="term-info">Components: 183</span>
+<span class="term-success">SBOM is valid.</span>
+<span class="term-info">Warnings: 0</span>
+<span class="term-info">Errors: 0</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                Schedule SBOM validation as a quality gate in CI/CD so that only valid SBOMs are published or distributed.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Validated SBOM with no errors</li>
+                <li><span class="check-icon">&#10003;</span> Distributed SBOM to stakeholders</li>
+                <li><span class="check-icon">&#10003;</span> Integrated SBOM into compliance tooling</li>
+            </ul>
+        </div>
+
+        <div class="lab-quiz" id="lab-quiz">
+            <h4>&#129504; Knowledge Check</h4>
+            <div class="lab-quiz-question">Which command adds VEX vulnerability data to an SBOM?</div>
+            <ul class="lab-quiz-options">
+                <li class="lab-quiz-option" data-correct="false">mend sbom export --format vex</li>
+                <li class="lab-quiz-option" data-correct="true">mend sbom export --format cyclonedx --include-vex --output sbom-vex.json</li>
+                <li class="lab-quiz-option" data-correct="false">mend scan --vex</li>
+                <li class="lab-quiz-option" data-correct="false">mend remediate --include-vex</li>
+            </ul>
+            <div class="lab-quiz-question" style="margin-top: 20px;">Which event should trigger SBOM generation in a GitHub Actions release workflow?</div>
+            <ul class="lab-quiz-options">
+                <li class="lab-quiz-option" data-correct="false">on: push</li>
+                <li class="lab-quiz-option" data-correct="true">on: release: types: [published]</li>
+                <li class="lab-quiz-option" data-correct="false">on: schedule</li>
+                <li class="lab-quiz-option" data-correct="false">on: pull_request</li>
+            </ul>
+        </div>
+
+        <div class="lab-completion-banner" id="lab-complete">
+            <h2>&#127881; Lab Complete!</h2>
+            <p>You have compared SBOM formats, generated and enriched SBOMs, automated their creation in CI/CD, and validated them for distribution.</p>
+            <div class="lab-completion-xp">+100 XP</div>
+            <div class="lab-actions" style="justify-content: center;">
+                <a href="../labs.html" class="btn btn-secondary">Back to Labs</a>
+                <a href="secrets-detection-setup.html" class="btn btn-primary">Next Lab: Secrets Detection Setup</a>
+            </div>
+        </div>
+
+        <div class="lab-actions" id="lab-actions">
+            <button class="btn btn-primary" id="lab-complete-btn" disabled>Complete Lab</button>
+            <a href="../labs.html" class="btn btn-secondary">Back to Labs</a>
+        </div>
+    </div>
+
+    <footer id="site-footer" class="site-footer"></footer>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+    (function() {
+        var totalSteps = 5;
+        var stepChecklists = {};
+
+        document.querySelectorAll('.lab-step').forEach(function(stepEl) {
+            var stepNum = stepEl.getAttribute('data-step');
+            var items = stepEl.querySelectorAll('.lab-checklist li');
+            stepChecklists[stepNum] = { total: items.length, checked: 0 };
+
+            items.forEach(function(item) {
+                item.addEventListener('click', function() {
+                    if (item.classList.contains('checked')) {
+                        item.classList.remove('checked');
+                        stepChecklists[stepNum].checked--;
+                    } else {
+                        item.classList.add('checked');
+                        stepChecklists[stepNum].checked++;
+                    }
+                    updateProgress();
+                });
+            });
+        });
+
+        function updateProgress() {
+            var totalItems = 0;
+            var checkedItems = 0;
+            var allStepsComplete = true;
+
+            for (var i = 1; i <= totalSteps; i++) {
+                if (!stepChecklists[i]) continue;
+                totalItems += stepChecklists[i].total;
+                checkedItems += stepChecklists[i].checked;
+                if (stepChecklists[i].checked < stepChecklists[i].total) {
+                    allStepsComplete = false;
+                }
+            }
+
+            var pct = totalItems > 0 ? (checkedItems / totalItems) * 100 : 0;
+            document.getElementById('lab-progress').style.width = pct + '%';
+
+            for (var j = 1; j <= totalSteps; j++) {
+                var stepEl = document.querySelector('.lab-step[data-step="' + j + '"]');
+                if (stepEl && stepChecklists[j] && stepChecklists[j].checked >= stepChecklists[j].total) {
+                    stepEl.classList.add('completed');
+                } else if (stepEl) {
+                    stepEl.classList.remove('completed');
+                }
+            }
+
+            var btn = document.getElementById('lab-complete-btn');
+            if (allStepsComplete) {
+                btn.disabled = false;
+                btn.classList.add('btn-primary');
+            } else {
+                btn.disabled = true;
+            }
+        }
+
+        document.getElementById('lab-complete-btn').addEventListener('click', function() {
+            if (this.disabled) return;
+
+            if (typeof MendStore !== 'undefined') {
+                MendStore.completeLab('sbom-generation', 100);
+            }
+
+            document.getElementById('lab-complete').classList.add('visible');
+            document.getElementById('lab-actions').style.display = 'none';
+            document.getElementById('lab-complete').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+
+        document.querySelectorAll('.lab-quiz-option').forEach(function(opt) {
+            opt.addEventListener('click', function() {
+                var siblings = this.parentNode.querySelectorAll('.lab-quiz-option');
+                siblings.forEach(function(s) { s.classList.remove('correct', 'incorrect'); });
+                if (this.getAttribute('data-correct') === 'true') {
+                    this.classList.add('correct');
+                } else {
+                    this.classList.add('incorrect');
+                    siblings.forEach(function(s) {
+                        if (s.getAttribute('data-correct') === 'true') s.classList.add('correct');
+                    });
+                }
+            });
+        });
+    })();
+    </script>
+</body>
+</html>

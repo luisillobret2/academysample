@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href="../../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <title>Security Review Workflows - Mend Learn</title>
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar"></aside>
+
+        <main class="module-content" id="main-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>SAST Product Track</span> &rsaquo; <span>Security Review Workflows</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>Security Review Workflows</h1>
+                <div class="module-meta">
+                    <span>&#128338; 35 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 175 XP</span>
+                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>Integrate SAST into pull request workflows with inline feedback</li>
+                    <li>Configure security gates and approval workflows</li>
+                    <li>Build a shift-left security culture with developer-friendly feedback loops</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>Pull Request Integration</h2>
+                <p>Pull request integration is the most effective way to catch vulnerabilities before they reach the main branch. Mend SAST scans changed files when a PR is opened or updated, and reports findings directly in the Git provider's interface. This keeps feedback in the developer's natural workflow and avoids the need to switch between security tools and code review tools.</p>
+                <p>PR scans are faster and more focused than full baseline scans. By analyzing only the diff, Mend reduces scan time and surfaces findings that are relevant to the current change. Developers can see the vulnerable line, the rule that triggered, and remediation guidance without leaving the PR. This immediacy is the foundation of a shift-left security program.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128200;</div>
+                        <h4>Diff-Only Scanning</h4>
+                        <p>Scan only the files and functions changed in the PR, reducing feedback time from minutes to seconds.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128172;</div>
+                        <h4>Inline Comments</h4>
+                        <p>Findings appear as comments on the exact line of code, just like a human reviewer.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128736;</div>
+                        <h4>Status Checks</h4>
+                        <p>PR checks pass or fail based on configurable severity and rule thresholds.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128300;</div>
+                        <h4>Contextual Guidance</h4>
+                        <p>Each finding includes a description, severity, and suggested fix tailored to the code pattern.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Inline Code Review Comments</h2>
+                <p>Inline comments turn SAST findings into actionable code review feedback. A good comment explains why the code is risky, shows what an attack might look like, and suggests a concrete remediation. Developers are more likely to fix issues when the feedback is clear, specific, and respectful rather than generic or alarmist.</p>
+                <p>Mend SAST can include remediation snippets directly in the comment, suggesting a safer pattern for the same language and framework. For example, a SQL injection finding might include a prepared statement example, while a cross-site scripting finding might show the correct output encoding function. These snippets reduce the cognitive load on developers and speed up remediation.</p>
+
+                <div class="key-concept">
+                    <h4>Comment Quality</h4>
+                    <p>High-quality comments include: the vulnerability name, the affected line, the attack scenario, the safe pattern, and a link to documentation. Avoid comments that only say "vulnerability found" or assign blame. The goal is to teach the developer, not to shame them.</p>
+                </div>
+
+                <h3>Example Inline Comment</h3>
+                <pre><code>File: src/api/orders.js, line 42
+Finding: SQL Injection (CWE-89)
+Severity: High
+
+The userId parameter is concatenated directly into a SQL query. An attacker
+could provide a value such as "1 OR 1=1" to access other users' orders.
+
+Suggested fix: use a parameterized query.
+
+const query = "SELECT * FROM orders WHERE user_id = ?";
+const rows = await db.query(query, [userId]);</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>Security Gates &amp; Approval Workflows</h2>
+                <p>Security gates enforce minimum standards before code can be merged or deployed. A gate can block PRs that introduce critical or high-severity vulnerabilities, require approval for new medium-severity issues, or allow merge only after all findings are resolved or approved. Gates must be calibrated to the team's maturity: too strict and developers find workarounds, too lenient and vulnerabilities slip through.</p>
+                <p>Approval workflows let security champions review exceptions. When a developer believes a finding is a false positive or accepts the risk, they can request an approval from a security engineer. The approver can see the finding, the code, the developer's rationale, and the security impact. Approved exceptions are logged for audit and revisited periodically.</p>
+
+                <div class="vuln-table">
+                    <table>
+                        <thead>
+                            <tr><th>Gate Level</th><th>Condition</th><th>Typical Action</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Block</td><td>Critical or high severity finding</td><td>Prevent merge until fixed or approved</td></tr>
+                            <tr><td>Warn</td><td>Medium severity finding</td><td>Allow merge with security review required</td></tr>
+                            <tr><td>Inform</td><td>Low severity or informational</td><td>Comment only, no block</td></tr>
+                            <tr><td>Exception</td><td>Approved risk acceptance</td><td>Merge allowed with documented exception</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Shift-Left Security Culture</h2>
+                <p>Shift-left security means addressing security as early as possible in the development lifecycle. SAST in the PR workflow is a core shift-left practice because it gives feedback while code is still being written. But tools alone do not create culture. Developers need training, clear policies, fast feedback, and trust that security findings are relevant and helpful.</p>
+                <p>Build feedback loops between security and engineering teams. Regularly review the most common findings, the slowest-remediated categories, and the top sources of false positives. Use this data to update training, tune rules, and improve documentation. When developers see that their input leads to better tools, they are more likely to engage with security findings.</p>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Workflow Tip</h4>
+                    <p>Keep PR scan time under five minutes. If scans take longer, developers will start bypassing them. Use diff-only scanning, incremental analysis, and rule set optimization to stay within the feedback window that developers expect.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 1:</strong> What is the main benefit of diff-only SAST scanning in pull requests?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> It scans the entire repository history</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> It provides faster feedback by analyzing only changed code</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> It disables all security rules for the PR</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> It requires no CI integration</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 2:</strong> Which gate action is most appropriate for a critical severity finding introduced in a pull request?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Block merge until fixed or approved</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Comment only with no block</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Allow merge with any developer approval</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Suppress the finding automatically</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>175 XP earned for completing this module</span>
+                </div>
+                <div class="module-nav-buttons">
+                    <a href="06-false-positive-management.html" class="btn btn-secondary">&#8592; Previous: False Positive Management</a>
+                    <a href="08-advanced-sast-config.html" class="btn btn-primary">Next: Advanced SAST Configuration &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/layout.js"></script>
+    <script src="../../js/store.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/search.js"></script>
+    <script src="../../js/chat.js"></script>
+    <script src="../../js/homepage.js"></script>
+    <script src="../../js/leaderboard.js"></script>
+    <script src="../../js/cert-recommendations.js"></script>
+    <script src="../../js/badges.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/tracks.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

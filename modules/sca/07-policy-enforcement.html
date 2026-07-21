@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href="../../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <title>Policy Enforcement &amp; Governance - Mend Learn</title>
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar"></aside>
+
+        <main class="module-content" id="main-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>SCA Deep Dive</span> &rsaquo; <span>Policy Enforcement &amp; Governance</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>Policy Enforcement &amp; Governance</h1>
+                <div class="module-meta">
+                    <span>&#128338; 35 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 175 XP</span>
+                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>Configure security and license policies in Mend SCA</li>
+                    <li>Apply enforcement actions such as blocking PRs and failing builds</li>
+                    <li>Integrate policy outcomes with governance reporting and compliance frameworks</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>Security Policy Configuration</h2>
+                <p>Mend SCA policies translate organizational risk appetite into automated decisions. A security policy defines which vulnerabilities are unacceptable based on severity, CVSS score, exploit maturity, reachability, and whether a fix is available. Policies can be scoped to the entire organization, a specific application, or a single repository.</p>
+                <p>Effective policies balance risk reduction with developer productivity. A blanket "block all CVEs" rule creates friction and alert fatigue, while a nuanced rule such as "block reachable critical CVEs with available fixes" focuses enforcement on issues that actually matter. Mend lets you combine multiple criteria so policies reflect real-world exploitability rather than raw score alone.</p>
+
+                <div class="key-concept">
+                    <h4>Policy Scope</h4>
+                    <p>Policies are inherited hierarchically: organization-level policies apply to every application and project, while application-level policies can add exceptions or stricter requirements for sensitive systems. Project-level policies give teams flexibility for experimental code without weakening enterprise standards.</p>
+                </div>
+
+                <h3>Example Severity Threshold Policy</h3>
+                <pre><code>Policy: Block Reachable Critical/High Vulnerabilities
+- Severity: Critical or High
+- Reachability: Reachable only
+- Fix availability: Any (including upgrade required)
+- Action: Block pull request and fail build
+- Exemptions: Requires security team approval via policy violation workflow</code></pre>
+            </section>
+
+            <section class="module-section">
+                <h2>License Policy Rules</h2>
+                <p>Open-source license compliance is as critical as vulnerability management. Mend SCA license policies classify licenses by risk level and define the actions to take when a forbidden or restricted license appears in your dependency tree. Categories include Permissive, Weak Copyleft, Strong Copyleft, Commercial, and Custom License Groups.</p>
+                <p>License policies evaluate the full dependency tree, including transitive dependencies that developers may not know about. A popular permissive library might pull in a strong copyleft dependency, so Mend scans the entire resolved dependency graph rather than only top-level declarations. This prevents license contamination from slipping into production.</p>
+
+                <div class="vuln-table">
+                    <table>
+                        <thead>
+                            <tr><th>License Category</th><th>Examples</th><th>Common Action</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Permissive</td><td>MIT, Apache-2.0, BSD</td><td>Allow automatically</td></tr>
+                            <tr><td>Weak Copyleft</td><td>MPL, EPL, CDDL</td><td>Allow with attribution requirement</td></tr>
+                            <tr><td>Strong Copyleft</td><td>GPL-2.0, GPL-3.0, AGPL</td><td>Block or require legal review</td></tr>
+                            <tr><td>Commercial</td><td>Proprietary, custom EULA</td><td>Block unless explicitly approved</td></tr>
+                            <tr><td>Unknown</td><td>No license detected</td><td>Flag for manual review</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Enforcement Actions &amp; Policy as Code</h2>
+                <p>Enforcement is where policy meets the development workflow. Mend SCA can trigger actions at multiple points: during CI/CD scans, in pull request checks, and on scheduled baseline scans. The most common enforcement actions are blocking pull requests, failing builds, creating Jira tickets, and sending notifications to Slack or Microsoft Teams.</p>
+                <p>Policy as code lets you store policy definitions in version-controlled files alongside your application code. This approach supports reproducible governance, peer review of policy changes, and integration with existing GitOps workflows. Mend supports YAML-based policy definitions that can be committed to a repository or managed centrally via the Mend API.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128721;</div>
+                        <h4>Block Pull Requests</h4>
+                        <p>Prevent merging code that violates security or license policies. The PR check surfaces the violating library, severity, and recommended fix directly in the developer workflow.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128683;</div>
+                        <h4>Fail Builds</h4>
+                        <p>CI/CD integration returns a non-zero exit code when violations are detected, ensuring that non-compliant artifacts cannot be built or deployed.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128203;</div>
+                        <h4>Create Tickets</h4>
+                        <p>Automated Jira, Azure DevOps, or ServiceNow tickets route violations to the right team with full context, severity, and remediation guidance.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128172;</div>
+                        <h4>Notify Teams</h4>
+                        <p>Slack, Microsoft Teams, and email notifications keep security champions and developers informed without overwhelming them.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Governance Reporting &amp; Compliance</h2>
+                <p>Governance reporting turns scan data into evidence for auditors, executives, and compliance teams. Mend provides dashboards, scheduled reports, and exportable artifacts that demonstrate policy coverage, violation trends, mean-time-to-remediate, and open-source inventory health. These reports are essential for SOC 2, ISO 27001, FedRAMP, and customer security questionnaires.</p>
+                <p>Audit trails record every policy change, exemption approval, and enforcement action. Knowing who changed a policy, when, and why is critical for compliance and forensic investigation. Mend preserves this history in the platform and exposes it through the API for integration with centralized logging and SIEM systems.</p>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Governance Tip</h4>
+                    <p>Schedule a weekly executive summary that shows policy violation trends and mean-time-to-remediate. Pair it with a monthly audit report of policy changes and exemptions. This combination gives leadership visibility and gives auditors a clear trail of governance activity.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 1:</strong> What is the primary advantage of policy as code for Mend SCA governance?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Policies can be version-controlled and reviewed like application code</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Policies execute faster than UI-based policies</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Policies do not require enforcement actions</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Policies are automatically disabled after each scan</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 2:</strong> Which enforcement action prevents a developer from merging code that violates a policy?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Email notification</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Block pull request</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Create Jira ticket</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Schedule report</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>175 XP earned for completing this module</span>
+                </div>
+                <div class="module-nav-buttons">
+                    <a href="06-sbom-reporting.html" class="btn btn-secondary">&#8592; Previous: SBOM &amp; Reporting</a>
+                    <a href="08-enterprise-scaling.html" class="btn btn-primary">Next: Enterprise SCA at Scale &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/layout.js"></script>
+    <script src="../../js/store.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/search.js"></script>
+    <script src="../../js/chat.js"></script>
+    <script src="../../js/homepage.js"></script>
+    <script src="../../js/leaderboard.js"></script>
+    <script src="../../js/cert-recommendations.js"></script>
+    <script src="../../js/badges.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/tracks.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

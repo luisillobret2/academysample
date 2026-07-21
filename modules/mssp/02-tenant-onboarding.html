@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href="../../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <title>Tenant Onboarding &amp; Segmentation - Mend Learn</title>
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar"></aside>
+
+        <main class="module-content" id="main-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>MSSP Operations Track</span> &rsaquo; <span>Tenant Onboarding</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>Tenant Onboarding &amp; Segmentation</h1>
+                <div class="module-meta">
+                    <span>&#128338; 40 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 200 XP</span>
+                    <span class="level-badge advanced">Level 3 - Advanced</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>Explain Mend&rsquo;s multi-tenant architecture and how tenant isolation protects customer data</li>
+                    <li>Execute customer onboarding workflows including self-service and bulk provisioning</li>
+                    <li>Configure role-based access and data segregation per tenant</li>
+                    <li>Apply branding customization so each customer sees a tailored experience</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>Multi-Tenant Architecture &amp; Tenant Isolation</h2>
+                <p>An MSSP&rsquo;s credibility depends on one absolute guarantee: no customer can ever see another customer&rsquo;s data. Mend&rsquo;s multi-tenant architecture enforces this through <strong>logical tenant isolation</strong>. Every customer is represented by a tenant &mdash; a fully segregated logical container that holds its projects, findings, policies, users, and reports. Tenant boundaries are enforced at the data-access layer on every query, so even a bug in a UI component cannot leak data across tenants because the backend will not return rows that do not belong to the caller&rsquo;s tenant.</p>
+
+                <p>Isolation extends beyond data access. Each tenant has its own <strong>policy namespace</strong>, its own <strong>integration configuration</strong> (Jira instances, Slack workspaces, CI tokens), and its own <strong>audit log</strong>. A policy created for Tenant A never appears in Tenant B&rsquo;s console. An integration token scoped to Tenant A cannot be used to scan Tenant B&rsquo;s repositories. This strict separation lets an MSSP serve competing customers from the same platform instance without any risk of cross-contamination.</p>
+
+                <div class="key-concept">
+                    <h4>&#128161; Why Logical Isolation Wins for MSSPs</h4>
+                    <p>Some platforms offer physical (per-customer) isolation instead of logical isolation. Physical isolation is simpler to reason about but creates an operational nightmare at scale: hundreds of instances to patch, upgrade, monitor, and back up. Logical isolation gives the MSSP one platform to operate while preserving the data boundary customers demand. Mend&rsquo;s logical isolation is independently audited and is the foundation of its MSSP suitability.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Customer Onboarding Workflows</h2>
+                <p>Onboarding a new customer tenant is the first operational moment of truth for an MSSP. A smooth onboarding builds confidence; a fumbled one creates doubt that lingers for the life of the contract. Mend supports two onboarding modes: <strong>guided onboarding</strong>, where the MSSP&rsquo;s operations team creates and configures the tenant on the customer&rsquo;s behalf, and <strong>self-service provisioning</strong>, where the customer (or the MSSP&rsquo;s sales engineer) steps through a wizard that creates the tenant, connects repositories, and applies a starter policy template.</p>
+
+                <p>For MSSPs onboarding many customers in a quarter, <strong>bulk onboarding</strong> accelerates the process. A provisioning API and CSV import let the operations team create dozens of tenants, assign administrators, and apply policy templates in a single batch. Bulk onboarding is especially valuable when an MSSP wins a large enterprise with many business units, each of which becomes its own tenant with its own administrator but rolls up to a parent account for consolidated reporting.</p>
+
+                <ol class="steps-list">
+                    <li><strong>Create the tenant</strong> &mdash; Provision a new tenant container, assign a tenant administrator, and apply a starter policy template appropriate to the customer&rsquo;s industry (e.g., Regulated Workloads for financial services).</li>
+                    <li><strong>Connect source repositories</strong> &mdash; Link the customer&rsquo;s GitHub, GitLab, or Bitbucket organizations so Mend can discover and scan repositories. Use scoped tokens with least-privilege access.</li>
+                    <li><strong>Configure integrations</strong> &mdash; Wire up the customer&rsquo;s Jira, Slack, or Teams instances so findings route to the systems their developers use. Validate each integration with a test finding.</li>
+                    <li><strong>Apply branding</strong> &mdash; Customize the tenant&rsquo;s logo, color scheme, and report footer so the customer sees a tailored experience, whether branded as the MSSP or co-branded.</li>
+                    <li><strong>Run a baseline scan</strong> &mdash; Execute the first full scan across all connected repositories and review the baseline findings with the customer to set expectations and remediation priorities.</li>
+                </ol>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; The First-Scan Review</h4>
+                    <p>Schedule a baseline-review meeting within one week of onboarding. Walking the customer through their initial findings &mdash; especially the Criticals and the reachability-filtered noise reduction &mdash; converts a list of vulnerabilities into a shared action plan and establishes the MSSP as a partner rather than a vendor.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Role-Based Access &amp; Data Segregation per Tenant</h2>
+                <p>Within each tenant, Mend&rsquo;s role-based access control (RBAC) lets the MSSP and the customer share administration safely. The MSSP&rsquo;s operations engineers hold platform-level roles that span tenants (for support and reporting), while the customer&rsquo;s administrators hold tenant-scoped roles that grant access only to their own data. This dual-layer model means an MSSP engineer can help a customer configure a policy without ever being able to exfiltrate that customer&rsquo;s findings to another tenant.</p>
+
+                <p>Common tenant-scoped roles include <strong>Tenant Administrator</strong> (full configuration within the tenant), <strong>Security Analyst</strong> (view and triage findings, manage policies), <strong>Developer</strong> (view findings in assigned projects, remediate), and <strong>Read-Only Viewer</strong> (dashboards and reports only). Roles can be customized per tenant, so a regulated customer can enforce a stricter separation-of-duties matrix than a less-regulated one. Every role assignment is captured in the tenant&rsquo;s audit log for compliance evidence.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #073C8C;">&#128274;</div>
+                        <h4>Data Segregation</h4>
+                        <p>Findings, policies, reports, and integrations are all scoped to the tenant. A query from any user returns only the rows that belong to that user&rsquo;s tenant, enforced at the data-access layer rather than in the UI.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #2ecc71;">&#127912;</div>
+                        <h4>Branding Customization</h4>
+                        <p>Each tenant can carry its own logo, color scheme, and report footer. MSSPs can white-label the platform under their own brand or co-brand with the customer, supporting both reseller and managed-service delivery models.</p>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>&#9888;&#65039; Token Hygiene</h4>
+                    <p>Integration tokens scoped to one tenant must never be reused for another. A shared token is the most common cause of accidental cross-tenant access in multi-tenant platforms. Enforce a one-token-per-tenant-per-integration rule and rotate tokens on a regular schedule.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 1:</strong> How does Mend&rsquo;s multi-tenant architecture enforce tenant isolation?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Through logical tenant isolation enforced at the data-access layer on every query, so the backend never returns rows from another tenant</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> By giving each customer a physically separate server with no shared infrastructure</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> By relying on UI components to hide data the user should not see</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> By storing all customers&rsquo; data in one shared table with no separation</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 2:</strong> What is the recommended practice for integration tokens in a multi-tenant MSSP deployment?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Use a single shared token across all tenants to simplify operations</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Enforce one token per tenant per integration and rotate tokens on a regular schedule</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Reuse the MSSP&rsquo;s internal platform token for every customer integration</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Avoid tokens entirely and use username/password authentication for integrations</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>200 XP earned for completing this module</span>
+                </div>
+                <div class="module-nav-buttons">
+                    <a href="01-mssp-operations-overview.html" class="btn btn-secondary">&#8592; Previous: MSSP Operations Overview</a>
+                    <a href="03-multi-customer-reporting.html" class="btn btn-primary">Next: Multi-Customer Reporting &amp; SLAs &#8594;</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/layout.js"></script>
+    <script src="../../js/store.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/search.js"></script>
+    <script src="../../js/chat.js"></script>
+    <script src="../../js/homepage.js"></script>
+    <script src="../../js/leaderboard.js"></script>
+    <script src="../../js/cert-recommendations.js"></script>
+    <script src="../../js/badges.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/tracks.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

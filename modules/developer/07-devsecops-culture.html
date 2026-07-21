@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href="../../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <title>DevSecOps Culture &amp; Developer Adoption - Mend Learn</title>
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar"></aside>
+
+        <main class="module-content" id="main-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>Developer Track</span> &rsaquo; <span>DevSecOps Culture</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>DevSecOps Culture &amp; Developer Adoption</h1>
+                <div class="module-meta">
+                    <span>&#128338; 35 min</span>
+                    <span>&#128218; 4 sections</span>
+                    <span>&#11088; 175 XP</span>
+                    <span class="level-badge intermediate">Level 2 - Intermediate</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>How to shift security left without adding friction that developers resent</li>
+                    <li>Strategies for developer evangelism and embedding security into existing workflows</li>
+                    <li>How to measure adoption and use gamification to sustain engagement</li>
+                    <li>How to build a security champions program and address developer pushback</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>Shifting Left Without Friction</h2>
+                <p>DevSecOps is a cultural shift, not a tooling purchase. The core idea &mdash; moving security earlier in the development lifecycle so issues are caught when they are cheap to fix &mdash; only works if developers actually engage with it. The fastest way to fail is to bolt on a security gate that blocks builds with a wall of low-context alerts. Developers route around friction, and a tool they resent becomes shelf-ware regardless of how good its detection is.</p>
+                <p>"Shift left without friction" means bringing security findings to developers <strong>in the tools they already use</strong>, at the moment they can act on them, with enough context to fix the issue quickly. A vulnerability surfaced inside the IDE as they write code, or in the pull request they are already reviewing, with a suggested fix version attached, feels like help. The same vulnerability delivered as a nightly email digest of 400 issues feels like noise.</p>
+                <p>The guiding principle is to minimize the cost of doing the right thing. Every additional click, context switch, or ambiguous alert reduces adoption. When security is embedded, contextual, and actionable, developers adopt it not because they are forced to, but because it makes their work easier and their code better.</p>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Culture Tip</h4>
+                    <p>Measure friction, not just findings. If developers are filing bypass requests, ignoring alerts, or complaining about false positives, your program has a friction problem no amount of new detection will fix. Reducing noise and context-switching often improves security posture more than tightening the gate.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Evangelism and Embedding Into Workflows</h2>
+                <p>Adoption grows through advocacy, not mandate. Developer evangelism means making the value of secure development visible and desirable rather than compulsory. This starts with meeting developers where they are: demonstrating the tool in a lunch-and-learn using the team's own repository, showing how a real vulnerability in their code gets flagged and fixed in seconds, and celebrating the wins publicly when a team ships with zero critical findings.</p>
+                <p>The technical counterpart to evangelism is deep workflow integration. Security should appear at every natural checkpoint developers already pass through: inline in the IDE as they code, as an automated check on every pull request, and as a gate in CI/CD that is tuned to block only what genuinely matters. When findings arrive with clear remediation guidance &mdash; the fixed version, the reachable path, the exact line &mdash; developers can resolve them without leaving their flow or filing a ticket with the security team.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128187;</div>
+                        <h4>In the IDE</h4>
+                        <p>Flag issues as code is written, with the fix suggested inline &mdash; the cheapest possible moment to remediate.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128260;</div>
+                        <h4>In the Pull Request</h4>
+                        <p>Automated checks comment directly on the PR developers are already reviewing, keeping context intact.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9881;</div>
+                        <h4>In CI/CD</h4>
+                        <p>Tuned gates that block only genuinely critical, reachable issues &mdash; not every low-severity finding.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128226;</div>
+                        <h4>Evangelism</h4>
+                        <p>Lunch-and-learns on the team's own code, public celebration of secure releases, visible quick wins.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Measuring Adoption and Using Gamification</h2>
+                <p>What gets measured gets managed, and adoption is no exception. Track a small set of metrics that reveal whether developers are genuinely engaging: the percentage of repositories onboarded, the share of pull requests scanned, mean time to remediate critical findings, the ratio of findings fixed versus suppressed, and the trend in the backlog of open vulnerabilities. Rising remediation speed and a shrinking critical backlog are the clearest signals that the culture is taking hold.</p>
+                <p>Gamification turns those metrics into motivation. Leaderboards that rank teams by remediation speed, badges for shipping zero-critical releases, and recognition for the developers who fix the most issues tap into healthy competition and pride of craft. The key is to gamify the <em>right</em> behaviors &mdash; reward fixing and prevention, never just raw activity &mdash; and to keep it positive. Publicly shaming teams for having vulnerabilities breeds gaming and resentment; celebrating improvement builds momentum.</p>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="feature-icon">&#128202;</div>
+                        <h4>Coverage</h4>
+                        <p>Percentage of repos onboarded and PRs scanned &mdash; the reach of the program.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#9201;</div>
+                        <h4>Remediation Speed</h4>
+                        <p>Mean time to remediate critical findings; falling MTTR shows real engagement.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#127942;</div>
+                        <h4>Leaderboards &amp; Badges</h4>
+                        <p>Reward fixing and prevention; recognize zero-critical releases and top remediators.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="feature-icon">&#128200;</div>
+                        <h4>Backlog Trend</h4>
+                        <p>Direction of the open-vulnerability backlog &mdash; the ultimate health signal.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Security Champions and Handling Pushback</h2>
+                <p>A <strong>security champions program</strong> is the most durable way to scale a security culture beyond a small central team. Champions are volunteer developers embedded in each engineering team who receive extra training, act as the first point of contact for security questions, and advocate for good practices from within. Because they are peers rather than outside enforcers, their guidance carries credibility that a central security team can rarely match, and they surface friction and false positives early.</p>
+                <p>Run the program deliberately: recruit one or two champions per team, give them dedicated training and a direct line to the security team, recognize their contribution in performance reviews, and convene them regularly to share patterns and wins. Over time champions become a force multiplier &mdash; a network that spreads secure defaults, triages findings locally, and keeps security human-scaled as the organization grows.</p>
+                <p>Pushback is inevitable and should be treated as signal. When developers object that a tool is too noisy, tune the policies and suppress false positives rather than dismissing the complaint. When they say security slows them down, look for the specific friction and remove it. When leadership deprioritizes remediation, translate risk into business terms. The organizations that build lasting DevSecOps cultures are the ones that listen to developers, reduce friction relentlessly, and make secure development the path of least resistance &mdash; the fitting close to this Developer Track.</p>
+
+                <div class="steps-list">
+                    <ol>
+                        <li><strong>Recruit</strong> one or two volunteer champions per engineering team.</li>
+                        <li><strong>Train</strong> them beyond baseline and give them a direct line to the security team.</li>
+                        <li><strong>Recognize</strong> their work formally, including in performance reviews.</li>
+                        <li><strong>Convene</strong> champions regularly to share patterns, wins, and friction.</li>
+                        <li><strong>Act on pushback</strong> &mdash; tune noise, remove friction, translate risk into business terms.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="Yw==">
+                        <p><strong>Question 1:</strong> What does "shift left without friction" mean in practice?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Adding a strict security gate that blocks every build with any finding</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Emailing developers a nightly digest of all open vulnerabilities</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Surfacing actionable, contextual findings in the tools developers already use, at the moment they can fix them</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Moving all security review to a separate team after code is merged</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 2:</strong> What is the primary purpose of a security champions program?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> To replace the central security team entirely with automation</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> To embed trained developer advocates within each team who spread secure practices as credible peers</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> To publicly rank and shame teams that have the most vulnerabilities</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> To block all pull requests until a security manager approves them</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>175 XP earned for completing this module</span>
+                </div>
+                <div class="module-nav-buttons">
+                    <a href="06-api-integration.html" class="btn btn-secondary">&#8592; Previous: API Integration &amp; Webhooks</a>
+                    <button class="btn btn-primary mark-complete-btn" data-xp="175">Mark Complete</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/layout.js"></script>
+    <script src="../../js/store.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/search.js"></script>
+    <script src="../../js/chat.js"></script>
+    <script src="../../js/homepage.js"></script>
+    <script src="../../js/leaderboard.js"></script>
+    <script src="../../js/cert-recommendations.js"></script>
+    <script src="../../js/badges.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/tracks.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

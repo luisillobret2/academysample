@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href="../../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <title>Platform ROI &amp; Business Value - Mend Learn</title>
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/module.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="module-layout">
+        <aside class="module-sidebar"></aside>
+
+        <main class="module-content" id="main-content">
+            <div class="module-breadcrumb"><a href="../../learning-paths.html">Learning Paths</a> &rsaquo; <span>Platform Unified Track</span> &rsaquo; <span>Platform ROI</span></div>
+
+            <div class="module-header">
+                <div class="module-badge not-started-badge">Not Started</div>
+                <h1>Platform ROI &amp; Business Value</h1>
+                <div class="module-meta">
+                    <span>&#128338; 30 min</span>
+                    <span>&#128218; 3 sections</span>
+                    <span>&#11088; 150 XP</span>
+                    <span class="level-badge advanced">Level 3 - Advanced</span>
+                </div>
+            </div>
+
+            <div class="module-objectives">
+                <h4>&#127919; Learning Objectives</h4>
+                <p>In this module you will cover:</p>
+                <ul>
+                    <li>Quantify the ROI of a unified platform versus point tools using TCO and consolidation savings</li>
+                    <li>Measure productivity gains and risk reduction with defensible metrics</li>
+                    <li>Build a compelling business case for platform investment backed by executive dashboards</li>
+                </ul>
+            </div>
+
+            <section class="module-section">
+                <h2>Quantifying ROI: Unified Platform vs. Point Tools</h2>
+                <p>The financial case for a unified platform rests on three layers of savings: <strong>tool consolidation</strong>, <strong>productivity gains</strong>, and <strong>risk reduction</strong>. Point-tool environments carry hidden costs that disappear when a single platform replaces them &mdash; multiple license fees, multiple integration maintenance efforts, multiple vendor relationships, and the overhead of reconciling findings across disconnected consoles. Quantifying these layers turns a vague "platforms are better" argument into a defensible business case.</p>
+
+                <p>Start with <strong>Total Cost of Ownership (TCO)</strong>. For each point tool in the current stack, tally license cost, the FTE effort to maintain its integrations, the FTE effort to triage its findings, and the cost of any gaps it leaves that require yet another tool to fill. A typical enterprise running four separate security tools spends 30-50% more on total TCO than an equivalent Mend deployment would require, once consolidation is complete. The savings come not only from license reduction but from the eliminated integration glue and the reduced analyst toil.</p>
+
+                <div class="key-concept">
+                    <h4>&#128161; The Consolidation Multiplier</h4>
+                    <p>Consolidation savings compound. Removing one tool saves its license, but removing four tools and replacing them with one also saves the integration maintenance between them, the duplicate finding triage, and the reporting overhead of stitching four data sources together. The multiplier is typically 1.5x to 2.5x the raw license savings.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Productivity &amp; Risk-Reduction Metrics</h2>
+                <p>ROI is not only about cost reduction; it is about doing more with the same people and reducing the risk that turns into incidents. Mend provides the telemetry to measure both. Productivity metrics include <strong>mean time to remediate</strong> (how quickly findings are closed), <strong>developer hours saved</strong> through finding deduplication and reachability filtering, and <strong>release throughput impact</strong> (whether security gates slow down delivery or, with progressive enforcement, leave it unaffected).</p>
+
+                <p>Risk reduction is harder to observe directly &mdash; you cannot count incidents that did not happen &mdash; but it can be quantified through proxy metrics that leadership accepts. These include the count of open Critical findings and its trend, the percentage of production builds passing all security gates, the number of vulnerabilities caught before merge versus after release, and the reduction in findings carrying exploitable reachability. Each metric should be tracked from a baseline captured before the Mend deployment so improvement is demonstrable.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #2ecc71;">&#9889;</div>
+                        <h4>Productivity Metrics</h4>
+                        <p>Mean time to remediate, developer hours saved via deduplication and reachability, release throughput impact, and champion-led fix velocity. Pair these with cost-per-finding-remediated to translate effort into dollars.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon" style="color: #e74c3c;">&#128737;</div>
+                        <h4>Risk Metrics</h4>
+                        <p>Open Critical count and trend, production build pass rate, pre-merge catch rate, and exploitable-finding reduction. These answer "are we safer?" in terms executives and auditors can accept.</p>
+                    </div>
+                </div>
+
+                <div class="callout-box tip">
+                    <h4>&#128161; Baseline Before You Deploy</h4>
+                    <p>Capture the current-state metrics before Mend goes live. Without a baseline, every improvement claim invites the rebuttal "how do you know it was not already improving?" A two-week pre-deployment baseline is the most valuable investment in the ROI story.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Building the Business Case &amp; Executive Dashboards</h2>
+                <p>The business case for platform investment ties the three layers together into a narrative executives can approve. Structure it as a one-page summary backed by a detailed appendix. The summary states the investment, the expected annual savings (consolidation + productivity), the risk-reduction outcome, and the payback period &mdash; typically 9 to 15 months for a mid-size enterprise consolidating four tools onto Mend. The appendix carries the TCO worksheet, the metric baselines, and the deployment plan that makes the savings credible.</p>
+
+                <p>Executive dashboards make the business case live on after approval. Once Mend is deployed, the same dashboards that track security posture can be extended with <strong>value-realization widgets</strong>: TCO savings to date, developer hours saved, mean time to remediate trend, and open Critical finding burndown. Presenting these alongside the security posture score in a monthly executive review keeps the platform&rsquo;s value visible and protects the program&rsquo;s budget in future planning cycles.</p>
+
+                <ol class="steps-list">
+                    <li><strong>Capture the baseline</strong> &mdash; Inventory current tools, costs, FTE effort, and security metrics two weeks before deployment.</li>
+                    <li><strong>Build the TCO worksheet</strong> &mdash; Sum license, integration, triage, and gap-filling costs for the current stack; compare to Mend&rsquo;s single-platform TCO.</li>
+                    <li><strong>Project productivity and risk gains</strong> &mdash; Use industry benchmarks (20-35% finding deduplication, 80% reachability noise reduction) adjusted for the organization&rsquo;s context.</li>
+                    <li><strong>Assemble the one-pager</strong> &mdash; Investment, annual savings, risk outcome, payback period, with the appendix linked for detail.</li>
+                    <li><strong>Stand up value-realization dashboards</strong> &mdash; Extend executive dashboards with savings and productivity widgets; review monthly with leadership.</li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>&#9888;&#65039; Avoid Over-Promising</h4>
+                    <p>Resist the temptation to project aggressive savings to win approval. Over-promised ROI undermines credibility when the savings materialize more slowly than forecast. Use conservative assumptions and let actual results exceed them; an under-promised, over-delivered program keeps its budget in every cycle.</p>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div class="quiz-question" data-c="YQ==">
+                        <p><strong>Question 1:</strong> What is the "consolidation multiplier" effect when replacing multiple point tools with a unified platform?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Total savings are typically 1.5x to 2.5x the raw license savings, because integration, triage, and reporting overhead also disappear</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Savings are exactly equal to the sum of retired license fees</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Consolidation always costs more because the unified platform is more expensive per seat</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> The multiplier applies only to risk reduction, not to cost</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question" data-c="Yg==">
+                        <p><strong>Question 2:</strong> Why is capturing a baseline of metrics before deploying Mend critical to the ROI story?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> It is required by the Mend license agreement</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Without a baseline, every improvement claim invites the rebuttal that the metric may have already been improving; a baseline makes improvement demonstrable</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> It is the only way to configure security gates</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Baselines are only needed for compliance audits, not for ROI</label>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                    <button class="btn btn-primary quiz-submit">Check Answers</button>
+                    <div class="quiz-results"></div>
+                </div>
+            </section>
+
+            <section class="module-section">
+                <h2>Resources &amp; Related Labs</h2>
+                <div class="module-resources">
+                    <a class="module-resource" href="../../labs.html"><span class="resource-icon">&#128187;</span><span>Hands-on Labs<span class="resource-meta">Practice environment</span></span></a>
+                    <a class="module-resource" href="../../resources.html"><span class="resource-icon">&#128196;</span><span>Resource Library<span class="resource-meta">Guides &amp; templates</span></span></a>
+                    <a class="module-resource" href="../../certifications.html"><span class="resource-icon">&#127942;</span><span>Certifications<span class="resource-meta">Validate your skills</span></span></a>
+                </div>
+            </section>
+
+            <div class="module-footer">
+                <div class="module-xp-earned">
+                    <span class="xp-icon">&#11088;</span>
+                    <span>150 XP earned for completing this module</span>
+                </div>
+                <div class="module-nav-buttons">
+                    <a href="05-deployment-strategy.html" class="btn btn-secondary">&#8592; Previous: Platform Deployment Strategy</a>
+                    <button class="btn btn-primary mark-complete-btn" data-xp="150">Mark Complete</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/layout.js"></script>
+    <script src="../../js/store.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/search.js"></script>
+    <script src="../../js/chat.js"></script>
+    <script src="../../js/homepage.js"></script>
+    <script src="../../js/leaderboard.js"></script>
+    <script src="../../js/cert-recommendations.js"></script>
+    <script src="../../js/badges.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/tracks.js"></script>
+    <script src="../../js/module.js"></script>
+</body>
+</html>

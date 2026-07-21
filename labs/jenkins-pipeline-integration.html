@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../img/mend-logo.svg">
+    <link rel="icon" type="image/png" href="../img/mend-logo.png">
+    <link rel="apple-touch-icon" href="../img/mend-logo.png">
+    <meta name="theme-color" content="#073C8C">
+    <meta name="description" content="Interactive lab: Integrate Mend scans into a Jenkins pipeline, configure quality gates, and review build results.">
+    <title>Lab: Jenkins Pipeline Integration - Mend Learn</title>
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/lab.css">
+</head>
+<body>
+    <header id="site-header" class="site-header"></header>
+
+    <div class="lab-layout">
+        <div class="lab-breadcrumb">
+            <a href="../labs.html">Labs</a> &rsaquo;
+            <span>Jenkins Pipeline Integration</span>
+        </div>
+
+        <div class="lab-header">
+            <div class="lab-title-row">
+                <h1>Jenkins Pipeline <span class="accent">Integration</span></h1>
+                <span class="lab-type-badge guided">Guided</span>
+            </div>
+            <div class="lab-meta">
+                <span>&#128339; 60 min</span>
+                <span>&#127942; 100 XP</span>
+                <span>&#128260; Integration</span>
+                <span>&#128218; 5 steps</span>
+            </div>
+        </div>
+
+        <div class="lab-objectives">
+            <h4>&#127919; Lab Objectives</h4>
+            <ul>
+                <li>Install and configure the Mend Jenkins plugin</li>
+                <li>Write a Jenkinsfile with a Mend scan stage</li>
+                <li>Configure build quality gates and fail conditions</li>
+                <li>Run a pipeline and interpret console output</li>
+                <li>View Mend reports and trends in Jenkins</li>
+            </ul>
+        </div>
+
+        <div class="lab-progress-bar">
+            <div class="lab-progress-bar-fill" id="lab-progress"></div>
+        </div>
+
+        <div class="lab-step" data-step="1">
+            <div class="lab-step-number">1</div>
+            <h3>Install Mend Jenkins Plugin</h3>
+            <p>Install the Mend plugin from the Jenkins plugin repository and configure global credentials for the Mend platform.</p>
+            <div class="lab-code-block"><span class="comment">// Navigate to Jenkins &gt; Manage Jenkins &gt; Plugins &gt; Available plugins</span>
+<span class="comment">// Search for "Mend" and install the Mend plugin</span>
+<span class="comment">// Restart Jenkins after installation</span></div>
+            <div class="lab-terminal"><span class="term-prompt">Jenkins &gt;</span> Manage Jenkins &gt; Credentials &gt; System &gt; Global credentials
+<span class="term-info">Add Credentials</span>
+<span class="term-info">  Kind: Secret text</span>
+<span class="term-info">  ID: MEND_API_KEY</span>
+<span class="term-info">  Secret: &lt;your Mend API key&gt;</span>
+<span class="term-success">Credentials saved successfully.</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                Store the Mend URL, email, and API key as global credentials so pipelines can reference them without exposing secrets in code.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Mend plugin installed and Jenkins restarted</li>
+                <li><span class="check-icon">&#10003;</span> Global credentials created for Mend API key, email, and URL</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="2">
+            <div class="lab-step-number">2</div>
+            <h3>Create a Jenkinsfile with Mend Scanning</h3>
+            <p>Add a Mend scan stage to your Jenkinsfile. The stage uses the <code>mendScan</code> step to run SCA and SAST scans.</p>
+            <div class="lab-code-block">pipeline {
+    agent any
+    environment {
+        MEND_EMAIL = credentials('mend-email')
+        MEND_KEY   = credentials('mend-api-key')
+        MEND_URL   = credentials('mend-url')
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Mend Scan') {
+            steps {
+                mendScan product: 'Lab: Java App', type: 'sca,sast'
+            }
+        }
+    }
+}</div>
+            <div class="lab-terminal"><span class="term-prompt">$</span> git add Jenkinsfile
+<span class="term-prompt">$</span> git commit -m "Add Mend scan stage"
+<span class="term-success">[main 4a2b9c1] Add Mend scan stage</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                Use the <code>type</code> argument to select one or more scan types. Separate multiple values with commas, for example <code>sca,sast</code>.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Jenkinsfile created in the repository root</li>
+                <li><span class="check-icon">&#10003;</span> Mend scan stage uses the correct product and scan type</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="3">
+            <div class="lab-step-number">3</div>
+            <h3>Configure Build Quality Gates</h3>
+            <p>Add fail conditions and post-scan actions to enforce security standards. Fail the build when critical vulnerabilities are found and publish results.</p>
+            <div class="lab-code-block">pipeline {
+    agent any
+    environment {
+        MEND_EMAIL = credentials('mend-email')
+        MEND_KEY   = credentials('mend-api-key')
+        MEND_URL   = credentials('mend-url')
+    }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Mend Scan') {
+            steps {
+                mendScan product: 'Lab: Java App', type: 'sca,sast', failOn: 'critical'
+            }
+        }
+    }
+    post {
+        always {
+            mendPublishReports()
+        }
+        failure {
+            echo 'Build failed due to critical security findings.'
+        }
+    }
+}</div>
+            <div class="lab-terminal"><span class="term-info">[Mend Scan] Running Mend scan...</span>
+<span class="term-error">ERROR: Critical vulnerabilities detected. Failing build.</span>
+<span class="term-info">Build failed due to critical security findings.</span></div>
+            <div class="lab-callout warning">
+                <strong>Notice</strong>
+                Quality gates help prevent vulnerable code from reaching production. Start with <code>failOn: 'critical'</code> and tighten thresholds as the team matures.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Fail condition set to fail on critical vulnerabilities</li>
+                <li><span class="check-icon">&#10003;</span> Post-scan publishing action added</li>
+                <li><span class="check-icon">&#10003;</span> Pipeline intentionally fails when critical findings exist</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="4">
+            <div class="lab-step-number">4</div>
+            <h3>Run the Pipeline</h3>
+            <p>Trigger a build from the Jenkins job page and watch the console output for scan progress and results.</p>
+            <div class="lab-code-block"><span class="comment">// In Jenkins, click "Build Now" on the job page</span>
+<span class="comment">// Open the build console output</span></div>
+            <div class="lab-terminal"><span class="term-info">Started by user learner</span>
+<span class="term-info">[Pipeline] stage</span>
+<span class="term-info">[Pipeline] { (Mend Scan)</span>
+<span class="term-info">Scanning project: Lab: Java App</span>
+<span class="term-info">Detected: Maven (pom.xml)</span>
+<span class="term-info">Resolving dependencies...</span>
+<span class="term-info">Found 47 direct dependencies, 183 total</span>
+<span class="term-warn">Critical: 3 vulnerabilities</span>
+<span class="term-warn">High:     7 vulnerabilities</span>
+<span class="term-success">Results uploaded to Mend platform.</span>
+<span class="term-info">[Pipeline] }</span>
+<span class="term-info">[Pipeline] // stage</span>
+<span class="term-info">Finished: SUCCESS</span></div>
+            <div class="lab-callout tip">
+                <strong>Tip</strong>
+                If the build fails, expand the Mend Scan stage in the console log to see the exact vulnerability IDs and remediation guidance.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Build triggered successfully</li>
+                <li><span class="check-icon">&#10003;</span> Mend Scan stage completed in console output</li>
+                <li><span class="check-icon">&#10003;</span> Build status reflects the configured quality gate</li>
+            </ul>
+        </div>
+
+        <div class="lab-step" data-step="5">
+            <div class="lab-step-number">5</div>
+            <h3>View Reports in Jenkins</h3>
+            <p>After the build finishes, access the Mend scan reports from the Jenkins build page and enable trend tracking over time.</p>
+            <div class="lab-code-block"><span class="comment">// Build page &gt; Mend Scan Results</span>
+<span class="comment">// View vulnerabilities, severity breakdown, and remediation links</span></div>
+            <div class="lab-terminal"><span class="term-info">Mend Scan Results</span>
+<span class="term-info">  Critical: 0</span>
+<span class="term-info">  High:     2</span>
+<span class="term-info">  Medium:   8</span>
+<span class="term-info">  Low:      4</span>
+<span class="term-success">Trend: Critical findings decreased from 3 to 0.</span></div>
+            <div class="lab-callout tip">
+                <strong>Why trends matter</strong>
+                Trend tracking helps teams measure security posture improvements and spot regressions before they reach production.
+            </div>
+            <ul class="lab-checklist">
+                <li><span class="check-icon">&#10003;</span> Opened Mend scan report from the Jenkins build page</li>
+                <li><span class="check-icon">&#10003;</span> Reviewed severity trend across builds</li>
+            </ul>
+        </div>
+
+        <div class="lab-quiz" id="lab-quiz">
+            <h4>&#129504; Knowledge Check</h4>
+            <div class="lab-quiz-question">Which Jenkinsfile step runs the Mend scan?</div>
+            <ul class="lab-quiz-options">
+                <li class="lab-quiz-option" data-correct="false">mend()</li>
+                <li class="lab-quiz-option" data-correct="true">mendScan product: 'Lab: Java App', type: 'sca,sast'</li>
+                <li class="lab-quiz-option" data-correct="false">scanMend()</li>
+                <li class="lab-quiz-option" data-correct="false">mendPipeline()</li>
+            </ul>
+            <div class="lab-quiz-question" style="margin-top: 20px;">What is the purpose of the <code>failOn</code> parameter?</div>
+            <ul class="lab-quiz-options">
+                <li class="lab-quiz-option" data-correct="false">To skip the build stage</li>
+                <li class="lab-quiz-option" data-correct="true">To fail the build when a specified severity threshold is met</li>
+                <li class="lab-quiz-option" data-correct="false">To disable SAST scanning</li>
+                <li class="lab-quiz-option" data-correct="false">To publish reports to the Mend platform</li>
+            </ul>
+        </div>
+
+        <div class="lab-completion-banner" id="lab-complete">
+            <h2>&#127881; Lab Complete!</h2>
+            <p>You have integrated Mend scans into a Jenkins pipeline, configured quality gates, and reviewed reports inside Jenkins.</p>
+            <div class="lab-completion-xp">+100 XP</div>
+            <div class="lab-actions" style="justify-content: center;">
+                <a href="../labs.html" class="btn btn-secondary">Back to Labs</a>
+                <a href="sso-rbac-config.html" class="btn btn-primary">Next Lab: SSO &amp; RBAC Configuration</a>
+            </div>
+        </div>
+
+        <div class="lab-actions" id="lab-actions">
+            <button class="btn btn-primary" id="lab-complete-btn" disabled>Complete Lab</button>
+            <a href="../labs.html" class="btn btn-secondary">Back to Labs</a>
+        </div>
+    </div>
+
+    <footer id="site-footer" class="site-footer"></footer>
+
+    <script src="../js/layout.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+    (function() {
+        var totalSteps = 5;
+        var stepChecklists = {};
+
+        document.querySelectorAll('.lab-step').forEach(function(stepEl) {
+            var stepNum = stepEl.getAttribute('data-step');
+            var items = stepEl.querySelectorAll('.lab-checklist li');
+            stepChecklists[stepNum] = { total: items.length, checked: 0 };
+
+            items.forEach(function(item) {
+                item.addEventListener('click', function() {
+                    if (item.classList.contains('checked')) {
+                        item.classList.remove('checked');
+                        stepChecklists[stepNum].checked--;
+                    } else {
+                        item.classList.add('checked');
+                        stepChecklists[stepNum].checked++;
+                    }
+                    updateProgress();
+                });
+            });
+        });
+
+        function updateProgress() {
+            var totalItems = 0;
+            var checkedItems = 0;
+            var allStepsComplete = true;
+
+            for (var i = 1; i <= totalSteps; i++) {
+                if (!stepChecklists[i]) continue;
+                totalItems += stepChecklists[i].total;
+                checkedItems += stepChecklists[i].checked;
+                if (stepChecklists[i].checked < stepChecklists[i].total) {
+                    allStepsComplete = false;
+                }
+            }
+
+            var pct = totalItems > 0 ? (checkedItems / totalItems) * 100 : 0;
+            document.getElementById('lab-progress').style.width = pct + '%';
+
+            for (var j = 1; j <= totalSteps; j++) {
+                var stepEl = document.querySelector('.lab-step[data-step="' + j + '"]');
+                if (stepEl && stepChecklists[j] && stepChecklists[j].checked >= stepChecklists[j].total) {
+                    stepEl.classList.add('completed');
+                } else if (stepEl) {
+                    stepEl.classList.remove('completed');
+                }
+            }
+
+            var btn = document.getElementById('lab-complete-btn');
+            if (allStepsComplete) {
+                btn.disabled = false;
+                btn.classList.add('btn-primary');
+            } else {
+                btn.disabled = true;
+            }
+        }
+
+        document.getElementById('lab-complete-btn').addEventListener('click', function() {
+            if (this.disabled) return;
+
+            if (typeof MendStore !== 'undefined') {
+                MendStore.completeLab('jenkins-pipeline-integration', 100);
+            }
+
+            document.getElementById('lab-complete').classList.add('visible');
+            document.getElementById('lab-actions').style.display = 'none';
+            document.getElementById('lab-complete').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+
+        document.querySelectorAll('.lab-quiz-option').forEach(function(opt) {
+            opt.addEventListener('click', function() {
+                var siblings = this.parentNode.querySelectorAll('.lab-quiz-option');
+                siblings.forEach(function(s) { s.classList.remove('correct', 'incorrect'); });
+                if (this.getAttribute('data-correct') === 'true') {
+                    this.classList.add('correct');
+                } else {
+                    this.classList.add('incorrect');
+                    siblings.forEach(function(s) {
+                        if (s.getAttribute('data-correct') === 'true') s.classList.add('correct');
+                    });
+                }
+            });
+        });
+    })();
+    </script>
+</body>
+</html>
