@@ -6,8 +6,8 @@ test.describe('Client-side search', () => {
         await page.locator('#nav-search-input').fill('reachability');
         const dropdown = page.locator('.search-dropdown');
         await expect(dropdown).toHaveClass(/open/);
-        await expect(dropdown.locator('.search-result-item')).toHaveCount(1);
-        await expect(dropdown.locator('.search-result-title')).toContainText('Reachability');
+        await expect(dropdown.locator('.search-result-item')).toHaveCount(2);
+        await expect(dropdown.locator('.search-result-title').first()).toContainText('Reachability');
     });
 
     test('Enter navigates to the first result', async ({ page }) => {

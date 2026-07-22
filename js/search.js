@@ -138,7 +138,8 @@ const MendSearch = {
         { title: 'Battlecard: Mend vs Checkmarx', href: 'battlecard-checkmarx.html', category: 'Battlecard', tags: 'checkmarx competitive comparison' },
         { title: 'Battlecard: Mend vs Black Duck', href: 'battlecard-black-duck.html', category: 'Battlecard', tags: 'black duck synopsys competitive' },
         { title: 'Battlecard: Mend vs GitHub Advanced Security', href: 'battlecard-github-advanced-security.html', category: 'Battlecard', tags: 'github advanced security ghas competitive' },
-        { title: 'Battlecard: Mend vs Sonatype', href: 'battlecard-sonatype.html', category: 'Battlecard', tags: 'sonatype nexus competitive' }
+        { title: 'Battlecard: Mend vs Sonatype', href: 'battlecard-sonatype.html', category: 'Battlecard', tags: 'sonatype nexus competitive' },
+        { title: 'Battlecard: Mend vs Endor Labs', href: 'battlecard-endor-labs.html', category: 'Battlecard', tags: 'endor labs reachability competitive' }
     ],
 
     /* Simple fuzzy matching: split query into words, check if every word
